@@ -546,28 +546,78 @@
   .gc-tcard__role { font-size:12px; color:var(--gc-gray-400); margin-top:1px; }
 
   /* ══════════════════════
-     RISK / GUARANTEE
+     RISK / NO-BRAINER
      ══════════════════════ */
   .gc-guarantee {
     background:var(--gc-offwhite);
     border-top:1px solid var(--gc-gray-200); border-bottom:1px solid var(--gc-gray-200);
   }
   .gc-guarantee__inner {
-    max-width:var(--narrow-w); margin:0 auto; text-align:center;
+    max-width:var(--max-w); margin:0 auto;
   }
-  .gc-guarantee__icon {
-    width:64px; height:64px; border-radius:50%; margin:0 auto 24px;
-    background:var(--gc-green-light);
-    display:flex; align-items:center; justify-content:center; font-size:28px;
+  .gc-guarantee__head { text-align:center; margin-bottom:48px; }
+  .gc-guarantee__head .gc-heading { max-width:700px; margin:0 auto; }
+  .gc-guarantee__head .gc-subtext { max-width:560px; margin:18px auto 0; }
+  .gc-risk-vs {
+    display:grid; grid-template-columns:1fr auto 1fr; gap:0; align-items:stretch;
+    max-width:900px; margin:0 auto 48px; border-radius:20px; overflow:hidden;
+    box-shadow:0 8px 32px rgba(0,0,0,0.06);
   }
-  .gc-guarantee__heading {
-    font-family:var(--font-display); font-size:clamp(24px,3vw,36px);
-    font-weight:500; color:var(--gc-black); letter-spacing:-0.02em;
-    margin-bottom:18px;
+  .gc-risk-col { padding:clamp(24px,3.5vw,40px); }
+  .gc-risk-col--bad { background:var(--gc-gray-100); }
+  .gc-risk-col--vs {
+    background:var(--gc-gray-200); display:flex; align-items:center;
+    justify-content:center; padding:16px 12px; writing-mode:vertical-rl;
+    font-size:13px; font-weight:800; color:var(--gc-gray-400);
+    letter-spacing:0.1em; text-transform:uppercase;
   }
-  .gc-guarantee__text {
-    font-size:15.5px; color:var(--gc-gray-600); line-height:1.75;
-    max-width:580px; margin:0 auto;
+  .gc-risk-col--good { background:var(--gc-green); color:var(--gc-white); }
+  .gc-risk-col__title {
+    font-size:13px; font-weight:700; letter-spacing:0.08em;
+    text-transform:uppercase; margin-bottom:20px;
+  }
+  .gc-risk-col--bad .gc-risk-col__title { color:var(--gc-gray-400); }
+  .gc-risk-col--good .gc-risk-col__title { color:rgba(255,255,255,0.6); }
+  .gc-risk-item {
+    display:flex; align-items:flex-start; gap:10px;
+    padding:10px 0; font-size:14px; line-height:1.5;
+  }
+  .gc-risk-col--bad .gc-risk-item { color:var(--gc-gray-600); }
+  .gc-risk-col--good .gc-risk-item { color:rgba(255,255,255,0.85); }
+  .gc-risk-x { color:#CC4444; font-weight:700; flex-shrink:0; font-size:16px; }
+  .gc-risk-check { color:var(--gc-white); font-weight:700; flex-shrink:0; font-size:16px; }
+
+  .gc-nobrainer {
+    max-width:800px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+  }
+  .gc-nobrainer__card {
+    text-align:center; background:var(--gc-white); border-radius:20px;
+    padding:clamp(24px,3vw,36px); border:1px solid var(--gc-gray-200);
+  }
+  .gc-nobrainer__icon {
+    width:52px; height:52px; border-radius:50%; margin:0 auto 16px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px;
+  }
+  .gc-nobrainer__icon--green { background:var(--gc-green-light); }
+  .gc-nobrainer__title {
+    font-size:17px; font-weight:700; color:var(--gc-black); margin-bottom:8px;
+  }
+  .gc-nobrainer__text { font-size:13.5px; color:var(--gc-gray-600); line-height:1.6; }
+
+  .gc-guarantee__bottom {
+    text-align:center; margin-top:40px; padding:32px;
+    background:var(--gc-dark); border-radius:20px;
+    max-width:800px; margin-left:auto; margin-right:auto;
+  }
+  .gc-guarantee__bottom-text {
+    font-family:var(--font-display); font-size:clamp(20px,3vw,28px);
+    font-weight:500; color:var(--gc-white); letter-spacing:-0.02em; line-height:1.3;
+  }
+  .gc-guarantee__bottom-text em { color:var(--gc-green); font-style:italic; }
+  .gc-guarantee__bottom-sub {
+    font-size:14px; color:rgba(255,255,255,0.45); margin-top:12px;
   }
 
   /* ══════════════════════
@@ -1006,8 +1056,10 @@
     .gc-stats-bar__item:nth-child(2) { border-right:none; }
     .gc-trust__grid { grid-template-columns:1fr; }
     .gc-wood__img-row { grid-template-columns:1fr; }
-    .gc-compare__table { font-size:13px; }
-    .gc-compare__table th, .gc-compare__table td { padding:12px 14px; }
+    .gc-compare__table { font-size:13px; display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; }
+    .gc-compare__table th, .gc-compare__table td { padding:10px 12px; white-space:nowrap; min-width:80px; }
+    .gc-compare__table tbody td:first-child { min-width:110px; position:sticky; left:0; background:var(--gc-white); z-index:1; }
+    .gc-compare__table thead th:first-child { position:sticky; left:0; z-index:2; }
 
     /* ══ MOBILE-FIRST INVESTOR UX ══ */
 
@@ -1036,12 +1088,15 @@
     /* CTAs: volle Breite, große Tap-Targets (min 48px) */
     .gc-btn { width:100%; justify-content:center; padding:16px 24px; min-height:52px; font-size:15px; }
 
-    /* Stats Bar: horizontal scrollbar auf Mobile */
-    .gc-stats-bar { overflow-x:auto; -webkit-overflow-scrolling:touch; }
-    .gc-stats-bar__inner { min-width:600px; }
-    .gc-stats-bar__item { padding:20px 16px; }
-    .gc-stats-bar__num { font-size:28px; }
-    .gc-stats-bar__label { font-size:10px; }
+    /* Stats Bar: 2x2 Grid statt Scroll */
+    .gc-stats-bar { overflow:visible; }
+    .gc-stats-bar__inner { min-width:0; grid-template-columns:1fr 1fr; }
+    .gc-stats-bar__item { padding:20px 16px; border-bottom:1px solid var(--gc-gray-200); }
+    .gc-stats-bar__item:nth-child(odd) { border-right:1px solid var(--gc-gray-200); }
+    .gc-stats-bar__item:nth-child(even) { border-right:none; }
+    .gc-stats-bar__item:nth-child(n+3) { border-bottom:none; }
+    .gc-stats-bar__num { font-size:24px; }
+    .gc-stats-bar__label { font-size:9.5px; }
 
     /* Sections: weniger Padding, mehr Content-Dichte */
     .gc-section { padding:60px 20px; }
@@ -1084,8 +1139,12 @@
     .gc-calc__breakdown { gap:10px; }
     .gc-calc__break-card { padding:16px; border-radius:14px; }
     .gc-calc__break-val { font-size:20px; }
-    .gc-calc__compare-card { padding:20px; border-radius:16px; }
-    .gc-calc__compare-name { width:80px; font-size:12px; }
+    .gc-calc__compare-card { padding:16px; border-radius:16px; }
+    .gc-calc__compare-row { gap:8px; flex-wrap:nowrap; }
+    .gc-calc__compare-name { width:70px; font-size:11px; flex-shrink:0; }
+    .gc-calc__compare-bar { font-size:10px; padding:0 6px; min-width:auto; }
+    .gc-calc__compare-bar-wrap { height:24px; }
+    .gc-calc__compare-bar--loss { font-size:10px; }
     .gc-calc__impact-card { padding:20px; border-radius:16px; gap:16px; }
     .gc-calc__cta-btn { width:100%; justify-content:center; padding:18px 24px; font-size:16px; }
 
@@ -1106,10 +1165,15 @@
     }
     .gc-form-submit { min-height:56px; font-size:16px; border-radius:12px; }
 
-    /* Guarantee: kompakter */
-    .gc-guarantee__icon { width:52px; height:52px; }
-    .gc-guarantee__heading { font-size:clamp(22px,6vw,30px); }
-    .gc-guarantee__text { font-size:14.5px; }
+    /* Risk / No-Brainer: Stack auf Mobile */
+    .gc-risk-vs { grid-template-columns:1fr; border-radius:16px; }
+    .gc-risk-col--vs { writing-mode:horizontal-tb; padding:12px 20px; text-align:center; }
+    .gc-risk-col { padding:24px 20px; }
+    .gc-risk-item { font-size:13.5px; }
+    .gc-nobrainer { grid-template-columns:1fr; gap:12px; }
+    .gc-nobrainer__card { padding:20px; border-radius:16px; }
+    .gc-guarantee__bottom { padding:24px; margin-top:32px; border-radius:16px; }
+    .gc-guarantee__bottom-text { font-size:clamp(18px,5vw,24px); }
 
     /* Footer */
     .gc-footer__inner { flex-direction:column; text-align:center; }
@@ -1134,8 +1198,10 @@
     .gc-calc__impact-card { grid-template-columns:1fr; }
     .gc-hero__float-card { display:none; }
     .gc-revenue__kpi { flex-direction:column; gap:16px; }
-    .gc-stats-bar__inner { grid-template-columns:1fr; }
-    .gc-stats-bar__item { border-right:none; border-bottom:1px solid var(--gc-gray-200); }
+    .gc-stats-bar__inner { grid-template-columns:1fr 1fr; }
+    .gc-stats-bar__item { border-right:none; border-bottom:1px solid var(--gc-gray-200); padding:16px 12px; }
+    .gc-stats-bar__item:nth-child(odd) { border-right:1px solid var(--gc-gray-200); }
+    .gc-stats-bar__num { font-size:22px; }
   }
 </style>
 
@@ -1144,12 +1210,13 @@
   <!-- ════════ NAV ════════ -->
   <nav class="gc-nav" id="gcNav">
     <a href="#" class="gc-nav__logo">
-      <img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;width:auto;"> greenchild
+      <img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;width:auto;">
     </a>
     <ul class="gc-nav__links">
       <li><a href="#vorteile">Vorteile</a></li>
       <li><a href="#rechner">Rechner</a></li>
       <li><a href="#preise">Baum-Sets</a></li>
+      <li><a href="#sicherheit">Sicherheit</a></li>
       <li><a href="#team">Über uns</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
@@ -1165,6 +1232,7 @@
     <a href="#vorteile" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">Vorteile</a>
     <a href="#rechner" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">Rechner</a>
     <a href="#preise" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">Baum-Sets</a>
+    <a href="#sicherheit" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">Sicherheit</a>
     <a href="#team" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">Über uns</a>
     <a href="#faq" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">FAQ</a>
     <a href="#leadform" onclick="document.getElementById('gcMobileMenu').classList.remove('open')" style="color:#1B9E5A;font-weight:700;">Jetzt anfragen</a>
@@ -1452,8 +1520,8 @@
           <div class="gc-wood__img-caption">Möbel & Innenausbau</div>
         </div>
         <div class="gc-wood__img-item">
-          <img src="https://images.unsplash.com/photo-1520587048607-ba4016f400a7?w=600&q=80"
-               alt="Yacht auf dem Meer – Schiffbau" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=600&q=80"
+               alt="Yacht auf dem Meer – Schiffbau mit Paulownia-Holz" loading="lazy">
           <div class="gc-wood__img-caption">Schiff- & Bootsbau</div>
         </div>
         <div class="gc-wood__img-item">
@@ -1820,14 +1888,74 @@
     </div>
   </section>
 
-  <!-- ════════ GUARANTEE / RISK ════════ -->
-  <section class="gc-section gc-guarantee gc-reveal">
+  <!-- ════════ WARUM RISIKOARM / NO-BRAINER ════════ -->
+  <section class="gc-section gc-guarantee" id="sicherheit">
     <div class="gc-guarantee__inner">
-      <div class="gc-guarantee__icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#1B9E5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
-      <h2 class="gc-guarantee__heading">Warum das Risiko gering ist.</h2>
-      <p class="gc-guarantee__text">
-        Die Plantage ist Eigentum der Greenchild Group — kein Pachtrisiko durch Dritte. Der Paulownia ist einer der am schnellsten wachsenden Bäume, was die Zeitspanne bis zur Ernte und damit das Risiko minimiert. Er ist widerstandsfähig gegen Schädlinge, Trockenheit und extreme Temperaturen. Zudem ist der Holzpreis inflationsgesichert und unabhängig vom Aktienmarkt. Und sollte der Preis vorübergehend sinken, wird die Ernte einfach verschoben — der Baum wächst weiter und steigt im Wert.
-      </p>
+
+      <div class="gc-guarantee__head">
+        <div class="gc-eyebrow">Risikoanalyse</div>
+        <h2 class="gc-heading">Warum kluge Investoren Bäume wählen — statt Aktien, Fonds oder Krypto.</h2>
+        <p class="gc-subtext">Jedes Investment hat Risiken. Die Frage ist: Wie groß sind sie, und was passiert im schlimmsten Fall? Bei Paulownia ist die Antwort überraschend beruhigend.</p>
+      </div>
+
+      <!-- VS Comparison -->
+      <div class="gc-risk-vs">
+        <div class="gc-risk-col gc-risk-col--bad">
+          <div class="gc-risk-col__title">Klassische Investments</div>
+          <div class="gc-risk-item"><span class="gc-risk-x">✕</span> Aktien können über Nacht 50 % verlieren</div>
+          <div class="gc-risk-item"><span class="gc-risk-x">✕</span> Immobilien brauchen Eigenkapital, Kredit, Verwaltung</div>
+          <div class="gc-risk-item"><span class="gc-risk-x">✕</span> Krypto: extreme Volatilität, kein Sachwert</div>
+          <div class="gc-risk-item"><span class="gc-risk-x">✕</span> Sparbuch: Inflation frisst jedes Jahr 2–3 % weg</div>
+          <div class="gc-risk-item"><span class="gc-risk-x">✕</span> Fonds: versteckte Gebühren, keine Transparenz</div>
+          <div class="gc-risk-item"><span class="gc-risk-x">✕</span> Totalverlust bei Insolvenz des Anbieters möglich</div>
+        </div>
+        <div class="gc-risk-col gc-risk-col--vs">VS</div>
+        <div class="gc-risk-col gc-risk-col--good">
+          <div class="gc-risk-col__title">Ihr Paulownia-Investment</div>
+          <div class="gc-risk-item"><span class="gc-risk-check">✓</span> Sachwert — der Baum existiert physisch auf Ihrer Parzelle</div>
+          <div class="gc-risk-item"><span class="gc-risk-check">✓</span> Firmeneigenes Land — kein Pacht-Risiko durch Dritte</div>
+          <div class="gc-risk-item"><span class="gc-risk-check">✓</span> Preis sinkt? Ernte verschieben — Baum wächst weiter</div>
+          <div class="gc-risk-item"><span class="gc-risk-check">✓</span> Inflationsgeschützt: Holzpreis steigt seit 100 Jahren</div>
+          <div class="gc-risk-item"><span class="gc-risk-check">✓</span> Null laufende Kosten — alles im Kaufpreis enthalten</div>
+          <div class="gc-risk-item"><span class="gc-risk-check">✓</span> Baum regeneriert 3–5× aus dem Wurzelsystem (Phoenix)</div>
+        </div>
+      </div>
+
+      <!-- 3 No-Brainer Cards -->
+      <div class="gc-nobrainer">
+        <div class="gc-nobrainer__card">
+          <div class="gc-nobrainer__icon gc-nobrainer__icon--green">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#1B9E5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <div class="gc-nobrainer__title">Kein Totalverlust möglich</div>
+          <div class="gc-nobrainer__text">Ihr Baum steht auf firmeneigenem Land. Selbst im unwahrscheinlichsten Szenario besitzen Sie den Sachwert — Holz, Wurzeln, Biomasse. Kein Aktien-Crash, kein Bankrott kann das wegnehmen.</div>
+        </div>
+        <div class="gc-nobrainer__card">
+          <div class="gc-nobrainer__icon gc-nobrainer__icon--green">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#1B9E5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="gc-nobrainer__title">Zeit arbeitet für Sie</div>
+          <div class="gc-nobrainer__text">Aktien fallen und steigen. Ihr Baum wächst nur in eine Richtung — nach oben. Jeden Tag wird er größer, schwerer, wertvoller. Biologisches Wachstum kennt keine Rezession.</div>
+        </div>
+        <div class="gc-nobrainer__card">
+          <div class="gc-nobrainer__icon gc-nobrainer__icon--green">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#1B9E5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+          </div>
+          <div class="gc-nobrainer__title">Flexibel bleiben</div>
+          <div class="gc-nobrainer__text">Brauchen Sie Liquidität? Verkaufen Sie Ihre Bäume jederzeit vor der Ernte — ein Gutachter ermittelt den aktuellen Marktwert. Kein Lock-in, keine Kündigungsfrist.</div>
+        </div>
+      </div>
+
+      <!-- Bottom Quote -->
+      <div class="gc-guarantee__bottom">
+        <div class="gc-guarantee__bottom-text">
+          „Aktien steigen und fallen. Einmal gepflanzte Bäume <em>wachsen nur.</em>"
+        </div>
+        <div class="gc-guarantee__bottom-sub">
+          Über 15 Jahre Erfahrung · 200+ Hektar · 100+ zufriedene Investoren · EU New European Bauhaus Finalist
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1993,7 +2121,7 @@
   <footer class="gc-footer">
     <div class="gc-footer__inner">
       <div class="gc-footer__brand">
-        <img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:22px;width:auto;filter:brightness(10);"> greenchild
+        <img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:22px;width:auto;filter:brightness(10);">
       </div>
       <div class="gc-footer__copy">© 2026 Greenchild Group LLC · Ferizaj, Kosovo · London, UK</div>
       <ul class="gc-footer__links">
