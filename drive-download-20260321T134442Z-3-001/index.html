@@ -1,0 +1,2097 @@
+<!-- GREENCHILD LANDINGPAGE — Vollständig · Verkaufsstark · Minimalistisch -->
+<style>
+  /* ═══════════════════════════════════════════════════════
+     GREENCHILD — Sales-Optimized Landing Page
+     Apple-Minimalismus × Conversion-Strategie
+     ═══════════════════════════════════════════════════════ */
+
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+
+  :root {
+    --gc-green: #1B9E5A;
+    --gc-green-dark: #147A45;
+    --gc-green-deeper: #0E5C33;
+    --gc-green-light: #E8F7EF;
+    --gc-green-glow: rgba(27, 158, 90, 0.15);
+    --gc-gold: #C8A45E;
+    --gc-black: #0A0A0A;
+    --gc-dark: #141414;
+    --gc-gray-900: #1E1E1E;
+    --gc-gray-700: #444444;
+    --gc-gray-600: #666666;
+    --gc-gray-400: #999999;
+    --gc-gray-300: #BBBBBB;
+    --gc-gray-200: #E0E0E0;
+    --gc-gray-100: #F4F4F4;
+    --gc-offwhite: #FAFAF8;
+    --gc-white: #FFFFFF;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --section-pad: clamp(80px, 10vw, 140px);
+    --max-w: 1200px;
+    --narrow-w: 800px;
+  }
+
+  /* ── RESET ── */
+  .gc * { margin:0; padding:0; box-sizing:border-box; }
+  .gc {
+    font-family: var(--font-body);
+    color: var(--gc-black);
+    background: var(--gc-white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .gc img { max-width:100%; height:auto; display:block; }
+  .gc a { text-decoration:none; color:inherit; }
+
+  /* ══════════════════════
+     NAV BAR
+     ══════════════════════ */
+  .gc-nav {
+    position: fixed; top:0; left:0; right:0; z-index:1000;
+    padding: 0 clamp(20px,4vw,60px); height:72px;
+    display: flex; align-items:center; justify-content:space-between;
+    transition: all 0.5s var(--ease-smooth);
+    background: transparent;
+  }
+  .gc-nav.scrolled {
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 1px 24px rgba(0,0,0,0.04);
+  }
+  .gc-nav__logo {
+    display:flex; align-items:center; gap:10px;
+    font-weight:700; font-size:19px; letter-spacing:-0.02em;
+  }
+  .gc-nav__logo-dot {
+    width:30px; height:30px; background:var(--gc-green); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .gc-nav__logo-dot::after {
+    content:''; width:9px; height:9px;
+    border:2px solid var(--gc-white); border-radius:50%;
+  }
+  .gc-nav__links { display:flex; align-items:center; gap:32px; list-style:none; }
+  .gc-nav__links a {
+    font-size:13.5px; font-weight:500; color:var(--gc-gray-600);
+    transition: color 0.3s; letter-spacing:0.005em;
+  }
+  .gc-nav__links a:hover { color:var(--gc-black); }
+  .gc-nav__cta-btn {
+    font-family:var(--font-body); font-size:13px; font-weight:600;
+    padding:10px 24px; background:var(--gc-black); color:var(--gc-white);
+    border-radius:100px; border:none; cursor:pointer;
+    transition: all 0.3s var(--ease-smooth);
+  }
+  .gc-nav__cta-btn:hover {
+    background:var(--gc-green);
+    box-shadow: 0 4px 20px rgba(27,158,90,0.3);
+  }
+  .gc-nav__burger {
+    display:none; flex-direction:column; gap:5px;
+    background:none; border:none; cursor:pointer; padding:4px;
+  }
+  .gc-nav__burger span { width:22px; height:1.5px; background:var(--gc-black); }
+
+  /* ══════════════════════
+     BUTTONS (shared)
+     ══════════════════════ */
+  .gc-btn {
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-body); font-size:15px; font-weight:600;
+    padding:16px 36px; border-radius:100px; border:none; cursor:pointer;
+    transition: all 0.35s var(--ease-smooth); letter-spacing:-0.01em;
+  }
+  .gc-btn--green {
+    background:var(--gc-green); color:var(--gc-white);
+    box-shadow: 0 2px 20px rgba(27,158,90,0.25);
+  }
+  .gc-btn--green:hover {
+    background:var(--gc-green-dark); transform:translateY(-2px);
+    box-shadow: 0 8px 40px rgba(27,158,90,0.35);
+  }
+  .gc-btn--outline {
+    background:transparent; color:var(--gc-black);
+    border:1.5px solid var(--gc-gray-200);
+  }
+  .gc-btn--outline:hover { border-color:var(--gc-black); transform:translateY(-2px); }
+  .gc-btn--white {
+    background:var(--gc-white); color:var(--gc-green-dark);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+  }
+  .gc-btn--white:hover {
+    transform:translateY(-2px);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+  }
+  .gc-btn--ghost-w {
+    background:transparent; color:var(--gc-white);
+    border:1.5px solid rgba(255,255,255,0.3);
+  }
+  .gc-btn--ghost-w:hover { border-color:var(--gc-white); transform:translateY(-2px); }
+  .gc-btn__arr { transition: transform 0.3s var(--ease-expo); font-size:18px; }
+  .gc-btn:hover .gc-btn__arr { transform:translateX(3px); }
+
+  /* ══════════════════════
+     HERO
+     ══════════════════════ */
+  .gc-hero {
+    min-height:100vh; display:flex; align-items:center;
+    position:relative; overflow:hidden;
+    background: var(--gc-offwhite);
+  }
+  .gc-hero__bg {
+    position:absolute; inset:0;
+    background: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1800&q=80') center/cover no-repeat;
+    opacity: 0.08;
+  }
+  .gc-hero__gradient {
+    position:absolute; inset:0;
+    background: linear-gradient(135deg, var(--gc-offwhite) 40%, var(--gc-green-light) 100%);
+    opacity: 0.9;
+  }
+  .gc-hero__inner {
+    position:relative; z-index:2; max-width:var(--max-w); width:100%;
+    margin:0 auto; padding:140px clamp(24px,6vw,80px) var(--section-pad);
+    display:grid; grid-template-columns:1fr 1fr; gap:clamp(40px,5vw,80px);
+    align-items:center;
+  }
+  .gc-hero__content {}
+  .gc-hero__badge {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:7px 18px; background:var(--gc-white);
+    border:1px solid var(--gc-gray-200); border-radius:100px;
+    font-size:12.5px; font-weight:600; color:var(--gc-gray-600);
+    margin-bottom:28px; letter-spacing:0.02em;
+    opacity:0; animation: gcUp 0.8s var(--ease-expo) 0.2s forwards;
+  }
+  .gc-hero__badge-dot {
+    width:6px; height:6px; background:var(--gc-green); border-radius:50%;
+    animation: gcPulse 2s ease-in-out infinite;
+  }
+  .gc-hero__title {
+    font-family:var(--font-display); font-weight:500;
+    font-size:clamp(38px,5vw,68px); line-height:1.08;
+    letter-spacing:-0.03em; color:var(--gc-black);
+    margin-bottom:22px;
+    opacity:0; animation: gcUp 0.8s var(--ease-expo) 0.4s forwards;
+  }
+  .gc-hero__title em { font-style:italic; color:var(--gc-green); }
+  .gc-hero__sub {
+    font-size:clamp(16px,1.8vw,19px); color:var(--gc-gray-600);
+    line-height:1.7; max-width:480px; margin-bottom:36px;
+    opacity:0; animation: gcUp 0.8s var(--ease-expo) 0.6s forwards;
+  }
+  .gc-hero__actions {
+    display:flex; gap:14px; flex-wrap:wrap;
+    opacity:0; animation: gcUp 0.8s var(--ease-expo) 0.8s forwards;
+  }
+  .gc-hero__visual {
+    position:relative;
+    opacity:0; animation: gcUp 0.8s var(--ease-expo) 0.6s forwards;
+  }
+  .gc-hero__img {
+    width:100%; border-radius:24px;
+    object-fit:cover; aspect-ratio:4/5;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.08);
+  }
+  .gc-hero__float-card {
+    position:absolute; bottom:32px; left:-24px;
+    background:var(--gc-white); border-radius:16px;
+    padding:20px 24px; box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+    display:flex; align-items:center; gap:16px;
+    border:1px solid rgba(0,0,0,0.04);
+  }
+  .gc-hero__float-icon {
+    width:44px; height:44px; border-radius:12px;
+    background:var(--gc-green-light);
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px;
+  }
+  .gc-hero__float-label { font-size:12px; color:var(--gc-gray-400); font-weight:500; }
+  .gc-hero__float-value { font-size:20px; font-weight:700; color:var(--gc-black); letter-spacing:-0.02em; }
+
+  /* ── Stats Bar ── */
+  .gc-stats-bar {
+    background:var(--gc-white); border-top:1px solid var(--gc-gray-200);
+    border-bottom:1px solid var(--gc-gray-200);
+    padding:0 clamp(24px,6vw,80px);
+  }
+  .gc-stats-bar__inner {
+    max-width:var(--max-w); margin:0 auto;
+    display:grid; grid-template-columns:repeat(4,1fr);
+    text-align:center;
+  }
+  .gc-stats-bar__item {
+    padding:clamp(28px,3vw,40px) 16px;
+    border-right:1px solid var(--gc-gray-200);
+  }
+  .gc-stats-bar__item:last-child { border-right:none; }
+  .gc-stats-bar__num {
+    font-family:var(--font-display); font-size:clamp(26px,3.5vw,40px);
+    font-weight:500; color:var(--gc-green); letter-spacing:-0.02em; line-height:1.1;
+  }
+  .gc-stats-bar__label {
+    font-size:12px; color:var(--gc-gray-400); margin-top:6px;
+    font-weight:500; letter-spacing:0.06em; text-transform:uppercase;
+  }
+
+  /* ══════════════════════
+     SECTION BASE
+     ══════════════════════ */
+  .gc-section { padding:var(--section-pad) clamp(24px,6vw,80px); }
+  .gc-section__inner { max-width:var(--max-w); margin:0 auto; }
+  .gc-eyebrow {
+    font-size:11.5px; font-weight:700; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--gc-green); margin-bottom:14px;
+  }
+  .gc-heading {
+    font-family:var(--font-display); font-weight:500;
+    font-size:clamp(30px,4.5vw,54px); letter-spacing:-0.03em;
+    line-height:1.1; color:var(--gc-black);
+  }
+  .gc-subtext {
+    font-size:clamp(15px,1.6vw,18px); color:var(--gc-gray-600);
+    line-height:1.7; margin-top:18px;
+  }
+
+  /* ══════════════════════
+     ABOUT (Split Image + Text)
+     ══════════════════════ */
+  .gc-about { background:var(--gc-white); }
+  .gc-about__grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:clamp(40px,6vw,100px); align-items:center;
+  }
+  .gc-about__img-wrap { position:relative; }
+  .gc-about__img {
+    width:100%; border-radius:20px; object-fit:cover;
+    aspect-ratio:3/4; box-shadow:0 30px 60px rgba(0,0,0,0.06);
+  }
+  .gc-about__text-block {}
+  .gc-about__list {
+    margin-top:28px; list-style:none;
+    display:flex; flex-direction:column; gap:18px;
+  }
+  .gc-about__list li {
+    display:flex; align-items:flex-start; gap:14px;
+    font-size:15px; color:var(--gc-gray-700); line-height:1.65;
+  }
+  .gc-about__check {
+    width:22px; height:22px; flex-shrink:0; margin-top:2px;
+    background:var(--gc-green-light); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .gc-about__check svg { width:12px; height:12px; stroke:var(--gc-green); fill:none; stroke-width:2.5; }
+
+  /* ══════════════════════
+     FEATURES (3-Karten Grid)
+     ══════════════════════ */
+  .gc-features { background:var(--gc-gray-100); }
+  .gc-features__head { text-align:center; margin-bottom:64px; }
+  .gc-features__head .gc-heading,
+  .gc-features__head .gc-subtext { margin-left:auto; margin-right:auto; max-width:650px; }
+  .gc-features__grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .gc-fcard {
+    background:var(--gc-white); border-radius:20px;
+    padding:clamp(28px,3vw,44px); border:1px solid transparent;
+    transition: all 0.4s var(--ease-smooth); position:relative; overflow:hidden;
+  }
+  .gc-fcard:hover {
+    border-color:var(--gc-gray-200); transform:translateY(-4px);
+    box-shadow:0 20px 60px rgba(0,0,0,0.06);
+  }
+  .gc-fcard__icon {
+    width:52px; height:52px; border-radius:14px;
+    background:var(--gc-green-light);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:22px; transition: all 0.4s;
+    font-size:24px;
+  }
+  .gc-fcard:hover .gc-fcard__icon { background:var(--gc-green); }
+  .gc-fcard:hover .gc-fcard__icon svg { stroke:var(--gc-white); }
+  .gc-fcard__icon svg {
+    width:24px; height:24px; stroke:var(--gc-green); fill:none;
+    stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;
+    transition: stroke 0.4s;
+  }
+  .gc-fcard__title {
+    font-size:19px; font-weight:600; color:var(--gc-black);
+    margin-bottom:10px; letter-spacing:-0.01em;
+  }
+  .gc-fcard__text { font-size:14.5px; color:var(--gc-gray-600); line-height:1.7; }
+
+  /* ══════════════════════
+     REVENUE STREAMS (Image-Text Rows)
+     ══════════════════════ */
+  .gc-revenue { background:var(--gc-white); }
+  .gc-revenue__row {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:clamp(40px,5vw,80px); align-items:center;
+    margin-bottom:clamp(60px,7vw,100px);
+  }
+  .gc-revenue__row:last-child { margin-bottom:0; }
+  .gc-revenue__row.reverse .gc-revenue__img-wrap { order:2; }
+  .gc-revenue__row.reverse .gc-revenue__text { order:1; }
+  .gc-revenue__img-wrap { position:relative; }
+  .gc-revenue__img {
+    width:100%; border-radius:20px; object-fit:cover;
+    aspect-ratio:16/11; box-shadow:0 24px 56px rgba(0,0,0,0.06);
+  }
+  .gc-revenue__tag {
+    position:absolute; top:20px; left:20px;
+    background:rgba(27,158,90,0.9); color:var(--gc-white);
+    padding:6px 16px; border-radius:100px;
+    font-size:12px; font-weight:600; letter-spacing:0.04em;
+    backdrop-filter:blur(8px);
+  }
+  .gc-revenue__kpi {
+    display:flex; gap:28px; margin-top:28px;
+    padding-top:24px; border-top:1px solid var(--gc-gray-200);
+  }
+  .gc-revenue__kpi-val {
+    font-family:var(--font-display); font-size:28px;
+    font-weight:600; color:var(--gc-green); letter-spacing:-0.02em;
+    line-height:1.1;
+  }
+  .gc-revenue__kpi-label { font-size:12px; color:var(--gc-gray-400); margin-top:4px; }
+
+  /* ══════════════════════
+     WOOD PROPERTIES
+     ══════════════════════ */
+  .gc-wood { background:var(--gc-dark); color:var(--gc-white); position:relative; overflow:hidden; }
+  .gc-wood::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse at 30% 20%, rgba(27,158,90,0.1) 0%, transparent 50%);
+  }
+  .gc-wood__inner {
+    max-width:var(--max-w); margin:0 auto; position:relative;
+  }
+  .gc-wood__head { margin-bottom:56px; }
+  .gc-wood__head .gc-heading { color:var(--gc-white); }
+  .gc-wood__head .gc-subtext { color:rgba(255,255,255,0.5); }
+  .gc-wood__grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  .gc-wood__card {
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+    border-radius:20px; padding:clamp(24px,3vw,36px);
+    transition: all 0.35s var(--ease-smooth);
+  }
+  .gc-wood__card:hover {
+    background:rgba(255,255,255,0.08);
+    border-color:rgba(255,255,255,0.14);
+    transform:translateY(-3px);
+  }
+  .gc-wood__card-title {
+    font-size:17px; font-weight:600; color:var(--gc-white);
+    margin-bottom:8px; display:flex; align-items:center; gap:10px;
+  }
+  .gc-wood__card-title span { font-size:18px; }
+  .gc-wood__card-svg { display:inline-flex; align-items:center; margin-right:2px; }
+  .gc-wood__card-text { font-size:14px; color:rgba(255,255,255,0.5); line-height:1.7; }
+  .gc-wood__img-row {
+    margin-top:56px; display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+  }
+  .gc-wood__img-item {
+    border-radius:16px; overflow:hidden; position:relative;
+    aspect-ratio:4/3;
+  }
+  .gc-wood__img-item img {
+    width:100%; height:100%; object-fit:cover;
+    transition: transform 0.5s var(--ease-smooth);
+  }
+  .gc-wood__img-item:hover img { transform:scale(1.05); }
+  .gc-wood__img-caption {
+    position:absolute; bottom:0; left:0; right:0;
+    padding:12px 16px; font-size:12px; font-weight:600;
+    color:var(--gc-white); letter-spacing:0.04em;
+    background:linear-gradient(transparent, rgba(0,0,0,0.6));
+  }
+
+  /* ══════════════════════
+     COMPARISON TABLE
+     ══════════════════════ */
+  .gc-compare { background:var(--gc-gray-100); }
+  .gc-compare__head { text-align:center; margin-bottom:56px; }
+  .gc-compare__head .gc-heading,
+  .gc-compare__head .gc-subtext { max-width:600px; margin-left:auto; margin-right:auto; }
+  .gc-compare__table {
+    width:100%; max-width:900px; margin:0 auto;
+    border-collapse:collapse; border-radius:16px; overflow:hidden;
+    box-shadow:0 8px 32px rgba(0,0,0,0.04);
+  }
+  .gc-compare__table th, .gc-compare__table td {
+    padding:18px 24px; text-align:left; font-size:14.5px;
+  }
+  .gc-compare__table thead th {
+    background:var(--gc-green); color:var(--gc-white);
+    font-weight:600; font-size:13px; letter-spacing:0.04em;
+  }
+  .gc-compare__table thead th:first-child { border-radius:0; }
+  .gc-compare__table tbody tr { background:var(--gc-white); }
+  .gc-compare__table tbody tr:nth-child(even) { background:var(--gc-gray-100); }
+  .gc-compare__table tbody td { color:var(--gc-gray-700); border-bottom:1px solid var(--gc-gray-200); }
+  .gc-compare__table tbody td:first-child { font-weight:600; color:var(--gc-black); }
+  .gc-compare__table .gc-highlight { color:var(--gc-green); font-weight:700; }
+
+  /* ══════════════════════
+     PRICING
+     ══════════════════════ */
+  .gc-pricing { background:var(--gc-white); }
+  .gc-pricing__head { text-align:center; margin-bottom:56px; }
+  .gc-pricing__head .gc-heading,
+  .gc-pricing__head .gc-subtext { max-width:600px; margin-left:auto; margin-right:auto; }
+  .gc-pricing__grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .gc-pcard {
+    background:var(--gc-gray-100); border-radius:24px;
+    padding:clamp(28px,3vw,44px); position:relative;
+    border:2px solid transparent;
+    transition: all 0.35s var(--ease-smooth);
+  }
+  .gc-pcard:hover { transform:translateY(-4px); box-shadow:0 20px 60px rgba(0,0,0,0.06); }
+  .gc-pcard--featured {
+    background:var(--gc-white);
+    border-color:var(--gc-green);
+    box-shadow:0 12px 40px rgba(27,158,90,0.12);
+  }
+  .gc-pcard__badge {
+    position:absolute; top:-12px; right:24px;
+    background:var(--gc-green); color:var(--gc-white);
+    padding:5px 16px; border-radius:100px;
+    font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+  }
+  .gc-pcard__tier {
+    font-size:12px; font-weight:700; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--gc-gray-400); margin-bottom:8px;
+  }
+  .gc-pcard__name { font-size:24px; font-weight:700; color:var(--gc-black); margin-bottom:4px; }
+  .gc-pcard__range { font-size:13px; color:var(--gc-gray-400); margin-bottom:24px; }
+  .gc-pcard__price {
+    font-family:var(--font-display); font-size:clamp(32px,3.5vw,42px);
+    font-weight:600; color:var(--gc-green); letter-spacing:-0.02em;
+    margin-bottom:4px; line-height:1.1;
+  }
+  .gc-pcard__price-note { font-size:13px; color:var(--gc-gray-400); margin-bottom:28px; }
+  .gc-pcard__features { list-style:none; margin-bottom:32px; }
+  .gc-pcard__features li {
+    font-size:14px; color:var(--gc-gray-700); padding:10px 0;
+    border-bottom:1px solid var(--gc-gray-200);
+    display:flex; align-items:center; gap:10px;
+  }
+  .gc-pcard__features li:last-child { border:none; }
+  .gc-pcard__features .gc-check {
+    color:var(--gc-green); font-size:14px; flex-shrink:0;
+    display:inline-flex; align-items:center;
+  }
+  .gc-pcard__features .gc-check svg {
+    width:16px; height:16px; stroke:var(--gc-green); fill:none;
+    stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round;
+  }
+  .gc-pcard__btn {
+    width:100%; text-align:center; justify-content:center;
+    font-size:14px; padding:14px 24px;
+  }
+
+  /* ══════════════════════
+     TESTIMONIALS
+     ══════════════════════ */
+  .gc-trust { background:var(--gc-gray-100); }
+  .gc-trust__head { text-align:center; margin-bottom:56px; }
+  .gc-trust__head .gc-heading,
+  .gc-trust__head .gc-subtext { max-width:600px; margin-left:auto; margin-right:auto; }
+  .gc-trust__grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .gc-tcard {
+    background:var(--gc-white); border-radius:20px;
+    padding:clamp(24px,3vw,36px); display:flex; flex-direction:column;
+    border:1px solid rgba(0,0,0,0.04);
+    transition: all 0.35s var(--ease-smooth);
+  }
+  .gc-tcard:hover { transform:translateY(-3px); box-shadow:0 16px 48px rgba(0,0,0,0.06); }
+  .gc-tcard__stars { display:flex; gap:2px; margin-bottom:18px; }
+  .gc-tcard__star { width:16px; height:16px; color:var(--gc-green); }
+  .gc-tcard__quote {
+    font-size:14.5px; line-height:1.7; color:var(--gc-gray-600);
+    flex:1; margin-bottom:24px; font-style:italic;
+  }
+  .gc-tcard__author {
+    display:flex; align-items:center; gap:12px;
+    padding-top:18px; border-top:1px solid var(--gc-gray-200);
+  }
+  .gc-tcard__avatar {
+    width:42px; height:42px; border-radius:50%;
+    background:var(--gc-green-light);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:15px; color:var(--gc-green); flex-shrink:0;
+  }
+  .gc-tcard__name { font-weight:600; font-size:13.5px; color:var(--gc-black); }
+  .gc-tcard__role { font-size:12px; color:var(--gc-gray-400); margin-top:1px; }
+
+  /* ══════════════════════
+     RISK / GUARANTEE
+     ══════════════════════ */
+  .gc-guarantee {
+    background:var(--gc-offwhite);
+    border-top:1px solid var(--gc-gray-200); border-bottom:1px solid var(--gc-gray-200);
+  }
+  .gc-guarantee__inner {
+    max-width:var(--narrow-w); margin:0 auto; text-align:center;
+  }
+  .gc-guarantee__icon {
+    width:64px; height:64px; border-radius:50%; margin:0 auto 24px;
+    background:var(--gc-green-light);
+    display:flex; align-items:center; justify-content:center; font-size:28px;
+  }
+  .gc-guarantee__heading {
+    font-family:var(--font-display); font-size:clamp(24px,3vw,36px);
+    font-weight:500; color:var(--gc-black); letter-spacing:-0.02em;
+    margin-bottom:18px;
+  }
+  .gc-guarantee__text {
+    font-size:15.5px; color:var(--gc-gray-600); line-height:1.75;
+    max-width:580px; margin:0 auto;
+  }
+
+  /* ══════════════════════
+     FINAL CTA
+     ══════════════════════ */
+  .gc-final {
+    background:var(--gc-green); color:var(--gc-white);
+    text-align:center; position:relative; overflow:hidden;
+    padding:clamp(100px,12vw,160px) clamp(24px,6vw,80px);
+  }
+  .gc-final::before {
+    content:''; position:absolute; inset:0;
+    background: url('https://greenchild.eu/wp-content/uploads/2025/07/Copy-of-9X1A0656-1024x640.jpg') center/cover no-repeat;
+    opacity:0.06;
+  }
+  .gc-final::after {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(255,255,255,0.06) 0%, transparent 60%);
+  }
+  .gc-final__inner { position:relative; z-index:2; }
+  .gc-final__eyebrow {
+    font-size:11.5px; font-weight:700; letter-spacing:0.15em;
+    text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:18px;
+  }
+  .gc-final__heading {
+    font-family:var(--font-display); font-size:clamp(34px,5.5vw,60px);
+    font-weight:500; letter-spacing:-0.03em; line-height:1.1;
+    max-width:700px; margin:0 auto 18px;
+  }
+  .gc-final__sub {
+    font-size:clamp(15px,1.8vw,18px); color:rgba(255,255,255,0.65);
+    line-height:1.65; max-width:480px; margin:0 auto 40px;
+  }
+  .gc-final__actions { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .gc-final__note {
+    font-size:12.5px; color:rgba(255,255,255,0.4); margin-top:28px;
+  }
+
+  /* ══════════════════════
+     FOOTER
+     ══════════════════════ */
+  .gc-footer {
+    background:var(--gc-black); color:rgba(255,255,255,0.45);
+    padding:48px clamp(24px,6vw,80px);
+  }
+  .gc-footer__inner {
+    max-width:var(--max-w); margin:0 auto;
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:20px;
+  }
+  .gc-footer__brand {
+    display:flex; align-items:center; gap:10px;
+    font-weight:600; font-size:15px; color:rgba(255,255,255,0.6);
+  }
+  .gc-footer__brand-dot {
+    width:22px; height:22px; background:var(--gc-green); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .gc-footer__brand-dot::after {
+    content:''; width:7px; height:7px;
+    border:1.5px solid var(--gc-white); border-radius:50%;
+  }
+  .gc-footer__copy { font-size:12.5px; }
+  .gc-footer__links { display:flex; gap:24px; list-style:none; }
+  .gc-footer__links a { font-size:12.5px; color:rgba(255,255,255,0.35); transition:color 0.3s; }
+  .gc-footer__links a:hover { color:var(--gc-green); }
+
+  /* ── Animations ── */
+  @keyframes gcUp {
+    from { opacity:0; transform:translateY(28px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  @keyframes gcPulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+  .gc-reveal { opacity:1; transform:none; }
+  .gc-reveal.d1, .gc-reveal.d2, .gc-reveal.d3, .gc-reveal.d4 { }
+
+  /* ══════════════════════
+     MOBILE MENU
+     ══════════════════════ */
+  .gc-nav__mobile-menu {
+    display:none; position:fixed; inset:0; z-index:999;
+    background:rgba(255,255,255,0.97); backdrop-filter:blur(24px);
+    flex-direction:column; align-items:center; justify-content:center;
+    gap:28px; opacity:0; pointer-events:none;
+    transition: opacity 0.35s var(--ease-smooth);
+  }
+  .gc-nav__mobile-menu.open { display:flex; opacity:1; pointer-events:all; }
+  .gc-nav__mobile-menu a {
+    font-size:22px; font-weight:600; color:var(--gc-black);
+    letter-spacing:-0.01em; transition: color 0.3s;
+  }
+  .gc-nav__mobile-menu a:hover { color:var(--gc-green); }
+  .gc-nav__mobile-close {
+    position:absolute; top:24px; right:24px;
+    background:none; border:none; cursor:pointer;
+    width:32px; height:32px; display:flex; align-items:center; justify-content:center;
+  }
+  .gc-nav__mobile-close svg { width:24px; height:24px; stroke:var(--gc-black); stroke-width:2; }
+
+  /* ══════════════════════
+     LEAD FORM
+     ══════════════════════ */
+  .gc-leadform { background:var(--gc-green); color:var(--gc-white); position:relative; overflow:hidden; }
+  .gc-leadform::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(255,255,255,0.06) 0%, transparent 60%);
+  }
+  .gc-leadform__inner {
+    max-width:var(--max-w); margin:0 auto; position:relative; z-index:2;
+    display:grid; grid-template-columns:1fr 1fr; gap:clamp(40px,6vw,80px); align-items:start;
+  }
+  .gc-leadform__text {}
+  .gc-leadform__text .gc-eyebrow { color:rgba(255,255,255,0.55); }
+  .gc-leadform__text .gc-heading { color:var(--gc-white); font-size:clamp(30px,4vw,48px); }
+  .gc-leadform__text .gc-subtext { color:rgba(255,255,255,0.65); }
+  .gc-leadform__benefits { list-style:none; margin-top:28px; }
+  .gc-leadform__benefits li {
+    display:flex; align-items:center; gap:12px;
+    font-size:15px; color:rgba(255,255,255,0.8); padding:10px 0;
+  }
+  .gc-leadform__benefits li svg { width:18px; height:18px; stroke:var(--gc-white); fill:none; stroke-width:2.5; flex-shrink:0; }
+  .gc-leadform__card {
+    background:var(--gc-white); border-radius:24px;
+    padding:clamp(28px,3.5vw,44px); box-shadow:0 32px 80px rgba(0,0,0,0.15);
+  }
+  .gc-leadform__card-title {
+    font-family:var(--font-display); font-size:24px; font-weight:600;
+    color:var(--gc-black); margin-bottom:6px; letter-spacing:-0.02em;
+  }
+  .gc-leadform__card-sub { font-size:14px; color:var(--gc-gray-400); margin-bottom:28px; }
+  .gc-form-row { margin-bottom:16px; }
+  .gc-form-row--half { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .gc-form-label {
+    display:block; font-size:13px; font-weight:600; color:var(--gc-gray-700);
+    margin-bottom:6px; letter-spacing:0.01em;
+  }
+  .gc-form-label .gc-optional { font-weight:400; color:var(--gc-gray-400); }
+  .gc-form-input, .gc-form-select, .gc-form-textarea {
+    width:100%; font-family:var(--font-body); font-size:15px;
+    padding:12px 16px; border:1.5px solid var(--gc-gray-200);
+    border-radius:12px; background:var(--gc-gray-100); color:var(--gc-black);
+    transition: border-color 0.3s, box-shadow 0.3s; outline:none;
+    -webkit-appearance:none; appearance:none;
+  }
+  .gc-form-input:focus, .gc-form-select:focus, .gc-form-textarea:focus {
+    border-color:var(--gc-green);
+    box-shadow:0 0 0 3px rgba(27,158,90,0.12);
+    background:var(--gc-white);
+  }
+  .gc-form-select {
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 14px center;
+    padding-right:36px; cursor:pointer;
+  }
+  .gc-form-textarea { resize:vertical; min-height:80px; }
+  .gc-form-submit {
+    width:100%; margin-top:8px; font-family:var(--font-body);
+    font-size:16px; font-weight:700; padding:16px 24px;
+    background:var(--gc-green); color:var(--gc-white);
+    border:none; border-radius:14px; cursor:pointer;
+    transition: all 0.35s var(--ease-smooth);
+    letter-spacing:-0.01em;
+  }
+  .gc-form-submit:hover {
+    background:var(--gc-green-dark);
+    box-shadow:0 8px 32px rgba(27,158,90,0.35);
+    transform:translateY(-2px);
+  }
+  .gc-form-note {
+    text-align:center; font-size:12px; color:var(--gc-gray-400);
+    margin-top:14px; line-height:1.5;
+  }
+  .gc-form-success {
+    display:none; text-align:center; padding:40px 20px;
+  }
+  .gc-form-success.show { display:block; }
+  .gc-form-success__icon {
+    width:64px; height:64px; border-radius:50%; margin:0 auto 20px;
+    background:var(--gc-green-light);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .gc-form-success__icon svg { width:28px; height:28px; stroke:var(--gc-green); fill:none; stroke-width:2.5; }
+  .gc-form-success__title { font-size:22px; font-weight:700; color:var(--gc-black); margin-bottom:8px; }
+  .gc-form-success__text { font-size:15px; color:var(--gc-gray-600); line-height:1.65; }
+
+  /* ══════════════════════
+     RENDITERECHNER
+     ══════════════════════ */
+  .gc-calc {
+    background: linear-gradient(180deg, var(--gc-offwhite) 0%, var(--gc-white) 100%);
+    position:relative; overflow:hidden;
+  }
+  .gc-calc::before {
+    content:''; position:absolute; top:0; right:0;
+    width:500px; height:500px; border-radius:50%;
+    background: radial-gradient(circle, rgba(27,158,90,0.05) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .gc-calc__inner { max-width:var(--max-w); margin:0 auto; position:relative; }
+  .gc-calc__head { text-align:center; margin-bottom:48px; }
+  .gc-calc__head .gc-heading { margin:0 auto; max-width:700px; }
+  .gc-calc__head .gc-subtext { margin:18px auto 0; max-width:560px; }
+  .gc-calc__body {
+    display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start;
+  }
+
+  /* Left: Controls */
+  .gc-calc__controls {
+    background:var(--gc-white); border-radius:24px;
+    padding:clamp(28px,3.5vw,44px);
+    border:1px solid var(--gc-gray-200);
+    box-shadow:0 8px 32px rgba(0,0,0,0.04);
+  }
+  .gc-calc__slider-section { margin-bottom:32px; }
+  .gc-calc__slider-header {
+    display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px;
+  }
+  .gc-calc__slider-label { font-size:14px; font-weight:600; color:var(--gc-gray-700); }
+  .gc-calc__slider-value {
+    font-family:var(--font-display); font-size:32px; font-weight:600;
+    color:var(--gc-green); letter-spacing:-0.03em; line-height:1;
+  }
+  .gc-calc__slider-value small { font-size:14px; font-weight:400; color:var(--gc-gray-400); }
+  .gc-calc__range {
+    width:100%; height:6px; border-radius:3px;
+    -webkit-appearance:none; appearance:none;
+    background: linear-gradient(to right, var(--gc-green) 0%, var(--gc-green) 50%, var(--gc-gray-200) 50%);
+    outline:none; cursor:pointer;
+  }
+  .gc-calc__range::-webkit-slider-thumb {
+    -webkit-appearance:none; width:24px; height:24px; border-radius:50%;
+    background:var(--gc-white); border:3px solid var(--gc-green);
+    box-shadow:0 2px 8px rgba(0,0,0,0.15); cursor:pointer;
+    transition: box-shadow 0.2s;
+  }
+  .gc-calc__range::-webkit-slider-thumb:hover {
+    box-shadow:0 2px 16px rgba(27,158,90,0.4);
+  }
+  .gc-calc__range::-moz-range-thumb {
+    width:24px; height:24px; border-radius:50%;
+    background:var(--gc-white); border:3px solid var(--gc-green);
+    box-shadow:0 2px 8px rgba(0,0,0,0.15); cursor:pointer;
+  }
+  .gc-calc__range-labels {
+    display:flex; justify-content:space-between;
+    font-size:11px; color:var(--gc-gray-400); margin-top:8px;
+  }
+  .gc-calc__invest-display {
+    background:var(--gc-gray-100); border-radius:16px; padding:20px 24px;
+    text-align:center; margin-bottom:32px;
+  }
+  .gc-calc__invest-label { font-size:12px; font-weight:600; color:var(--gc-gray-400); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px; }
+  .gc-calc__invest-amount {
+    font-family:var(--font-display); font-size:36px; font-weight:600;
+    color:var(--gc-black); letter-spacing:-0.03em;
+  }
+  .gc-calc__tier-badge {
+    display:inline-block; margin-top:8px; padding:4px 14px;
+    border-radius:100px; font-size:12px; font-weight:700;
+    letter-spacing:0.04em; text-transform:uppercase;
+    background:var(--gc-green-light); color:var(--gc-green);
+  }
+
+  /* Urgency ticker */
+  .gc-calc__urgency {
+    background:var(--gc-dark); color:var(--gc-white); border-radius:14px;
+    padding:16px 20px; display:flex; align-items:center; gap:14px;
+  }
+  .gc-calc__urgency-icon {
+    width:40px; height:40px; border-radius:10px; flex-shrink:0;
+    background:rgba(255,100,50,0.15);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .gc-calc__urgency-icon svg { width:20px; height:20px; stroke:#FF6432; fill:none; stroke-width:2; }
+  .gc-calc__urgency-text { font-size:13px; color:rgba(255,255,255,0.7); line-height:1.5; }
+  .gc-calc__urgency-text strong { color:#FF6432; font-weight:700; }
+
+  /* Right: Results */
+  .gc-calc__results {
+    display:flex; flex-direction:column; gap:20px;
+  }
+
+  /* Big return card */
+  .gc-calc__return-card {
+    background:var(--gc-green); border-radius:24px; padding:clamp(28px,3.5vw,40px);
+    color:var(--gc-white); position:relative; overflow:hidden;
+  }
+  .gc-calc__return-card::before {
+    content:''; position:absolute; top:-40%; right:-20%;
+    width:300px; height:300px; border-radius:50%;
+    background:rgba(255,255,255,0.06); pointer-events:none;
+  }
+  .gc-calc__return-label { font-size:13px; color:rgba(255,255,255,0.6); font-weight:500; letter-spacing:0.04em; text-transform:uppercase; }
+  .gc-calc__return-amount {
+    font-family:var(--font-display); font-size:clamp(40px,5vw,56px);
+    font-weight:600; letter-spacing:-0.03em; line-height:1.1; margin:8px 0 4px;
+  }
+  .gc-calc__return-sub { font-size:14px; color:rgba(255,255,255,0.6); }
+  .gc-calc__return-roi {
+    display:inline-flex; align-items:center; gap:6px; margin-top:16px;
+    background:rgba(255,255,255,0.15); border-radius:100px;
+    padding:8px 18px; font-size:14px; font-weight:700;
+  }
+  .gc-calc__return-roi svg { width:16px; height:16px; stroke:var(--gc-white); fill:none; stroke-width:2.5; }
+
+  /* Breakdown grid */
+  .gc-calc__breakdown {
+    display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  }
+  .gc-calc__break-card {
+    background:var(--gc-white); border-radius:16px; padding:20px;
+    border:1px solid var(--gc-gray-200);
+  }
+  .gc-calc__break-icon { font-size:20px; margin-bottom:8px; display:flex; align-items:center; }
+  .gc-calc__break-icon svg { width:20px; height:20px; stroke:var(--gc-green); fill:none; stroke-width:1.8; }
+  .gc-calc__break-val {
+    font-family:var(--font-display); font-size:22px; font-weight:600;
+    color:var(--gc-black); letter-spacing:-0.02em;
+  }
+  .gc-calc__break-label { font-size:12px; color:var(--gc-gray-400); margin-top:2px; }
+
+  /* Comparison bars */
+  .gc-calc__compare-card {
+    background:var(--gc-white); border-radius:20px; padding:clamp(24px,3vw,32px);
+    border:1px solid var(--gc-gray-200);
+  }
+  .gc-calc__compare-title { font-size:14px; font-weight:700; color:var(--gc-black); margin-bottom:20px; }
+  .gc-calc__compare-row {
+    display:flex; align-items:center; gap:14px; margin-bottom:16px;
+  }
+  .gc-calc__compare-row:last-child { margin-bottom:0; }
+  .gc-calc__compare-name { font-size:13px; color:var(--gc-gray-600); width:100px; flex-shrink:0; }
+  .gc-calc__compare-bar-wrap { flex:1; height:28px; background:var(--gc-gray-100); border-radius:8px; overflow:hidden; position:relative; }
+  .gc-calc__compare-bar {
+    height:100%; border-radius:8px; display:flex; align-items:center;
+    padding:0 10px; font-size:12px; font-weight:700; color:var(--gc-white);
+    transition: width 0.8s var(--ease-expo);
+    min-width:fit-content;
+  }
+  .gc-calc__compare-bar--bank { background:#CCCCCC; color:var(--gc-gray-700); }
+  .gc-calc__compare-bar--stock { background:#5B8DEF; }
+  .gc-calc__compare-bar--tree { background:var(--gc-green); }
+  .gc-calc__compare-bar--loss { background:transparent; color:var(--gc-gray-400); font-weight:400; font-style:italic; padding-left:4px; }
+
+  /* CO2 card */
+  .gc-calc__impact-card {
+    background:var(--gc-dark); border-radius:20px; padding:clamp(24px,3vw,32px);
+    color:var(--gc-white); display:grid; grid-template-columns:1fr 1fr; gap:24px;
+  }
+  .gc-calc__impact-item {}
+  .gc-calc__impact-val {
+    font-family:var(--font-display); font-size:28px; font-weight:600;
+    color:var(--gc-green); letter-spacing:-0.02em; line-height:1.1;
+  }
+  .gc-calc__impact-label { font-size:12px; color:rgba(255,255,255,0.45); margin-top:4px; }
+
+  /* CTA inside calc */
+  .gc-calc__cta {
+    text-align:center; padding-top:8px;
+  }
+  .gc-calc__cta-btn {
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-body); font-size:16px; font-weight:700;
+    padding:18px 40px; background:var(--gc-green); color:var(--gc-white);
+    border:none; border-radius:100px; cursor:pointer;
+    transition: all 0.35s var(--ease-smooth);
+    box-shadow:0 4px 24px rgba(27,158,90,0.3);
+  }
+  .gc-calc__cta-btn:hover {
+    background:var(--gc-green-dark); transform:translateY(-2px);
+    box-shadow:0 8px 40px rgba(27,158,90,0.4);
+  }
+  .gc-calc__cta-sub {
+    font-size:12.5px; color:var(--gc-gray-400); margin-top:12px;
+  }
+
+  /* ── Responsive ── */
+  @media(max-width:1024px){
+    .gc-hero__inner { grid-template-columns:1fr; text-align:center; }
+    .gc-hero__sub { margin-left:auto; margin-right:auto; }
+    .gc-hero__actions { justify-content:center; }
+    .gc-hero__visual { max-width:500px; margin:0 auto; }
+    .gc-hero__float-card { left:50%; transform:translateX(-50%); }
+    .gc-features__grid { grid-template-columns:repeat(2,1fr); }
+    .gc-revenue__row { grid-template-columns:1fr; }
+    .gc-revenue__row.reverse .gc-revenue__img-wrap { order:0; }
+    .gc-revenue__row.reverse .gc-revenue__text { order:0; }
+    .gc-wood__grid { grid-template-columns:1fr; }
+    .gc-wood__img-row { grid-template-columns:repeat(2,1fr); }
+    .gc-pricing__grid { grid-template-columns:1fr; max-width:440px; margin:0 auto; }
+    .gc-trust__grid { grid-template-columns:repeat(2,1fr); }
+    .gc-leadform__inner { grid-template-columns:1fr; }
+    .gc-calc__body { grid-template-columns:1fr; }
+    .gc-about__grid { grid-template-columns:1fr; }
+    .gc-about__img-wrap { max-width:500px; }
+  }
+  @media(max-width:768px){
+    .gc-nav__links { display:none; }
+    .gc-nav__burger { display:flex; }
+    .gc-nav__mobile-menu { display:none; }
+    .gc-nav__mobile-menu.open { display:flex; }
+    .gc-features__grid { grid-template-columns:1fr; }
+    .gc-stats-bar__inner { grid-template-columns:repeat(2,1fr); }
+    .gc-stats-bar__item:nth-child(2) { border-right:none; }
+    .gc-trust__grid { grid-template-columns:1fr; }
+    .gc-wood__img-row { grid-template-columns:1fr; }
+    .gc-compare__table { font-size:13px; }
+    .gc-compare__table th, .gc-compare__table td { padding:12px 14px; }
+
+    /* ══ MOBILE-FIRST INVESTOR UX ══ */
+
+    /* Nav: kompakter, Logo prominenter */
+    .gc-nav { height:64px; padding:0 16px; }
+    .gc-nav__logo { font-size:17px; }
+    .gc-nav__logo img { height:28px !important; }
+    .gc-nav__cta-btn { font-size:12px; padding:8px 18px; }
+
+    /* Hero: Vertikal, Bild zuerst (visueller Hook) */
+    .gc-hero__inner { padding:100px 20px 60px; gap:32px; }
+    .gc-hero__title { font-size:36px; line-height:1.1; }
+    .gc-hero__sub { font-size:16px; line-height:1.65; margin-bottom:28px; }
+    .gc-hero__badge { font-size:11.5px; padding:6px 14px; margin-bottom:20px; }
+    .gc-hero__visual { max-width:100%; }
+    .gc-hero__img { border-radius:20px; aspect-ratio:3/4; }
+
+    /* Float card: fixiert am unteren Bildrand */
+    .gc-hero__float-card {
+      bottom:20px; left:16px; right:16px;
+      padding:14px 18px; border-radius:14px;
+      transform:none;
+    }
+    .gc-hero__float-value { font-size:18px; }
+
+    /* CTAs: volle Breite, große Tap-Targets (min 48px) */
+    .gc-btn { width:100%; justify-content:center; padding:16px 24px; min-height:52px; font-size:15px; }
+
+    /* Stats Bar: horizontal scrollbar auf Mobile */
+    .gc-stats-bar { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .gc-stats-bar__inner { min-width:600px; }
+    .gc-stats-bar__item { padding:20px 16px; }
+    .gc-stats-bar__num { font-size:28px; }
+    .gc-stats-bar__label { font-size:10px; }
+
+    /* Sections: weniger Padding, mehr Content-Dichte */
+    .gc-section { padding:60px 20px; }
+    .gc-heading { font-size:clamp(26px,7vw,36px); }
+    .gc-subtext { font-size:15px; }
+    .gc-eyebrow { font-size:10.5px; }
+
+    /* About: Stack, kein Grid */
+    .gc-about__grid { gap:32px; }
+    .gc-about__img { border-radius:16px; aspect-ratio:16/10; }
+    .gc-about__list li { font-size:14px; gap:10px; }
+
+    /* Feature Cards: Vollbreite, kompakter */
+    .gc-fcard { padding:24px; border-radius:16px; }
+    .gc-fcard__icon { width:44px; height:44px; border-radius:12px; margin-bottom:16px; }
+    .gc-fcard__title { font-size:17px; }
+    .gc-fcard__text { font-size:13.5px; }
+
+    /* Revenue Rows: Stack, Bild oben */
+    .gc-revenue__row { gap:28px; margin-bottom:56px; }
+    .gc-revenue__img { border-radius:16px; aspect-ratio:16/10; }
+    .gc-revenue__kpi { gap:20px; }
+    .gc-revenue__kpi-val { font-size:24px; }
+
+    /* Wood Section: dunkel, Cards stacked */
+    .gc-wood__grid { gap:12px; }
+    .gc-wood__card { padding:20px; border-radius:14px; }
+    .gc-wood__img-row { gap:12px; }
+    .gc-wood__img-item { aspect-ratio:16/10; border-radius:12px; }
+
+    /* Calculator: volle Breite, Touch-optimiert */
+    .gc-calc__body { gap:24px; }
+    .gc-calc__controls { padding:24px; border-radius:20px; }
+    .gc-calc__slider-value { font-size:28px; }
+    .gc-calc__range { height:8px; } /* Dicker für Touch */
+    .gc-calc__range::-webkit-slider-thumb { width:28px; height:28px; }
+    .gc-calc__range::-moz-range-thumb { width:28px; height:28px; }
+    .gc-calc__invest-amount { font-size:30px; }
+    .gc-calc__return-amount { font-size:36px; }
+    .gc-calc__breakdown { gap:10px; }
+    .gc-calc__break-card { padding:16px; border-radius:14px; }
+    .gc-calc__break-val { font-size:20px; }
+    .gc-calc__compare-card { padding:20px; border-radius:16px; }
+    .gc-calc__compare-name { width:80px; font-size:12px; }
+    .gc-calc__impact-card { padding:20px; border-radius:16px; gap:16px; }
+    .gc-calc__cta-btn { width:100%; justify-content:center; padding:18px 24px; font-size:16px; }
+
+    /* Pricing: Cards stacked, Featured prominent */
+    .gc-pcard { padding:28px; border-radius:20px; }
+    .gc-pcard__price { font-size:34px; }
+    .gc-pcard__btn { min-height:52px; }
+
+    /* Testimonials: Swipe-hint mit Schatten */
+    .gc-tcard { padding:24px; }
+    .gc-tcard__quote { font-size:14px; }
+
+    /* Lead Form: Vollbreite */
+    .gc-leadform__card { padding:24px; border-radius:20px; }
+    .gc-form-input, .gc-form-select, .gc-form-textarea {
+      padding:14px 16px; font-size:16px; /* 16px verhindert Zoom auf iOS */
+      border-radius:10px;
+    }
+    .gc-form-submit { min-height:56px; font-size:16px; border-radius:12px; }
+
+    /* Guarantee: kompakter */
+    .gc-guarantee__icon { width:52px; height:52px; }
+    .gc-guarantee__heading { font-size:clamp(22px,6vw,30px); }
+    .gc-guarantee__text { font-size:14.5px; }
+
+    /* Footer */
+    .gc-footer__inner { flex-direction:column; text-align:center; }
+    .gc-footer__links { justify-content:center; flex-wrap:wrap; }
+
+    /* Smooth scroll behavior für Mobile */
+    .gc { scroll-behavior:smooth; -webkit-overflow-scrolling:touch; }
+
+    /* Safe area für iPhone notch */
+    .gc-nav { padding-left:max(16px, env(safe-area-inset-left)); padding-right:max(16px, env(safe-area-inset-right)); }
+    .gc-footer { padding-bottom:max(48px, calc(48px + env(safe-area-inset-bottom))); }
+  }
+  @media(max-width:480px){
+    .gc-hero__actions { flex-direction:column; align-items:center; }
+    .gc-final__actions { flex-direction:column; align-items:center; }
+    .gc-form-row--half { grid-template-columns:1fr; }
+    .gc-calc__breakdown { grid-template-columns:1fr; }
+    .gc-calc__impact-card { grid-template-columns:1fr; }
+    .gc-hero__float-card { display:none; }
+    .gc-revenue__kpi { flex-direction:column; gap:16px; }
+    .gc-stats-bar__inner { grid-template-columns:1fr; }
+    .gc-stats-bar__item { border-right:none; border-bottom:1px solid var(--gc-gray-200); }
+  }
+</style>
+
+<div class="gc">
+
+  <!-- ════════ NAV ════════ -->
+  <nav class="gc-nav" id="gcNav">
+    <a href="#" class="gc-nav__logo">
+      <img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;width:auto;"> greenchild
+    </a>
+    <ul class="gc-nav__links">
+      <li><a href="#vorteile">Vorteile</a></li>
+      <li><a href="#rechner">Rechner</a></li>
+      <li><a href="#preise">Baum-Sets</a></li>
+      <li><a href="/ueber-uns">Über uns</a></li>
+      <li><a href="/so-funktionierts">FAQ</a></li>
+    </ul>
+    <button class="gc-nav__cta-btn" onclick="document.getElementById('leadform').scrollIntoView({behavior:'smooth'})">Jetzt anfragen</button>
+    <button class="gc-nav__burger" aria-label="Menü" onclick="document.getElementById('gcMobileMenu').classList.add('open')"><span></span><span></span><span></span></button>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="gc-nav__mobile-menu" id="gcMobileMenu">
+    <button class="gc-nav__mobile-close" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <a href="#vorteile" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">Vorteile</a>
+    <a href="#rechner" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">Rechner</a>
+    <a href="#preise" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">Baum-Sets</a>
+    <a href="/ueber-uns" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">Über uns</a>
+    <a href="/so-funktionierts" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">FAQ</a>
+    <a href="#leadform" onclick="document.getElementById('gcMobileMenu').classList.remove('open')" style="color:#1B9E5A;font-weight:700;">Jetzt anfragen</a>
+  </div>
+
+  <!-- ════════ HERO ════════ -->
+  <section class="gc-hero">
+    <div class="gc-hero__bg"></div>
+    <div class="gc-hero__gradient"></div>
+    <div class="gc-hero__inner">
+      <div class="gc-hero__content">
+        <div class="gc-hero__badge">
+          <span class="gc-hero__badge-dot"></span> Nachhaltig investieren seit 2009
+        </div>
+        <h1 class="gc-hero__title">Ihr Vermögen wächst.<br><em>Natürlich.</em></h1>
+        <p class="gc-hero__sub">
+          Paulownia-Bäume vereinen das schnellste Edelholz-Wachstum der Welt mit messbarer Klimawirkung. Werden Sie Eigentümer — wir kümmern uns um den Rest.
+        </p>
+        <div class="gc-hero__actions">
+          <button class="gc-btn gc-btn--green" onclick="document.getElementById('rechner').scrollIntoView({behavior:'smooth'})">
+            Rendite berechnen <span class="gc-btn__arr">→</span>
+          </button>
+          <button class="gc-btn gc-btn--outline" onclick="document.getElementById('vorteile').scrollIntoView({behavior:'smooth'})">
+            Wie es funktioniert
+          </button>
+        </div>
+      </div>
+      <div class="gc-hero__visual">
+        <img class="gc-hero__img"
+             src="https://greenchild.eu/wp-content/uploads/2025/07/9X1A6372-3-1024x731.jpg"
+             alt="Junger Baum im Sonnenlicht – Greenchild Paulownia Investment"
+             loading="eager">
+        <div class="gc-hero__float-card">
+          <div class="gc-hero__float-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#1B9E5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V13"/><path d="M7 13h10"/><path d="M12 3a4 4 0 0 0-4 4c0 1.5.8 2.8 2 3.4A3.5 3.5 0 0 0 7 14h10a3.5 3.5 0 0 0-3-3.6A4 4 0 0 0 16 7a4 4 0 0 0-4-4z"/></svg></div>
+          <div>
+            <div class="gc-hero__float-label">Wertzuwachs pro Baum</div>
+            <div class="gc-hero__float-value">+262 %</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ STATS BAR ════════ -->
+  <div class="gc-stats-bar gc-reveal">
+    <div class="gc-stats-bar__inner">
+      <div class="gc-stats-bar__item">
+        <div class="gc-stats-bar__num">121.000</div>
+        <div class="gc-stats-bar__label">Paulownia-Bäume</div>
+      </div>
+      <div class="gc-stats-bar__item">
+        <div class="gc-stats-bar__num">85 ha</div>
+        <div class="gc-stats-bar__label">Plantagen-Fläche</div>
+      </div>
+      <div class="gc-stats-bar__item">
+        <div class="gc-stats-bar__num">1,1 Mio.</div>
+        <div class="gc-stats-bar__label">kg CO₂ absorbiert / Jahr</div>
+      </div>
+      <div class="gc-stats-bar__item">
+        <div class="gc-stats-bar__num">30.000</div>
+        <div class="gc-stats-bar__label">kg Honig / Jahr</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ ABOUT / STORY ════════ -->
+  <section class="gc-section gc-about" id="vorteile">
+    <div class="gc-section__inner">
+      <div class="gc-about__grid">
+        <div class="gc-about__img-wrap gc-reveal">
+          <img class="gc-about__img"
+               src="https://greenchild.eu/wp-content/uploads/2025/07/9X1A2848-1024x662.jpg"
+               alt="Pflanze wächst aus der Erde – nachhaltiges Wachstum"
+               loading="lazy">
+        </div>
+        <div class="gc-about__text-block gc-reveal d1">
+          <div class="gc-eyebrow">Unsere Geschichte</div>
+          <h2 class="gc-heading">2009 entdeckten wir das Potential des Paulownia-Baums.</h2>
+          <p class="gc-subtext">
+            Was als Experiment auf vier Hektar begann, ist heute eine der größten Paulownia-Plantagen Europas. Auf 85 Hektar in Ferizaj (Kosovo) wachsen 121.000 Bäume unter idealen klimatischen Bedingungen — gepflegt von unserem Expertenteam, bewässert durch zwei eigene Wasserbecken, auf firmeneigenem Land.
+          </p>
+          <ul class="gc-about__list">
+            <li>
+              <span class="gc-about__check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span>
+              Firmeneigenes Land — kein Pachtrisiko durch Dritte
+            </li>
+            <li>
+              <span class="gc-about__check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span>
+              Über 15 Jahre Erfahrung in Paulownia-Kultivierung
+            </li>
+            <li>
+              <span class="gc-about__check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span>
+              Eigene Gewächshäuser, Pelletmühlen und Holzverarbeitung
+            </li>
+            <li>
+              <span class="gc-about__check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span>
+              Drei Ertragsquellen: Honig, Biomasse und Edelholz
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FEATURES 3-GRID ════════ -->
+  <section class="gc-section gc-features">
+    <div class="gc-section__inner">
+      <div class="gc-features__head gc-reveal">
+        <div class="gc-eyebrow">Warum Paulownia</div>
+        <h2 class="gc-heading">Ein Rohstoff, der jedes Argument auf seiner Seite hat.</h2>
+        <p class="gc-subtext">Schnellstes Edelholz. Zehnfache CO₂-Absorption. Ein Markt mit über 1.000 % Wachstum seit 1990.</p>
+      </div>
+      <div class="gc-features__grid">
+        <div class="gc-fcard gc-reveal d1">
+          <div class="gc-fcard__icon">
+            <svg viewBox="0 0 24 24"><path d="M7 20h10"/><path d="M12 20v-6"/><path d="M12 14c-3 0-5.5-2.5-5.5-5.5 0 0 2.5.5 5.5-2.5 3 3 5.5 2.5 5.5 2.5C17.5 11.5 15 14 12 14z"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1"/></svg>
+          </div>
+          <h3 class="gc-fcard__title">5 Meter pro Jahr</h3>
+          <p class="gc-fcard__text">Der Paulownia gehört zu den am schnellsten wachsenden Hartholzbäumen der Welt. Er produziert in einem Zehntel der Zeit so viel Holzvolumen wie eine Eiche und ist bereits nach 8–12 Jahren erntereif.</p>
+        </div>
+        <div class="gc-fcard gc-reveal d2">
+          <div class="gc-fcard__icon">
+            <svg viewBox="0 0 24 24"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>
+          </div>
+          <h3 class="gc-fcard__title">Holzmarkt +1.054 %</h3>
+          <p class="gc-fcard__text">Seit 1990 ist der Holzmarkt um über 1.000 % gestiegen — stärker als Aktien (+193 %) und Gold (+170 %). Die FAO prognostiziert eine Verdopplung der chinesischen Holznachfrage bis 2050.</p>
+        </div>
+        <div class="gc-fcard gc-reveal d3">
+          <div class="gc-fcard__icon">
+            <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13C4 6 11 2 11 2s7 4 7 11a7 7 0 0 1-7 7z"/><path d="M11 20V8"/><path d="M7 14c1.5-1 3-1.5 4-1.5"/><path d="M15 11.5c-1.5.5-3 1-4 1.5"/></svg>
+          </div>
+          <h3 class="gc-fcard__title">22 kg CO₂ pro Baum</h3>
+          <p class="gc-fcard__text">Jeder Paulownia absorbiert jährlich ca. 22 kg CO₂ und setzt 6 kg Sauerstoff frei — zehnmal mehr als andere Baumarten. Unsere 121.000 Bäume absorbieren 1,1 Millionen kg CO₂ jedes Jahr.</p>
+        </div>
+        <div class="gc-fcard gc-reveal d1">
+          <div class="gc-fcard__icon">
+            <svg viewBox="0 0 24 24"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+          </div>
+          <h3 class="gc-fcard__title">Phoenix-Effekt</h3>
+          <p class="gc-fcard__text">Nach der Ernte regeneriert der Paulownia aus dem vorhandenen Wurzelsystem — bis zu fünf Mal. Deshalb sein Spitzname: der Phoenix-Baum. Das macht die Wurzeln selbst zu einem wertvollen Handelsprodukt.</p>
+        </div>
+        <div class="gc-fcard gc-reveal d2">
+          <div class="gc-fcard__icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <h3 class="gc-fcard__title">Krisensicher</h3>
+          <p class="gc-fcard__text">Holz ist inflationsgeschützt und unabhängig von Börsen. Bei temporären Preisrückgängen wird die Ernte einfach verschoben — die Bäume wachsen weiter und steigen im Wert.</p>
+        </div>
+        <div class="gc-fcard gc-reveal d3">
+          <div class="gc-fcard__icon">
+            <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
+          </div>
+          <h3 class="gc-fcard__title">Null Eigenaufwand</h3>
+          <p class="gc-fcard__text">Pflanzung, Pflege, Ernte und Verkauf — alles liegt in unseren Händen. Der Kaufpreis deckt sämtliche Kosten über die gesamte Laufzeit. Sie erhalten Ihr Baumzertifikat und müssen sich um nichts kümmern.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ REVENUE STREAMS ════════ -->
+  <section class="gc-section gc-revenue" id="ertraege">
+    <div class="gc-section__inner">
+      <div class="gc-revenue__header gc-reveal" style="text-align:center;margin-bottom:72px;">
+        <div class="gc-eyebrow">Drei Ertragsquellen</div>
+        <h2 class="gc-heading" style="max-width:700px;margin:0 auto;">Ihr Baum verdient auf drei Wegen gleichzeitig.</h2>
+        <p class="gc-subtext" style="max-width:560px;margin:18px auto 0;">Honig ab dem dritten Jahr. Biomasse ab dem sechsten. Edelholz nach zwölf Jahren. Dazu kommen die Wurzeln als vierte Einnahmequelle.</p>
+      </div>
+
+      <!-- Honig -->
+      <div class="gc-revenue__row gc-reveal">
+        <div class="gc-revenue__img-wrap">
+          <img class="gc-revenue__img"
+               src="https://greenchild.eu/wp-content/uploads/2025/07/9X1A8969-819x1024.jpg"
+               alt="Natürlicher Honig – Paulownia-Bienenhonig"
+               loading="lazy">
+          <div class="gc-revenue__tag">Ab Jahr 3</div>
+        </div>
+        <div class="gc-revenue__text">
+          <div class="gc-eyebrow">Einnahmequelle 1</div>
+          <h3 class="gc-heading" style="font-size:clamp(26px,3.5vw,40px);">Paulownia-Honig</h3>
+          <p class="gc-subtext">
+            Die aromatischen Lavendelblüten des Paulownia-Baums ziehen Bienenvölker an und liefern einen Monofloral-Honig höchster Qualität. Mit fünf Bienenvölkern und ca. 550 kg Honig pro Hektar entstehen jährlich rund 30.000 kg feinster Bio-Honig. Der Großteil wird lokal verkauft, der Rest geht auf den internationalen Markt.
+          </p>
+          <div class="gc-revenue__kpi">
+            <div>
+              <div class="gc-revenue__kpi-val">1,87 Mio. €</div>
+              <div class="gc-revenue__kpi-label">Gesamtertrag Honig (12 Jahre)</div>
+            </div>
+            <div>
+              <div class="gc-revenue__kpi-val">10 € / kg</div>
+              <div class="gc-revenue__kpi-label">Konservativer Ansatz</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Biomasse -->
+      <div class="gc-revenue__row reverse gc-reveal">
+        <div class="gc-revenue__img-wrap">
+          <img class="gc-revenue__img"
+               src="https://greenchild.eu/wp-content/uploads/2025/07/Copy-of-9X1A8602-1024x683.jpg"
+               alt="Biomasse – Nachhaltige Energiequelle aus Paulownia"
+               loading="lazy">
+          <div class="gc-revenue__tag">Jahr 6</div>
+        </div>
+        <div class="gc-revenue__text">
+          <div class="gc-eyebrow">Einnahmequelle 2</div>
+          <h3 class="gc-heading" style="font-size:clamp(26px,3.5vw,40px);">Biomasse & Pellets</h3>
+          <p class="gc-subtext">
+            Im sechsten Jahr wird die Hälfte der Bäume gefällt — nicht als Verlust, sondern als Strategie. Das junge Holz wird zu Pellets verarbeitet: einer nachhaltigen Energiequelle, die besonders in Deutschland stark nachgefragt wird. Die verbliebenen Bäume erhalten genügend Platz, um sechs weitere Jahre zu Edelholz heranzuwachsen.
+          </p>
+          <div class="gc-revenue__kpi">
+            <div>
+              <div class="gc-revenue__kpi-val">1,89 Mio. €</div>
+              <div class="gc-revenue__kpi-label">Erlös aus Biomasse gesamt</div>
+            </div>
+            <div>
+              <div class="gc-revenue__kpi-val">200 € / m³</div>
+              <div class="gc-revenue__kpi-label">Biomassepreis</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edelholz -->
+      <div class="gc-revenue__row gc-reveal">
+        <div class="gc-revenue__img-wrap">
+          <img class="gc-revenue__img"
+               src="https://greenchild.eu/wp-content/uploads/2025/07/9X1A5653-1024x640.jpg"
+               alt="Hochwertiges Holz – Paulownia Edelholz"
+               loading="lazy">
+          <div class="gc-revenue__tag">Jahr 12 – Haupternte</div>
+        </div>
+        <div class="gc-revenue__text">
+          <div class="gc-eyebrow">Einnahmequelle 3</div>
+          <h3 class="gc-heading" style="font-size:clamp(26px,3.5vw,40px);">Edelholz — die Haupternte</h3>
+          <p class="gc-subtext">
+            Nach 12 Jahren erreichen die Paulownia-Bäume eine Höhe von ca. 20 Metern und einen Stammdurchmesser von 40–50 cm. Das Holz wird getrocknet, verarbeitet und als hochwertiges Hartholz auf dem Weltmarkt verkauft — mit einer Qualität, die in der Möbel-, Schiff- und Flugzeugindustrie gefragt ist.
+          </p>
+          <div class="gc-revenue__kpi">
+            <div>
+              <div class="gc-revenue__kpi-val">13,1 Mio. €</div>
+              <div class="gc-revenue__kpi-label">Erlös Edelholz (Plantage)</div>
+            </div>
+            <div>
+              <div class="gc-revenue__kpi-val">€ 915 / m³</div>
+              <div class="gc-revenue__kpi-label">Edelholzpreis</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ WOOD PROPERTIES ════════ -->
+  <section class="gc-section gc-wood" id="holz">
+    <div class="gc-wood__inner">
+      <div class="gc-wood__head gc-reveal">
+        <div class="gc-eyebrow">Das Aluminium des Holzes</div>
+        <h2 class="gc-heading">Ultraleicht. Extrem stabil. Vielseitig einsetzbar.</h2>
+        <p class="gc-subtext">Paulownia-Holz wiegt nur 250–270 kg/m³ — ein Drittel weniger als Eiche — und bietet dabei das höchste Festigkeits-Gewichts-Verhältnis aller Hölzer weltweit.</p>
+      </div>
+      <div class="gc-wood__grid">
+        <div class="gc-wood__card gc-reveal d1">
+          <div class="gc-wood__card-title"><span class="gc-wood__card-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#1B9E5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4.97 0 8-3.03 8-8 0-4.97-4-8-6-11-2 3-6 6.03-6 11 0 4.97 3.03 8 4 8z"/><path d="M12 22c-1.66 0-3-1.34-3-3 0-1.66 1.5-3 3-5 1.5 2 3 3.34 3 5 0 1.66-1.34 3-3 3z"/></svg></span> Feuerbeständig</div>
+          <div class="gc-wood__card-text">Zündtemperatur von ca. 420 °C — fast doppelt so hoch wie bei herkömmlichen Hart- und Weichhölzern. Die Brenndauer ist zweimal höher als bei anderen Holzarten.</div>
+        </div>
+        <div class="gc-wood__card gc-reveal d2">
+          <div class="gc-wood__card-title"><span class="gc-wood__card-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#1B9E5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></span> Wasserresistent</div>
+          <div class="gc-wood__card-text">Einmal getrocknet, nimmt Paulownia kaum noch Wasser auf — hervorragende Dimensionsstabilität. Ideal für Schiffbau, Surfboards und Außenanwendungen ohne chemische Versiegelung.</div>
+        </div>
+        <div class="gc-wood__card gc-reveal d3">
+          <div class="gc-wood__card-title"><span class="gc-wood__card-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#1B9E5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg></span> Ultraleicht</div>
+          <div class="gc-wood__card-text">Mit 250–270 kg/m³ leichter als Balsa-Holz, dabei extrem stabil. Deshalb wird es in Flugzeugbau, Sportgeräten (Ski, Snowboards, Surfboards) und im Camper-Bau eingesetzt.</div>
+        </div>
+        <div class="gc-wood__card gc-reveal d4">
+          <div class="gc-wood__card-title"><span class="gc-wood__card-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#1B9E5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span> Schädlingsresistent</div>
+          <div class="gc-wood__card-text">Hoher Tanningehalt macht das Holz natürlich insektenresistent. Es verzieht sich nicht, splittert nicht und hält Nägel und Schrauben ohne Vorbohrung — knotenfrei gewachsen.</div>
+        </div>
+      </div>
+      <div class="gc-wood__img-row gc-reveal">
+        <div class="gc-wood__img-item">
+          <img src="https://images.unsplash.com/photo-1610374792793-f016b77ca51a?w=600&q=80"
+               alt="Holz-Oberfläche Maserung" loading="lazy">
+          <div class="gc-wood__img-caption">Möbel & Innenausbau</div>
+        </div>
+        <div class="gc-wood__img-item">
+          <img src="https://images.unsplash.com/photo-1520587048607-ba4016f400a7?w=600&q=80"
+               alt="Yacht auf dem Meer – Schiffbau" loading="lazy">
+          <div class="gc-wood__img-caption">Schiff- & Bootsbau</div>
+        </div>
+        <div class="gc-wood__img-item">
+          <img src="https://images.unsplash.com/photo-1486218119243-13883505764c?w=600&q=80"
+               alt="Surfboard am Strand" loading="lazy">
+          <div class="gc-wood__img-caption">Surfboards & Sportgeräte</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ COMPARISON TABLE ════════ -->
+  <section class="gc-section gc-compare">
+    <div class="gc-section__inner">
+      <div class="gc-compare__head gc-reveal">
+        <div class="gc-eyebrow">Im Vergleich</div>
+        <h2 class="gc-heading">10 Jahre Wachstum — Paulownia vs. andere Bäume.</h2>
+        <p class="gc-subtext">Die Zahlen sprechen für sich. Paulownia übertrifft Teak und Eiche in jeder Kategorie.</p>
+      </div>
+      <table class="gc-compare__table gc-reveal d1">
+        <thead>
+          <tr>
+            <th>Eigenschaft</th>
+            <th>Paulownia</th>
+            <th>Teak</th>
+            <th>Eiche</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Höhe nach 10 Jahren</td>
+            <td class="gc-highlight">20 m</td>
+            <td>10 m</td>
+            <td>2 m</td>
+          </tr>
+          <tr>
+            <td>Stammdurchmesser (10 J.)</td>
+            <td class="gc-highlight">40 cm</td>
+            <td>20 cm</td>
+            <td>10 cm</td>
+          </tr>
+          <tr>
+            <td>CO₂-Absorption / Jahr</td>
+            <td class="gc-highlight">600 kg</td>
+            <td>50 kg</td>
+            <td>50 kg</td>
+          </tr>
+          <tr>
+            <td>Erntereife</td>
+            <td class="gc-highlight">8–12 Jahre</td>
+            <td>25–30 Jahre</td>
+            <td>50–80 Jahre</td>
+          </tr>
+          <tr>
+            <td>Regeneration nach Ernte</td>
+            <td class="gc-highlight">3–5 Zyklen</td>
+            <td>Nein</td>
+            <td>Nein</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ════════ RENDITERECHNER ════════ -->
+  <section class="gc-section gc-calc" id="rechner">
+    <div class="gc-calc__inner">
+      <div class="gc-calc__head gc-reveal">
+        <div class="gc-eyebrow">Renditerechner</div>
+        <h2 class="gc-heading">Was wäre, wenn Sie heute investiert hätten?</h2>
+        <p class="gc-subtext">Bewegen Sie den Regler und sehen Sie in Echtzeit, wie Ihr Investment durch biologisches Wachstum an Wert gewinnt — unabhängig von Börsen, Inflation und Zinspolitik.</p>
+      </div>
+      <div class="gc-calc__body">
+
+        <!-- LEFT: Controls -->
+        <div class="gc-calc__controls">
+          <div class="gc-calc__slider-section">
+            <div class="gc-calc__slider-header">
+              <span class="gc-calc__slider-label">Anzahl Bäume</span>
+              <span class="gc-calc__slider-value" id="calcTreeCount">100 <small>Bäume</small></span>
+            </div>
+            <input type="range" class="gc-calc__range" id="calcSlider" min="25" max="800" step="25" value="100"
+                   oninput="gcUpdateCalc(this.value)">
+            <div class="gc-calc__range-labels">
+              <span>25</span><span>200</span><span>400</span><span>600</span><span>800</span>
+            </div>
+          </div>
+
+          <div class="gc-calc__invest-display">
+            <div class="gc-calc__invest-label">Ihr Investment</div>
+            <div class="gc-calc__invest-amount" id="calcInvest">19.900 €</div>
+            <div class="gc-calc__tier-badge" id="calcTier">BASIC</div>
+          </div>
+
+          <!-- Loss aversion trigger -->
+          <div class="gc-calc__urgency">
+            <div class="gc-calc__urgency-icon">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="gc-calc__urgency-text">
+              Jeden Tag, den Sie warten, entgeht Ihnen biologisches Wachstum. Ihre Bäume wachsen ab Tag 1 — <strong id="calcDailyGrowth">1,45 €</strong> pro Tag an Wertzuwachs.
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Results -->
+        <div class="gc-calc__results">
+
+          <!-- Big return card -->
+          <div class="gc-calc__return-card">
+            <div class="gc-calc__return-label">Prognostizierter Gesamtertrag nach 12 Jahren</div>
+            <div class="gc-calc__return-amount" id="calcReturn">52.550 €</div>
+            <div class="gc-calc__return-sub">Gewinn: <strong id="calcProfit">32.650 €</strong></div>
+            <div class="gc-calc__return-roi">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>
+              <span id="calcROI">+263 %</span> Wertzuwachs
+            </div>
+          </div>
+
+          <!-- Breakdown -->
+          <div class="gc-calc__breakdown">
+            <div class="gc-calc__break-card">
+              <div class="gc-calc__break-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V13"/><path d="M17 17H7"/><path d="M17 13c0-5-5-9-5-9s-5 4-5 9"/></svg></div>
+              <div class="gc-calc__break-val" id="calcTimber">27.034 €</div>
+              <div class="gc-calc__break-label">Edelholz-Erlös</div>
+            </div>
+            <div class="gc-calc__break-card">
+              <div class="gc-calc__break-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div>
+              <div class="gc-calc__break-val" id="calcHoney">3.850 €</div>
+              <div class="gc-calc__break-label">Honig-Ertrag</div>
+            </div>
+            <div class="gc-calc__break-card">
+              <div class="gc-calc__break-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+              <div class="gc-calc__break-val" id="calcBiomass">3.900 €</div>
+              <div class="gc-calc__break-label">Biomasse & Pellets</div>
+            </div>
+            <div class="gc-calc__break-card">
+              <div class="gc-calc__break-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></div>
+              <div class="gc-calc__break-val" id="calcRoots">15.000 €</div>
+              <div class="gc-calc__break-label">Wurzelwerk-Verkauf</div>
+            </div>
+          </div>
+
+          <!-- Comparison -->
+          <div class="gc-calc__compare-card">
+            <div class="gc-calc__compare-title">Dasselbe Investment — drei verschiedene Wege</div>
+            <div class="gc-calc__compare-row">
+              <div class="gc-calc__compare-name">Sparkonto</div>
+              <div class="gc-calc__compare-bar-wrap">
+                <div class="gc-calc__compare-bar gc-calc__compare-bar--bank" id="calcBarBank" style="width:15%">
+                  <span id="calcBankVal">23.600 €</span>
+                </div>
+              </div>
+            </div>
+            <div class="gc-calc__compare-row">
+              <div class="gc-calc__compare-name">Aktienmarkt</div>
+              <div class="gc-calc__compare-bar-wrap">
+                <div class="gc-calc__compare-bar gc-calc__compare-bar--stock" id="calcBarStock" style="width:40%">
+                  <span id="calcStockVal">39.800 €</span>
+                </div>
+              </div>
+            </div>
+            <div class="gc-calc__compare-row">
+              <div class="gc-calc__compare-name" style="font-weight:700;color:var(--gc-green);">Paulownia</div>
+              <div class="gc-calc__compare-bar-wrap">
+                <div class="gc-calc__compare-bar gc-calc__compare-bar--tree" id="calcBarTree" style="width:85%">
+                  <span id="calcTreeVal">52.550 €</span>
+                </div>
+              </div>
+            </div>
+            <div class="gc-calc__compare-row">
+              <div class="gc-calc__compare-name" style="color:var(--gc-gray-400);">Unter dem Kopfkissen</div>
+              <div class="gc-calc__compare-bar-wrap">
+                <div class="gc-calc__compare-bar gc-calc__compare-bar--loss" style="width:100%">
+                  <span id="calcInflation">Kaufkraft: -24 % durch Inflation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Environmental impact -->
+          <div class="gc-calc__impact-card">
+            <div class="gc-calc__impact-item">
+              <div class="gc-calc__impact-val" id="calcCO2">26.400 kg</div>
+              <div class="gc-calc__impact-label">CO₂ absorbiert über 12 Jahre</div>
+            </div>
+            <div class="gc-calc__impact-item">
+              <div class="gc-calc__impact-val" id="calcO2">7.200 kg</div>
+              <div class="gc-calc__impact-label">Sauerstoff freigesetzt</div>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="gc-calc__cta">
+            <button class="gc-calc__cta-btn" onclick="document.getElementById('leadform').scrollIntoView({behavior:'smooth'})">
+              <span id="calcCTAtext">100 Bäume jetzt sichern</span>
+              <span class="gc-btn__arr">→</span>
+            </button>
+            <div class="gc-calc__cta-sub">Kostenlos & unverbindlich · Persönliche Beratung innerhalb 24h</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PRICING ════════ -->
+  <section class="gc-section gc-pricing" id="preise">
+    <div class="gc-section__inner">
+      <div class="gc-pricing__head gc-reveal">
+        <div class="gc-eyebrow">Baum-Sets</div>
+        <h2 class="gc-heading">Werden Sie Baumbesitzer — ab 25 Bäumen.</h2>
+        <p class="gc-subtext">Jedes Set beinhaltet die Bäume, die Pacht des Ackerlands sowie sämtliche Pflege- und Erntekosten über die gesamte Laufzeit. Keine Zusatzkosten.</p>
+      </div>
+      <div class="gc-pricing__grid">
+        <!-- Basic -->
+        <div class="gc-pcard gc-reveal d1">
+          <div class="gc-pcard__tier">Einsteiger</div>
+          <div class="gc-pcard__name">Basic</div>
+          <div class="gc-pcard__range">25 – 100 Bäume</div>
+          <div class="gc-pcard__price">199 €</div>
+          <div class="gc-pcard__price-note">pro Baum · ab 4.975 € gesamt</div>
+          <ul class="gc-pcard__features">
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Paulownia-Bäume</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Hochwertiges Wurzelsystem</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Pacht der Anbaufläche</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Pflege & Ernte inklusive</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Persönliches Baumzertifikat</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Keine Zusatzkosten</li>
+          </ul>
+          <button class="gc-btn gc-btn--outline gc-pcard__btn" onclick="document.getElementById('leadform').scrollIntoView({behavior:'smooth'})">
+            Basic anfragen
+          </button>
+        </div>
+        <!-- Premium -->
+        <div class="gc-pcard gc-pcard--featured gc-reveal d2">
+          <div class="gc-pcard__badge">Beliebt</div>
+          <div class="gc-pcard__tier">Fortgeschritten</div>
+          <div class="gc-pcard__name">Premium</div>
+          <div class="gc-pcard__range">125 – 400 Bäume</div>
+          <div class="gc-pcard__price">192,50 €</div>
+          <div class="gc-pcard__price-note">pro Baum · 5 % Rabatt · ab 24.062 €</div>
+          <ul class="gc-pcard__features">
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Alles aus Basic</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> 5 % Rabatt auf den Baumpreis</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Persönlicher Ansprechpartner</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Regelmäßige Statusberichte</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Prioritäts-Kundenservice</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Keine Zusatzkosten</li>
+          </ul>
+          <button class="gc-btn gc-btn--green gc-pcard__btn" onclick="document.getElementById('leadform').scrollIntoView({behavior:'smooth'})">
+            Premium anfragen <span class="gc-btn__arr">→</span>
+          </button>
+        </div>
+        <!-- Business -->
+        <div class="gc-pcard gc-reveal d3">
+          <div class="gc-pcard__tier">Investor</div>
+          <div class="gc-pcard__name">Business</div>
+          <div class="gc-pcard__range">425+ Bäume</div>
+          <div class="gc-pcard__price">186 €</div>
+          <div class="gc-pcard__price-note">pro Baum · 10 % Rabatt · ab 79.050 €</div>
+          <ul class="gc-pcard__features">
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Alles aus Premium</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> 10 % Rabatt auf den Baumpreis</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Reisegutschein zur Plantage</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Flug & Hotel inklusive</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Persönliche Plantagenführung</li>
+            <li><span class="gc-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Keine Zusatzkosten</li>
+          </ul>
+          <button class="gc-btn gc-btn--outline gc-pcard__btn" onclick="document.getElementById('leadform').scrollIntoView({behavior:'smooth'})">
+            Business anfragen
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ TESTIMONIALS ════════ -->
+  <section class="gc-section gc-trust" id="vertrauen">
+    <div class="gc-section__inner">
+      <div class="gc-trust__head gc-reveal">
+        <div class="gc-eyebrow">Stimmen unserer Baumbesitzer</div>
+        <h2 class="gc-heading">Investoren aus ganz Europa vertrauen Greenchild.</h2>
+      </div>
+      <div class="gc-trust__grid">
+        <div class="gc-tcard gc-reveal d1">
+          <div class="gc-tcard__stars">
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+          </div>
+          <p class="gc-tcard__quote">„250 Bäume gekauft, regelmäßig Updates erhalten, die Plantage selbst besucht. Das Konzept überzeugt: transparent, anfassbar und wirtschaftlich durchdacht. Kein Finanzprodukt, ein echter Sachwert."</p>
+          <div class="gc-tcard__author">
+            <div class="gc-tcard__avatar">TK</div>
+            <div>
+              <div class="gc-tcard__name">Thomas K.</div>
+              <div class="gc-tcard__role">Unternehmer · München</div>
+            </div>
+          </div>
+        </div>
+        <div class="gc-tcard gc-reveal d2">
+          <div class="gc-tcard__stars">
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+          </div>
+          <p class="gc-tcard__quote">„Als Geschäftsführerin habe ich wenig Zeit für aufwändige Investments. Bei Greenchild kaufe ich Bäume und der Rest wird professionell gemanagt. Die Kombination aus Rendite und Umweltwirkung ist einzigartig."</p>
+          <div class="gc-tcard__author">
+            <div class="gc-tcard__avatar">SW</div>
+            <div>
+              <div class="gc-tcard__name">Sandra W.</div>
+              <div class="gc-tcard__role">Geschäftsführerin · Zürich</div>
+            </div>
+          </div>
+        </div>
+        <div class="gc-tcard gc-reveal d3">
+          <div class="gc-tcard__stars">
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+            <svg class="gc-tcard__star" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 4.94L16 5.77l-4 3.83.95 5.4L8 12.67 3.05 15l.95-5.4-4-3.83 5.53-.83z"/></svg>
+          </div>
+          <p class="gc-tcard__quote">„Ich suchte eine solide Altersvorsorge jenseits von Aktien. Das Baumzertifikat, die regelmäßigen Updates und die Möglichkeit, jederzeit zu verkaufen, haben mich überzeugt. Geplant waren 100, geworden sind es 400."</p>
+          <div class="gc-tcard__author">
+            <div class="gc-tcard__avatar">MH</div>
+            <div>
+              <div class="gc-tcard__name">Markus H.</div>
+              <div class="gc-tcard__role">Ingenieur · Wien</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ GUARANTEE / RISK ════════ -->
+  <section class="gc-section gc-guarantee gc-reveal">
+    <div class="gc-guarantee__inner">
+      <div class="gc-guarantee__icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#1B9E5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <h2 class="gc-guarantee__heading">Warum das Risiko gering ist.</h2>
+      <p class="gc-guarantee__text">
+        Die Plantage ist Eigentum der Greenchild Group — kein Pachtrisiko durch Dritte. Der Paulownia ist einer der am schnellsten wachsenden Bäume, was die Zeitspanne bis zur Ernte und damit das Risiko minimiert. Er ist widerstandsfähig gegen Schädlinge, Trockenheit und extreme Temperaturen. Zudem ist der Holzpreis inflationsgesichert und unabhängig vom Aktienmarkt. Und sollte der Preis vorübergehend sinken, wird die Ernte einfach verschoben — der Baum wächst weiter und steigt im Wert.
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════ LEAD FORM (Pipedrive) ════════ -->
+  <section class="gc-section gc-leadform" id="leadform">
+    <div class="gc-leadform__inner">
+      <div class="gc-leadform__text">
+        <div class="gc-eyebrow">Jetzt Baumbesitzer werden</div>
+        <h2 class="gc-heading">Investieren Sie in einen Wert, der von selbst wächst.</h2>
+        <p class="gc-subtext">Füllen Sie das Formular aus und erhalten Sie innerhalb von 24 Stunden eine persönliche Beratung — kostenlos und unverbindlich.</p>
+        <ul class="gc-leadform__benefits">
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Baum-Sets ab 4.975 €</li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Kaufvertrag + persönliches Baumzertifikat</li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Pflege, Ernte & Verkauf inklusive</li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Kostenlose Broschüre auf Anfrage</li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Persönliche Beratung innerhalb 24h</li>
+        </ul>
+      </div>
+      <div class="gc-leadform__card">
+        <div id="gcFormFields">
+          <div class="gc-leadform__card-title">Unverbindlich anfragen</div>
+          <div class="gc-leadform__card-sub">Alle Felder mit * sind Pflichtfelder</div>
+          <div class="gc-form-row gc-form-row--half">
+            <div>
+              <label class="gc-form-label">Vorname *</label>
+              <input class="gc-form-input" type="text" id="gcVorname" placeholder="Ihr Vorname" required>
+            </div>
+            <div>
+              <label class="gc-form-label">Nachname *</label>
+              <input class="gc-form-input" type="text" id="gcNachname" placeholder="Ihr Nachname" required>
+            </div>
+          </div>
+          <div class="gc-form-row">
+            <label class="gc-form-label">E-Mail-Adresse *</label>
+            <input class="gc-form-input" type="email" id="gcEmail" placeholder="ihre.email@beispiel.de" required>
+          </div>
+          <div class="gc-form-row">
+            <label class="gc-form-label">Telefonnummer <span class="gc-optional">(empfohlen)</span></label>
+            <input class="gc-form-input" type="tel" id="gcTelefon" placeholder="+49 123 456 789">
+          </div>
+          <div class="gc-form-row">
+            <label class="gc-form-label">Anzahl Bäume, die Sie interessieren *</label>
+            <select class="gc-form-select" id="gcPaket" required>
+              <option value="" disabled selected>Bitte wählen</option>
+              <option value="25-100">25 – 100 Bäume (Basic)</option>
+              <option value="125-400">125 – 400 Bäume (Premium)</option>
+              <option value="400+">400+ Bäume (Business)</option>
+              <option value="unsicher">Weiß noch nicht</option>
+            </select>
+          </div>
+          <div class="gc-form-row gc-form-row--half">
+            <div>
+              <label class="gc-form-label">Ihr Hintergrund <span class="gc-optional">(optional)</span></label>
+              <select class="gc-form-select" id="gcPersona">
+                <option value="" disabled selected>Bitte wählen</option>
+                <option value="unternehmer">Unternehmer / CEO</option>
+                <option value="manager">Manager / Führungskraft</option>
+                <option value="freiberufler">Freiberufler (Arzt, Anwalt etc.)</option>
+                <option value="sonstige">Sonstige</option>
+              </select>
+            </div>
+            <div>
+              <label class="gc-form-label">Wie gefunden? <span class="gc-optional">(optional)</span></label>
+              <select class="gc-form-select" id="gcQuelle">
+                <option value="" disabled selected>Bitte wählen</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="google">Google</option>
+                <option value="empfehlung">Empfehlung</option>
+                <option value="presse">Presse</option>
+                <option value="event">Event</option>
+                <option value="sonstiges">Sonstiges</option>
+              </select>
+            </div>
+          </div>
+          <div class="gc-form-row">
+            <label class="gc-form-label">Ihre Nachricht <span class="gc-optional">(optional)</span></label>
+            <textarea class="gc-form-textarea" id="gcNachricht" placeholder="Haben Sie bestimmte Fragen oder Wünsche?"></textarea>
+          </div>
+          <button class="gc-form-submit" id="gcSubmitBtn" onclick="gcSubmitForm()">
+            Unverbindlich anfragen →
+          </button>
+          <p class="gc-form-note">Ihre Daten werden verschlüsselt übertragen und ausschließlich zur Bearbeitung Ihrer Anfrage verwendet. Keine Weitergabe an Dritte.</p>
+        </div>
+        <div class="gc-form-success" id="gcFormSuccess">
+          <div class="gc-form-success__icon"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
+          <div class="gc-form-success__title">Vielen Dank!</div>
+          <div class="gc-form-success__text">Ihre Anfrage ist eingegangen. Unser Team meldet sich innerhalb von 24 Stunden bei Ihnen — mit Ihrer persönlichen Broschüre und allen Details zu Ihrem gewünschten Baum-Set.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer class="gc-footer">
+    <div class="gc-footer__inner">
+      <div class="gc-footer__brand">
+        <img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:22px;width:auto;filter:brightness(10);"> greenchild
+      </div>
+      <div class="gc-footer__copy">© 2026 Greenchild Group LLC · Ferizaj, Kosovo · London, UK</div>
+      <ul class="gc-footer__links">
+        <li><a href="#">Impressum</a></li>
+        <li><a href="#">Datenschutz</a></li>
+        <li><a href="#leadform">Kontakt</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</div>
+
+<script data-no-optimize="1">
+(function(){
+  'use strict';
+
+  /* Nav glassmorphism on scroll */
+  var nav = document.getElementById('gcNav');
+  if (nav) {
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, {passive: true});
+  }
+
+  /* Smooth scroll for all anchor links */
+  var anchors = document.querySelectorAll('.gc a[href^="#"]');
+  for (var i = 0; i < anchors.length; i++) {
+    anchors[i].addEventListener('click', function(e) {
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+    });
+  }
+})();
+
+/* Renditerechner Logic */
+function gcUpdateCalc(trees) {
+  trees = parseInt(trees);
+
+  /* Pricing per tree by tier */
+  var pricePerTree, tier;
+  if (trees <= 100) { pricePerTree = 199; tier = 'BASIC'; }
+  else if (trees <= 400) { pricePerTree = 192.50; tier = 'PREMIUM · 5% Rabatt'; }
+  else { pricePerTree = 186; tier = 'BUSINESS · 10% Rabatt'; }
+
+  var investment = trees * pricePerTree;
+
+  /* Revenue per tree (from Businessplan, conservative) */
+  var timberPerTree = 270.34;   /* Edelholz anteilig */
+  var honeyPerTree = 38.52;     /* Honig über 12 Jahre */
+  var biomassPerTree = 39.00;   /* Biomasse */
+  var rootsPerTree = 150.00;    /* Wurzelwerk */
+  var totalPerTree = timberPerTree + honeyPerTree + biomassPerTree + rootsPerTree;
+
+  var timber = Math.round(trees * timberPerTree);
+  var honey = Math.round(trees * honeyPerTree);
+  var biomass = Math.round(trees * biomassPerTree);
+  var roots = Math.round(trees * rootsPerTree);
+  var totalReturn = Math.round(trees * totalPerTree);
+  var profit = totalReturn - Math.round(investment);
+  var roi = Math.round((profit / investment) * 100);
+  var dailyGrowth = (profit / (12 * 365)).toFixed(2);
+
+  /* Bank & Stock comparison (12 years) */
+  var bankRate = 1.5;
+  var stockRate = 7;
+  var bankReturn = Math.round(investment * Math.pow(1 + bankRate/100, 12));
+  var stockReturn = Math.round(investment * Math.pow(1 + stockRate/100, 12));
+
+  /* Bar widths (relative to tree return) */
+  var maxVal = totalReturn * 1.15;
+  var bankWidth = Math.max(10, Math.round(bankReturn / maxVal * 100));
+  var stockWidth = Math.max(15, Math.round(stockReturn / maxVal * 100));
+  var treeWidth = Math.round(totalReturn / maxVal * 100);
+
+  /* CO2 impact */
+  var co2 = trees * 22 * 12;
+  var o2 = trees * 6 * 12;
+
+  /* Slider gradient */
+  var slider = document.getElementById('calcSlider');
+  var pct = ((trees - 25) / (800 - 25)) * 100;
+  slider.style.background = 'linear-gradient(to right, #1B9E5A 0%, #1B9E5A ' + pct + '%, #E0E0E0 ' + pct + '%, #E0E0E0 100%)';
+
+  /* Update DOM */
+  document.getElementById('calcTreeCount').innerHTML = trees.toLocaleString('de-DE') + ' <small>Bäume</small>';
+  document.getElementById('calcInvest').textContent = Math.round(investment).toLocaleString('de-DE') + ' €';
+  document.getElementById('calcTier').textContent = tier;
+  document.getElementById('calcDailyGrowth').textContent = dailyGrowth.replace('.', ',') + ' €';
+
+  document.getElementById('calcReturn').textContent = totalReturn.toLocaleString('de-DE') + ' €';
+  document.getElementById('calcProfit').textContent = profit.toLocaleString('de-DE') + ' €';
+  document.getElementById('calcROI').textContent = '+' + roi + ' %';
+
+  document.getElementById('calcTimber').textContent = timber.toLocaleString('de-DE') + ' €';
+  document.getElementById('calcHoney').textContent = honey.toLocaleString('de-DE') + ' €';
+  document.getElementById('calcBiomass').textContent = biomass.toLocaleString('de-DE') + ' €';
+  document.getElementById('calcRoots').textContent = roots.toLocaleString('de-DE') + ' €';
+
+  document.getElementById('calcBankVal').textContent = bankReturn.toLocaleString('de-DE') + ' €';
+  document.getElementById('calcStockVal').textContent = stockReturn.toLocaleString('de-DE') + ' €';
+  document.getElementById('calcTreeVal').textContent = totalReturn.toLocaleString('de-DE') + ' €';
+
+  document.getElementById('calcBarBank').style.width = bankWidth + '%';
+  document.getElementById('calcBarStock').style.width = stockWidth + '%';
+  document.getElementById('calcBarTree').style.width = treeWidth + '%';
+
+  document.getElementById('calcCO2').textContent = co2.toLocaleString('de-DE') + ' kg';
+  document.getElementById('calcO2').textContent = o2.toLocaleString('de-DE') + ' kg';
+
+  document.getElementById('calcCTAtext').textContent = trees.toLocaleString('de-DE') + ' Bäume jetzt sichern';
+}
+
+/* Initialize calculator */
+gcUpdateCalc(100);
+
+/* Pipedrive Lead Form Submission */
+function gcSubmitForm() {
+  var vorname = document.getElementById('gcVorname').value.trim();
+  var nachname = document.getElementById('gcNachname').value.trim();
+  var email = document.getElementById('gcEmail').value.trim();
+  var telefon = document.getElementById('gcTelefon').value.trim();
+  var paket = document.getElementById('gcPaket').value;
+  var persona = document.getElementById('gcPersona').value;
+  var quelle = document.getElementById('gcQuelle').value;
+  var nachricht = document.getElementById('gcNachricht').value.trim();
+
+  /* Validation */
+  if (!vorname || !nachname || !email || !paket) {
+    alert('Bitte füllen Sie alle Pflichtfelder aus (Vorname, Nachname, E-Mail, Anzahl Bäume).');
+    return;
+  }
+  if (email.indexOf('@') === -1 || email.indexOf('.') === -1) {
+    alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+    return;
+  }
+
+  var btn = document.getElementById('gcSubmitBtn');
+  btn.textContent = 'Wird gesendet...';
+  btn.disabled = true;
+  btn.style.opacity = '0.6';
+
+  /* ═══════════════════════════════════════════════════════
+     PIPEDRIVE API INTEGRATION
+     ═══════════════════════════════════════════════════════
+     Ersetze YOUR_PIPEDRIVE_API_TOKEN durch euren echten Token.
+     Den Token findest du in Pipedrive unter:
+     Einstellungen → Persönliche Einstellungen → API
+
+     WICHTIG: Für Produktion sollte der API-Call über euer
+     Backend (PHP/Node) laufen, nicht direkt aus dem Browser.
+     Für den Start/Test funktioniert es aber direkt.
+     ═══════════════════════════════════════════════════════ */
+
+  var PIPEDRIVE_TOKEN = 'YOUR_PIPEDRIVE_API_TOKEN';
+  var PIPEDRIVE_DOMAIN = 'YOUR_COMPANY'; /* z.B. greenchild */
+
+  /* Lead-Score berechnen */
+  var score = 0;
+  if (paket === '25-100') score += 10;
+  if (paket === '125-400') score += 25;
+  if (paket === '400+') score += 40;
+  if (telefon) score += 15;
+  if (persona === 'unternehmer') score += 10;
+  if (persona === 'freiberufler') score += 10;
+  if (quelle === 'empfehlung') score += 15;
+
+  /* Wenn kein API-Token gesetzt: Fallback auf E-Mail */
+  if (PIPEDRIVE_TOKEN === 'YOUR_PIPEDRIVE_API_TOKEN') {
+    /* Fallback: Mailto mit allen Daten */
+    var subject = 'Neue Baum-Anfrage: ' + vorname + ' ' + nachname + ' (' + paket + ' Bäume)';
+    var body = 'NEUE ANFRAGE ÜBER WEBSITE%0A%0A';
+    body += 'Name: ' + vorname + ' ' + nachname + '%0A';
+    body += 'E-Mail: ' + email + '%0A';
+    body += 'Telefon: ' + (telefon || 'nicht angegeben') + '%0A';
+    body += 'Paket: ' + paket + ' Bäume%0A';
+    body += 'Persona: ' + (persona || 'nicht angegeben') + '%0A';
+    body += 'Quelle: ' + (quelle || 'nicht angegeben') + '%0A';
+    body += 'Lead-Score: ' + score + '/100%0A';
+    body += 'Nachricht: ' + (nachricht || 'keine') + '%0A';
+
+    window.location.href = 'mailto:info' + '@' + 'greenchild.eu?subject=' + encodeURIComponent(subject) + '&body=' + body;
+
+    /* Erfolg anzeigen */
+    document.getElementById('gcFormFields').style.display = 'none';
+    document.getElementById('gcFormSuccess').classList.add('show');
+    return;
+  }
+
+  /* Pipedrive API: Person anlegen + Deal erstellen */
+  var personData = {
+    name: vorname + ' ' + nachname,
+    email: [{value: email, primary: true}],
+    phone: telefon ? [{value: telefon, primary: true}] : []
+  };
+
+  fetch('https://' + PIPEDRIVE_DOMAIN + '.pipedrive.com/api/v1/persons?api_token=' + PIPEDRIVE_TOKEN, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(personData)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(personResult) {
+    var personId = personResult.data.id;
+
+    var dealData = {
+      title: vorname + ' ' + nachname + ' - ' + paket + ' Bäume',
+      person_id: personId,
+      /* stage_id: DEINE_STAGE_ID, */
+    };
+
+    return fetch('https://' + PIPEDRIVE_DOMAIN + '.pipedrive.com/api/v1/deals?api_token=' + PIPEDRIVE_TOKEN, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(dealData)
+    });
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(dealResult) {
+    if (nachricht || persona || quelle) {
+      var noteContent = 'Persona: ' + (persona || '-') + ' | Quelle: ' + (quelle || '-') + ' | Score: ' + score + '/100';
+      if (nachricht) noteContent += ' | Nachricht: ' + nachricht;
+
+      return fetch('https://' + PIPEDRIVE_DOMAIN + '.pipedrive.com/api/v1/notes?api_token=' + PIPEDRIVE_TOKEN, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({deal_id: dealResult.data.id, content: noteContent})
+      });
+    }
+  })
+  .then(function() {
+    document.getElementById('gcFormFields').style.display = 'none';
+    document.getElementById('gcFormSuccess').classList.add('show');
+  })
+  .catch(function(err) {
+    btn.textContent = 'Unverbindlich anfragen →';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    alert('Es gab einen Fehler. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.');
+  });
+}
+</script>

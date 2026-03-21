@@ -1,0 +1,343 @@
+<!-- GREENCHILD — So funktioniert's · FAQ · Einwand-Behandlung -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+  :root {
+    --gc-green:#1B9E5A; --gc-green-dark:#147A45; --gc-green-light:#E8F7EF;
+    --gc-black:#0A0A0A; --gc-dark:#141414; --gc-gray-700:#444; --gc-gray-600:#666;
+    --gc-gray-400:#999; --gc-gray-200:#E0E0E0; --gc-gray-100:#F4F4F4;
+    --gc-offwhite:#FAFAF8; --gc-white:#FFFFFF;
+    --font-display:'Playfair Display',Georgia,serif;
+    --font-body:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+    --ease-expo:cubic-bezier(0.16,1,0.3,1); --ease-smooth:cubic-bezier(0.25,0.1,0.25,1);
+    --max-w:1200px; --section-pad:clamp(80px,10vw,140px);
+  }
+  .gc *{margin:0;padding:0;box-sizing:border-box}
+  .gc{font-family:var(--font-body);color:var(--gc-black);background:var(--gc-white);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .gc img{max-width:100%;height:auto;display:block} .gc a{text-decoration:none;color:inherit}
+
+  /* Nav (same as about page) */
+  .gc-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 clamp(20px,4vw,60px);height:72px;display:flex;align-items:center;justify-content:space-between;transition:all 0.5s var(--ease-smooth);background:rgba(255,255,255,0.78);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid rgba(0,0,0,0.05);box-shadow:0 1px 24px rgba(0,0,0,0.04)}
+  .gc-nav__logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:-0.02em}
+  .gc-nav__logo-dot{width:30px;height:30px;background:var(--gc-green);border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .gc-nav__logo-dot::after{content:'';width:9px;height:9px;border:2px solid var(--gc-white);border-radius:50%}
+  .gc-nav__links{display:flex;align-items:center;gap:32px;list-style:none}
+  .gc-nav__links a{font-size:13.5px;font-weight:500;color:var(--gc-gray-600);transition:color 0.3s}
+  .gc-nav__links a:hover,.gc-nav__links a.active{color:var(--gc-black);font-weight:600}
+  .gc-nav__cta-btn{font-family:var(--font-body);font-size:13px;font-weight:600;padding:10px 24px;background:var(--gc-black);color:var(--gc-white);border-radius:100px;border:none;cursor:pointer;transition:all 0.3s var(--ease-smooth)}
+  .gc-nav__cta-btn:hover{background:var(--gc-green);box-shadow:0 4px 20px rgba(27,158,90,0.3)}
+  .gc-nav__burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+  .gc-nav__burger span{width:22px;height:1.5px;background:var(--gc-black)}
+  .gc-nav__mobile-menu{display:none;position:fixed;inset:0;z-index:999;background:rgba(255,255,255,0.97);backdrop-filter:blur(24px);flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;pointer-events:none;transition:opacity 0.35s}
+  .gc-nav__mobile-menu.open{display:flex;opacity:1;pointer-events:all}
+  .gc-nav__mobile-menu a{font-size:22px;font-weight:600;color:var(--gc-black)}
+  .gc-nav__mobile-close{position:absolute;top:24px;right:24px;background:none;border:none;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center}
+  .gc-nav__mobile-close svg{width:24px;height:24px;stroke:var(--gc-black);stroke-width:2}
+
+  /* Shared */
+  .gc-section{padding:var(--section-pad) clamp(24px,6vw,80px)}
+  .gc-section__inner{max-width:var(--max-w);margin:0 auto}
+  .gc-eyebrow{font-size:11.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gc-green);margin-bottom:14px}
+  .gc-heading{font-family:var(--font-display);font-weight:500;font-size:clamp(30px,4.5vw,54px);letter-spacing:-0.03em;line-height:1.1;color:var(--gc-black)}
+  .gc-subtext{font-size:clamp(15px,1.6vw,18px);color:var(--gc-gray-600);line-height:1.7;margin-top:18px}
+  .gc-page-hero{padding:140px clamp(24px,6vw,80px) clamp(60px,8vw,100px);text-align:center;background:linear-gradient(180deg,var(--gc-green-light) 0%,var(--gc-white) 100%)}
+  .gc-page-hero .gc-heading{max-width:700px;margin:0 auto}
+  .gc-page-hero .gc-subtext{max-width:560px;margin:18px auto 0}
+  .gc-page-hero em{font-style:italic;color:var(--gc-green)}
+
+  /* Steps */
+  .gc-steps{background:var(--gc-white)}
+  .gc-steps__head{text-align:center;margin-bottom:64px}
+  .gc-steps__head .gc-heading{max-width:600px;margin:0 auto}
+  .gc-steps__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .gc-step{background:var(--gc-gray-100);border-radius:24px;padding:clamp(28px,3vw,40px);position:relative;transition:all 0.35s var(--ease-smooth)}
+  .gc-step:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,0.06)}
+  .gc-step__num{font-family:var(--font-display);font-size:48px;font-weight:400;color:var(--gc-green-light);line-height:1;margin-bottom:16px;letter-spacing:-0.04em}
+  .gc-step__title{font-size:18px;font-weight:700;color:var(--gc-black);margin-bottom:8px}
+  .gc-step__text{font-size:14px;color:var(--gc-gray-600);line-height:1.65}
+  .gc-step__connector{display:none}
+
+  /* Lifecycle visual */
+  .gc-lifecycle{background:var(--gc-dark);color:var(--gc-white);position:relative;overflow:hidden}
+  .gc-lifecycle::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(27,158,90,0.1) 0%,transparent 60%)}
+  .gc-lifecycle__inner{max-width:var(--max-w);margin:0 auto;position:relative}
+  .gc-lifecycle__head{text-align:center;margin-bottom:56px}
+  .gc-lifecycle__head .gc-heading{color:var(--gc-white)}
+  .gc-lifecycle__head .gc-subtext{color:rgba(255,255,255,0.5);max-width:560px;margin:18px auto 0}
+  .gc-lifecycle__phases{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+  .gc-phase{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:clamp(20px,2.5vw,32px);text-align:center}
+  .gc-phase__period{font-size:12px;font-weight:700;color:var(--gc-green);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px}
+  .gc-phase__icon{font-size:32px;margin-bottom:12px}
+  .gc-phase__icon svg{width:32px;height:32px;stroke:var(--gc-green);fill:none;stroke-width:1.5;margin:0 auto}
+  .gc-phase__title{font-size:16px;font-weight:700;color:var(--gc-white);margin-bottom:6px}
+  .gc-phase__text{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.6}
+
+  /* FAQ */
+  .gc-faq{background:var(--gc-gray-100)}
+  .gc-faq__head{text-align:center;margin-bottom:56px}
+  .gc-faq__head .gc-heading{max-width:600px;margin:0 auto}
+  .gc-faq__list{max-width:800px;margin:0 auto}
+  .gc-faq__item{background:var(--gc-white);border-radius:16px;margin-bottom:12px;overflow:hidden;border:1px solid rgba(0,0,0,0.04);transition:all 0.3s var(--ease-smooth)}
+  .gc-faq__item:hover{box-shadow:0 4px 20px rgba(0,0,0,0.04)}
+  .gc-faq__question{width:100%;text-align:left;padding:20px 24px;font-family:var(--font-body);font-size:16px;font-weight:600;color:var(--gc-black);background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;line-height:1.4}
+  .gc-faq__toggle{width:24px;height:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--gc-gray-100);transition:all 0.3s}
+  .gc-faq__toggle svg{width:14px;height:14px;stroke:var(--gc-gray-600);fill:none;stroke-width:2.5;transition:transform 0.3s var(--ease-expo)}
+  .gc-faq__answer{max-height:0;overflow:hidden;transition:max-height 0.4s var(--ease-expo)}
+  .gc-faq__answer-inner{padding:0 24px 20px;font-size:15px;color:var(--gc-gray-600);line-height:1.7}
+  .gc-faq__item.open .gc-faq__toggle{background:var(--gc-green)}
+  .gc-faq__item.open .gc-faq__toggle svg{stroke:var(--gc-white);transform:rotate(180deg)}
+  .gc-faq__item.open .gc-faq__answer{max-height:400px}
+
+  /* CTA Banner */
+  .gc-cta-banner{background:var(--gc-green);text-align:center;padding:clamp(60px,8vw,100px) clamp(24px,6vw,80px);position:relative;overflow:hidden}
+  .gc-cta-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(255,255,255,0.06) 0%,transparent 60%)}
+  .gc-cta-banner__heading{font-family:var(--font-display);font-size:clamp(28px,4vw,44px);font-weight:500;color:var(--gc-white);letter-spacing:-0.03em;max-width:600px;margin:0 auto 24px;position:relative}
+  .gc-cta-banner__actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative}
+  .gc-btn--white{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-body);font-size:15px;font-weight:600;padding:16px 36px;border-radius:100px;border:none;cursor:pointer;background:var(--gc-white);color:var(--gc-green-dark);box-shadow:0 2px 20px rgba(0,0,0,0.1);transition:all 0.35s var(--ease-smooth)}
+  .gc-btn--white:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(0,0,0,0.15)}
+  .gc-btn--ghost-w{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-body);font-size:15px;font-weight:600;padding:16px 36px;border-radius:100px;cursor:pointer;background:transparent;color:var(--gc-white);border:1.5px solid rgba(255,255,255,0.3);transition:all 0.35s var(--ease-smooth)}
+  .gc-btn--ghost-w:hover{border-color:var(--gc-white);transform:translateY(-2px)}
+  .gc-btn__arr{transition:transform 0.3s var(--ease-expo);font-size:18px}
+
+  /* Footer */
+  .gc-footer{background:var(--gc-black);color:rgba(255,255,255,0.45);padding:48px clamp(24px,6vw,80px)}
+  .gc-footer__inner{max-width:var(--max-w);margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+  .gc-footer__brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;color:rgba(255,255,255,0.6)}
+  .gc-footer__brand-dot{width:22px;height:22px;background:var(--gc-green);border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .gc-footer__brand-dot::after{content:'';width:7px;height:7px;border:1.5px solid var(--gc-white);border-radius:50%}
+  .gc-footer__copy{font-size:12.5px}
+  .gc-footer__links{display:flex;gap:24px;list-style:none}
+  .gc-footer__links a{font-size:12.5px;color:rgba(255,255,255,0.35);transition:color 0.3s}
+  .gc-footer__links a:hover{color:var(--gc-green)}
+
+  @media(max-width:1024px){
+    .gc-steps__grid{grid-template-columns:repeat(2,1fr)}
+    .gc-lifecycle__phases{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:768px){
+    .gc-nav{height:64px;padding:0 16px} .gc-nav__logo{font-size:17px} .gc-nav__logo img{height:28px!important}
+    .gc-nav__cta-btn{font-size:12px;padding:8px 18px}
+    .gc-section{padding:60px 20px} .gc-heading{font-size:clamp(26px,7vw,36px)} .gc-subtext{font-size:15px}
+    .gc-page-hero{padding:100px 20px 48px}
+    .gc-footer__inner{flex-direction:column;text-align:center} .gc-footer__links{justify-content:center}
+    .gc-btn--white,.gc-btn--ghost-w{width:100%;justify-content:center;min-height:52px}
+    .gc .gc-form-input,.gc .gc-form-select{font-size:16px}
+    .gc-nav__links{display:none} .gc-nav__burger{display:flex}
+    .gc-steps__grid{grid-template-columns:1fr}
+    .gc-lifecycle__phases{grid-template-columns:1fr}
+    .gc-cta-banner__actions{flex-direction:column;align-items:center}
+  }
+</style>
+
+<div class="gc">
+
+  <!-- Nav -->
+  <nav class="gc-nav">
+    <a href="/" class="gc-nav__logo"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;width:auto;"> greenchild</a>
+    <ul class="gc-nav__links">
+      <li><a href="/">Startseite</a></li>
+      <li><a href="/ueber-uns">Über uns</a></li>
+      <li><a href="/so-funktionierts" class="active">So funktioniert's</a></li>
+      <li><a href="/kontakt">Kontakt</a></li>
+    </ul>
+    <a href="/#leadform" class="gc-nav__cta-btn">Jetzt anfragen</a>
+    <button class="gc-nav__burger" aria-label="Menü" onclick="document.getElementById('gcMobileMenu').classList.add('open')"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="gc-nav__mobile-menu" id="gcMobileMenu">
+    <button class="gc-nav__mobile-close" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <a href="/" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">Startseite</a>
+    <a href="/ueber-uns" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">Über uns</a>
+    <a href="/so-funktionierts" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">So funktioniert's</a>
+    <a href="/kontakt" onclick="document.getElementById('gcMobileMenu').classList.remove('open')">Kontakt</a>
+    <a href="/#leadform" onclick="document.getElementById('gcMobileMenu').classList.remove('open')" style="color:#1B9E5A;font-weight:700;">Jetzt anfragen</a>
+  </div>
+
+  <!-- ════════ PAGE HERO ════════ -->
+  <section class="gc-page-hero">
+    <div class="gc-eyebrow">So funktioniert's</div>
+    <h1 class="gc-heading">Vom Klick zum <em>Baumbesitzer.</em><br>In vier einfachen Schritten.</h1>
+    <p class="gc-subtext">Kein Fachwissen nötig. Kein Aufwand für Sie. Sie kaufen die Bäume — wir kümmern uns um alles andere. Hier erfahren Sie genau, wie das funktioniert.</p>
+  </section>
+
+  <!-- ════════ 4 STEPS ════════ -->
+  <section class="gc-section gc-steps">
+    <div class="gc-section__inner">
+      <div class="gc-steps__grid">
+        <div class="gc-step">
+          <div class="gc-step__num">01</div>
+          <h3 class="gc-step__title">Baum-Set wählen</h3>
+          <p class="gc-step__text">Wählen Sie zwischen Basic (25–100 Bäume), Premium (125–400) oder Business (425+). Je mehr Bäume, desto höher der Rabatt — bis zu 10 %. Nutzen Sie unseren Renditerechner, um Ihr Investment vorab zu kalkulieren.</p>
+        </div>
+        <div class="gc-step">
+          <div class="gc-step__num">02</div>
+          <h3 class="gc-step__title">Vertrag & Zertifikat</h3>
+          <p class="gc-step__text">Nach Ihrer Anfrage erhalten Sie einen persönlichen Kaufvertrag. Mit der Unterschrift werden Sie rechtlicher Eigentümer der Bäume. Sie erhalten ein individuelles Baumzertifikat mit GPS-Koordinaten Ihrer Parzelle.</p>
+        </div>
+        <div class="gc-step">
+          <div class="gc-step__num">03</div>
+          <h3 class="gc-step__title">Wir pflegen — Sie warten</h3>
+          <p class="gc-step__text">Unser Expertenteam vor Ort übernimmt die gesamte Pflege: Bewässerung, Düngung, Beschnitt, Schädlingskontrolle. Sie erhalten regelmäßige Updates über den Zustand Ihrer Bäume. Besuche auf der Plantage sind jederzeit willkommen.</p>
+        </div>
+        <div class="gc-step">
+          <div class="gc-step__num">04</div>
+          <h3 class="gc-step__title">Ernte & Ertrag</h3>
+          <p class="gc-step__text">Nach 8–12 Jahren wird das Edelholz geerntet und am Weltmarkt verkauft. Sie erhalten Ihren anteiligen Erlös. Zwischen Ernte und Enderlös profitieren Sie zusätzlich von Honig- und Biomasse-Einnahmen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ LIFECYCLE ════════ -->
+  <section class="gc-section gc-lifecycle">
+    <div class="gc-lifecycle__inner">
+      <div class="gc-lifecycle__head">
+        <div class="gc-eyebrow" style="color:var(--gc-green)">Der Lebenszyklus</div>
+        <h2 class="gc-heading">12 Jahre. Drei Ernten. Vier Einnahmequellen.</h2>
+        <p class="gc-subtext">Ihr Baum verdient ab dem dritten Jahr — lange bevor die Haupternte stattfindet.</p>
+      </div>
+      <div class="gc-lifecycle__phases">
+        <div class="gc-phase">
+          <div class="gc-phase__period">Jahr 1–2</div>
+          <div class="gc-phase__icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M12 20v-8"/><path d="M12 12c-2 0-4-2-4-4.5S10 3 12 3s4 2 4 4.5-2 4.5-4 4.5z"/></svg></div>
+          <div class="gc-phase__title">Wachstum</div>
+          <div class="gc-phase__text">Die Setzlinge werden in Gewächshäusern aufgezogen und auf die Plantage übertragen. Regelmäßige Bewässerung und Pflege. Bis zu 5 Meter Wachstum pro Jahr.</div>
+        </div>
+        <div class="gc-phase">
+          <div class="gc-phase__period">Ab Jahr 3</div>
+          <div class="gc-phase__icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div>
+          <div class="gc-phase__title">Honigproduktion</div>
+          <div class="gc-phase__text">Die violetten Blüten erscheinen. Bienenvölker produzieren hochwertigen Monofloral-Honig. Ca. 550 kg pro Hektar und Jahr. Erste Einnahmen für Ihre Investition.</div>
+        </div>
+        <div class="gc-phase">
+          <div class="gc-phase__period">Jahr 6</div>
+          <div class="gc-phase__icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+          <div class="gc-phase__title">Biomasse-Ernte</div>
+          <div class="gc-phase__text">50 % der Bäume werden gefällt und zu Pellets verarbeitet. Der Wurzelstock wird verkauft (150–200 € pro Wurzel). Die restlichen Bäume bekommen Platz für die Endreife.</div>
+        </div>
+        <div class="gc-phase">
+          <div class="gc-phase__period">Jahr 8–12</div>
+          <div class="gc-phase__icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></div>
+          <div class="gc-phase__title">Edelholz-Ernte</div>
+          <div class="gc-phase__text">Die Bäume erreichen 20 m Höhe und 40–50 cm Stammdurchmesser. Das Holz wird getrocknet, verarbeitet und als hochwertiges Hartholz auf dem Weltmarkt verkauft. Ihre Hauptrendite.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FAQ ════════ -->
+  <section class="gc-section gc-faq">
+    <div class="gc-section__inner">
+      <div class="gc-faq__head">
+        <div class="gc-eyebrow">Häufige Fragen</div>
+        <h2 class="gc-heading">Alles, was Investoren wissen wollen.</h2>
+      </div>
+      <div class="gc-faq__list">
+
+        <div class="gc-faq__item">
+          <button class="gc-faq__question" onclick="this.parentElement.classList.toggle('open')">
+            Bin ich wirklich Eigentümer der Bäume?
+            <span class="gc-faq__toggle"><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </button>
+          <div class="gc-faq__answer"><div class="gc-faq__answer-inner">
+            Ja. Mit dem Kaufvertrag werden Sie rechtlicher Eigentümer der Paulownia-Bäume. Sie erhalten ein persönliches Baumzertifikat mit der genauen Lage Ihrer Parzelle (GPS-Koordinaten). Sie können Ihre Bäume jederzeit weiterverkaufen — das Eigentumsrecht ist übertragbar.
+          </div></div>
+        </div>
+
+        <div class="gc-faq__item">
+          <button class="gc-faq__question" onclick="this.parentElement.classList.toggle('open')">
+            Fallen nach dem Kauf weitere Kosten an?
+            <span class="gc-faq__toggle"><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </button>
+          <div class="gc-faq__answer"><div class="gc-faq__answer-inner">
+            Nein. Der Kaufpreis deckt sämtliche Kosten: Pacht des Ackerlands, Pflanzung, Bewässerung, Düngung, Beschnitt, Schädlingskontrolle, Ernte und Verarbeitung. Es gibt keine versteckten Gebühren und keine laufenden Kosten für Sie.
+          </div></div>
+        </div>
+
+        <div class="gc-faq__item">
+          <button class="gc-faq__question" onclick="this.parentElement.classList.toggle('open')">
+            Was passiert, wenn die Bäume durch Unwetter oder Schädlinge beschädigt werden?
+            <span class="gc-faq__toggle"><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </button>
+          <div class="gc-faq__answer"><div class="gc-faq__answer-inner">
+            Der Paulownia-Baum ist von Natur aus sehr widerstandsfähig gegen Insekten (hoher Tanningehalt) und tolerant gegenüber Trockenheit (tiefes Wurzelsystem bis 6 Meter). Grundsätzlich lassen sich Naturkatastrophen nie vollständig ausschließen — aber durch die firmeneigene Fläche, die professionelle Pflege und die natürliche Robustheit des Baums ist das Risiko vergleichsweise gering. Zudem regeneriert der Paulownia nach Beschädigung aus dem Wurzelsystem.
+          </div></div>
+        </div>
+
+        <div class="gc-faq__item">
+          <button class="gc-faq__question" onclick="this.parentElement.classList.toggle('open')">
+            Kann ich meine Bäume vor der Ernte verkaufen?
+            <span class="gc-faq__toggle"><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </button>
+          <div class="gc-faq__answer"><div class="gc-faq__answer-inner">
+            Ja. Wenn Sie Ihr Baumzertifikat besitzen, können Sie Ihre Bäume jederzeit verkaufen — auch vor der Ernte. Ein Sachverständiger besucht die Plantage, misst Ihre Bäume, ermittelt den aktuellen Holzpreis pro Kubikmeter und berechnet den aktuellen Wert. Da der Baum biologisch wächst, steigt sein Wert kontinuierlich.
+          </div></div>
+        </div>
+
+        <div class="gc-faq__item">
+          <button class="gc-faq__question" onclick="this.parentElement.classList.toggle('open')">
+            Wem gehört das Land, auf dem die Bäume stehen?
+            <span class="gc-faq__toggle"><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </button>
+          <div class="gc-faq__answer"><div class="gc-faq__answer-inner">
+            Das Land gehört der Greenchild Group. Es wird nicht gepachtet — es ist firmeneigenes Eigentum. Das eliminiert das Risiko, dass ein Dritter (Landverpächter) den Betrieb beeinflussen kann. Sie kaufen die Bäume und erhalten eine Pacht auf die entsprechende Anbaufläche, die im Kaufpreis enthalten ist.
+          </div></div>
+        </div>
+
+        <div class="gc-faq__item">
+          <button class="gc-faq__question" onclick="this.parentElement.classList.toggle('open')">
+            Ist das ein Finanzprodukt?
+            <span class="gc-faq__toggle"><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </button>
+          <div class="gc-faq__answer"><div class="gc-faq__answer-inner">
+            Nein. Der Paulownia-Baum ist kein Finanzprodukt. Sein Wert ist an die physische Größe des Baums und die Qualität seines Holzes gebunden — nicht an Börsen, Fonds oder Zinspolitik. Es handelt sich um einen Sachwert, vergleichbar mit dem Kauf einer Immobilie oder eines Grundstücks. In vielen Ländern sind Kapitalgewinne aus Agroforestry-Investments steuerlich begünstigt — fragen Sie Ihren Steuerberater.
+          </div></div>
+        </div>
+
+        <div class="gc-faq__item">
+          <button class="gc-faq__question" onclick="this.parentElement.classList.toggle('open')">
+            Wie sicher sind die prognostizierten Renditen?
+            <span class="gc-faq__toggle"><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </button>
+          <div class="gc-faq__answer"><div class="gc-faq__answer-inner">
+            Alle Prognosen basieren auf konservativen Schätzungen: niedrig angesetzte Honigausbeute, konstante (nicht steigende) Holzpreise, und etablierte Wachstumsdaten aus über 15 Jahren Erfahrung. Die tatsächlichen Erträge könnten höher ausfallen, da wir steigende Holzpreise und zunehmende Honigausbeute bei wachsenden Bäumen nicht eingerechnet haben. Dennoch: Es handelt sich um Prognosen — keine garantierten Renditen.
+          </div></div>
+        </div>
+
+        <div class="gc-faq__item">
+          <button class="gc-faq__question" onclick="this.parentElement.classList.toggle('open')">
+            Kann ich die Plantage besuchen?
+            <span class="gc-faq__toggle"><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </button>
+          <div class="gc-faq__answer"><div class="gc-faq__answer-inner">
+            Selbstverständlich. Wir laden jeden Interessenten und Baumbesitzer herzlich ein, die Phoenix One Plantage in Ferizaj persönlich zu besuchen. Business-Kunden (425+ Bäume) erhalten einen Reisegutschein inklusive Flug und Hotel. Die Plantage wird außerdem per Video überwacht — auf Anfrage erhalten Sie Zugang zu den Live-Aufnahmen.
+          </div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CTA BANNER ════════ -->
+  <section class="gc-cta-banner">
+    <h2 class="gc-cta-banner__heading">Noch Fragen? Oder bereit zu investieren?</h2>
+    <div class="gc-cta-banner__actions">
+      <a href="/#leadform" class="gc-btn--white">Unverbindlich anfragen <span class="gc-btn__arr">→</span></a>
+      <a href="/#rechner" class="gc-btn--ghost-w">Rendite berechnen</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="gc-footer">
+    <div class="gc-footer__inner">
+      <div class="gc-footer__brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:22px;width:auto;filter:brightness(10);"> greenchild</div>
+      <div class="gc-footer__copy">© 2026 Greenchild Group LLC · Ferizaj, Kosovo · London, UK</div>
+      <ul class="gc-footer__links">
+        <li><a href="#">Impressum</a></li>
+        <li><a href="#">Datenschutz</a></li>
+        <li><a href="/kontakt">Kontakt</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</div>
