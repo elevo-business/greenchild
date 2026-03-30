@@ -409,7 +409,7 @@
   .gc-wood__card-svg { display:inline-flex; align-items:center; margin-right:2px; }
   .gc-wood__card-text { font-size:14px; color:rgba(255,255,255,0.5); line-height:1.7; }
   .gc-wood__img-row {
-    margin-top:56px; display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+    margin-top:56px; display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
   }
   .gc-wood__img-item {
     border-radius:16px; overflow:hidden; position:relative;
@@ -1023,7 +1023,67 @@
   .gc-faq__item.open .gc-faq__toggle svg{stroke:var(--gc-white);transform:rotate(180deg)}
   .gc-faq__item.open .gc-faq__answer{max-height:400px}
 
-  /* ── Responsive ── */
+  /* ══════════════════════
+     WHATSAPP WIDGET
+     ══════════════════════ */
+  .gc-whatsapp {
+    position:fixed; bottom:24px; right:24px; z-index:900;
+    display:flex; flex-direction:column; align-items:flex-end; gap:10px;
+  }
+  .gc-whatsapp__tooltip {
+    background:var(--gc-white); color:var(--gc-black); padding:10px 16px;
+    border-radius:12px 12px 0 12px; box-shadow:0 4px 24px rgba(0,0,0,0.12);
+    font-size:13px; font-weight:500; line-height:1.4;
+    opacity:0; transform:translateY(8px); pointer-events:none;
+    transition: all 0.35s var(--ease-expo);
+    max-width:220px;
+  }
+  .gc-whatsapp:hover .gc-whatsapp__tooltip { opacity:1; transform:translateY(0); pointer-events:all; }
+  .gc-whatsapp__btn {
+    width:60px; height:60px; border-radius:50%; border:none; cursor:pointer;
+    background:#25D366; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 20px rgba(37,211,102,0.4);
+    transition: all 0.3s var(--ease-smooth);
+    animation: gcWaPulse 3s ease-in-out infinite;
+  }
+  .gc-whatsapp__btn:hover {
+    transform:scale(1.08); box-shadow:0 6px 32px rgba(37,211,102,0.5);
+    animation:none;
+  }
+  .gc-whatsapp__btn svg { width:28px; height:28px; fill:var(--gc-white); }
+  @keyframes gcWaPulse {
+    0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.4)}
+    50%{box-shadow:0 4px 32px rgba(37,211,102,0.6)}
+  }
+
+  /* ══════════════════════
+     PREMIUM TRUST BAR (Google Ads)
+     ══════════════════════ */
+  .gc-trust-bar {
+    background:var(--gc-dark); padding:14px clamp(20px,4vw,60px);
+    display:flex; justify-content:center; align-items:center;
+    gap:clamp(16px,3vw,40px); flex-wrap:wrap;
+  }
+  .gc-trust-bar__item {
+    display:flex; align-items:center; gap:8px;
+    font-size:12px; color:rgba(255,255,255,0.5); font-weight:500;
+    letter-spacing:0.02em;
+  }
+  .gc-trust-bar__item svg {
+    width:16px; height:16px; stroke:var(--gc-green); fill:none; stroke-width:2;
+  }
+
+  /* ══════════════════════
+     EU BADGE (Social Proof)
+     ══════════════════════ */
+  .gc-eu-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:6px 16px; border-radius:100px;
+    background:rgba(27,158,90,0.08); border:1px solid rgba(27,158,90,0.15);
+    font-size:12px; font-weight:600; color:var(--gc-green);
+    margin-top:16px; letter-spacing:0.02em;
+  }
+  .gc-eu-badge svg { width:14px; height:14px; stroke:var(--gc-green); fill:none; stroke-width:2; }
   @media(max-width:1024px){
     .gc-hero__inner { grid-template-columns:1fr; text-align:center; }
     .gc-hero__sub { margin-left:auto; margin-right:auto; }
@@ -1189,6 +1249,19 @@
     /* Safe area für iPhone notch */
     .gc-nav { padding-left:max(16px, env(safe-area-inset-left)); padding-right:max(16px, env(safe-area-inset-right)); }
     .gc-footer { padding-bottom:max(48px, calc(48px + env(safe-area-inset-bottom))); }
+
+    /* WhatsApp: kleiner auf Mobile, safe area */
+    .gc-whatsapp { bottom:max(20px, calc(16px + env(safe-area-inset-bottom))); right:16px; }
+    .gc-whatsapp__btn { width:54px; height:54px; }
+    .gc-whatsapp__btn svg { width:24px; height:24px; }
+    .gc-whatsapp__tooltip { display:none; }
+
+    /* Trust bar: scrollbar */
+    .gc-trust-bar { gap:12px; padding:12px 16px; justify-content:flex-start; overflow-x:auto; flex-wrap:nowrap; -webkit-overflow-scrolling:touch; }
+    .gc-trust-bar__item { white-space:nowrap; font-size:11px; flex-shrink:0; }
+
+    /* Wood image grid: 2 columns on mobile */
+    .gc-wood__img-row { grid-template-columns:repeat(2,1fr); }
   }
   @media(max-width:480px){
     .gc-hero__actions { flex-direction:column; align-items:center; }
@@ -1238,6 +1311,30 @@
     <a href="#leadform" onclick="document.getElementById('gcMobileMenu').classList.remove('open')" style="color:#1B9E5A;font-weight:700;">Jetzt anfragen</a>
   </div>
 
+  <!-- ════════ TRUST BAR (Google Ads Quality Signal) ════════ -->
+  <div class="gc-trust-bar">
+    <div class="gc-trust-bar__item">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      250 Hektar firmeneigenes Land
+    </div>
+    <div class="gc-trust-bar__item">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>
+      200.000 Paulownia-Bäume
+    </div>
+    <div class="gc-trust-bar__item">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>
+      Eine der größten Plantagen der EU
+    </div>
+    <div class="gc-trust-bar__item">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>
+      Seit 2009 · Über 15 Jahre Erfahrung
+    </div>
+    <div class="gc-trust-bar__item">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/></svg>
+      100+ zufriedene Investoren
+    </div>
+  </div>
+
   <!-- ════════ HERO ════════ -->
   <section class="gc-hero">
     <div class="gc-hero__bg"></div>
@@ -1249,8 +1346,12 @@
         </div>
         <h1 class="gc-hero__title">Ihr Vermögen wächst.<br><em>Natürlich.</em></h1>
         <p class="gc-hero__sub">
-          Paulownia-Bäume vereinen das schnellste Edelholz-Wachstum der Welt mit messbarer Klimawirkung. Werden Sie Eigentümer — wir kümmern uns um den Rest.
+          Paulownia-Bäume vereinen das schnellste Edelholz-Wachstum der Welt mit messbarer Klimawirkung. Werden Sie Eigentümer auf einer der größten Paulownia-Plantagen der EU — wir kümmern uns um den Rest.
         </p>
+        <div class="gc-eu-badge">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>
+          EU New European Bauhaus — Finalist
+        </div>
         <div class="gc-hero__actions">
           <button class="gc-btn gc-btn--green" onclick="document.getElementById('rechner').scrollIntoView({behavior:'smooth'})">
             Rendite berechnen <span class="gc-btn__arr">→</span>
@@ -1280,19 +1381,19 @@
   <div class="gc-stats-bar gc-reveal">
     <div class="gc-stats-bar__inner">
       <div class="gc-stats-bar__item">
-        <div class="gc-stats-bar__num">121.000</div>
+        <div class="gc-stats-bar__num">200.000</div>
         <div class="gc-stats-bar__label">Paulownia-Bäume</div>
       </div>
       <div class="gc-stats-bar__item">
-        <div class="gc-stats-bar__num">85 ha</div>
+        <div class="gc-stats-bar__num">250 ha</div>
         <div class="gc-stats-bar__label">Plantagen-Fläche</div>
       </div>
       <div class="gc-stats-bar__item">
-        <div class="gc-stats-bar__num">1,1 Mio.</div>
+        <div class="gc-stats-bar__num">4,4 Mio.</div>
         <div class="gc-stats-bar__label">kg CO₂ absorbiert / Jahr</div>
       </div>
       <div class="gc-stats-bar__item">
-        <div class="gc-stats-bar__num">30.000</div>
+        <div class="gc-stats-bar__num">137.000</div>
         <div class="gc-stats-bar__label">kg Honig / Jahr</div>
       </div>
     </div>
@@ -1312,7 +1413,7 @@
           <div class="gc-eyebrow">Unsere Geschichte</div>
           <h2 class="gc-heading">2009 entdeckten wir das Potential des Paulownia-Baums.</h2>
           <p class="gc-subtext">
-            Was als Experiment auf vier Hektar begann, ist heute eine der größten Paulownia-Plantagen Europas. Auf 85 Hektar in Ferizaj (Kosovo) wachsen 121.000 Bäume unter idealen klimatischen Bedingungen — gepflegt von unserem Expertenteam, bewässert durch zwei eigene Wasserbecken, auf firmeneigenem Land.
+            Was als Experiment auf vier Hektar begann, ist heute eine der größten privaten Paulownia-Plantagen der Europäischen Union. Auf 250 Hektar in Ferizaj (Kosovo) wachsen 200.000 Bäume unter idealen klimatischen Bedingungen — gepflegt von unserem Expertenteam, bewässert durch eigene Wasserbecken, auf firmeneigenem Land.
           </p>
           <ul class="gc-about__list">
             <li>
@@ -1329,7 +1430,7 @@
             </li>
             <li>
               <span class="gc-about__check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span>
-              Drei Ertragsquellen: Honig, Biomasse und Edelholz
+              Drei Ertragsquellen: Honig, Pellets und Edelholz
             </li>
           </ul>
         </div>
@@ -1365,7 +1466,7 @@
             <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13C4 6 11 2 11 2s7 4 7 11a7 7 0 0 1-7 7z"/><path d="M11 20V8"/><path d="M7 14c1.5-1 3-1.5 4-1.5"/><path d="M15 11.5c-1.5.5-3 1-4 1.5"/></svg>
           </div>
           <h3 class="gc-fcard__title">22 kg CO₂ pro Baum</h3>
-          <p class="gc-fcard__text">Jeder Paulownia absorbiert jährlich ca. 22 kg CO₂ und setzt 6 kg Sauerstoff frei — zehnmal mehr als andere Baumarten. Unsere 121.000 Bäume absorbieren 1,1 Millionen kg CO₂ jedes Jahr.</p>
+          <p class="gc-fcard__text">Jeder Paulownia absorbiert jährlich ca. 22 kg CO₂ und setzt 6 kg Sauerstoff frei — zehnmal mehr als andere Baumarten. Unsere 200.000 Bäume absorbieren 4,4 Millionen kg CO₂ jedes Jahr.</p>
         </div>
         <div class="gc-fcard gc-reveal d1">
           <div class="gc-fcard__icon">
@@ -1398,7 +1499,7 @@
       <div class="gc-revenue__header gc-reveal" style="text-align:center;margin-bottom:72px;">
         <div class="gc-eyebrow">Drei Ertragsquellen</div>
         <h2 class="gc-heading" style="max-width:700px;margin:0 auto;">Ihr Baum verdient auf drei Wegen gleichzeitig.</h2>
-        <p class="gc-subtext" style="max-width:560px;margin:18px auto 0;">Honig ab dem dritten Jahr. Biomasse ab dem sechsten. Edelholz nach zwölf Jahren. Dazu kommen die Wurzeln als vierte Einnahmequelle.</p>
+        <p class="gc-subtext" style="max-width:560px;margin:18px auto 0;">Honig ab dem dritten Jahr. Pellets ab dem sechsten. Edelholz nach zwölf Jahren. Dazu kommen die Wurzeln als vierte Einnahmequelle.</p>
       </div>
 
       <!-- Honig -->
@@ -1414,7 +1515,7 @@
           <div class="gc-eyebrow">Einnahmequelle 1</div>
           <h3 class="gc-heading" style="font-size:clamp(26px,3.5vw,40px);">Paulownia-Honig</h3>
           <p class="gc-subtext">
-            Die aromatischen Lavendelblüten des Paulownia-Baums ziehen Bienenvölker an und liefern einen Monofloral-Honig höchster Qualität. Mit fünf Bienenvölkern und ca. 550 kg Honig pro Hektar entstehen jährlich rund 30.000 kg feinster Bio-Honig. Der Großteil wird lokal verkauft, der Rest geht auf den internationalen Markt.
+            Die aromatischen Lavendelblüten des Paulownia-Baums ziehen Bienenvölker an und liefern einen Monofloral-Honig höchster Qualität. Mit fünf Bienenvölkern und ca. 550 kg Honig pro Hektar entstehen jährlich rund 137.000 kg feinster Bio-Honig. Der Großteil wird lokal verkauft, der Rest geht auf den internationalen Markt.
           </p>
           <div class="gc-revenue__kpi">
             <div>
@@ -1429,29 +1530,29 @@
         </div>
       </div>
 
-      <!-- Biomasse -->
+      <!-- Pellets -->
       <div class="gc-revenue__row reverse gc-reveal">
         <div class="gc-revenue__img-wrap">
           <img class="gc-revenue__img"
                src="https://greenchild.eu/wp-content/uploads/2025/07/Copy-of-9X1A8602-1024x683.jpg"
-               alt="Biomasse – Nachhaltige Energiequelle aus Paulownia"
+               alt="Pelletproduktion aus Paulownia-Holz"
                loading="lazy">
           <div class="gc-revenue__tag">Jahr 6</div>
         </div>
         <div class="gc-revenue__text">
           <div class="gc-eyebrow">Einnahmequelle 2</div>
-          <h3 class="gc-heading" style="font-size:clamp(26px,3.5vw,40px);">Biomasse & Pellets</h3>
+          <h3 class="gc-heading" style="font-size:clamp(26px,3.5vw,40px);">Pellets — nachhaltige Energie</h3>
           <p class="gc-subtext">
-            Im sechsten Jahr wird die Hälfte der Bäume gefällt — nicht als Verlust, sondern als Strategie. Das junge Holz wird zu Pellets verarbeitet: einer nachhaltigen Energiequelle, die besonders in Deutschland stark nachgefragt wird. Die verbliebenen Bäume erhalten genügend Platz, um sechs weitere Jahre zu Edelholz heranzuwachsen.
+            Im sechsten Jahr wird die Hälfte der Bäume strategisch gefällt. Das junge Holz wird in unseren eigenen Pelletmühlen zu hochwertigen Holzpellets verarbeitet — einem nachhaltigen Brennstoff, der besonders in der DACH-Region stark nachgefragt wird. Die verbliebenen Bäume erhalten so genügend Platz, um weitere sechs Jahre zu Edelholz heranzuwachsen.
           </p>
           <div class="gc-revenue__kpi">
             <div>
               <div class="gc-revenue__kpi-val">1,89 Mio. €</div>
-              <div class="gc-revenue__kpi-label">Erlös aus Biomasse gesamt</div>
+              <div class="gc-revenue__kpi-label">Erlös aus Pellets gesamt</div>
             </div>
             <div>
               <div class="gc-revenue__kpi-val">200 € / m³</div>
-              <div class="gc-revenue__kpi-label">Biomassepreis</div>
+              <div class="gc-revenue__kpi-label">Pelletpreis</div>
             </div>
           </div>
         </div>
@@ -1515,19 +1616,24 @@
       </div>
       <div class="gc-wood__img-row gc-reveal">
         <div class="gc-wood__img-item">
-          <img src="https://images.unsplash.com/photo-1610374792793-f016b77ca51a?w=600&q=80"
-               alt="Holz-Oberfläche Maserung" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80"
+               alt="Holzverarbeitung – Paulownia-Bretter in der Werkstatt" loading="lazy">
+          <div class="gc-wood__img-caption">Holzverarbeitung</div>
+        </div>
+        <div class="gc-wood__img-item">
+          <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80"
+               alt="Hochwertige Möbel aus Edelholz" loading="lazy">
           <div class="gc-wood__img-caption">Möbel & Innenausbau</div>
         </div>
         <div class="gc-wood__img-item">
           <img src="https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=600&q=80"
-               alt="Yacht auf dem Meer – Schiffbau mit Paulownia-Holz" loading="lazy">
+               alt="Segelboot auf dem Meer – Schiffbau mit Paulownia" loading="lazy">
           <div class="gc-wood__img-caption">Schiff- & Bootsbau</div>
         </div>
         <div class="gc-wood__img-item">
-          <img src="https://images.unsplash.com/photo-1486218119243-13883505764c?w=600&q=80"
-               alt="Surfboard am Strand" loading="lazy">
-          <div class="gc-wood__img-caption">Surfboards & Sportgeräte</div>
+          <img src="https://images.unsplash.com/photo-1531565637446-32307b194362?w=600&q=80"
+               alt="Musikinstrument Gitarre aus Holz" loading="lazy">
+          <div class="gc-wood__img-caption">Musikinstrumente</div>
         </div>
       </div>
     </div>
@@ -1655,8 +1761,8 @@
             </div>
             <div class="gc-calc__break-card">
               <div class="gc-calc__break-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
-              <div class="gc-calc__break-val" id="calcBiomass">3.900 €</div>
-              <div class="gc-calc__break-label">Biomasse & Pellets</div>
+              <div class="gc-calc__break-val" id="calcPellets">3.900 €</div>
+              <div class="gc-calc__break-label">Pellets</div>
             </div>
             <div class="gc-calc__break-card">
               <div class="gc-calc__break-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></div>
@@ -1928,7 +2034,7 @@
             <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#1B9E5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
           </div>
           <div class="gc-nobrainer__title">Kein Totalverlust möglich</div>
-          <div class="gc-nobrainer__text">Ihr Baum steht auf firmeneigenem Land. Selbst im unwahrscheinlichsten Szenario besitzen Sie den Sachwert — Holz, Wurzeln, Biomasse. Kein Aktien-Crash, kein Bankrott kann das wegnehmen.</div>
+          <div class="gc-nobrainer__text">Ihr Baum steht auf firmeneigenem Land. Selbst im unwahrscheinlichsten Szenario besitzen Sie den Sachwert — Holz, Wurzeln, Pellets. Kein Aktien-Crash, kein Bankrott kann das wegnehmen.</div>
         </div>
         <div class="gc-nobrainer__card">
           <div class="gc-nobrainer__icon gc-nobrainer__icon--green">
@@ -1952,7 +2058,7 @@
           „Aktien steigen und fallen. Einmal gepflanzte Bäume <em>wachsen nur.</em>"
         </div>
         <div class="gc-guarantee__bottom-sub">
-          Über 15 Jahre Erfahrung · 200+ Hektar · 100+ zufriedene Investoren · EU New European Bauhaus Finalist
+          Über 15 Jahre Erfahrung · 250 Hektar · 200.000 Bäume · Eine der größten Paulownia-Plantagen der EU · EU New European Bauhaus Finalist
         </div>
       </div>
 
@@ -2131,9 +2237,50 @@
       </ul>
     </div>
   </footer>
+  <!-- ════════ WHATSAPP WIDGET ════════ -->
+  <div class="gc-whatsapp">
+    <div class="gc-whatsapp__tooltip">
+      Fragen? Schreiben Sie uns direkt per WhatsApp — Antwort innerhalb von Minuten.
+    </div>
+    <a href="https://wa.me/447956394576?text=Hallo%20Greenchild%2C%20ich%20interessiere%20mich%20f%C3%BCr%20ein%20Paulownia-Investment.%20K%C3%B6nnen%20Sie%20mich%20beraten%3F" target="_blank" rel="noopener" class="gc-whatsapp__btn" aria-label="WhatsApp Chat starten">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+  </div>
 
 </div>
 
+<!-- ════════ GOOGLE ADS / TRACKING (Platzhalter) ════════ -->
+<!--
+  Google Ads Conversion Tracking:
+  Ersetze CONVERSION_ID und CONVERSION_LABEL mit euren echten Werten.
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-CONVERSION_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-CONVERSION_ID');
+  </script>
+  
+  Conversion Event (im Lead-Formular nach Absenden):
+  gtag('event', 'conversion', {
+    'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
+    'value': 1.0,
+    'currency': 'EUR'
+  });
+  
+  Google Analytics 4:
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  Meta Pixel (für spätere Facebook/Instagram Ads):
+  Ebenfalls hier einfügen.
+-->
 <script data-no-optimize="1">
 (function(){
   'use strict';
@@ -2178,13 +2325,13 @@ function gcUpdateCalc(trees) {
   /* Revenue per tree (from Businessplan, conservative) */
   var timberPerTree = 270.34;   /* Edelholz anteilig */
   var honeyPerTree = 38.52;     /* Honig über 12 Jahre */
-  var biomassPerTree = 39.00;   /* Biomasse */
+  var pelletsPerTree = 39.00;   /* Pellets */
   var rootsPerTree = 150.00;    /* Wurzelwerk */
-  var totalPerTree = timberPerTree + honeyPerTree + biomassPerTree + rootsPerTree;
+  var totalPerTree = timberPerTree + honeyPerTree + pelletsPerTree + rootsPerTree;
 
   var timber = Math.round(trees * timberPerTree);
   var honey = Math.round(trees * honeyPerTree);
-  var biomass = Math.round(trees * biomassPerTree);
+  var pellets = Math.round(trees * pelletsPerTree);
   var roots = Math.round(trees * rootsPerTree);
   var totalReturn = Math.round(trees * totalPerTree);
   var profit = totalReturn - Math.round(investment);
@@ -2224,7 +2371,7 @@ function gcUpdateCalc(trees) {
 
   document.getElementById('calcTimber').textContent = timber.toLocaleString('de-DE') + ' €';
   document.getElementById('calcHoney').textContent = honey.toLocaleString('de-DE') + ' €';
-  document.getElementById('calcBiomass').textContent = biomass.toLocaleString('de-DE') + ' €';
+  document.getElementById('calcPellets').textContent = pellets.toLocaleString('de-DE') + ' €';
   document.getElementById('calcRoots').textContent = roots.toLocaleString('de-DE') + ' €';
 
   document.getElementById('calcBankVal').textContent = bankReturn.toLocaleString('de-DE') + ' €';
@@ -2314,6 +2461,11 @@ function gcSubmitForm() {
     /* Erfolg anzeigen */
     document.getElementById('gcFormFields').style.display = 'none';
     document.getElementById('gcFormSuccess').classList.add('show');
+
+    /* Google Ads Conversion Tracking */
+    if (typeof gtag === 'function') {
+      gtag('event', 'conversion', {'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL', 'value': 1.0, 'currency': 'EUR'});
+    }
     return;
   }
 
