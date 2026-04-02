@@ -7,84 +7,49 @@
 <meta name="description" content="Greenchild Group — seit 2009 im Paulownia-Anbau. 130+ Hektar, 80.000+ Bäume.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
 <style>
-.page-hero { background: linear-gradient(170deg, #081E14 0%, #0C2E20 100%); padding: 160px 0 100px; }
-.page-hero h1 { color: #fff; margin-bottom: 16px; }
-.page-hero p { color: rgba(255,255,255,.6); font-size: 18px; max-width: 560px; }
-.page-hero .label { color: var(--green-light); }
-.page-hero .label::before { background: var(--green-light); }
-.timeline { position: relative; max-width: 720px; margin: 0 auto; }
-.timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--green-pale), var(--green), var(--green-pale)); transform: translateX(-50%); }
-.timeline-item { display: flex; margin-bottom: 48px; position: relative; }
-.timeline-item:nth-child(odd) { padding-right: calc(50% + 36px); text-align: right; }
-.timeline-item:nth-child(even) { padding-left: calc(50% + 36px); }
-.timeline-dot { position: absolute; left: 50%; top: 4px; transform: translateX(-50%); width: 16px; height: 16px; border-radius: 50%; background: var(--green); border: 3px solid var(--bg); box-shadow: 0 0 0 2px var(--green); z-index: 2; }
-.timeline-year { font-family: var(--font-h); font-size: 24px; font-weight: 800; color: var(--green); margin-bottom: 6px; }
-.timeline-text { font-size: 14.5px; color: var(--text-muted); line-height: 1.65; }
-.timeline-text strong { color: var(--text); }
-.values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-.value-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 36px 28px; text-align: center; transition: all .4s var(--ease); }
-.value-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
-.value-card-icon { font-size: 28px; margin-bottom: 16px; }
-.value-card h4 { font-size: 17px; margin-bottom: 8px; }
-.value-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
-.quote-band { background: var(--green-deep); padding: 80px 0; text-align: center; }
-.quote-text { font-family: var(--font-h); font-size: clamp(22px, 3vw, 32px); font-weight: 600; color: #fff; line-height: 1.4; max-width: 700px; margin: 0 auto 16px; font-style: italic; }
-.quote-attr { font-size: 14px; color: rgba(255,255,255,.4); }
-@media (max-width: 900px) { .values-grid { grid-template-columns: repeat(2, 1fr); } .timeline::before { left: 20px; } .timeline-item:nth-child(odd), .timeline-item:nth-child(even) { padding-left: 52px; padding-right: 0; text-align: left; } .timeline-dot { left: 20px; } }
-@media (max-width: 600px) { .values-grid { grid-template-columns: 1fr; } }
+.page-hero{background:linear-gradient(170deg,#081E14 0%,#0C2E20 100%);padding:160px 0 100px}
+.page-hero h1{color:#fff;margin-bottom:16px}
+.page-hero p{color:rgba(255,255,255,.6);font-size:18px;max-width:560px}
+.page-hero .label{color:var(--green-light)}.page-hero .label::before{background:var(--green-light)}
+.timeline{position:relative;max-width:720px;margin:0 auto}
+.timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--green-pale),var(--green),var(--green-pale));transform:translateX(-50%)}
+.timeline-item{display:flex;margin-bottom:48px;position:relative}
+.timeline-item:nth-child(odd){padding-right:calc(50% + 36px);text-align:right}
+.timeline-item:nth-child(even){padding-left:calc(50% + 36px)}
+.timeline-dot{position:absolute;left:50%;top:4px;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:var(--green);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--green);z-index:2}
+.timeline-year{font-family:var(--font-h);font-size:24px;font-weight:800;color:var(--green);margin-bottom:6px}
+.timeline-text{font-size:14.5px;color:var(--text-muted);line-height:1.65}
+.timeline-text strong{color:var(--text)}
+.values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.value-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px 28px;text-align:center;transition:all .4s var(--ease)}
+.value-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.value-card-icon{font-size:28px;margin-bottom:16px}
+.value-card h4{font-size:17px;margin-bottom:8px}
+.value-card p{font-size:14px;color:var(--text-muted);line-height:1.6}
+.quote-band{background:var(--green-deep);padding:80px 0;text-align:center}
+.quote-text{font-family:var(--font-h);font-size:clamp(20px,3vw,30px);font-weight:600;color:#fff;line-height:1.4;max-width:700px;margin:0 auto 16px;font-style:italic}
+.quote-attr{font-size:14px;color:rgba(255,255,255,.4)}
+.cta-band{background:linear-gradient(135deg,var(--green-forest),#0D4A35);padding:80px 0;text-align:center}
+.cta-band h2{color:#fff;margin-bottom:16px}.cta-band p{color:rgba(255,255,255,.55);font-size:17px;max-width:500px;margin:0 auto 32px}
+@media(max-width:900px){.values-grid{grid-template-columns:repeat(2,1fr)}.timeline::before{left:20px}.timeline-item:nth-child(odd),.timeline-item:nth-child(even){padding-left:52px;padding-right:0;text-align:left}.timeline-dot{left:20px}}
+@media(max-width:600px){.values-grid{grid-template-columns:1fr}.page-hero{padding:120px 0 60px}}
 </style>
 </head>
 <body>
 <div class="scroll-progress" id="scrollProgress"></div>
-<header class="header" id="header"><div class="header-inner">
-    <a href="/de/" class="logo"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" class="logo-img"></a>
-    <nav class="nav"><a href="/de/" class="nav-link">Start</a><a href="/de/ueber-uns.html" class="nav-link active">Über uns</a><a href="/de/kiri-baum.html" class="nav-link">Der Kiri-Baum</a><a href="/de/plantagen.html" class="nav-link">Plantagen</a><a href="/de/baumbesitzer.html" class="nav-link">Baumbesitzer werden</a><a href="/de/kontakt.html" class="nav-link">Kontakt</a><div class="nav-divider"></div><a href="/en/about.html" class="nav-lang">EN</a><a href="/de/kontakt.html" class="btn btn-primary btn-sm nav-cta">Gespräch anfragen</a></nav>
-    <button class="hamburger" id="menuToggle" aria-label="Menü"><span></span><span></span><span></span></button>
-</div></header>
+<header class="header" id="header"><div class="header-inner"><a href="/de/" class="logo"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" class="logo-img"></a><nav class="nav"><a href="/de/" class="nav-link">Start</a><a href="/de/ueber-uns.html" class="nav-link active">Über uns</a><a href="/de/kiri-baum.html" class="nav-link">Der Kiri-Baum</a><a href="/de/plantagen.html" class="nav-link">Plantagen</a><a href="/de/baumbesitzer.html" class="nav-link">Baumbesitzer werden</a><a href="/de/kontakt.html" class="nav-link">Kontakt</a><div class="nav-divider"></div><a href="/en/about.html" class="nav-lang">EN</a><a href="/de/kontakt.html" class="btn btn-primary btn-sm nav-cta">Gespräch anfragen</a></nav><button class="hamburger" id="menuToggle" aria-label="Menü"><span></span><span></span><span></span></button></div></header>
 <div class="mobile-nav" id="mobileNav"><a href="/de/">Start</a><a href="/de/ueber-uns.html">Über uns</a><a href="/de/kiri-baum.html">Der Kiri-Baum</a><a href="/de/plantagen.html">Plantagen</a><a href="/de/baumbesitzer.html">Baumbesitzer werden</a><a href="/de/kontakt.html">Kontakt</a><a href="/en/">English</a></div>
-<section class="page-hero"><div class="container"><div class="label reveal">Über Greenchild</div><h1 class="reveal reveal-delay-1">Aus Liebe zur Natur.<br>Seit 2009.</h1><p class="reveal reveal-delay-2">Was als Experiment mit einer Handvoll Paulownia-Bäume begann, ist heute eine der größten Kiri-Plantagen Europas.</p></div></section>
-<section class="bg-white"><div class="container"><div class="grid grid-split-wide items-center gap-xl">
-    <div class="reveal"><img src="https://greenchild.eu/wp-content/uploads/2025/07/9X1A2848-1024x662.jpg" alt="Greenchild Team" class="img-rounded-lg img-shadow" style="width:100%; height:400px; object-fit:cover;"></div>
-    <div class="reveal reveal-delay-1"><div class="label">Unsere Geschichte</div><h2>Vom Experiment zur Plantage</h2><p style="margin:16px 0;">2009 lernten wir zum ersten Mal die Möglichkeiten des Paulownia-Baums kennen. Seine einzigartigen Eigenschaften und seine Effizienz haben uns fasziniert.</p><p style="margin-bottom:16px;">Angetrieben von Neugier und Enthusiasmus stellten wir ein Expertenteam zusammen und pflanzten unsere ersten Bäume in Südosteuropa. Nur ein halbes Jahr später standen die ersten Paulownia-Bäume auf vier Hektar Land.</p><p>Heute bewirtschaften wir über 130 Hektar mit mehr als 80.000 Bäumen — und wachsen weiter. Unser Ziel: jedem die Möglichkeit zu geben, Baumbesitzer zu werden und gleichzeitig einen Beitrag zur Umwelt zu leisten.</p></div>
-</div></div></section>
-<section class="bg-light"><div class="container"><div class="section-header center reveal"><div class="label center">Meilensteine</div><h2>Unser Weg</h2></div>
-    <div class="timeline">
-        <div class="timeline-item reveal"><div class="timeline-dot"></div><div><div class="timeline-year">2009</div><div class="timeline-text"><strong>Erste Experimente</strong> mit Paulownia-Bäumen. Das Potenzial wird erkannt.</div></div></div>
-        <div class="timeline-item reveal"><div class="timeline-dot"></div><div><div class="timeline-year">2010</div><div class="timeline-text"><strong>Erste Plantage:</strong> 4 Hektar in Südosteuropa. Die Ergebnisse übertreffen alle Erwartungen.</div></div></div>
-        <div class="timeline-item reveal"><div class="timeline-dot"></div><div><div class="timeline-year">2020</div><div class="timeline-text"><strong>Greenchild Group LLC</strong> wird gegründet. 35 Hektar „Phoenix One" in Ferizaj, Kosovo. 50.000 Bäume gepflanzt.</div></div></div>
-        <div class="timeline-item reveal"><div class="timeline-dot"></div><div><div class="timeline-year">2022</div><div class="timeline-text"><strong>Expansion auf 85 Hektar.</strong> Erste Baumbesitzer aus Deutschland und der Schweiz.</div></div></div>
-        <div class="timeline-item reveal"><div class="timeline-dot"></div><div><div class="timeline-year">2023</div><div class="timeline-text"><strong>Expansion nach Nordmazedonien.</strong> Neue Flächen, neue Partnerschaften. Über 80.000 Bäume.</div></div></div>
-        <div class="timeline-item reveal"><div class="timeline-dot"></div><div><div class="timeline-year">2024</div><div class="timeline-text"><strong>130+ Hektar, 80.000+ Bäume.</strong> Mikropropagation und Hybridzucht im eigenen Labor.</div></div></div>
-        <div class="timeline-item reveal"><div class="timeline-dot"></div><div><div class="timeline-year">2025</div><div class="timeline-text"><strong>Neuer Webauftritt, neue Vision.</strong> Greenchild öffnet sich für noch mehr Baumbesitzer weltweit.</div></div></div>
-    </div>
-</div></section>
-<section class="bg-white"><div class="container"><div class="section-header center reveal"><div class="label center">Unsere Werte</div><h2>Wofür wir stehen</h2></div>
-    <div class="values-grid">
-        <div class="value-card reveal"><div class="value-card-icon">🌱</div><h4>Nachhaltigkeit</h4><p>Nachhaltige Forstwirtschaft und aktiver Beitrag zum Klimaschutz stehen im Zentrum unseres Handelns.</p></div>
-        <div class="value-card reveal reveal-delay-1"><div class="value-card-icon">⭐</div><h4>Qualität</h4><p>Hochwertige Setzlinge, erstklassiges Holz und bester Service für unsere Baumbesitzer und Partner.</p></div>
-        <div class="value-card reveal reveal-delay-2"><div class="value-card-icon">🤝</div><h4>Vertrauen</h4><p>Familiäre Atmosphäre und exzellente Beziehungen zu Baumbesitzern, Partnern und lokalen Behörden.</p></div>
-        <div class="value-card reveal reveal-delay-3"><div class="value-card-icon">🔍</div><h4>Transparenz</h4><p>Regelmäßige und offene Berichterstattung über unsere Aktivitäten. Jeder Baumbesitzer kann jederzeit vor Ort sein.</p></div>
-    </div>
-</div></section>
-<div class="quote-band"><div class="container reveal"><div style="font-size:36px; color:var(--green-light); margin-bottom:16px;">"</div><div class="quote-text">Wir wollen jedem die Möglichkeit geben, einen greifbaren Beitrag zur Umwelt zu leisten — und dabei einen realen Sachwert zu besitzen.</div><div class="quote-attr">— Greenchild Gründerteam</div></div></div>
-<section class="bg-white"><div class="container"><div class="section-header center reveal"><div class="label center">In Zahlen</div><h2>Das ist Greenchild heute</h2></div>
-    <div class="stat-grid grid-4 reveal" style="max-width:800px; margin:0 auto;">
-        <div class="stat"><div class="stat-num" data-count="130" data-suffix="+">0</div><div class="stat-label">Hektar Plantage</div></div>
-        <div class="stat"><div class="stat-num" data-count="80000" data-suffix="+">0</div><div class="stat-label">Bäume gepflanzt</div></div>
-        <div class="stat"><div class="stat-num" data-count="15" data-suffix="+">0</div><div class="stat-label">Jahre Erfahrung</div></div>
-        <div class="stat"><div class="stat-num" data-count="100" data-suffix="+">0</div><div class="stat-label">Baumbesitzer</div></div>
-    </div>
-</div></section>
-<section class="cta-band"><div class="container reveal"><h2>Werde Teil der Geschichte</h2><p style="color:rgba(255,255,255,.55); font-size:17px; max-width:500px; margin:0 auto 36px;">Sprich mit uns über deine Möglichkeiten als Baumbesitzer.</p><a href="/de/kontakt.html" class="btn btn-white btn-lg">Gespräch anfragen</a></div></section>
-<footer class="footer"><div class="container"><div class="footer-grid">
-    <div class="footer-brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px; margin-bottom:16px; filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert. Vollservice von der Pflanzung bis zur Ernte.</p></div>
-    <div><h5>Unternehmen</h5><ul><li><a href="/de/ueber-uns.html">Über uns</a></li><li><a href="/de/plantagen.html">Plantagen</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div>
-    <div><h5>Wissen</h5><ul><li><a href="/de/kiri-baum.html">Der Kiri-Baum</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li></ul></div>
-    <div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="mailto:info@greenchild.eu">info@greenchild.eu</a></li></ul></div>
-</div><div class="footer-bottom"><span>© 2025 Greenchild Group LLC</span><div class="footer-legal"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div></div></div></footer>
+<section class="page-hero"><div class="container"><div class="label reveal">Über Greenchild</div><h1 class="reveal reveal-delay-1">Aus Liebe zur Natur.<br>Seit 2009.</h1><p class="reveal reveal-delay-2">Was als Experiment begann, ist heute eine der größten Kiri-Plantagen Europas.</p></div></section>
+<section class="bg-white"><div class="container"><div class="grid grid-split-wide items-center gap-xl"><div class="reveal"><img src="https://greenchild.eu/wp-content/uploads/2025/07/9X1A2848-1024x662.jpg" alt="Team" class="img-rounded-lg img-shadow" style="width:100%;height:360px;object-fit:cover;"></div><div class="reveal reveal-delay-1"><div class="label">Unsere Geschichte</div><h2>Vom Experiment zur Plantage</h2><p style="margin:16px 0;">2009 lernten wir die Möglichkeiten des Paulownia-Baums kennen. Seine Eigenschaften und Effizienz haben uns fasziniert.</p><p style="margin-bottom:16px;">Heute bewirtschaften wir über 130 Hektar mit mehr als 80.000 Bäumen — und wachsen weiter.</p></div></div></div></section>
+<section class="bg-light"><div class="container"><div class="section-header center reveal"><div class="label center">Meilensteine</div><h2>Unser Weg</h2></div><div class="timeline"><div class="timeline-item reveal"><div class="timeline-dot"></div><div><div class="timeline-year">2009</div><div class="timeline-text"><strong>Erste Experimente</strong> mit Paulownia-Bäumen.</div></div></div><div class="timeline-item reveal"><div class="timeline-dot"></div><div><div class="timeline-year">2010</div><div class="timeline-text"><strong>Erste Plantage:</strong> 4 Hektar in Südosteuropa.</div></div></div><div class="timeline-item reveal"><div class="timeline-dot"></div><div><div class="timeline-year">2020</div><div class="timeline-text"><strong>Greenchild Group LLC</strong> gegründet. 35 Hektar Phoenix One.</div></div></div><div class="timeline-item reveal"><div class="timeline-dot"></div><div><div class="timeline-year">2022</div><div class="timeline-text"><strong>Expansion auf 85 Hektar.</strong> Erste Baumbesitzer aus DACH.</div></div></div><div class="timeline-item reveal"><div class="timeline-dot"></div><div><div class="timeline-year">2023</div><div class="timeline-text"><strong>Expansion nach Nordmazedonien.</strong> 80.000+ Bäume.</div></div></div><div class="timeline-item reveal"><div class="timeline-dot"></div><div><div class="timeline-year">2024</div><div class="timeline-text"><strong>130+ Hektar.</strong> Mikropropagation im eigenen Labor.</div></div></div></div></div></section>
+<section class="bg-white"><div class="container"><div class="section-header center reveal"><div class="label center">Unsere Werte</div><h2>Wofür wir stehen</h2></div><div class="values-grid"><div class="value-card reveal"><div class="value-card-icon">🌱</div><h4>Nachhaltigkeit</h4><p>Nachhaltige Forstwirtschaft und aktiver Klimaschutz.</p></div><div class="value-card reveal reveal-delay-1"><div class="value-card-icon">⭐</div><h4>Qualität</h4><p>Hochwertige Setzlinge, erstklassiges Holz, bester Service.</p></div><div class="value-card reveal reveal-delay-2"><div class="value-card-icon">🤝</div><h4>Vertrauen</h4><p>Familiäre Atmosphäre und exzellente Beziehungen.</p></div><div class="value-card reveal reveal-delay-3"><div class="value-card-icon">🔍</div><h4>Transparenz</h4><p>Offene Berichterstattung. Jederzeit vor Ort sein.</p></div></div></div></section>
+<div class="quote-band"><div class="container reveal"><div style="font-size:36px;color:var(--green-light);margin-bottom:16px;">"</div><div class="quote-text">Wir wollen jedem die Möglichkeit geben, einen greifbaren Beitrag zur Umwelt zu leisten — und dabei einen realen Sachwert zu besitzen.</div><div class="quote-attr">— Greenchild Gründerteam</div></div></div>
+<section class="bg-white"><div class="container"><div class="section-header center reveal"><div class="label center">In Zahlen</div><h2>Das ist Greenchild</h2></div><div class="stat-grid grid-4 reveal" style="max-width:800px;margin:0 auto;"><div class="stat"><div class="stat-num" data-count="130" data-suffix="+">0</div><div class="stat-label">Hektar</div></div><div class="stat"><div class="stat-num" data-count="80000" data-suffix="+">0</div><div class="stat-label">Bäume</div></div><div class="stat"><div class="stat-num" data-count="15" data-suffix="+">0</div><div class="stat-label">Jahre</div></div><div class="stat"><div class="stat-num" data-count="100" data-suffix="+">0</div><div class="stat-label">Baumbesitzer</div></div></div></div></section>
+<section class="cta-band"><div class="container reveal"><h2>Werde Teil der Geschichte</h2><p>Sprich mit uns über deine Möglichkeiten.</p><a href="/de/kontakt.html" class="btn btn-white btn-lg">Gespräch anfragen</a></div></section>
+<footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert.</p></div><div><h5>Unternehmen</h5><ul><li><a href="/de/ueber-uns.html">Über uns</a></li><li><a href="/de/plantagen.html">Plantagen</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div><div><h5>Wissen</h5><ul><li><a href="/de/kiri-baum.html">Der Kiri-Baum</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li></ul></div><div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="mailto:info@greenchild.eu">info@greenchild.eu</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2025 Greenchild Group LLC</span><div class="footer-legal"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div></div></div></footer>
 <script src="/js/main.js"></script>
 </body>
 </html>
