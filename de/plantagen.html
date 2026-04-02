@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Unsere Plantagen — Greenchild</title>
-<meta name="description" content="Phoenix One: 130+ Hektar Paulownia-Plantage in Ferizaj, Kosovo.">
+<meta name="description" content="Phoenix One: 130+ Hektar Paulownia-Plantage in Ferizaj, Kosovo. Ein lebendes Ökosystem.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -12,8 +12,74 @@
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
 .advantage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media(max-width:900px){.advantage-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.advantage-grid{grid-template-columns:1fr}}
+
+/* ===== ECOSYSTEM CYCLE ===== */
+.eco-wrap{position:relative;width:100%;max-width:540px;margin:0 auto;aspect-ratio:1/1}
+.eco-svg{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.eco-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:3;pointer-events:none}
+.eco-center-tree{width:72px;height:72px;margin:0 auto 10px;border-radius:50%;background:var(--green-pale);border:1.5px solid rgba(0,168,107,.15);display:flex;align-items:center;justify-content:center}
+.eco-center-tree i{width:28px;height:28px;color:var(--green)}
+.eco-center-text{font-family:var(--font-body);font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.14em}
+.eco-node{position:absolute;z-index:4;cursor:pointer;transform:translate(-50%,-50%);transition:transform .35s var(--ease);-webkit-tap-highlight-color:transparent;user-select:none}
+.eco-node:hover,.eco-node:active{transform:translate(-50%,-50%) scale(1.1)}
+.eco-node.active{transform:translate(-50%,-50%) scale(1.12)}
+.eco-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid;transition:all .4s var(--ease);margin:0 auto}
+.eco-icon i{width:22px;height:22px}
+.eco-node.active .eco-icon{box-shadow:0 0 0 6px rgba(0,168,107,.1);transform:scale(1.08)}
+.eco-node-label{font-family:var(--font-body);font-size:11.5px;font-weight:500;color:var(--text);text-align:center;margin-top:5px;white-space:nowrap}
+.eco-node.active .eco-node-label{color:var(--green);font-weight:600}
+.eco-sonne .eco-icon{background:#FFF8EB;border-color:#EF9F27;color:#BA7517}
+.eco-wasser .eco-icon{background:#EBF5FF;border-color:#378ADD;color:#185FA5}
+.eco-erde .eco-icon{background:#F5EDE0;border-color:#A0845A;color:#6B5630}
+.eco-bienen .eco-icon{background:#FFF8EB;border-color:#EF9F27;color:#854F0B}
+.eco-schafe .eco-icon{background:#F3F2EE;border-color:#9C9A8E;color:#5F5E5A}
+.eco-duenger .eco-icon{background:#EDF5E5;border-color:#7CB342;color:#3B6D11}
+.eco-baum .eco-icon{background:var(--green-pale);border-color:var(--green);color:var(--green-dark)}
+.eco-co2 .eco-icon{background:#E1F5EE;border-color:#1D9E75;color:#0F6E56}
+.eco-info{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;max-width:400px;margin:32px auto 0;min-height:80px;opacity:0;transform:translateY(8px);transition:all .4s var(--ease)}
+.eco-info.show{opacity:1;transform:translateY(0)}
+.eco-info-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.eco-info-dot{width:10px;height:10px;border-radius:50%;background:var(--green);flex-shrink:0;transition:background .3s}
+.eco-info-title{font-family:var(--font-h);font-size:15px;font-weight:700;color:var(--text)}
+.eco-info-arrow{font-size:11px;color:var(--text-dim);margin-left:auto;font-weight:500}
+.eco-info-desc{font-family:var(--font-body);font-size:13.5px;color:var(--text-muted);line-height:1.65}
+.eco-controls{display:flex;justify-content:center;gap:10px;margin-top:20px}
+.eco-btn{font-family:var(--font-body);font-size:12px;font-weight:600;padding:8px 22px;border-radius:var(--radius-full);border:1.5px solid var(--border);background:var(--white);color:var(--text);cursor:pointer;transition:all .3s}
+.eco-btn:hover{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+.eco-btn.playing{background:var(--green);color:var(--white);border-color:var(--green)}
+@keyframes flowDash{to{stroke-dashoffset:-24}}
+.eco-flow{stroke-dasharray:6 18;animation:flowDash 2s linear infinite}
+@keyframes ecoParticle{0%{offset-distance:0%}100%{offset-distance:100%}}
+.eco-particle{width:5px;height:5px;border-radius:50%;background:var(--green);position:absolute;opacity:.45;offset-path:circle(38% at 50% 50%);animation:ecoParticle 8s linear infinite;pointer-events:none}
+.eco-particle:nth-child(2){animation-delay:-2s;opacity:.25;width:4px;height:4px}
+.eco-particle:nth-child(3){animation-delay:-4.5s;opacity:.35;width:3px;height:3px}
+.eco-particle:nth-child(4){animation-delay:-6.5s;opacity:.2;width:4px;height:4px}
+
+@media(max-width:900px){
+  .advantage-grid{grid-template-columns:1fr 1fr}
+  .eco-wrap{max-width:420px}
+  .eco-icon{width:48px;height:48px}
+  .eco-icon i{width:20px;height:20px}
+  .eco-node-label{font-size:10.5px}
+  .eco-center-tree{width:60px;height:60px}
+  .eco-center-tree i{width:24px;height:24px}
+}
+@media(max-width:600px){
+  .advantage-grid{grid-template-columns:1fr}
+  .eco-wrap{max-width:300px}
+  .eco-icon{width:40px;height:40px}
+  .eco-icon i{width:16px;height:16px}
+  .eco-node-label{font-size:9px;margin-top:2px}
+  .eco-center-tree{width:44px;height:44px}
+  .eco-center-tree i{width:18px;height:18px}
+  .eco-center-text{font-size:8.5px;letter-spacing:.08em}
+  .eco-info{padding:16px 18px;margin-top:20px;max-width:100%}
+  .eco-info-title{font-size:14px}
+  .eco-info-desc{font-size:12.5px;line-height:1.6}
+  .eco-particle{display:none}
+  .eco-controls{margin-top:14px}
+  .eco-btn{font-size:11px;padding:7px 18px}
+}
 </style>
 </head>
 <body>
@@ -21,19 +87,119 @@
 <header class="header" id="header"><div class="header-inner"><a href="/de/" class="logo"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" class="logo-img"></a><nav class="nav"><a href="/de/" class="nav-link">Start</a><a href="/de/ueber-uns.html" class="nav-link">Über uns</a><a href="/de/kiri-baum.html" class="nav-link">Der Kiri-Baum</a><a href="/de/plantagen.html" class="nav-link active">Plantagen</a><a href="/de/baumbesitzer.html" class="nav-link">Baumbesitzer werden</a><a href="/de/kontakt.html" class="nav-link">Kontakt</a><div class="nav-divider"></div><a href="/en/plantations.html" class="nav-lang">EN</a><a href="/de/kontakt.html" class="btn btn-primary btn-sm nav-cta">Gespräch anfragen</a></nav><button class="hamburger" id="menuToggle" aria-label="Menü"><span></span><span></span><span></span></button></div></header>
 <div class="mobile-nav" id="mobileNav"><a href="/de/">Start</a><a href="/de/ueber-uns.html">Über uns</a><a href="/de/kiri-baum.html">Der Kiri-Baum</a><a href="/de/plantagen.html">Plantagen</a><a href="/de/baumbesitzer.html">Baumbesitzer werden</a><a href="/de/kontakt.html">Kontakt</a><a href="/en/">English</a><a href="/de/kontakt.html" class="btn btn-primary" style="margin-top:16px;text-align:center;">Gespräch anfragen</a></div>
 
-<!-- HERO — FIXED (was broken: duplicate nested section removed) -->
+<!-- HERO -->
 <section class="page-hero"><div class="hero-bg"><img src="/assets/img/seedlings-truck.jpg" alt="Setzlinge auf der Plantage"></div><div class="hero-overlay" style="background:linear-gradient(170deg,rgba(8,30,20,.8) 0%,rgba(12,46,32,.45) 50%,rgba(8,30,20,.85) 100%);"></div><div class="hero-grain"></div><div class="container"><div class="label light" style="animation:fadeUp .8s .2s both;">Phoenix One &middot; N 42.39° E 21.10°</div><h1 style="animation:fadeUp .8s .4s both;">130+ Hektar.<br>80.000+ Bäume.</h1><p style="animation:fadeUp .8s .6s both;">Ferizaj, Kosovo — optimales Klima, nährstoffreicher Boden, professionelles Team vor Ort. Jeder Baum dokumentiert, jeder Besitzer zugeordnet.</p><div class="hero-data-strip" style="animation:fadeUp .8s .8s both;"><div class="hero-data-item"><div class="hero-data-num">573m</div><div class="hero-data-label">Höhenlage</div></div><div class="hero-data-item"><div class="hero-data-num">pH 6,5</div><div class="hero-data-label">Bodenqualität</div></div><div class="hero-data-item"><div class="hero-data-num">625</div><div class="hero-data-label">Bäume / Hektar</div></div></div></div></section>
 
+<!-- STATS + STANDORT -->
 <section class="bg-white"><div class="container"><div class="stat-grid grid-4 reveal" style="margin-bottom:56px;"><div class="stat"><div class="stat-num" data-count="130" data-suffix="+">0</div><div class="stat-label">Hektar</div></div><div class="stat"><div class="stat-num" data-count="80000" data-suffix="+">0</div><div class="stat-label">Bäume</div></div><div class="stat"><div class="stat-num" style="font-size:28px;">573 m</div><div class="stat-label">Höhenlage</div></div><div class="stat"><div class="stat-num" style="font-size:28px;">pH 6,5</div><div class="stat-label">Boden-pH</div></div></div><div class="grid grid-split items-center gap-xl"><div class="reveal"><img src="/assets/img/hero-plantation-sunset.jpg" alt="Phoenix One bei Sonnenuntergang" class="img-rounded-lg img-shadow" style="width:100%;height:360px;object-fit:cover;"></div><div class="reveal reveal-delay-1"><div class="label">Phoenix One</div><h2>Optimaler Standort</h2><p style="margin:16px 0;">Südosteuropa bietet ideale Klimabedingungen für Paulownia. Lange Wachstumssaison, nährstoffreicher Boden und strategische Nähe zur Holzverarbeitungsindustrie.</p><p style="font-size:13px;color:var(--text-dim);">N 42.397552°, E 21.106022°</p></div></div></div></section>
 
+<!-- STANDORTVORTEILE -->
 <section class="bg-light"><div class="container"><div class="section-header center reveal"><div class="label center">Standortvorteile</div><h2>Warum Phoenix One</h2></div><div class="advantage-grid"><div class="card reveal"><div class="icon-box green"><i data-lucide="sun"></i></div><h4>Optimales Klima</h4><p>Lange Wachstumssaison und milde Winter.</p></div><div class="card reveal reveal-delay-1"><div class="icon-box green"><i data-lucide="mountain"></i></div><h4>Nährstoffreicher Boden</h4><p>pH 6,5 — ideal für Paulownia-Wachstum.</p></div><div class="card reveal reveal-delay-2"><div class="icon-box green"><i data-lucide="truck"></i></div><h4>Infrastruktur</h4><p>Nähe zur Holzverarbeitungsindustrie.</p></div><div class="card reveal"><div class="icon-box green"><i data-lucide="hard-hat"></i></div><h4>Lokales Team</h4><p>Erfahrene Landwirte und Forstexperten.</p></div><div class="card reveal reveal-delay-1"><div class="icon-box green"><i data-lucide="cctv"></i></div><h4>Sicherheit</h4><p>Videoüberwachung rund um die Uhr.</p></div><div class="card reveal reveal-delay-2"><div class="icon-box green"><i data-lucide="map"></i></div><h4>Expansion</h4><p>Seit 2023 auch in Nordmazedonien aktiv.</p></div></div></div></section>
 
-<section class="bg-white"><div class="container"><div class="section-header center reveal"><div class="label center">Galerie</div><h2>Eindrücke von der Plantage</h2></div><div class="gallery-grid reveal"><div class="gallery-item"><img src="/assets/img/hero-plantation-sunset.jpg" alt="Plantage Sonnenuntergang" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/worker-watering.jpg" alt="Bewässerung" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/seedlings-truck.jpg" alt="Setzlinge" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/team-planting.jpg" alt="Pflanzung" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/team-action.jpg" alt="Team bei der Arbeit" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/beekeeper.jpg" alt="Imker auf der Plantage" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/worker-portrait.jpg" alt="Unser Team" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/investor-visit-woman.jpg" alt="Baumbesitzerin besucht Plantage" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/team-wood-logs.jpg" alt="Paulownia-Holz" loading="lazy"></div></div></div></section>
+<!-- ========== ÖKOSYSTEM-KREISLAUF ========== -->
+<section class="bg-white" id="ecosystem">
+  <div class="container">
+    <div class="section-header center reveal">
+      <div class="label center">Das Ökosystem</div>
+      <h2>Ein Kreislauf, der sich selbst erneuert</h2>
+      <p>Unsere Plantage ist kein Monokulturbetrieb — sie ist ein lebendes Ökosystem. Sonne, Wasser, Boden, Bienen und Schafe arbeiten zusammen. Nichts wird verschwendet.</p>
+    </div>
+    <div class="eco-wrap reveal">
+      <svg class="eco-svg" viewBox="0 0 540 540">
+        <circle cx="270" cy="270" r="205" fill="none" stroke="rgba(0,168,107,.06)" stroke-width="40"/>
+        <circle cx="270" cy="270" r="205" fill="none" stroke="rgba(0,168,107,.15)" stroke-width="1.5" stroke-dasharray="4 8"/>
+        <circle cx="270" cy="270" r="205" fill="none" class="eco-flow" stroke="rgba(0,168,107,.3)" stroke-width="2"/>
+        <g fill="var(--green)" opacity=".25">
+          <polygon points="270,64 276,76 264,76" transform="rotate(22.5 270 270)"/>
+          <polygon points="270,64 276,76 264,76" transform="rotate(112.5 270 270)"/>
+          <polygon points="270,64 276,76 264,76" transform="rotate(202.5 270 270)"/>
+          <polygon points="270,64 276,76 264,76" transform="rotate(292.5 270 270)"/>
+        </g>
+      </svg>
+      <div class="eco-particle"></div><div class="eco-particle"></div><div class="eco-particle"></div><div class="eco-particle"></div>
+      <div class="eco-center"><div class="eco-center-tree"><i data-lucide="trees"></i></div><div class="eco-center-text">Kreislauf</div></div>
+      <div class="eco-node eco-sonne" style="left:50%;top:5%;" data-idx="0"><div class="eco-icon"><i data-lucide="sun"></i></div><div class="eco-node-label">Sonne</div></div>
+      <div class="eco-node eco-wasser" style="left:82%;top:18%;" data-idx="1"><div class="eco-icon"><i data-lucide="droplets"></i></div><div class="eco-node-label">Wasser</div></div>
+      <div class="eco-node eco-erde" style="left:95%;top:50%;" data-idx="2"><div class="eco-icon"><i data-lucide="layers"></i></div><div class="eco-node-label">Erde</div></div>
+      <div class="eco-node eco-bienen" style="left:82%;top:82%;" data-idx="3"><div class="eco-icon"><i data-lucide="flower-2"></i></div><div class="eco-node-label">Bienen</div></div>
+      <div class="eco-node eco-schafe" style="left:50%;top:95%;" data-idx="4"><div class="eco-icon"><i data-lucide="cloud"></i></div><div class="eco-node-label">Schafe</div></div>
+      <div class="eco-node eco-duenger" style="left:18%;top:82%;" data-idx="5"><div class="eco-icon"><i data-lucide="recycle"></i></div><div class="eco-node-label">Dünger</div></div>
+      <div class="eco-node eco-baum" style="left:5%;top:50%;" data-idx="6"><div class="eco-icon"><i data-lucide="tree-pine"></i></div><div class="eco-node-label">Baum</div></div>
+      <div class="eco-node eco-co2" style="left:18%;top:18%;" data-idx="7"><div class="eco-icon"><i data-lucide="wind"></i></div><div class="eco-node-label">CO₂</div></div>
+    </div>
+    <div class="eco-info" id="ecoInfo">
+      <div class="eco-info-head"><div class="eco-info-dot" id="ecoInfoDot"></div><div class="eco-info-title" id="ecoInfoTitle">Tippe auf ein Element</div><div class="eco-info-arrow" id="ecoInfoArrow"></div></div>
+      <div class="eco-info-desc" id="ecoInfoDesc">Entdecke, wie jedes Element im Ökosystem unserer Plantage zusammenspielt.</div>
+    </div>
+    <div class="eco-controls"><button class="eco-btn" id="ecoPlayBtn" onclick="ecoTogglePlay()">Kreislauf starten</button></div>
+    <div class="reveal" style="text-align:center;margin-top:40px;"><p style="font-size:15px;color:var(--text-muted);margin-bottom:16px;">Ein Ökosystem, das für dich arbeitet.</p><a href="/de/baumbesitzer.html" class="btn btn-primary">Jetzt Baumbesitzer werden</a></div>
+  </div>
+</section>
 
+<!-- GALERIE -->
+<section class="bg-light"><div class="container"><div class="section-header center reveal"><div class="label center">Galerie</div><h2>Eindrücke von der Plantage</h2></div><div class="gallery-grid reveal"><div class="gallery-item"><img src="/assets/img/hero-plantation-sunset.jpg" alt="Plantage Sonnenuntergang" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/worker-watering.jpg" alt="Bewässerung" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/seedlings-truck.jpg" alt="Setzlinge" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/team-planting.jpg" alt="Pflanzung" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/team-action.jpg" alt="Team bei der Arbeit" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/beekeeper.jpg" alt="Imker auf der Plantage" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/worker-portrait.jpg" alt="Unser Team" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/investor-visit-woman.jpg" alt="Baumbesitzerin" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/team-wood-logs.jpg" alt="Paulownia-Holz" loading="lazy"></div></div></div></section>
+
+<!-- CTA -->
 <section class="cta-band"><div class="container reveal"><h2>Dein Baum wartet auf dich</h2><p>Ab 250 € pro Baum. Jederzeit besuchbar.</p><div class="btn-group" style="justify-content:center;"><a href="/de/baumbesitzer.html" class="btn btn-white btn-lg">Baumbesitzer werden</a><a href="/de/kontakt.html" class="btn btn-lg" style="border:1.5px solid rgba(255,255,255,.25);color:#fff;">Plantage besuchen</a></div></div></section>
 
+<!-- FOOTER -->
 <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert.</p></div><div><h5>Unternehmen</h5><ul><li><a href="/de/ueber-uns.html">Über uns</a></li><li><a href="/de/plantagen.html">Plantagen</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div><div><h5>Wissen</h5><ul><li><a href="/de/kiri-baum.html">Der Kiri-Baum</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li></ul></div><div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="mailto:info@greenchild.eu">info@greenchild.eu</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2025 Greenchild Group LLC</span><div class="footer-legal"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div></div></div></footer>
 <div class="lightbox" id="lightbox"><button class="lightbox-close">&times;</button><img src="" alt=""></div>
 <script src="/js/main.js"></script>
+<script>
+(function(){
+  var ecoData=[
+    {id:'sonne',title:'Sonne',color:'#EF9F27',next:'Wasser',desc:'Südosteuropa bietet über 2.200 Sonnenstunden pro Jahr. Das Sonnenlicht treibt die Photosynthese — der Turbo für das Wachstum der Paulownia-Bäume.'},
+    {id:'wasser',title:'Wasser',color:'#378ADD',next:'Erde',desc:'Regen und gezielte Bewässerung versorgen die Plantage. Die Höhenlage von 573m sorgt für ideale Niederschlagsmengen und natürliche Drainage.'},
+    {id:'erde',title:'Erde',color:'#A0845A',next:'Bienen',desc:'Nährstoffreicher Boden mit pH 6,5 — perfekt für Paulownia. Der Boden wird durch natürlichen Dünger der Schafe ständig mit Nährstoffen versorgt.'},
+    {id:'bienen',title:'Bienen',color:'#EF9F27',next:'Schafe',desc:'Paulownia-Blüten sind eine wichtige Nahrungsquelle für Bienen. Die Bestäubung fördert das gesamte Ökosystem der Plantage.'},
+    {id:'schafe',title:'Schafe',color:'#9C9A8E',next:'Dünger',desc:'Schafe grasen zwischen den Baumreihen. Sie halten das Gras kurz, reduzieren Maschineneinsatz und pflegen den Boden auf natürliche Weise.'},
+    {id:'duenger',title:'Natürlicher Dünger',color:'#7CB342',next:'Baum',desc:'Die Schafe produzieren organischen Dünger direkt auf der Plantage. Keine Chemie — die Nährstoffe fließen zurück in den Boden.'},
+    {id:'baum',title:'Paulownia-Baum',color:'#00A86B',next:'CO₂',desc:'Der Baum wächst bis zu 5 Meter pro Jahr. Nach 8–12 Jahren liefert jeder Baum bis zu 2 m³ Edelholz — das wertvollste Glied im Kreislauf.'},
+    {id:'co2',title:'CO₂-Bindung',color:'#1D9E75',next:'Sonne',desc:'Jeder Baum bindet bis zu 600 kg CO₂ pro Jahr und gibt Sauerstoff ab. Die Plantage reduziert jährlich über 1,1 Millionen kg CO₂.'}
+  ];
+  var nodes=document.querySelectorAll('.eco-node');
+  var info=document.getElementById('ecoInfo');
+  var infoTitle=document.getElementById('ecoInfoTitle');
+  var infoDesc=document.getElementById('ecoInfoDesc');
+  var infoDot=document.getElementById('ecoInfoDot');
+  var infoArrow=document.getElementById('ecoInfoArrow');
+  var playBtn=document.getElementById('ecoPlayBtn');
+  var playInterval=null;
+  if(!nodes.length)return;
+  nodes.forEach(function(node){
+    node.addEventListener('click',function(){
+      showEcoNode(parseInt(this.dataset.idx));
+    });
+  });
+  function showEcoNode(idx){
+    var d=ecoData[idx];
+    nodes.forEach(function(n){n.classList.remove('active')});
+    nodes[idx].classList.add('active');
+    infoDot.style.background=d.color;
+    infoTitle.textContent=d.title;
+    infoDesc.textContent=d.desc;
+    infoArrow.textContent='\u2192 '+d.next;
+    info.classList.add('show');
+  }
+  window.ecoTogglePlay=function(){
+    if(playInterval){
+      clearInterval(playInterval);
+      playInterval=null;
+      playBtn.classList.remove('playing');
+      playBtn.textContent='Kreislauf starten';
+      return;
+    }
+    playBtn.classList.add('playing');
+    playBtn.textContent='Stoppen';
+    var i=0;
+    showEcoNode(0);
+    playInterval=setInterval(function(){
+      i=(i+1)%ecoData.length;
+      showEcoNode(i);
+    },2000);
+  };
+})();
+</script>
 </body>
 </html>
