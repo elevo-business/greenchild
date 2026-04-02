@@ -106,7 +106,13 @@
     background:linear-gradient(to bottom,rgba(8,30,20,.4) 0%,rgba(8,30,20,.7) 40%,rgba(10,36,24,.95) 100%)!important;
   }
   .growth-grid{grid-template-columns:1fr}.tree-visual{height:280px}
-  .journey-timeline{grid-template-columns:1fr 1fr;gap:24px}.journey-timeline::before{display:none}
+  .journey-timeline{grid-template-columns:1fr;gap:0}
+.journey-step{display:grid;grid-template-columns:44px 1fr;gap:2px 14px;text-align:left;padding:16px 0;border-bottom:1px solid rgba(0,60,35,.07)}
+.journey-step:last-child{border-bottom:none}
+.journey-step .journey-dot{grid-column:1;grid-row:1/3;align-self:center;margin:0;width:40px;height:40px;font-size:14px}
+.journey-step .journey-img{display:none}
+.journey-step h4{grid-column:2;grid-row:1;align-self:end;font-size:15px;margin-bottom:0}
+.journey-step p{grid-column:2;grid-row:2;align-self:start;font-size:13px;margin:0}
   .plantation-split{grid-template-columns:1fr}
   .config-results{grid-template-columns:repeat(2,1fr)}.config-box{padding:32px 20px}
   .proof-grid{grid-template-columns:1fr 1fr}
