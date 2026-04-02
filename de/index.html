@@ -90,14 +90,48 @@
 .env-stat-num{font-family:var(--font-h);font-size:48px;font-weight:800;color:var(--green-light);line-height:1}
 .env-stat-label{font-size:12px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
 /* MOBILE OVERRIDES */
+/* MOBILE OVERRIDES — diesen Block im <style> der index.html ersetzen */
 @media(max-width:900px){
-.hero-home .hero-content{grid-template-columns:1fr}.hero-right{display:none}
-.growth-grid{grid-template-columns:1fr}.tree-visual{height:280px}
-.journey-timeline{grid-template-columns:1fr 1fr;gap:24px}.journey-timeline::before{display:none}
-.plantation-split{grid-template-columns:1fr}
-.config-results{grid-template-columns:repeat(2,1fr)}.config-box{padding:32px 20px}
-.proof-grid{grid-template-columns:1fr 1fr}
-.env-stats{gap:32px}
+  .hero-home .hero-content{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .hero-home .hero-overlay{
+    background:linear-gradient(to bottom,rgba(8,30,20,.4) 0%,rgba(8,30,20,.7) 40%,rgba(10,36,24,.95) 100%)!important;
+  }
+  .growth-grid{grid-template-columns:1fr}.tree-visual{height:280px}
+  .journey-timeline{grid-template-columns:1fr 1fr;gap:24px}.journey-timeline::before{display:none}
+  .plantation-split{grid-template-columns:1fr}
+  .config-results{grid-template-columns:repeat(2,1fr)}.config-box{padding:32px 20px}
+  .proof-grid{grid-template-columns:1fr 1fr}
+  .env-stats{gap:32px}
+}
+@media(max-width:600px){
+  .hero-home{
+    min-height:auto;
+    padding:90px 0 48px;
+  }
+  .hero-home .hero-overlay{
+    background:linear-gradient(to bottom,rgba(8,30,20,.3) 0%,rgba(8,30,20,.65) 30%,rgba(10,36,24,.97) 100%)!important;
+  }
+  .hero-home .hero-content{padding-top:20px;padding-bottom:20px}
+  .hero-home h1{font-size:clamp(28px,8.5vw,40px)}
+  .hero-home .hero-text p{font-size:15px;margin-bottom:28px;line-height:1.7}
+  .hero-home .label{margin-bottom:14px}
+  .hero-home .hero-text > p:last-of-type{font-size:10px}
+  .hero-stat-card .stat-num{font-size:22px}
+  .config-count{font-size:44px}.config-market-value{font-size:22px}
+  .config-result-value{font-size:17px}
+  .config-range-labels{font-size:10px}
+  .growth-data-grid{grid-template-columns:1fr 1fr}.growth-data-value{font-size:20px}
+  .journey-timeline{grid-template-columns:1fr}
+  .plantation-img-wrap img{height:220px}
+  .proof-grid{grid-template-columns:1fr}
+  .proof-card{aspect-ratio:16/10}
+  .env-stat-num{font-size:32px}.env-stats{gap:20px;flex-direction:column;align-items:center}
+  .plantation-mini-stats{grid-template-columns:repeat(4,1fr);gap:8px}
+  .plantation-mini-stat{padding:12px 8px}
+  .plantation-mini-stat .stat-num{font-size:18px!important}
+  .plantation-mini-stat .stat-label{font-size:9px}
+}
 }
 @media(max-width:600px){
 .hero-home{padding-top:80px}
