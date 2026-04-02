@@ -374,7 +374,9 @@ h1{font-size:clamp(28px,7vw,42px)}h2{font-size:clamp(24px,5vw,34px)}
 }
 /* ========== MOBILE UX OVERHAUL v2 — AN DAS ENDE DER style.css ANHÄNGEN ========== */
 
-/* HERO MOBILE FIX — Gradient muss UNTEN dunkel sein, nicht links */
+/* ========== MOBILE UX OVERHAUL v3 — AN DAS ENDE DER style.css ANHÄNGEN ========== */
+
+/* HERO MOBILE FIX */
 @media(max-width:900px){
   .page-hero .hero-overlay{
     background:linear-gradient(to bottom,rgba(8,30,20,.2) 0%,rgba(8,30,20,.55) 35%,rgba(8,30,20,.92) 70%,rgba(10,36,24,.98) 100%)!important;
@@ -398,46 +400,28 @@ h1{font-size:clamp(28px,7vw,42px)}h2{font-size:clamp(24px,5vw,34px)}
   .hero-data-item .hero-data-num{font-size:22px}
   .hero-data-item .hero-data-label{font-size:9px}
 
-  /* Mobile Nav Upgrade */
-  .mobile-nav{
-    padding:100px 24px 40px;
-    gap:0;
-    overflow-y:auto;
-  }
-  .mobile-nav a{
-    font-size:17px;
-    font-weight:500;
-    padding:16px 0;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-  }
-  .mobile-nav a::after{
-    content:'\2192';
-    color:var(--text-dim);
-    font-size:14px;
-  }
+  /* Mobile Nav */
+  .mobile-nav{padding:100px 24px 40px;gap:0;overflow-y:auto}
+  .mobile-nav a{font-size:17px;font-weight:500;padding:16px 0;display:flex;align-items:center;justify-content:space-between}
+  .mobile-nav a::after{content:'\2192';color:var(--text-dim);font-size:14px}
   .mobile-nav .btn{margin-top:24px;justify-content:center}
   .mobile-nav .btn::after{display:none}
 
-  /* CTA Band tighter */
+  /* CTA Band */
   .cta-band{padding:56px 0}
   .cta-band h2{font-size:clamp(22px,6vw,30px);margin-bottom:10px}
   .cta-band p{font-size:15px;margin-bottom:24px}
 
-  /* Footer mobile */
+  /* Footer */
   .footer{padding:56px 0 24px}
   .footer-grid{margin-bottom:36px;gap:28px}
 
-  /* Cards mobile */
+  /* Cards */
   .card{padding:28px 22px}
   .card h4{font-size:16px}
   .card p{font-size:13.5px}
 
-  /* Section header mobile */
   .section-header h2{margin-bottom:8px}
-
-  /* Hero orbs hidden on mobile */
   .hero-orb{display:none}
 }
 
@@ -449,25 +433,50 @@ h1{font-size:clamp(28px,7vw,42px)}h2{font-size:clamp(24px,5vw,34px)}
   .hero-data-item .hero-data-num{font-size:18px}
   .hero-data-item .hero-data-label{font-size:8px;letter-spacing:.06em}
 
-  /* Buttons full width stack */
   .btn-group{gap:10px}
   .btn-lg{padding:15px 28px;font-size:14px}
 
-  /* Proof grid single column */
   .proof-grid .proof-card{aspect-ratio:16/9}
 
-  /* Journey on mobile — compact list */
-  .journey-step{text-align:left;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding:0}
-  .journey-step .journey-dot{margin:0;width:36px;height:36px;font-size:13px}
-  .journey-step .journey-img{display:none}
-  .journey-step h4{font-size:14px;margin-bottom:2px}
-  .journey-step p{font-size:12.5px}
+  /* ===== JOURNEY MOBILE FIX ===== */
+  /* Structure: .journey-dot, .journey-img(hidden), h4, p */
+  .journey-timeline{grid-template-columns:1fr!important;gap:0!important}
+  .journey-step{
+    display:grid!important;
+    grid-template-columns:44px 1fr;
+    gap:2px 14px;
+    text-align:left!important;
+    padding:16px 0!important;
+    border-bottom:1px solid var(--border);
+  }
+  .journey-step:last-child{border-bottom:none}
+  .journey-step .journey-dot{
+    grid-column:1;
+    grid-row:1/3;
+    align-self:center;
+    margin:0;
+    width:40px;height:40px;
+    font-size:14px;
+  }
+  .journey-step .journey-img{display:none!important}
+  .journey-step h4{
+    grid-column:2;
+    grid-row:1;
+    align-self:end;
+    font-size:15px;
+    margin-bottom:0;
+  }
+  .journey-step p{
+    grid-column:2;
+    grid-row:2;
+    align-self:start;
+    font-size:13px;
+    margin:0;
+  }
 
-  /* Lighter touch for FAQ */
   .faq-q h4{font-size:15px}
   .faq-a-inner{font-size:14px}
 
-  /* Env stats mobile */
   .env-stats{flex-direction:column;align-items:center;gap:20px}
   .env-stat-num{font-size:32px}
 }
@@ -477,8 +486,7 @@ h1{font-size:clamp(28px,7vw,42px)}h2{font-size:clamp(24px,5vw,34px)}
   html{scrollbar-width:thin;scrollbar-color:var(--green) var(--bg)}
 }
 
-/* Focus states for a11y */
+/* Focus a11y */
 .btn:focus-visible,.form-input:focus-visible,.form-textarea:focus-visible,.form-select:focus-visible{
-  outline:2px solid var(--green);
-  outline-offset:2px;
+  outline:2px solid var(--green);outline-offset:2px;
 }
