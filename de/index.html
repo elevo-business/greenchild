@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Greenchild — Dein Baum. Dein Sachwert. Dein Beitrag.</title>
-<meta name="description" content="Werde Baumbesitzer. Paulownia-Bäume als Sachwert auf unserer Plantage in Südosteuropa. 130+ Hektar, 80.000+ Bäume. Vollservice inklusive.">
+<meta name="description" content="Werde Baumbesitzer. Paulownia-Bäume als Sachwert auf 375+ Hektar in 4 Ländern. 200.000+ Bäume. Vollservice inklusive.">
 <meta property="og:title" content="Greenchild — Dein Baum. Dein Sachwert.">
 <meta property="og:description" content="Paulownia-Bäume als Sachwert. Vollservice von der Pflanzung bis zur Ernte.">
 <meta property="og:type" content="website">
@@ -15,18 +15,28 @@
 <link rel="stylesheet" href="/css/style.css">
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
-/* HOME-SPECIFIC */
-  /* HOME HERO — FULLSCREEN IMAGE FIX */
-.hero-home{position:relative;overflow:hidden}
+/* TRANSPARENT HEADER FOR HOMEPAGE */
+.header-transparent{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom-color:transparent}
+.header-transparent .nav-link{color:rgba(255,255,255,.75)}
+.header-transparent .nav-link:hover,.header-transparent .nav-link.active{color:#fff;background:rgba(255,255,255,.08)}
+.header-transparent .hamburger span{background:#fff}
+.header-transparent .logo-img{filter:brightness(1.5)}
+.header-transparent .nav-lang{color:rgba(255,255,255,.5);border-color:rgba(255,255,255,.15)}
+.header-transparent .nav-lang:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.header-transparent.scrolled{background:rgba(250,252,251,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.header-transparent.scrolled .nav-link{color:var(--text-body)}
+.header-transparent.scrolled .nav-link:hover,.header-transparent.scrolled .nav-link.active{color:var(--green);background:var(--green-soft)}
+.header-transparent.scrolled .hamburger span{background:var(--text)}
+.header-transparent.scrolled .logo-img{filter:none}
+.header-transparent.scrolled .nav-lang{color:var(--text-dim);border-color:var(--border)}
+/* HERO FULLSCREEN */
+.hero-home{position:relative;min-height:100vh;overflow:hidden;padding-top:0}
 .hero-home .hero-bg{position:absolute;inset:0;z-index:0}
 .hero-home .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
-.hero-home .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(8,30,20,.3) 0%,rgba(8,30,20,.55) 40%,rgba(12,46,32,.9) 75%,#0C2E20 100%)!important}
+.hero-home .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(8,30,20,.35) 0%,rgba(8,30,20,.5) 40%,rgba(12,46,32,.85) 75%,#0C2E20 100%)}
 .hero-home .hero-grain{position:absolute;inset:0;z-index:2}
-.hero-home .hero-content{position:relative;z-index:4}
+.hero-home .hero-content{position:relative;z-index:4;display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center;padding-top:160px;padding-bottom:60px}
 .hero-home .scroll-indicator{position:relative;z-index:4}
-.hero-home{background:var(--green-deep);min-height:100vh;padding-top:100px}
-.hero-home .hero-overlay{background:linear-gradient(170deg,rgba(8,30,20,.6) 0%,rgba(12,46,32,.35) 40%,rgba(8,30,20,.7) 100%)}
-.hero-home .hero-content{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center;padding-top:40px;padding-bottom:60px}
 .hero-text{max-width:580px}
 .hero-stats-float{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .hero-stat-card{background:rgba(255,255,255,.06);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:24px 20px;text-align:center}
@@ -76,105 +86,75 @@
 .journey-step:hover .journey-dot{background:var(--green);color:var(--white);transform:scale(1.15)}
 .journey-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius);margin-bottom:12px;box-shadow:var(--shadow-sm)}
 .journey-step h4{font-size:13px;margin-bottom:4px}.journey-step p{font-size:12px;color:var(--text-muted);line-height:1.5}
-/* INVESTOR PROOF */
+/* PROOF */
 .proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .proof-card{border-radius:var(--radius-lg);overflow:hidden;position:relative;aspect-ratio:3/4}
-.proof-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
-.proof-card:hover img{transform:scale(1.05)}
-.proof-card-overlay{position:absolute;bottom:0;left:0;right:0;padding:24px;background:linear-gradient(to top,rgba(0,0,0,.6),transparent);color:#fff}
-.proof-card-overlay p{font-size:14px;font-weight:500;line-height:1.4}
-/* PLANTATION SPLIT */
+.proof-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}.proof-card:hover img{transform:scale(1.05)}
+.proof-card-overlay{position:absolute;bottom:0;left:0;right:0;padding:28px 24px;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.35) 50%,transparent 100%);color:#fff}
+.proof-card-overlay p{font-size:14px;font-weight:500;line-height:1.5;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+/* PLANTATION */
 .plantation-split{display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:center}
 .plantation-img-wrap{position:relative;border-radius:var(--radius-lg);overflow:hidden}
 .plantation-img-wrap img{width:100%;height:420px;object-fit:cover}
 .plantation-mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
 .plantation-mini-stat{background:var(--bg-warm);border-radius:var(--radius);padding:18px;text-align:center}
-/* ENVIRONMENTAL IMPACT */
-.env-banner{position:relative;overflow:hidden}
-.env-banner .env-bg{position:absolute;inset:0;z-index:0}
-.env-banner .env-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.4)}
-.env-banner .container{position:relative;z-index:1}
+/* ENV */
+.env-banner{position:relative;overflow:hidden}.env-banner .env-bg{position:absolute;inset:0;z-index:0}.env-banner .env-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.3)}.env-banner .container{position:relative;z-index:1}
 .env-stats{display:flex;gap:48px;justify-content:center;flex-wrap:wrap;margin-top:40px}
 .env-stat-num{font-family:var(--font-h);font-size:48px;font-weight:800;color:var(--green-light);line-height:1}
 .env-stat-label{font-size:12px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
-/* MOBILE OVERRIDES */
-/* MOBILE OVERRIDES — diesen Block im <style> der index.html ersetzen */
+/* MOBILE */
 @media(max-width:900px){
-  .hero-home .hero-content{grid-template-columns:1fr}
-  .hero-right{display:none}
-  .hero-home .hero-overlay{
-    background:linear-gradient(to bottom,rgba(8,30,20,.4) 0%,rgba(8,30,20,.7) 40%,rgba(10,36,24,.95) 100%)!important;
-  }
+  .hero-home .hero-content{grid-template-columns:1fr;padding-top:130px}.hero-right{display:none}
+  .hero-home .hero-overlay{background:linear-gradient(to bottom,rgba(8,30,20,.3) 0%,rgba(8,30,20,.6) 35%,rgba(10,36,24,.95) 100%)!important}
   .growth-grid{grid-template-columns:1fr}.tree-visual{height:280px}
-  .journey-timeline{grid-template-columns:1fr;gap:0}
-.journey-step{display:grid;grid-template-columns:44px 1fr;gap:2px 14px;text-align:left;padding:16px 0;border-bottom:1px solid rgba(0,60,35,.07)}
-.journey-step:last-child{border-bottom:none}
-.journey-step .journey-dot{grid-column:1;grid-row:1/3;align-self:center;margin:0;width:40px;height:40px;font-size:14px}
-.journey-step .journey-img{display:none}
-.journey-step h4{grid-column:2;grid-row:1;align-self:end;font-size:15px;margin-bottom:0}
-.journey-step p{grid-column:2;grid-row:2;align-self:start;font-size:13px;margin:0}
+  .journey-timeline{grid-template-columns:1fr 1fr;gap:24px}.journey-timeline::before{display:none}
   .plantation-split{grid-template-columns:1fr}
   .config-results{grid-template-columns:repeat(2,1fr)}.config-box{padding:32px 20px}
   .proof-grid{grid-template-columns:1fr 1fr}
   .env-stats{gap:32px}
 }
 @media(max-width:600px){
-  .hero-home{
-    min-height:auto;
-    padding:90px 0 48px;
-  }
-  .hero-home .hero-overlay{
-    background:linear-gradient(to bottom,rgba(8,30,20,.3) 0%,rgba(8,30,20,.65) 30%,rgba(10,36,24,.97) 100%)!important;
-  }
-  .hero-home .hero-content{padding-top:20px;padding-bottom:20px}
+  .hero-home{min-height:auto}
+  .hero-home .hero-content{padding-top:110px;padding-bottom:40px}
+  .hero-home .hero-overlay{background:linear-gradient(to bottom,rgba(8,30,20,.2) 0%,rgba(8,30,20,.6) 30%,rgba(10,36,24,.97) 100%)!important}
   .hero-home h1{font-size:clamp(28px,8.5vw,40px)}
   .hero-home .hero-text p{font-size:15px;margin-bottom:28px;line-height:1.7}
-  .hero-home .label{margin-bottom:14px}
-  .hero-home .hero-text > p:last-of-type{font-size:10px}
   .hero-stat-card .stat-num{font-size:22px}
   .config-count{font-size:44px}.config-market-value{font-size:22px}
-  .config-result-value{font-size:17px}
-  .config-range-labels{font-size:10px}
+  .config-result-value{font-size:17px}.config-range-labels{font-size:10px}
   .growth-data-grid{grid-template-columns:1fr 1fr}.growth-data-value{font-size:20px}
-  .journey-timeline{grid-template-columns:1fr}
+  /* JOURNEY MOBILE FIX */
+  .journey-timeline{grid-template-columns:1fr;gap:0}
+  .journey-step{display:grid;grid-template-columns:44px 1fr;gap:2px 14px;text-align:left;padding:16px 0;border-bottom:1px solid rgba(0,60,35,.07)}
+  .journey-step:last-child{border-bottom:none}
+  .journey-step .journey-dot{grid-column:1;grid-row:1/3;align-self:center;margin:0;width:40px;height:40px;font-size:14px}
+  .journey-step .journey-img{display:none}
+  .journey-step h4{grid-column:2;grid-row:1;align-self:end;font-size:15px;margin-bottom:0}
+  .journey-step p{grid-column:2;grid-row:2;align-self:start;font-size:13px;margin:0}
   .plantation-img-wrap img{height:220px}
-  .proof-grid{grid-template-columns:1fr}
-  .proof-card{aspect-ratio:16/10}
+  .proof-grid{grid-template-columns:1fr}.proof-card{aspect-ratio:16/10}
   .env-stat-num{font-size:32px}.env-stats{gap:20px;flex-direction:column;align-items:center}
   .plantation-mini-stats{grid-template-columns:repeat(4,1fr);gap:8px}
   .plantation-mini-stat{padding:12px 8px}
   .plantation-mini-stat .stat-num{font-size:18px!important}
   .plantation-mini-stat .stat-label{font-size:9px}
 }
-}
-@media(max-width:600px){
-.hero-home{padding-top:80px}
-.hero-stat-card .stat-num{font-size:22px}
-.config-count{font-size:48px}.config-market-value{font-size:24px}
-.config-result-value{font-size:17px}
-.growth-data-grid{grid-template-columns:1fr}.growth-data-value{font-size:20px}
-.journey-timeline{grid-template-columns:1fr}
-.plantation-img-wrap img{height:240px}
-.proof-grid{grid-template-columns:1fr}
-.env-stat-num{font-size:36px}.env-stats{gap:24px}
-}
 </style>
 </head>
 <body>
 <div class="scroll-progress" id="scrollProgress"></div>
 
-<!-- HEADER -->
-<header class="header" id="header"><div class="header-inner">
+<header class="header header-transparent" id="header"><div class="header-inner">
     <a href="/de/" class="logo"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" class="logo-img"></a>
     <nav class="nav"><a href="/de/" class="nav-link active">Start</a><a href="/de/ueber-uns.html" class="nav-link">Über uns</a><a href="/de/kiri-baum.html" class="nav-link">Der Kiri-Baum</a><a href="/de/plantagen.html" class="nav-link">Plantagen</a><a href="/de/baumbesitzer.html" class="nav-link">Baumbesitzer werden</a><a href="/de/kontakt.html" class="nav-link">Kontakt</a><div class="nav-divider"></div><a href="/en/" class="nav-lang">EN</a><a href="/de/kontakt.html" class="btn btn-primary btn-sm nav-cta">Gespräch anfragen</a></nav>
     <button class="hamburger" id="menuToggle" aria-label="Menü"><span></span><span></span><span></span></button>
 </div></header>
 <div class="mobile-nav" id="mobileNav"><a href="/de/">Start</a><a href="/de/ueber-uns.html">Über uns</a><a href="/de/kiri-baum.html">Der Kiri-Baum</a><a href="/de/plantagen.html">Plantagen</a><a href="/de/baumbesitzer.html">Baumbesitzer werden</a><a href="/de/kontakt.html">Kontakt</a><a href="/en/">English</a><a href="/de/kontakt.html" class="btn btn-primary" style="margin-top:16px;text-align:center;">Gespräch anfragen</a></div>
 
-<!-- ========== HERO ========== -->
 <section class="hero hero-home">
-    <div class="hero-bg"><img src="/assets/img/hero-plantation-sunset.jpg" alt="Greenchild Paulownia Plantage bei Sonnenuntergang" loading="eager"></div>
-    <div class="hero-overlay" style="background:linear-gradient(170deg,rgba(8,30,20,.75) 0%,rgba(10,40,28,.3) 40%,rgba(8,30,20,.8) 100%);"></div>
+    <div class="hero-bg"><img src="/assets/img/hero-plantation-sunset.jpg" alt="Greenchild Paulownia Plantage" loading="eager"></div>
+    <div class="hero-overlay"></div>
     <div class="hero-grain"></div>
     <div class="hero-orb hero-orb-1"></div>
     <div class="hero-orb hero-orb-2"></div>
@@ -193,7 +173,7 @@
             <div class="hero-stats-float">
                 <div class="hero-stat-card"><div class="stat-num" data-count="375" data-suffix="+">0</div><div class="stat-label">Hektar in 4 Ländern</div></div>
                 <div class="hero-stat-card"><div class="stat-num" data-count="200000" data-suffix="+">0</div><div class="stat-label">Bäume gepflanzt</div></div>
-                <div class="hero-stat-card"><div class="stat-num" data-count="1.1" data-suffix=" Mio" data-decimals="1">0</div><div class="stat-label">kg CO₂ / Jahr</div></div>
+                <div class="hero-stat-card"><div class="stat-num" data-count="200">0</div><div class="stat-label">Bienenvölker</div></div>
                 <div class="hero-stat-card"><div class="stat-num" data-count="15" data-suffix="+">0</div><div class="stat-label">Jahre Erfahrung</div></div>
             </div>
         </div>
@@ -201,101 +181,74 @@
     <div class="scroll-indicator">Scroll</div>
 </section>
 
-<!-- ========== WARUM GREENCHILD ========== -->
 <section class="bg-white">
     <div class="container">
-        <div class="section-header center reveal"><div class="label center">Warum Greenchild</div><h2>Ein Sachwert, der mit der Natur wächst</h2><p>Paulownia-Bäume verbinden ökologischen Beitrag mit realem Substanzwert. Kein Finanzprodukt — ein physischer Vermögensgegenstand, der jedes Jahr an Volumen gewinnt.</p></div>
+        <div class="section-header center reveal"><div class="label center">Warum Greenchild</div><h2>Ein Sachwert, der mit der Natur wächst</h2><p>Paulownia-Bäume verbinden ökologischen Beitrag mit realem Substanzwert. Kein Finanzprodukt — ein physischer Vermögensgegenstand.</p></div>
         <div class="grid grid-3" style="gap:24px;">
-            <div class="card reveal">
-                <div class="icon-box green"><i data-lucide="tree-pine"></i></div>
-                <h4>Physisches Eigentum</h4>
-                <p>Du kaufst reale Bäume auf unserer Plantage. Dein Baum-Zertifikat weist dich als Eigentümer aus. Substanz statt Papier.</p>
-            </div>
-            <div class="card reveal reveal-delay-1">
-                <div class="icon-box green"><i data-lucide="trending-up"></i></div>
-                <h4>Natürliches Wachstum</h4>
-                <p>Paulownia ist das schnellste Edelholz der Welt. In 8–12 Jahren produziert ein Baum bis zu 2 m³ hochwertiges Holz — der Sachwert steigt mit jedem Jahr.</p>
-            </div>
-            <div class="card reveal reveal-delay-2">
-                <div class="icon-box green"><i data-lucide="shield-check"></i></div>
-                <h4>Vollservice inklusive</h4>
-                <p>Pflanzung, Pflege, Ernte, Verarbeitung — alles im Kaufpreis von 250 € pro Baum. Du kümmerst dich um nichts.</p>
-            </div>
+            <div class="card reveal"><div class="icon-box green"><i data-lucide="tree-pine"></i></div><h4>Physisches Eigentum</h4><p>Du kaufst reale Bäume auf unserer Plantage. Dein Baum-Zertifikat weist dich als Eigentümer aus.</p></div>
+            <div class="card reveal reveal-delay-1"><div class="icon-box green"><i data-lucide="trending-up"></i></div><h4>Natürliches Wachstum</h4><p>In 8–12 Jahren produziert ein Baum bis zu 2 m³ Edelholz — der Sachwert steigt mit jedem Jahr.</p></div>
+            <div class="card reveal reveal-delay-2"><div class="icon-box green"><i data-lucide="shield-check"></i></div><h4>Vollservice inklusive</h4><p>Pflanzung, Pflege, Ernte — alles im Kaufpreis von 250 € pro Baum. Nicht-invasive, patentierte Hybride.</p></div>
         </div>
     </div>
 </section>
 
-<!-- ========== UMWELT-IMPACT (NEU - prominent) ========== -->
 <section class="env-banner" style="padding:100px 0;">
-    <div class="env-bg"><img src="/assets/img/team-action.jpg" alt="Greenchild Team bei der Arbeit"></div>
+    <div class="env-bg"><img src="/assets/img/team-action.jpg" alt="Greenchild Team"></div>
     <div class="container text-center">
-        <div class="label center" style="color:var(--green-light);" class="reveal">Dein Beitrag zur Umwelt</div>
-        <h2 style="color:#fff;margin-bottom:16px;max-width:600px;margin-left:auto;margin-right:auto;" class="reveal reveal-delay-1">Jeder Baum zählt. Für dich. Für die Erde. Für unsere Kinder.</h2>
-        <p style="color:rgba(255,255,255,.6);max-width:540px;margin:0 auto;" class="reveal reveal-delay-2">Paulownia-Bäume absorbieren bis zu 10x mehr CO₂ als andere Bäume. Unsere Plantage produziert jährlich 300.000 kg Sauerstoff und bindet über eine Million Kilogramm CO₂.</p>
-        <div class="env-stats reveal reveal-delay-3">
-            <div><div class="env-stat-num" data-count="1100000">0</div><div class="env-stat-label">kg CO₂ absorbiert / Jahr</div></div>
-            <div><div class="env-stat-num" data-count="300000">0</div><div class="env-stat-label">kg Sauerstoff / Jahr</div></div>
+        <div class="label center reveal" style="color:var(--green-light);">Dein Beitrag zur Umwelt</div>
+        <h2 style="color:#fff;margin-bottom:16px;max-width:600px;margin-left:auto;margin-right:auto;" class="reveal">Jeder Baum zählt. Für dich. Für die Erde.</h2>
+        <p style="color:rgba(255,255,255,.6);max-width:540px;margin:0 auto;" class="reveal">Paulownia absorbiert bis zu 10x mehr CO₂ als andere Bäume. 375+ Hektar aktiver Klimaschutz in 4 Ländern.</p>
+        <div class="env-stats reveal">
+            <div><div class="env-stat-num" data-count="375" data-suffix="+">0</div><div class="env-stat-label">Hektar Plantagen</div></div>
+            <div><div class="env-stat-num" data-count="200">0</div><div class="env-stat-label">Bienenvölker</div></div>
             <div><div class="env-stat-num" data-count="600">0</div><div class="env-stat-label">kg CO₂ pro Baum / Jahr</div></div>
         </div>
     </div>
 </section>
 
-<!-- ========== WACHSTUM + MARKTWERT ========== -->
 <section class="bg-light" id="growth">
     <div class="container">
-        <div class="section-header reveal"><div class="label">Dein Baum wächst</div><h2>12 Jahre. Von der Pflanzung zum Edelholz.</h2><p>Jedes Jahr steigt das Holzvolumen — und damit der Substanzwert deines Eigentums. Paulownia-Holz wird weltweit gehandelt.</p></div>
+        <div class="section-header reveal"><div class="label">Dein Baum wächst</div><h2>12 Jahre. Von der Pflanzung zum Edelholz.</h2><p>Jedes Jahr steigt das Holzvolumen — und damit der Substanzwert deines Eigentums.</p></div>
         <div class="growth-grid">
             <div class="tree-visual reveal"><div class="tree-ground-line"></div><div class="tree-trunk" id="treeTrunk"></div><div class="tree-crown" id="treeCrown"></div><div class="tree-year-display" id="growthYear">Jahr 1</div></div>
             <div class="reveal reveal-delay-1">
-                <div style="margin-bottom:32px;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span style="font-size:12px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;">Wachstumsjahr</span><span id="growthYear2" style="color:var(--green);font-family:var(--font-h);font-weight:700;">Jahr 1</span></div>
-                    <input type="range" min="1" max="12" value="1" class="growth-slider" id="growthSlider">
-                </div>
+                <div style="margin-bottom:32px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span style="font-size:12px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;">Wachstumsjahr</span><span id="growthYear2" style="color:var(--green);font-family:var(--font-h);font-weight:700;">Jahr 1</span></div><input type="range" min="1" max="12" value="1" class="growth-slider" id="growthSlider"></div>
                 <div class="growth-data-grid">
                     <div class="growth-data-card"><div class="growth-data-value" id="growthHeight">3m</div><div class="growth-data-label">Höhe</div></div>
                     <div class="growth-data-card"><div class="growth-data-value" id="growthDiameter">8cm</div><div class="growth-data-label">Durchmesser</div></div>
                     <div class="growth-data-card"><div class="growth-data-value" id="growthVolume">0.02 m³</div><div class="growth-data-label">Holzvolumen</div></div>
                     <div class="growth-data-card"><div class="growth-data-value" id="growthCo2">120 kg</div><div class="growth-data-label">CO₂ / Jahr</div></div>
                 </div>
-                <div class="market-box">
-                    <div class="market-label">Marktwert des Holzes (1 Baum)</div>
-                    <div class="market-value"><span id="growthMarketLow">$34</span> – <span id="growthMarketHigh">$42</span></div>
-                    <div class="market-source">Paulownia Qualität B: $1.695–$2.119/m³. Marktpreise unterliegen Schwankungen. Quelle: Internationale Handelsplattformen.</div>
-                </div>
+                <div class="market-box"><div class="market-label">Marktwert des Holzes (1 Baum)</div><div class="market-value"><span id="growthMarketLow">$34</span> – <span id="growthMarketHigh">$42</span></div><div class="market-source">Paulownia Qualität B: $1.695–$2.119/m³. Marktpreise unterliegen Schwankungen.</div></div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ========== PRODUKTE AUS PAULOWNIA ========== -->
 <section class="bg-white">
     <div class="container"><div class="grid grid-split items-center gap-xl">
-        <div class="reveal"><div class="label">Paulownia-Holz</div><h2>Premium-Holz für Premium-Produkte</h2><p style="margin:16px 0 24px;">Paulownia ist das leichteste Edelholz der Welt. Es wird weltweit eingesetzt — von Surfboards über Musikinstrumente bis hin zu Möbeln und Fahrrädern. Ein Rohstoff mit wachsender Nachfrage.</p>
+        <div class="reveal"><div class="label">Paulownia-Holz</div><h2>Premium-Holz für Premium-Produkte</h2><p style="margin:16px 0 24px;">Paulownia ist das leichteste Edelholz der Welt. Weltweit eingesetzt — von Surfboards über Musikinstrumente bis hin zu Möbeln.</p>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:28px;">
-                <div style="text-align:center;padding:14px;background:var(--bg-warm);border-radius:var(--radius);"><div style="font-family:var(--font-h);font-size:24px;font-weight:800;color:var(--green);">20m</div><div style="font-size:10px;color:var(--text-muted);font-weight:500;">Höhe in 12 J.</div></div>
-                <div style="text-align:center;padding:14px;background:var(--bg-warm);border-radius:var(--radius);"><div style="font-family:var(--font-h);font-size:24px;font-weight:800;color:var(--green);">300</div><div style="font-size:10px;color:var(--text-muted);font-weight:500;">kg/m³ Gewicht</div></div>
-                <div style="text-align:center;padding:14px;background:var(--bg-warm);border-radius:var(--radius);"><div style="font-family:var(--font-h);font-size:24px;font-weight:800;color:var(--green);">10x</div><div style="font-size:10px;color:var(--text-muted);font-weight:500;">schneller als Eiche</div></div>
+                <div style="text-align:center;padding:14px;background:var(--bg-warm);border-radius:var(--radius);"><div style="font-family:var(--font-h);font-size:24px;font-weight:800;color:var(--green);">20m</div><div style="font-size:10px;color:var(--text-muted);">Höhe in 12 J.</div></div>
+                <div style="text-align:center;padding:14px;background:var(--bg-warm);border-radius:var(--radius);"><div style="font-family:var(--font-h);font-size:24px;font-weight:800;color:var(--green);">300</div><div style="font-size:10px;color:var(--text-muted);">kg/m³</div></div>
+                <div style="text-align:center;padding:14px;background:var(--bg-warm);border-radius:var(--radius);"><div style="font-family:var(--font-h);font-size:24px;font-weight:800;color:var(--green);">10x</div><div style="font-size:10px;color:var(--text-muted);">schneller als Eiche</div></div>
             </div>
             <a href="/de/kiri-baum.html" class="btn btn-secondary">Mehr über den Kiri-Baum</a>
         </div>
         <div class="reveal reveal-delay-1" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <img src="/assets/img/surfboards.jpg" alt="Surfboards aus Paulownia-Holz" class="img-rounded-lg" style="width:100%;height:260px;object-fit:cover;">
-            <img src="/assets/img/showroom-bikes.jpg" alt="Fahrräder aus Paulownia-Holz" class="img-rounded-lg" style="width:100%;height:260px;object-fit:cover;">
+            <img src="/assets/img/surfboards.jpg" alt="Surfboards aus Paulownia" class="img-rounded-lg" style="width:100%;height:260px;object-fit:cover;">
+            <img src="/assets/img/showroom-bikes.jpg" alt="Fahrräder aus Paulownia" class="img-rounded-lg" style="width:100%;height:260px;object-fit:cover;">
         </div>
     </div></div>
 </section>
 
-<!-- ========== KONFIGURATOR MIT MARKTWERT ========== -->
 <section class="bg-light" id="config">
     <div class="container">
-        <div class="section-header center reveal"><div class="label center">Dein Wald</div><h2>Wähle deine Bäume</h2><p>250 € pro Baum. Vollservice inklusive. Sieh, was dein Wald leistet — für die Umwelt und als Sachwert.</p></div>
+        <div class="section-header center reveal"><div class="label center">Dein Wald</div><h2>Wähle deine Bäume</h2><p>250 € pro Baum. Vollservice inklusive.</p></div>
         <div class="config-box reveal">
             <div class="config-count" id="configCount">25</div>
             <div class="config-count-label">Paulownia-Bäume</div>
-            <div style="max-width:560px;margin:0 auto 8px;">
-                <input type="range" min="25" max="800" value="25" step="25" class="config-range" id="configSlider">
-                <div class="config-range-labels"><span>25 Bäume</span><span>800 Bäume</span></div>
-            </div>
+            <div style="max-width:560px;margin:0 auto 8px;"><input type="range" min="25" max="800" value="25" step="25" class="config-range" id="configSlider"><div class="config-range-labels"><span>25 Bäume</span><span>800 Bäume</span></div></div>
             <div class="forest-visual"><script>document.write(Array.from({length:70},(_,i)=>'<div class="forest-bar" style="transition-delay:'+i*15+'ms"></div>').join(''))</script></div>
             <div class="config-results">
                 <div class="config-result-card"><div class="config-result-icon"><i data-lucide="wallet"></i></div><div class="config-result-value" id="configPrice">6.250 €</div><div class="config-result-label">Kaufpreis</div></div>
@@ -303,48 +256,40 @@
                 <div class="config-result-card"><div class="config-result-icon"><i data-lucide="wind"></i></div><div class="config-result-value"><span id="configCo2">15.000</span> kg</div><div class="config-result-label">CO₂ / Jahr</div></div>
                 <div class="config-result-card"><div class="config-result-icon"><i data-lucide="axe"></i></div><div class="config-result-value"><span id="configVolume">50</span> m³</div><div class="config-result-label">Holz bei Reife</div></div>
             </div>
-            <div class="config-market-box">
-                <div class="config-market-label">Marktwert des Holzes bei Reife</div>
-                <div class="config-market-value"><span id="configMarketLow">$84.750</span> – <span id="configMarketHigh">$105.950</span></div>
-                <div class="config-market-source">Basierend auf Paulownia Qualität B ($1.695–$2.119/m³). Marktpreise unterliegen Schwankungen. Keine Renditeversprechen. Quelle: Internationale Handelsplattformen.</div>
-            </div>
+            <div class="config-market-box"><div class="config-market-label">Marktwert des Holzes bei Reife</div><div class="config-market-value"><span id="configMarketLow">$84.750</span> – <span id="configMarketHigh">$105.950</span></div><div class="config-market-source">Paulownia Qualität B ($1.695–$2.119/m³). Marktpreise unterliegen Schwankungen. Keine Renditeversprechen.</div></div>
             <div style="text-align:center;"><a href="/de/kontakt.html" class="btn btn-primary btn-lg">Diese Bäume anfragen</a><p style="font-size:12px;color:var(--text-dim);margin-top:10px;">Unverbindlich. Keine versteckten Kosten.</p></div>
         </div>
     </div>
 </section>
 
-<!-- ========== INVESTOREN-BESUCHE (SOCIAL PROOF) ========== -->
 <section class="bg-white">
     <div class="container">
-        <div class="section-header center reveal"><div class="label center">Unsere Baumbesitzer</div><h2>Besuche deine Bäume — jederzeit</h2><p>Unsere Baumbesitzer kommen regelmäßig auf die Plantage. Ihre Bäume wachsen, ihr Sachwert steigt — und sie sehen es mit eigenen Augen.</p></div>
+        <div class="section-header center reveal"><div class="label center">Unsere Baumbesitzer</div><h2>Besuche deine Bäume — jederzeit</h2><p>Baumbesitzer kommen regelmäßig auf die Plantage. Vertrauen durch Erleben.</p></div>
         <div class="proof-grid reveal">
-            <div class="proof-card"><img src="/assets/img/investor-visit-man.jpg" alt="Baumbesitzer bei seinen Bäumen" loading="lazy"><div class="proof-card-overlay"><p>Baumbesitzer vor Ort — seine Bäume sind bereits über 6 Meter hoch.</p></div></div>
-            <div class="proof-card reveal-delay-1"><img src="/assets/img/investor-visit-woman.jpg" alt="Baumbesitzerin umarmt ihren Baum" loading="lazy"><div class="proof-card-overlay"><p>Baumbesitzerin bei ihrem persönlichen Baum auf der Plantage.</p></div></div>
-            <div class="proof-card reveal-delay-2"><img src="/assets/img/investor-tour.jpg" alt="Plantagenführung für Baumbesitzer" loading="lazy"><div class="proof-card-overlay"><p>Persönliche Führung durch die Plantage für Baumbesitzer.</p></div></div>
+            <div class="proof-card"><img src="/assets/img/investor-visit-man.jpg" alt="Baumbesitzer" loading="lazy"><div class="proof-card-overlay"><p>Baumbesitzer vor Ort — Bäume über 6 Meter hoch.</p></div></div>
+            <div class="proof-card"><img src="/assets/img/investor-visit-woman.jpg" alt="Baumbesitzerin" loading="lazy"><div class="proof-card-overlay"><p>Persönlicher Besuch — greifbarer Sachwert.</p></div></div>
+            <div class="proof-card"><img src="/assets/img/investor-tour.jpg" alt="Plantagenführung" loading="lazy"><div class="proof-card-overlay"><p>Geführte Tour für alle Baumbesitzer.</p></div></div>
         </div>
     </div>
 </section>
 
-<!-- ========== PLANTAGE TEASER ========== -->
 <section class="bg-warm">
     <div class="container"><div class="plantation-split">
-        <div class="plantation-img-wrap reveal"><img src="/assets/img/team-action.jpg" alt="Greenchild Team auf Phoenix One" style="width:100%;height:420px;object-fit:cover;"><div class="img-badge">Phoenix One — Kosovo</div></div>
+        <div class="plantation-img-wrap reveal"><img src="/assets/img/team-action.jpg" alt="Greenchild Team" style="width:100%;height:420px;object-fit:cover;"><div class="img-badge">4 Länder &middot; 375+ Hektar</div></div>
         <div class="reveal reveal-delay-1">
-            <div class="label">Unsere Plantagen</div><h2>Phoenix One</h2>
-            <p style="margin:16px 0 12px;">375+ Hektar in 4 Ländern. Kosovo, Nordmazedonien, Albanien und Kroatien — 200.000+ Bäume die jeden Tag wachsen.</p>
-            <p style="margin-bottom:20px;font-size:13px;color:var(--text-dim);">N 42.397552°, E 21.106022°</p>
+            <div class="label">Unsere Plantagen</div><h2>4 Länder. Ein Standard.</h2>
+            <p style="margin:16px 0 12px;">375+ Hektar in Kosovo, Nordmazedonien, Albanien und Kroatien — 200.000+ Bäume die jeden Tag wachsen. Patentierte, nicht-invasive Greenchild-Kiri Hybride.</p>
             <div class="plantation-mini-stats">
                 <div class="plantation-mini-stat"><div class="stat-num" style="font-size:26px;">375+</div><div class="stat-label">Hektar</div></div>
                 <div class="plantation-mini-stat"><div class="stat-num" style="font-size:26px;">200.000+</div><div class="stat-label">Bäume</div></div>
-                <div class="plantation-mini-stat"><div class="stat-num" style="font-size:26px;">573m</div><div class="stat-label">Höhe</div></div>
-                <div class="plantation-mini-stat"><div class="stat-num" style="font-size:26px;">pH 6,5</div><div class="stat-label">Boden</div></div>
+                <div class="plantation-mini-stat"><div class="stat-num" style="font-size:26px;">200</div><div class="stat-label">Bienenvölker</div></div>
+                <div class="plantation-mini-stat"><div class="stat-num" style="font-size:26px;">4</div><div class="stat-label">Länder</div></div>
             </div>
             <a href="/de/plantagen.html" class="btn btn-secondary" style="margin-top:24px;">Plantagen entdecken</a>
         </div>
     </div></div>
 </section>
 
-<!-- ========== JOURNEY ========== -->
 <section class="bg-light">
     <div class="container">
         <div class="section-header center reveal"><div class="label center">Von der Wurzel zum Edelholz</div><h2>Der Weg deines Baumes</h2></div>
@@ -358,7 +303,6 @@
     </div>
 </section>
 
-<!-- ========== CTA ========== -->
 <section class="cta-band">
     <div class="container reveal">
         <h2>375+ Hektar. 4 Länder. Limitierte Fläche.</h2>
@@ -367,10 +311,9 @@
     </div>
 </section>
 
-<!-- ========== FOOTER ========== -->
 <footer class="footer"><div class="container">
     <div class="footer-grid">
-        <div class="footer-brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert. Vollservice von der Pflanzung bis zur Ernte. Für dich, für die Umwelt, für unsere Kinder.</p></div>
+        <div class="footer-brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert. 375+ Hektar in 4 Ländern.</p></div>
         <div><h5>Unternehmen</h5><ul><li><a href="/de/ueber-uns.html">Über uns</a></li><li><a href="/de/plantagen.html">Plantagen</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div>
         <div><h5>Wissen</h5><ul><li><a href="/de/kiri-baum.html">Der Kiri-Baum</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li></ul></div>
         <div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="mailto:info@greenchild.eu">info@greenchild.eu</a></li><li style="color:var(--text-inv-muted);font-size:13px;margin-top:8px;">Greenchild Group LLC<br>Ferizaj, Kosovo</li></ul></div>
@@ -378,12 +321,8 @@
     <div class="footer-bottom"><span>&copy; 2025 Greenchild Group LLC</span><div class="footer-legal"><a href="#" data-modal="impressumModal">Impressum</a><a href="#" data-modal="datenschutzModal">Datenschutz</a><a href="#">AGB</a></div></div>
 </div></footer>
 
-<!-- MODALS -->
-<div class="modal-overlay" id="impressumModal"><div class="modal"><button class="modal-close">&times;</button><h3>Impressum</h3><p><strong>Greenchild Group LLC</strong><br>M.Meha ecke "Greenchild street"<br>70000 Ferizaj, Kosovo</p><p><strong>Greenchild Group Ltd.</strong><br>Unit 3 Cedar Court, 1 Royal Oak Yard<br>London SE1 3GA, United Kingdom</p><p><strong>Kontakt:</strong><br>+49 151 191 333 31<br>info@greenchild.eu</p></div></div>
-<div class="modal-overlay" id="datenschutzModal"><div class="modal"><button class="modal-close">&times;</button><h3>Datenschutzerklärung</h3><p>Die Datenschutzerklärung wird gemäß DSGVO hier eingefügt.</p><p>Verantwortlich: Greenchild Group LLC, Ferizaj, Kosovo.</p></div></div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox"><button class="lightbox-close">&times;</button><img src="" alt=""></div>
+<div class="modal-overlay" id="impressumModal"><div class="modal"><button class="modal-close">&times;</button><h3>Impressum</h3><p><strong>Greenchild Group LLC</strong><br>M.Meha ecke "Greenchild street"<br>70000 Ferizaj, Kosovo</p><p><strong>Kontakt:</strong><br>+49 151 191 333 31<br>info@greenchild.eu</p></div></div>
+<div class="modal-overlay" id="datenschutzModal"><div class="modal"><button class="modal-close">&times;</button><h3>Datenschutzerklärung</h3><p>Die Datenschutzerklärung wird gemäß DSGVO hier eingefügt.</p></div></div>
 
 <script src="/js/main.js"></script>
 </body>
