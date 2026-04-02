@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Über uns — Greenchild Group</title>
-<meta name="description" content="Greenchild Group — seit 2009 im professionellen Paulownia-Anbau. 130+ Hektar, 80.000+ Bäume, zwei Standorte. Besuche jederzeit willkommen.">
+<meta name="description" content="Greenchild Group — seit 2009 im professionellen Paulownia-Anbau. 130+ Hektar, 80.000+ Bäume, zwei Standorte.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -49,7 +49,7 @@
 .tl-item:nth-child(odd) .tl-content{text-align:right}
 .tl-item:nth-child(odd) .tl-spacer{order:1}
 .tl-item:nth-child(even) .tl-content{order:1}
-.tl-dot{width:18px;height:18px;border-radius:50%;background:var(--green);border:4px solid var(--bg);box-shadow:0 0 0 2px var(--green);position:relative;z-index:2;margin-top:4px;flex-shrink:0;justify-self:center}
+.tl-dot{width:18px;height:18px;border-radius:50%;background:var(--green);border:4px solid var(--bg);box-shadow:0 0 0 2px var(--green);position:relative;z-index:2;margin-top:4px;justify-self:center}
 .tl-year{font-family:var(--font-h);font-size:22px;font-weight:800;color:var(--green);margin-bottom:4px}
 .tl-text{font-size:14.5px;color:var(--text-muted);line-height:1.65}
 .tl-text strong{color:var(--text)}
@@ -73,11 +73,22 @@
 .loc-card h4{font-size:17px;margin-bottom:8px}
 .loc-card p{font-size:13.5px;color:var(--text-muted);line-height:1.65}
 
-/* ===== TEAM PHOTOS ===== */
-.team-photo-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
-.team-photo-grid img{width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg)}
-.team-photo-grid img:first-child{grid-row:1/3;min-height:300px}
-.team-photo-grid img:not(:first-child){height:220px}
+/* ===== TEAM MEMBERS ===== */
+.team-lead-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.team-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px 24px;text-align:center;transition:all .4s var(--ease)}
+.team-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.team-avatar{width:100px;height:100px;border-radius:50%;margin:0 auto 16px;overflow:hidden;background:var(--bg-warm);display:flex;align-items:center;justify-content:center;border:2px solid var(--border);position:relative}
+.team-avatar img{width:100%;height:100%;object-fit:cover}
+.team-avatar-initials{font-family:var(--font-h);font-size:28px;font-weight:700;color:var(--green)}
+.team-badge{position:absolute;bottom:-2px;right:-2px;background:var(--green);color:var(--white);font-size:9px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);letter-spacing:.04em;border:2px solid var(--white)}
+.team-card h4{font-size:17px;margin-bottom:4px}
+.team-role{font-family:var(--font-body);font-size:12px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.team-bio{font-size:13.5px;color:var(--text-muted);line-height:1.65}
+
+/* ===== TEAM PHOTOS (Impressionen) ===== */
+.team-photo-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:40px}
+.team-photo-strip img{width:100%;height:180px;object-fit:cover;border-radius:var(--radius)}
 
 /* ===== ENV BANNER ===== */
 .env-banner{position:relative;overflow:hidden}
@@ -110,13 +121,14 @@
   .tl-item:nth-child(even) .tl-content{order:0}
   .ops-grid{grid-template-columns:1fr}
   .locations-strip{grid-template-columns:1fr}
-  .team-photo-grid{grid-template-columns:1fr 1fr}
-  .team-photo-grid img:first-child{grid-row:auto;height:220px;min-height:auto}
-  .team-photo-grid img{height:220px}
   .quote-band-v2{padding:56px 0}
   .proof-grid{grid-template-columns:1fr 1fr}
   .env-stats{gap:32px}
   .env-stat-num{font-size:36px}
+  .team-lead-grid{grid-template-columns:1fr 1fr}
+  .team-grid{grid-template-columns:1fr 1fr}
+  .team-photo-strip{grid-template-columns:repeat(3,1fr)}
+  .team-photo-strip img{height:150px}
 }
 @media(max-width:600px){
   .trust-numbers{grid-template-columns:repeat(3,1fr)}
@@ -126,9 +138,6 @@
   .trust-num-label{font-size:8px}
   .trust-pillars{grid-template-columns:1fr}
   .story-img-wrap img{height:220px}
-  .team-photo-grid{grid-template-columns:1fr}
-  .team-photo-grid img{height:200px}
-  .team-photo-grid img:first-child{height:240px}
   .tl-year{font-size:18px}
   .quote-mark{font-size:48px;margin-bottom:-12px}
   .quote-v2{font-size:17px}
@@ -139,6 +148,15 @@
   .env-stats{flex-direction:column;align-items:center;gap:20px}
   .env-stat-num{font-size:32px}
   .locations-strip{gap:12px}
+  .team-lead-grid{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr}
+  .team-card{padding:24px 20px}
+  .team-avatar{width:80px;height:80px}
+  .team-avatar-initials{font-size:22px}
+  .team-card h4{font-size:16px}
+  .team-bio{font-size:12.5px}
+  .team-photo-strip{grid-template-columns:repeat(3,1fr);gap:6px}
+  .team-photo-strip img{height:120px}
 }
 </style>
 </head>
@@ -165,8 +183,8 @@
     <div class="reveal">
       <div class="label">Unsere Geschichte</div>
       <h2>Von 4 Hektar Experiment zu 130+ Hektar Verantwortung</h2>
-      <p style="margin:20px 0;">2009 standen wir zum ersten Mal vor einem Paulownia-Setzling. Was wir sahen, hat alles verändert: Ein Baum, der in einem Jahr wächst, wofür andere Bäume zehn brauchen. Der mehr CO₂ bindet als jeder andere. Und dessen Holz weltweit als Edelholz gehandelt wird.</p>
-      <p style="margin-bottom:24px;">Was als Experiment auf 4 Hektar begann, wurde zur Mission. Heute bewirtschaften wir eine der größten privaten Paulownia-Plantagen Europas — und jeder Baum gehört einem Menschen, der an diese Zukunft glaubt.</p>
+      <p style="margin:20px 0;">2009 standen wir zum ersten Mal vor einem Paulownia-Setzling. Was wir sahen, hat alles verändert: Ein Baum, der in einem Jahr wächst, wofür andere zehn brauchen. Der mehr CO₂ bindet als jeder andere. Und dessen Holz weltweit als Edelholz gehandelt wird.</p>
+      <p style="margin-bottom:24px;">Was als Experiment auf 4 Hektar begann, wurde zur Mission. Heute bewirtschaften wir eine der größten privaten Paulownia-Plantagen Europas.</p>
       <div style="display:flex;gap:32px;flex-wrap:wrap;">
         <div><span style="font-family:var(--font-h);font-size:28px;font-weight:800;color:var(--green);">2009</span><br><span style="font-size:12px;color:var(--text-dim);">Erster Setzling gepflanzt</span></div>
         <div><span style="font-family:var(--font-h);font-size:28px;font-weight:800;color:var(--green);">2024</span><br><span style="font-size:12px;color:var(--text-dim);">Eigenes Mikropropagation-Labor</span></div>
@@ -183,10 +201,10 @@
 <section class="bg-light"><div class="container">
   <div class="section-header center reveal"><div class="label center">Transparenz als Prinzip</div><h2>Warum Baumbesitzer uns vertrauen</h2><p>Keine Versprechen — nur Fakten, Zugang und Nachvollziehbarkeit.</p></div>
   <div class="trust-pillars">
-    <div class="trust-pillar reveal"><div class="icon-box green"><i data-lucide="map-pin"></i></div><h4>Jederzeit besuchbar</h4><p>Deine Bäume stehen auf unserer Plantage. Du kannst sie jederzeit besuchen — wir organisieren die Führung.</p></div>
-    <div class="trust-pillar reveal reveal-delay-1"><div class="icon-box green"><i data-lucide="file-check"></i></div><h4>Baum-Zertifikat</h4><p>Persönlicher Eigentumsnachweis mit GPS-Koordinaten, Baumanzahl und deinem Namen.</p></div>
-    <div class="trust-pillar reveal reveal-delay-2"><div class="icon-box green"><i data-lucide="shield-check"></i></div><h4>Eigene Setzlingzucht</h4><p>Mikropropagation im hauseigenen Labor. Vollständige Qualitätskontrolle vom Samen bis zur Ernte.</p></div>
-    <div class="trust-pillar reveal reveal-delay-3"><div class="icon-box green"><i data-lucide="camera"></i></div><h4>24/7 Überwachung</h4><p>Videoüberwachung rund um die Uhr. Professionelles Team vor Ort. Regelmäßige Updates.</p></div>
+    <div class="trust-pillar reveal"><div class="icon-box green"><i data-lucide="map-pin"></i></div><h4>Jederzeit besuchbar</h4><p>Deine Bäume stehen auf unserer Plantage. Du kannst sie jederzeit besuchen.</p></div>
+    <div class="trust-pillar reveal reveal-delay-1"><div class="icon-box green"><i data-lucide="file-check"></i></div><h4>Baum-Zertifikat</h4><p>Persönlicher Eigentumsnachweis mit GPS-Koordinaten und deinem Namen.</p></div>
+    <div class="trust-pillar reveal reveal-delay-2"><div class="icon-box green"><i data-lucide="shield-check"></i></div><h4>Eigene Setzlingzucht</h4><p>Mikropropagation im hauseigenen Labor. Vollständige Qualitätskontrolle.</p></div>
+    <div class="trust-pillar reveal reveal-delay-3"><div class="icon-box green"><i data-lucide="camera"></i></div><h4>24/7 Überwachung</h4><p>Videoüberwachung rund um die Uhr. Professionelles Team vor Ort.</p></div>
   </div>
 </div></section>
 
@@ -194,14 +212,83 @@
 <section class="bg-white"><div class="container">
   <div class="section-header center reveal"><div class="label center">Unsere Baumbesitzer</div><h2>Sie kommen. Sie sehen. Sie wissen.</h2><p>Baumbesitzer aus ganz Europa besuchen regelmäßig ihre Bäume. Vertrauen durch Erleben.</p></div>
   <div class="proof-grid reveal">
-    <div class="proof-card"><img src="/assets/img/investor-visit-man.jpg" alt="Baumbesitzer bei seinen Paulownia-Bäumen" loading="lazy"><div class="proof-card-overlay"><p>Baumbesitzer vor Ort — Bäume bereits über 6 Meter hoch.</p></div></div>
-    <div class="proof-card"><img src="/assets/img/investor-visit-woman.jpg" alt="Baumbesitzerin auf der Plantage" loading="lazy"><div class="proof-card-overlay"><p>Persönlicher Besuch — greifbarer Sachwert auf eigener Parzelle.</p></div></div>
-    <div class="proof-card"><img src="/assets/img/investor-tour.jpg" alt="Plantagenführung Greenchild" loading="lazy"><div class="proof-card-overlay"><p>Geführte Tour durch die Plantage für alle Baumbesitzer.</p></div></div>
+    <div class="proof-card"><img src="/assets/img/investor-visit-man.jpg" alt="Baumbesitzer" loading="lazy"><div class="proof-card-overlay"><p>Baumbesitzer vor Ort — Bäume bereits über 6 Meter hoch.</p></div></div>
+    <div class="proof-card"><img src="/assets/img/investor-visit-woman.jpg" alt="Baumbesitzerin" loading="lazy"><div class="proof-card-overlay"><p>Persönlicher Besuch — greifbarer Sachwert auf eigener Parzelle.</p></div></div>
+    <div class="proof-card"><img src="/assets/img/investor-tour.jpg" alt="Plantagenführung" loading="lazy"><div class="proof-card-overlay"><p>Geführte Tour durch die Plantage für alle Baumbesitzer.</p></div></div>
   </div>
 </div></section>
 
 <!-- QUOTE -->
 <div class="quote-band-v2"><div class="container reveal"><div class="quote-mark">"</div><div class="quote-v2">Wir wollten nie ein Unternehmen bauen, das Bäume verkauft. Wir wollten ein Unternehmen bauen, dem man seine Bäume anvertraut.</div><div class="quote-attr-v2">— Greenchild Gründerteam</div></div></div>
+
+<!-- ========== TEAM ========== -->
+<section class="bg-white"><div class="container">
+  <div class="section-header center reveal"><div class="label center">Führungsteam</div><h2>Die Menschen hinter Greenchild</h2><p>Erfahrung aus Landwirtschaft, Wissenschaft und Wirtschaft — vereint in einer Mission.</p></div>
+
+  <!-- Gründer + Investor -->
+  <div class="team-lead-grid">
+    <div class="team-card reveal">
+      <div class="team-avatar">
+        <!-- BILD ERSETZEN: <img src="/assets/img/team-nazim.jpg" alt="Nazim Azemi"> -->
+        <span class="team-avatar-initials">NA</span>
+        <div class="team-badge">Gründer</div>
+      </div>
+      <h4>Nazim Azemi</h4>
+      <div class="team-role">Gründer &amp; Geschäftsführer</div>
+      <p class="team-bio">Visionär hinter Greenchild. Seit 2009 im Paulownia-Anbau. Hat das Unternehmen von 4 Hektar Experiment zu 130+ Hektar Europas größter privater Plantage aufgebaut.</p>
+    </div>
+    <div class="team-card reveal reveal-delay-1">
+      <div class="team-avatar">
+        <!-- BILD ERSETZEN: <img src="/assets/img/team-josef.jpg" alt="Josef Fürnkas"> -->
+        <span class="team-avatar-initials">JF</span>
+        <div class="team-badge">Investor</div>
+      </div>
+      <h4>Josef Fürnkas</h4>
+      <div class="team-role">Strategischer Investor</div>
+      <p class="team-bio">Erfahrener Unternehmer und strategischer Partner. Sein Engagement und Netzwerk treiben das internationale Wachstum von Greenchild voran.</p>
+    </div>
+  </div>
+
+  <!-- Experten-Team -->
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <div class="team-avatar">
+        <!-- BILD ERSETZEN: <img src="/assets/img/team-jeton.jpg" alt="Jeton Shala"> -->
+        <span class="team-avatar-initials">JS</span>
+      </div>
+      <h4>Dr. Jeton Shala</h4>
+      <div class="team-role">Labor- &amp; Forschungsdirektor</div>
+      <p class="team-bio">Doktor der Pharmazie mit 20+ Jahren Erfahrung in Laborwissenschaft und Agrar-Innovation. Leitet die ISO-Implementierung und die Entwicklung der patentierten Greenchild-Kiri Setzlinge.</p>
+    </div>
+    <div class="team-card reveal reveal-delay-1">
+      <div class="team-avatar">
+        <!-- BILD ERSETZEN: <img src="/assets/img/team-sonja.jpg" alt="Prof. Dr. Sonja Simic"> -->
+        <span class="team-avatar-initials">SS</span>
+      </div>
+      <h4>Prof. Dr. Sonja Simic</h4>
+      <div class="team-role">Wissenschaftliche Beraterin</div>
+      <p class="team-bio">25+ Jahre Forschung in Pflanzen-Biotechnologie. Spezialisiert auf In-vitro-Kulturen und Mikropropagation. 65+ wissenschaftliche Publikationen in internationalen Fachzeitschriften.</p>
+    </div>
+    <div class="team-card reveal reveal-delay-2">
+      <div class="team-avatar">
+        <!-- BILD ERSETZEN: <img src="/assets/img/team-andreas.jpg" alt="Andreas Dering"> -->
+        <span class="team-avatar-initials">AD</span>
+      </div>
+      <h4>Andreas Dering</h4>
+      <div class="team-role">Fachberater Agrar</div>
+      <p class="team-bio">Geschäftsführer des Maschinenring Rheinland-West. Bringt tiefes Wissen in landwirtschaftlichen Großbetrieben, Ressourcenoptimierung und nachhaltiger Entwicklung ein.</p>
+    </div>
+  </div>
+
+  <!-- Impressionen vom Team -->
+  <div class="team-photo-strip reveal">
+    <img src="/assets/img/team-planting.jpg" alt="Team bei der Pflanzung" loading="lazy">
+    <img src="/assets/img/worker-portrait.jpg" alt="Plantagenarbeiter" loading="lazy">
+    <img src="/assets/img/team-wood-logs.jpg" alt="Paulownia-Holz" loading="lazy">
+    <img src="/assets/img/team-young.jpg" alt="Team" loading="lazy">
+    <img src="/assets/img/team-action.jpg" alt="Team bei der Arbeit" loading="lazy">
+  </div>
+</div></section>
 
 <!-- TIMELINE -->
 <section class="bg-light"><div class="container">
@@ -209,7 +296,7 @@
   <div class="timeline-v2">
     <div class="tl-item reveal"><div class="tl-content"><div class="tl-year">2009</div><div class="tl-text"><strong>Der Anfang.</strong> Erste Experimente mit Paulownia in Südosteuropa. 4 Hektar.</div></div><div class="tl-dot"></div><div class="tl-spacer"></div></div>
     <div class="tl-item reveal"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><div class="tl-year">2010</div><div class="tl-text"><strong>Erste Plantage.</strong> Paulownia wächst exzellent unter südosteuropäischen Bedingungen.</div></div></div>
-    <div class="tl-item reveal"><div class="tl-content"><div class="tl-year">2020</div><div class="tl-text"><strong>Greenchild Group LLC gegründet.</strong> Phoenix One: 35 Hektar in Ferizaj, Kosovo.</div><div class="tl-highlight">Unternehmensgründung</div></div><div class="tl-dot"></div><div class="tl-spacer"></div></div>
+    <div class="tl-item reveal"><div class="tl-content"><div class="tl-year">2020</div><div class="tl-text"><strong>Greenchild Group LLC gegründet.</strong> Phoenix One: 35 Hektar in Ferizaj.</div><div class="tl-highlight">Unternehmensgründung</div></div><div class="tl-dot"></div><div class="tl-spacer"></div></div>
     <div class="tl-item reveal"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><div class="tl-year">2022</div><div class="tl-text"><strong>Expansion auf 85 Hektar.</strong> Erste Baumbesitzer aus DACH.</div><div class="tl-highlight">DACH-Expansion</div></div></div>
     <div class="tl-item reveal"><div class="tl-content"><div class="tl-year">2023</div><div class="tl-text"><strong>Internationales Wachstum.</strong> Expansion nach Nordmazedonien. 80.000+ Bäume.</div></div><div class="tl-dot"></div><div class="tl-spacer"></div></div>
     <div class="tl-item reveal"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><div class="tl-year">2024</div><div class="tl-text"><strong>130+ Hektar.</strong> Eigenes Mikropropagation-Labor.</div><div class="tl-highlight">Eigenes Labor</div></div></div>
@@ -220,21 +307,9 @@
 <section class="bg-white"><div class="container">
   <div class="section-header center reveal"><div class="label center">So arbeiten wir</div><h2>Professioneller Betrieb auf jedem Level</h2></div>
   <div class="ops-grid">
-    <div class="ops-card reveal">
-      <h4><i data-lucide="sprout"></i> Setzlingzucht</h4>
-      <p>Vom Samen bis zum pflanzfertigen Setzling — alles in eigener Hand.</p>
-      <ul><li>Mikropropagation im hauseigenen Labor</li><li>Geprüfte Paulownia-Hybride</li><li>Qualitätskontrolle vor jeder Pflanzung</li><li>Keine Fremdsetzlinge</li></ul>
-    </div>
-    <div class="ops-card reveal reveal-delay-1">
-      <h4><i data-lucide="trees"></i> Plantagenbetrieb</h4>
-      <p>Professionelles Team vor Ort — 365 Tage im Jahr.</p>
-      <ul><li>Erfahrene Forstexperten und Landwirte</li><li>Regelmäßige Bewässerung und Düngung</li><li>Schädlings- und Krankheitsmonitoring</li><li>GPS-dokumentierte Baumparzellen</li></ul>
-    </div>
-    <div class="ops-card reveal reveal-delay-2">
-      <h4><i data-lucide="lock"></i> Sicherheit</h4>
-      <p>Dein Eigentum ist geschützt — physisch und rechtlich.</p>
-      <ul><li>Videoüberwachung rund um die Uhr</li><li>Zaun- und Zugangskontrolle</li><li>Persönliches Baum-Zertifikat</li><li>Transparente Berichterstattung</li></ul>
-    </div>
+    <div class="ops-card reveal"><h4><i data-lucide="sprout"></i> Setzlingzucht</h4><p>Vom Samen bis zum Setzling — alles in eigener Hand.</p><ul><li>Mikropropagation im eigenen Labor</li><li>Geprüfte Paulownia-Hybride</li><li>Qualitätskontrolle vor jeder Pflanzung</li></ul></div>
+    <div class="ops-card reveal reveal-delay-1"><h4><i data-lucide="trees"></i> Plantagenbetrieb</h4><p>Professionelles Team — 365 Tage im Jahr.</p><ul><li>Erfahrene Forstexperten und Landwirte</li><li>Bewässerung und Düngung</li><li>GPS-dokumentierte Parzellen</li></ul></div>
+    <div class="ops-card reveal reveal-delay-2"><h4><i data-lucide="lock"></i> Sicherheit</h4><p>Dein Eigentum ist geschützt.</p><ul><li>Videoüberwachung 24/7</li><li>Zaun- und Zugangskontrolle</li><li>Persönliches Baum-Zertifikat</li></ul></div>
   </div>
 </div></section>
 
@@ -242,29 +317,8 @@
 <section class="bg-warm"><div class="container">
   <div class="section-header center reveal"><div class="label center">Unsere Standorte</div><h2>Zwei Standorte. Ein Standard.</h2></div>
   <div class="locations-strip">
-    <div class="loc-card reveal">
-      <div class="loc-flag">Kosovo</div>
-      <h4>Phoenix One — Hauptplantage</h4>
-      <p>130+ Hektar in Ferizaj. Optimales Klima, nährstoffreicher Boden (pH 6,5), 573m Höhenlage. Mikropropagation-Labor vor Ort.</p>
-      <p style="font-size:12px;color:var(--text-dim);margin-top:12px;">N 42.397552°, E 21.106022°</p>
-    </div>
-    <div class="loc-card reveal reveal-delay-1">
-      <div class="loc-flag">Nordmazedonien</div>
-      <h4>Expansion 2023</h4>
-      <p>Zweiter Standort mit vergleichbaren Klimabedingungen. Diversifizierung der Anbauflächen für maximale Sicherheit und Skalierung.</p>
-    </div>
-  </div>
-</div></section>
-
-<!-- TEAM -->
-<section class="bg-white"><div class="container">
-  <div class="section-header center reveal"><div class="label center">Unser Team</div><h2>Die Menschen hinter jedem Baum</h2><p>Von der Setzlingzucht bis zur Ernte — unser Team sorgt dafür, dass jeder Baum das Beste bekommt.</p></div>
-  <div class="team-photo-grid reveal">
-    <img src="/assets/img/team-planting.jpg" alt="Team bei der Pflanzung" loading="lazy">
-    <img src="/assets/img/worker-portrait.jpg" alt="Plantagenarbeiter" loading="lazy">
-    <img src="/assets/img/team-wood-logs.jpg" alt="Team mit Paulownia-Holz" loading="lazy">
-    <img src="/assets/img/team-young.jpg" alt="Greenchild Team" loading="lazy">
-    <img src="/assets/img/team-action.jpg" alt="Team bei der Arbeit" loading="lazy">
+    <div class="loc-card reveal"><div class="loc-flag">Kosovo</div><h4>Phoenix One — Hauptplantage</h4><p>130+ Hektar in Ferizaj. Optimales Klima, pH 6,5, 573m Höhenlage. Mikropropagation-Labor vor Ort.</p><p style="font-size:12px;color:var(--text-dim);margin-top:12px;">N 42.397552°, E 21.106022°</p></div>
+    <div class="loc-card reveal reveal-delay-1"><div class="loc-flag">Nordmazedonien</div><h4>Expansion 2023</h4><p>Zweiter Standort mit vergleichbaren Klimabedingungen. Diversifizierung für maximale Sicherheit.</p></div>
   </div>
 </div></section>
 
@@ -272,7 +326,7 @@
 <section class="env-banner" style="padding:100px 0;"><div class="env-bg"><img src="/assets/img/team-action.jpg" alt="Plantage"></div><div class="container" style="text-align:center;">
   <div class="label center" style="color:var(--green-light);">Umweltbeitrag</div>
   <h2 style="color:#fff;margin-bottom:16px;">Jeder Baum zählt</h2>
-  <p style="color:rgba(255,255,255,.65);max-width:520px;margin:0 auto 40px;font-size:16px;">Unsere Plantage ist nicht nur ein Sachwert — sie ist aktiver Klimaschutz. Paulownia bindet bis zu 10x mehr CO₂ als andere Baumarten.</p>
+  <p style="color:rgba(255,255,255,.65);max-width:520px;margin:0 auto 40px;font-size:16px;">Paulownia bindet bis zu 10x mehr CO₂ als andere Baumarten. Unsere Plantage ist aktiver Klimaschutz.</p>
   <div class="env-stats">
     <div><div class="env-stat-num" data-count="1100000">0</div><div class="env-stat-label">kg CO₂ pro Jahr</div></div>
     <div><div class="env-stat-num" data-count="300000">0</div><div class="env-stat-label">kg Sauerstoff pro Jahr</div></div>
