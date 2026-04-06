@@ -209,7 +209,7 @@
     <div class="container">
         <div class="section-header reveal"><div class="label">Dein Baum wächst</div><h2>12 Jahre. Von der Pflanzung zum Edelholz.</h2><p>Jedes Jahr steigt das Holzvolumen — und damit der Substanzwert deines Eigentums.</p></div>
         <div class="growth-grid">
-            <div class="tree-visual reveal"><div class="tree-ground-line"></div><div class="tree-trunk" id="treeTrunk"></div><div class="tree-crown" id="treeCrown"></div><div class="tree-year-display" id="growthYear">Jahr 1</div></div>
+            <div class="tree-visual reveal"><div class="tree-ground-line"></div><div class="tree-trunk" id="treeTrunk"></div><div class="tree-crown" id="treeCrown"></div><div class="tree-year-display" id="growthYear">Jahr 1</div><div id="treeDisc" style="position:absolute;bottom:16px;right:20px;width:24px;height:24px;border-radius:50%;transition:all 1s var(--ease);"></div><div id="discDiameter" style="position:absolute;bottom:0;right:20px;font-size:10px;font-weight:600;color:var(--text-dim);text-align:center;white-space:nowrap;transform:translateX(calc(50% - 50%));transition:all .5s;">Ø 7 cm</div></div>
             <div class="reveal reveal-delay-1">
                 <div style="margin-bottom:32px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span style="font-size:12px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;">Wachstumsjahr</span><span id="growthYear2" style="color:var(--green);font-family:var(--font-h);font-weight:700;">Jahr 1</span></div><input type="range" min="1" max="12" value="1" class="growth-slider" id="growthSlider"></div>
                 <div class="growth-data-grid">
@@ -293,7 +293,7 @@
     <div class="container">
         <div class="section-header center reveal"><div class="label center">Von der Wurzel zum Edelholz</div><h2>Der Weg deines Baumes</h2></div>
         <div class="journey-timeline reveal">
-            <div class="journey-step"><div class="journey-dot">1</div><img src="/assets/img/seedlings-truck.jpg" alt="Setzlinge" class="journey-img" loading="lazy"><h4>Aufzucht</h4><p>Setzlinge aus eigenen Gewächshäusern.</p></div>
+            <div class="journey-step"><div class="journey-dot">1</div><img src="/assets/img/seedlings-greenhouse-wide.jpg" alt="Laborzucht" class="journey-img" loading="lazy"><h4>Laborzucht</h4><p>Mikropropagation im Labor — jeder Setzling geprüft.</p></div>
             <div class="journey-step"><div class="journey-dot">2</div><img src="/assets/img/worker-watering.jpg" alt="Pflanzung" class="journey-img" loading="lazy"><h4>Pflanzung</h4><p>Professionelle Pflanzung mit Bewässerung.</p></div>
             <div class="journey-step"><div class="journey-dot">3</div><img src="/assets/img/hero-plantation-sunset.jpg" alt="Wachstum" class="journey-img" loading="lazy"><h4>Wachstum</h4><p>Bis zu 5 Meter pro Jahr.</p></div>
             <div class="journey-step"><div class="journey-dot">4</div><img src="/assets/img/team-wood-logs.jpg" alt="Ernte" class="journey-img" loading="lazy"><h4>Ernte</h4><p>Ca. 1,1–1,4 m³ Edelholz pro Baum.</p></div>
@@ -315,14 +315,10 @@
         <div class="footer-brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert. Ca. 360 Hektar in 3 Ländern.</p></div>
         <div><h5>Unternehmen</h5><ul><li><a href="/de/ueber-uns.html">Über uns</a></li><li><a href="/de/plantagen.html">Plantagen</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div>
         <div><h5>Wissen</h5><ul><li><a href="/de/kiri-baum.html">Der Kiri-Baum</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li></ul></div>
-        <div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="mailto:info@greenchild.eu">info@greenchild.eu</a></li><li style="color:var(--text-inv-muted);font-size:13px;margin-top:8px;">Greenchild Group LLC<br>Ferizaj, Kosovo</li></ul></div>
+        <div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="/cdn-cgi/l/email-protection#3c55525a537c5b4e5959525f54555058125949"><span class="__cf_email__" data-cfemail="cea7a0a8a18ea9bcababa0ada6a7a2aae0abbb">[email&#160;protected]</span></a></li><li style="color:var(--text-inv-muted);font-size:13px;margin-top:8px;">Greenchild Group LLC<br>Ferizaj, Kosovo</li></ul></div>
     </div>
     <div class="footer-bottom"><span>&copy; 2025 Greenchild Group LLC</span><div class="footer-legal"><a href="#" data-modal="impressumModal">Impressum</a><a href="#" data-modal="datenschutzModal">Datenschutz</a><a href="#">AGB</a></div></div>
 </div></footer>
 
-<div class="modal-overlay" id="impressumModal"><div class="modal"><button class="modal-close">&times;</button><h3>Impressum</h3><p><strong>Greenchild Group LLC</strong><br>M.Meha ecke "Greenchild street"<br>70000 Ferizaj, Kosovo</p><p><strong>Kontakt:</strong><br>+49 151 191 333 31<br>info@greenchild.eu</p></div></div>
-<div class="modal-overlay" id="datenschutzModal"><div class="modal"><button class="modal-close">&times;</button><h3>Datenschutzerklärung</h3><p>Die Datenschutzerklärung wird gemäß DSGVO hier eingefügt.</p></div></div>
-
-<script src="/js/main.js"></script>
-</body>
-</html>
+<div class="modal-overlay" id="impressumModal"><div class="modal"><button class="modal-close">&times;</button><h3>Impressum</h3><p><strong>Greenchild Group LLC</strong><br>M.Meha ecke "Greenchild street"<br>70000 Ferizaj, Kosovo</p><p><strong>Kontakt:</strong><br>+49 151 191 333 31<br><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5a33343c351a3d283f3f34393233363e743f2f">[email&#160;protected]</a></p></div></div>
+<div class="modal-over
