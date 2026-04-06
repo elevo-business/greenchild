@@ -28,19 +28,19 @@
 .bee-icon i{width:28px;height:28px;color:var(--green)}
 .bee-num{font-family:var(--font-h);font-size:32px;font-weight:800;color:var(--green)}
 /* ECOSYSTEM */
-.eco-wrap{position:relative;width:100%;max-width:540px;margin:0 auto;aspect-ratio:1/1}
+.eco-wrap{position:relative;width:100%;max-width:620px;margin:0 auto;aspect-ratio:1/1}
 .eco-svg{position:absolute;inset:0;width:100%;height:100%;z-index:1}
 .eco-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:3;pointer-events:none}
-.eco-center-tree{width:72px;height:72px;margin:0 auto 10px;border-radius:50%;background:var(--green-pale);border:1.5px solid rgba(0,168,107,.15);display:flex;align-items:center;justify-content:center}
-.eco-center-tree i{width:28px;height:28px;color:var(--green)}
-.eco-center-text{font-family:var(--font-body);font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.14em}
+.eco-center-tree{width:84px;height:84px;margin:0 auto 10px;border-radius:50%;background:var(--green-pale);border:1.5px solid rgba(0,168,107,.15);display:flex;align-items:center;justify-content:center}
+.eco-center-tree i{width:34px;height:34px;color:var(--green)}
+.eco-center-text{font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.14em}
 .eco-node{position:absolute;z-index:4;cursor:pointer;transform:translate(-50%,-50%);transition:transform .35s var(--ease);-webkit-tap-highlight-color:transparent;user-select:none}
 .eco-node:hover,.eco-node:active{transform:translate(-50%,-50%) scale(1.1)}
 .eco-node.active{transform:translate(-50%,-50%) scale(1.12)}
-.eco-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid;transition:all .4s var(--ease);margin:0 auto}
-.eco-icon i{width:22px;height:22px}
+.eco-icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid;transition:all .4s var(--ease);margin:0 auto}
+.eco-icon i{width:26px;height:26px}
 .eco-node.active .eco-icon{box-shadow:0 0 0 6px rgba(0,168,107,.1);transform:scale(1.08)}
-.eco-node-label{font-family:var(--font-body);font-size:11.5px;font-weight:500;color:var(--text);text-align:center;margin-top:5px;white-space:nowrap}
+.eco-node-label{font-family:var(--font-body);font-size:13px;font-weight:500;color:var(--text);text-align:center;margin-top:5px;white-space:nowrap}
 .eco-node.active .eco-node-label{color:var(--green);font-weight:600}
 .eco-sonne .eco-icon{background:#FFF8EB;border-color:#EF9F27;color:#BA7517}
 .eco-wasser .eco-icon{background:#EBF5FF;border-color:#378ADD;color:#185FA5}
@@ -76,7 +76,7 @@
 .nav-dropdown>.nav-link::after{content:'';width:4px;height:4px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);transition:transform .3s;margin-top:-2px}
 .nav-dropdown:hover>.nav-link::after{transform:rotate(-135deg)}
 .nav-sub{position:absolute;top:100%;left:0;min-width:180px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:6px;box-shadow:var(--shadow);opacity:0;visibility:hidden;transform:translateY(8px);transition:all .25s var(--ease);z-index:100}
-.nav-dropdown:hover .nav-sub{opacity:1;visibility:visible;transform:translateY(4px)}
+.nav-dropdown:hover .nav-sub,.nav-dropdown.open .nav-sub{opacity:1;visibility:visible;transform:translateY(4px)}
 .nav-sub a{display:block;padding:10px 14px;font-size:13px;font-weight:500;color:var(--text-body);border-radius:var(--radius-sm);text-decoration:none;transition:all .2s}
 .nav-sub a:hover{background:var(--green-soft);color:var(--green)}
 .header-transparent .nav-sub{background:rgba(12,46,32,.92);border-color:rgba(255,255,255,.1);backdrop-filter:blur(16px)}
@@ -132,7 +132,7 @@
   <div class="container" style="position:relative;z-index:2;">
   <div class="section-header center reveal"><div class="label center" style="color:var(--green-light);">Das Ökosystem</div><h2 style="color:#fff;">Ein Kreislauf, der sich selbst erneuert</h2><p style="color:rgba(255,255,255,.55);">Sonne, Wasser, Boden, Bienen und Schafe arbeiten zusammen. Nichts wird verschwendet.</p></div>
   <div class="eco-wrap reveal">
-    <svg class="eco-svg" viewBox="0 0 540 540"><circle cx="270" cy="270" r="205" fill="none" stroke="rgba(45,212,160,.04)" stroke-width="40"/><circle cx="270" cy="270" r="205" fill="none" stroke="rgba(45,212,160,.12)" stroke-width="1" stroke-dasharray="3 9"/><circle cx="270" cy="270" r="205" fill="none" class="eco-flow" stroke="rgba(45,212,160,.25)" stroke-width="1.5"/><g fill="var(--green-light)" opacity=".2"><polygon points="270,64 276,76 264,76" transform="rotate(22.5 270 270)"/><polygon points="270,64 276,76 264,76" transform="rotate(112.5 270 270)"/><polygon points="270,64 276,76 264,76" transform="rotate(202.5 270 270)"/><polygon points="270,64 276,76 264,76" transform="rotate(292.5 270 270)"/></g></svg>
+    <svg class="eco-svg" viewBox="0 0 540 540"><circle cx="270" cy="270" r="205" fill="none" stroke="rgba(45,212,160,.07)" stroke-width="50"/><circle cx="270" cy="270" r="205" fill="none" stroke="rgba(45,212,160,.2)" stroke-width="1" stroke-dasharray="3 9"/><circle cx="270" cy="270" r="205" fill="none" class="eco-flow" stroke="rgba(45,212,160,.4)" stroke-width="1.5"/><g fill="var(--green-light)" opacity=".2"><polygon points="270,64 276,76 264,76" transform="rotate(22.5 270 270)"/><polygon points="270,64 276,76 264,76" transform="rotate(112.5 270 270)"/><polygon points="270,64 276,76 264,76" transform="rotate(202.5 270 270)"/><polygon points="270,64 276,76 264,76" transform="rotate(292.5 270 270)"/></g></svg>
     <div class="eco-particle"></div><div class="eco-particle"></div><div class="eco-particle"></div><div class="eco-particle"></div>
     <div class="eco-center"><div class="eco-center-tree" style="background:rgba(0,168,107,.12);border-color:rgba(45,212,160,.25);"><i data-lucide="trees" style="color:var(--green-light);"></i></div><div class="eco-center-text" style="color:rgba(255,255,255,.45);">Kreislauf</div></div>
     <div class="eco-node eco-sonne" style="left:50%;top:5%;" data-idx="0"><div class="eco-icon" style="background:rgba(239,159,39,.12);border-color:rgba(239,159,39,.4);backdrop-filter:blur(8px);"><i data-lucide="sun" style="color:#F5C842;"></i></div><div class="eco-node-label" style="color:rgba(255,255,255,.7);">Sonne</div></div>
@@ -144,8 +144,8 @@
     <div class="eco-node eco-baum" style="left:5%;top:50%;" data-idx="6"><div class="eco-icon" style="background:rgba(0,168,107,.12);border-color:rgba(45,212,160,.4);backdrop-filter:blur(8px);"><i data-lucide="tree-pine" style="color:var(--green-light);"></i></div><div class="eco-node-label" style="color:rgba(255,255,255,.7);">Baum</div></div>
     <div class="eco-node eco-co2" style="left:18%;top:18%;" data-idx="7"><div class="eco-icon" style="background:rgba(29,158,117,.12);border-color:rgba(29,158,117,.4);backdrop-filter:blur(8px);"><i data-lucide="wind" style="color:#3DE8B0;"></i></div><div class="eco-node-label" style="color:rgba(255,255,255,.7);">CO₂</div></div>
   </div>
-  <div class="eco-info" id="ecoInfo" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);backdrop-filter:blur(12px);"><div class="eco-info-head"><div class="eco-info-dot" id="ecoInfoDot"></div><div class="eco-info-title" id="ecoInfoTitle" style="color:#fff;">Tippe auf ein Element</div><div class="eco-info-arrow" id="ecoInfoArrow" style="color:rgba(255,255,255,.3);"></div></div><div class="eco-info-desc" id="ecoInfoDesc" style="color:rgba(255,255,255,.55);">Entdecke, wie jedes Element im Ökosystem zusammenspielt.</div></div>
-  <div class="eco-controls"><button class="eco-btn" id="ecoPlayBtn" onclick="ecoTogglePlay()" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.15);color:rgba(255,255,255,.7);">Kreislauf starten</button></div>
+  <div class="eco-info" id="ecoInfo" style="background:rgba(255,255,255,.1);border:2px solid rgba(45,212,160,.3);backdrop-filter:blur(16px);"><div class="eco-info-head"><div class="eco-info-dot" id="ecoInfoDot"></div><div class="eco-info-title" id="ecoInfoTitle" style="color:#fff;">Tippe auf ein Element</div><div class="eco-info-arrow" id="ecoInfoArrow" style="color:rgba(255,255,255,.3);"></div></div><div class="eco-info-desc" id="ecoInfoDesc" style="color:rgba(255,255,255,.55);">Entdecke, wie jedes Element im Ökosystem zusammenspielt.</div></div>
+  <div class="eco-controls"><button class="eco-btn" id="ecoPlayBtn" onclick="ecoTogglePlay()" style="background:rgba(45,212,160,.15);border-color:rgba(45,212,160,.4);color:var(--green-light);font-size:14px;padding:12px 28px;">Kreislauf starten</button></div>
 </div></section>
 
 <!-- GALERIE -->
@@ -172,7 +172,7 @@
   if(!nodes.length)return;
   nodes.forEach(function(n){n.addEventListener('click',function(){show(parseInt(this.dataset.idx))})});
   function show(i){var x=d[i];nodes.forEach(function(n){n.classList.remove('active')});nodes[i].classList.add('active');iDot.style.background=x.color;iT.textContent=x.title;iD.textContent=x.desc;iA.textContent='\u2192 '+x.next;info.classList.add('show')}
-  window.ecoTogglePlay=function(){if(pi){clearInterval(pi);pi=null;btn.classList.remove('playing');btn.textContent='Kreislauf starten';return}btn.classList.add('playing');btn.textContent='Stoppen';var i=0;show(0);pi=setInterval(function(){i=(i+1)%d.length;show(i)},2000)};
+  window.ecoTogglePlay=function(){if(pi){clearInterval(pi);pi=null;btn.classList.remove('playing');btn.textContent='Kreislauf starten';return}btn.classList.add('playing');btn.textContent='Stoppen';var i=0;show(0);pi=setInterval(function(){i=(i+1)%d.length;show(i)},4500)};
 })();
 </script>
 </body>
