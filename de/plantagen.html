@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Unsere Plantagen — Greenchild</title>
-<meta name="description" content="375+ Hektar Paulownia-Plantagen in 4 Ländern. Kosovo, Nordmazedonien, Albanien, Kroatien.">
+<meta name="description" content="Ca. 360 Hektar Paulownia-Plantagen in 3 Ländern. Kosovo, Nordmazedonien, Kroatien.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
 .advantage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.country-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.country-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .country-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px 22px;text-align:center;transition:all .4s var(--ease);position:relative;overflow:hidden}
 .country-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
 .country-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--green);transform:scaleX(0);transition:transform .4s;transform-origin:left}
@@ -68,8 +68,8 @@
 .eco-particle:nth-child(2){animation-delay:-2s;opacity:.25;width:4px;height:4px}
 .eco-particle:nth-child(3){animation-delay:-4.5s;opacity:.35;width:3px;height:3px}
 .eco-particle:nth-child(4){animation-delay:-6.5s;opacity:.2;width:4px;height:4px}
-@media(max-width:900px){.advantage-grid{grid-template-columns:1fr 1fr}.country-grid{grid-template-columns:repeat(2,1fr)}.bee-banner{flex-direction:column;text-align:center}.eco-wrap{max-width:420px}.eco-icon{width:48px;height:48px}.eco-icon i{width:20px;height:20px}.eco-node-label{font-size:10.5px}.eco-center-tree{width:60px;height:60px}}
-@media(max-width:600px){.advantage-grid{grid-template-columns:1fr}.country-grid{grid-template-columns:1fr 1fr}.country-ha{font-size:28px}.bee-banner{padding:24px 20px}.bee-num{font-size:26px}.eco-wrap{max-width:300px}.eco-icon{width:40px;height:40px}.eco-icon i{width:16px;height:16px}.eco-node-label{font-size:9px;margin-top:2px}.eco-center-tree{width:44px;height:44px}.eco-center-tree i{width:18px;height:18px}.eco-center-text{font-size:8.5px}.eco-info{padding:16px 18px;margin-top:20px;max-width:100%}.eco-info-title{font-size:14px}.eco-info-desc{font-size:12.5px}.eco-particle{display:none}.eco-controls{margin-top:14px}}
+@media(max-width:900px){.advantage-grid{grid-template-columns:1fr 1fr}.country-grid{grid-template-columns:repeat(3,1fr)}.bee-banner{flex-direction:column;text-align:center}.eco-wrap{max-width:420px}.eco-icon{width:48px;height:48px}.eco-icon i{width:20px;height:20px}.eco-node-label{font-size:10.5px}.eco-center-tree{width:60px;height:60px}}
+@media(max-width:600px){.advantage-grid{grid-template-columns:1fr}.country-grid{grid-template-columns:1fr}.country-ha{font-size:28px}.bee-banner{padding:24px 20px}.bee-num{font-size:26px}.eco-wrap{max-width:300px}.eco-icon{width:40px;height:40px}.eco-icon i{width:16px;height:16px}.eco-node-label{font-size:9px;margin-top:2px}.eco-center-tree{width:44px;height:44px}.eco-center-tree i{width:18px;height:18px}.eco-center-text{font-size:8.5px}.eco-info{padding:16px 18px;margin-top:20px;max-width:100%}.eco-info-title{font-size:14px}.eco-info-desc{font-size:12.5px}.eco-particle{display:none}.eco-controls{margin-top:14px}}
 </style>
 </head>
 <body>
@@ -77,22 +77,21 @@
 <header class="header" id="header"><div class="header-inner"><a href="/de/" class="logo"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" class="logo-img"></a><nav class="nav"><a href="/de/" class="nav-link">Start</a><a href="/de/ueber-uns.html" class="nav-link">Über uns</a><a href="/de/kiri-baum.html" class="nav-link">Der Kiri-Baum</a><a href="/de/plantagen.html" class="nav-link active">Plantagen</a><a href="/de/baumbesitzer.html" class="nav-link">Baumbesitzer werden</a><a href="/de/kontakt.html" class="nav-link">Kontakt</a><div class="nav-divider"></div><a href="/en/plantations.html" class="nav-lang">EN</a><a href="/de/kontakt.html" class="btn btn-primary btn-sm nav-cta">Gespräch anfragen</a></nav><button class="hamburger" id="menuToggle" aria-label="Menü"><span></span><span></span><span></span></button></div></header>
 <div class="mobile-nav" id="mobileNav"><a href="/de/">Start</a><a href="/de/ueber-uns.html">Über uns</a><a href="/de/kiri-baum.html">Der Kiri-Baum</a><a href="/de/plantagen.html">Plantagen</a><a href="/de/baumbesitzer.html">Baumbesitzer werden</a><a href="/de/kontakt.html">Kontakt</a><a href="/en/">English</a><a href="/de/kontakt.html" class="btn btn-primary" style="margin-top:16px;text-align:center;">Gespräch anfragen</a></div>
 
-<section class="page-hero"><div class="hero-bg"><img src="/assets/img/seedlings-truck.jpg" alt="Setzlinge"></div><div class="hero-overlay" style="background:linear-gradient(170deg,rgba(8,30,20,.8) 0%,rgba(12,46,32,.45) 50%,rgba(8,30,20,.85) 100%);"></div><div class="hero-grain"></div><div class="container"><div class="label light" style="animation:fadeUp .8s .2s both;">4 Länder &middot; 1 Standard</div><h1 style="animation:fadeUp .8s .4s both;">375+ Hektar.<br>4 Standorte.</h1><p style="animation:fadeUp .8s .6s both;">Kosovo, Nordmazedonien, Albanien und Kroatien — optimales Klima, professionelles Team, jeder Baum dokumentiert.</p><div class="hero-data-strip" style="animation:fadeUp .8s .8s both;"><div class="hero-data-item"><div class="hero-data-num">375+</div><div class="hero-data-label">Hektar gesamt</div></div><div class="hero-data-item"><div class="hero-data-num">200</div><div class="hero-data-label">Bienenvölker</div></div><div class="hero-data-item"><div class="hero-data-num">625</div><div class="hero-data-label">Bäume / Hektar</div></div></div></div></section>
+<section class="page-hero"><div class="hero-bg"><img src="/assets/img/seedlings-truck.jpg" alt="Setzlinge"></div><div class="hero-overlay" style="background:linear-gradient(170deg,rgba(8,30,20,.8) 0%,rgba(12,46,32,.45) 50%,rgba(8,30,20,.85) 100%);"></div><div class="hero-grain"></div><div class="container"><div class="label light" style="animation:fadeUp .8s .2s both;">3 Länder &middot; 1 Standard</div><h1 style="animation:fadeUp .8s .4s both;">Ca. 360 Hektar.<br>3 Standorte.</h1><p style="animation:fadeUp .8s .6s both;">Kosovo, Nordmazedonien und Kroatien — optimales Klima, professionelles Team, jeder Baum dokumentiert.</p><div class="hero-data-strip" style="animation:fadeUp .8s .8s both;"><div class="hero-data-item"><div class="hero-data-num">ca. 360</div><div class="hero-data-label">Hektar gesamt</div></div><div class="hero-data-item"><div class="hero-data-num">200</div><div class="hero-data-label">Bienenvölker</div></div><div class="hero-data-item"><div class="hero-data-num">625</div><div class="hero-data-label">Bäume / Hektar</div></div></div></div></section>
 
 <!-- LÄNDER-ÜBERSICHT -->
 <section class="bg-white"><div class="container">
-  <div class="section-header center reveal"><div class="label center">Unsere Standorte</div><h2>Vier Länder. Ein Qualitätsstandard.</h2></div>
+  <div class="section-header center reveal"><div class="label center">Unsere Standorte</div><h2>Drei Länder. Ein Qualitätsstandard.</h2></div>
   <div class="country-grid reveal">
-    <div class="country-card primary"><div class="country-flag">Kosovo</div><div class="country-ha">200 <span>ha</span></div><div class="country-name">Phoenix One &middot; Ferizaj</div></div>
-    <div class="country-card"><div class="country-flag">Nordmazedonien</div><div class="country-ha">100 <span>ha</span></div><div class="country-name">Expansion 2023</div></div>
-    <div class="country-card"><div class="country-flag">Kroatien</div><div class="country-ha">60 <span>ha</span></div><div class="country-name">Adriaregion</div></div>
-    <div class="country-card"><div class="country-flag">Albanien</div><div class="country-ha">15 <span>ha</span></div><div class="country-name">Pilotstandort</div></div>
+    <div class="country-card primary"><div class="country-flag">Kosovo</div><div class="country-ha">ca. 200 <span>ha</span></div><div class="country-name">Phoenix One &middot; Ferizaj</div></div>
+    <div class="country-card"><div class="country-flag">Nordmazedonien</div><div class="country-ha">ca. 100 <span>ha</span></div><div class="country-name">Expansion 2023</div></div>
+    <div class="country-card"><div class="country-flag">Kroatien</div><div class="country-ha">ca. 60 <span>ha</span></div><div class="country-name">Adriaregion</div></div>
   </div>
   <div style="text-align:center;margin-top:24px;" class="reveal"><p style="font-size:14px;color:var(--text-dim);">Diversifizierung über mehrere Standorte — maximale Sicherheit für jeden Baumbesitzer.</p></div>
 </div></section>
 
 <!-- PHOENIX ONE DETAIL -->
-<section class="bg-light"><div class="container"><div class="grid grid-split items-center gap-xl"><div class="reveal"><img src="/assets/img/hero-plantation-sunset.jpg" alt="Phoenix One" class="img-rounded-lg img-shadow" style="width:100%;height:360px;object-fit:cover;"></div><div class="reveal reveal-delay-1"><div class="label">Hauptplantage</div><h2>Phoenix One — Kosovo</h2><p style="margin:16px 0;">200 Hektar in Ferizaj. Optimales Klima, nährstoffreicher Boden (pH 6,5), 573m Höhenlage. Hier steht auch das Mikropropagation-Labor — in Zusammenarbeit mit der Universität Ss. Kyrill und Method in Skopje.</p><p style="font-size:13px;color:var(--text-dim);">N 42.397552°, E 21.106022°</p></div></div></div></section>
+<section class="bg-light"><div class="container"><div class="grid grid-split items-center gap-xl"><div class="reveal"><img src="/assets/img/hero-plantation-sunset.jpg" alt="Phoenix One" class="img-rounded-lg img-shadow" style="width:100%;height:360px;object-fit:cover;"></div><div class="reveal reveal-delay-1"><div class="label">Hauptplantage</div><h2>Phoenix One — Kosovo</h2><p style="margin:16px 0;">Ca. 200 Hektar in Ferizaj. Optimales Klima, nährstoffreicher Boden (pH 6,5), 573m Höhenlage. Hier steht auch das Mikropropagation-Labor — in Zusammenarbeit mit der Universität Ss. Kyrill und Method in Skopje.</p><p style="font-size:13px;color:var(--text-dim);">N 42.397552°, E 21.106022°</p></div></div></div></section>
 
 <!-- BIENEN -->
 <section class="bg-white"><div class="container">
@@ -131,7 +130,7 @@
 <!-- GALERIE -->
 <section class="bg-light"><div class="container"><div class="section-header center reveal"><div class="label center">Galerie</div><h2>Eindrücke von den Plantagen</h2></div><div class="gallery-grid reveal"><div class="gallery-item"><img src="/assets/img/hero-plantation-sunset.jpg" alt="Plantage" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/worker-watering.jpg" alt="Bewässerung" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/seedlings-truck.jpg" alt="Setzlinge" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/team-planting.jpg" alt="Pflanzung" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/team-action.jpg" alt="Team" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/beekeeper.jpg" alt="Imker" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/worker-portrait.jpg" alt="Team" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/investor-visit-woman.jpg" alt="Baumbesitzerin" loading="lazy"></div><div class="gallery-item"><img src="/assets/img/team-wood-logs.jpg" alt="Holz" loading="lazy"></div></div></div></section>
 
-<section class="cta-band"><div class="container reveal"><h2>Dein Baum wartet auf dich</h2><p>Ab 250 € pro Baum. Jederzeit besuchbar.</p><div class="btn-group" style="justify-content:center;"><a href="/de/baumbesitzer.html" class="btn btn-white btn-lg">Baumbesitzer werden</a><a href="/de/kontakt.html" class="btn btn-lg" style="border:1.5px solid rgba(255,255,255,.25);color:#fff;">Plantage besuchen</a></div></div></section>
+<section class="cta-band"><div class="container reveal"><h2>Dein Baum wartet auf dich</h2><p>Ab 249 € pro Baum. Jederzeit besuchbar.</p><div class="btn-group" style="justify-content:center;"><a href="/de/baumbesitzer.html" class="btn btn-white btn-lg">Baumbesitzer werden</a><a href="/de/kontakt.html" class="btn btn-lg" style="border:1.5px solid rgba(255,255,255,.25);color:#fff;">Plantage besuchen</a></div></div></section>
 
 <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert.</p></div><div><h5>Unternehmen</h5><ul><li><a href="/de/ueber-uns.html">Über uns</a></li><li><a href="/de/plantagen.html">Plantagen</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div><div><h5>Wissen</h5><ul><li><a href="/de/kiri-baum.html">Der Kiri-Baum</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li></ul></div><div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="mailto:info@greenchild.eu">info@greenchild.eu</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2025 Greenchild Group LLC</span><div class="footer-legal"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div></div></div></footer>
 <div class="lightbox" id="lightbox"><button class="lightbox-close">&times;</button><img src="" alt=""></div>
@@ -145,8 +144,8 @@
     {title:'Bienen',color:'#EF9F27',next:'Schafe',desc:'200 Bienenvölker auf der Plantage. Sie bestäuben die Paulownia-Blüten und stärken das gesamte Ökosystem.'},
     {title:'Schafe',color:'#9C9A8E',next:'Dünger',desc:'Schafe grasen zwischen den Baumreihen. Sie halten das Gras kurz und reduzieren den Maschineneinsatz.'},
     {title:'Natürlicher Dünger',color:'#7CB342',next:'Baum',desc:'Die Schafe produzieren organischen Dünger. Keine Chemie — die Nährstoffe fließen zurück in den Boden.'},
-    {title:'Paulownia-Baum',color:'#00A86B',next:'CO₂',desc:'Bis zu 5 Meter Wachstum pro Jahr. Nach 8–12 Jahren liefert jeder Baum bis zu 2 m³ Edelholz.'},
-    {title:'CO₂-Bindung',color:'#1D9E75',next:'Sonne',desc:'Jeder Baum bindet bis zu 600 kg CO₂ pro Jahr. 375+ Hektar = Millionen Kilogramm CO₂-Reduktion.'}
+    {title:'Paulownia-Baum',color:'#00A86B',next:'CO₂',desc:'Bis zu 5 Meter Wachstum pro Jahr. Nach 8–12 Jahren liefert jeder Baum ca. 1,1–1,4 m³ Edelholz.'},
+    {title:'CO₂-Bindung',color:'#1D9E75',next:'Sonne',desc:'Jeder Baum bindet ca. 300 kg CO₂ pro Jahr. Ca. 360 Hektar = Millionen Kilogramm CO₂-Reduktion.'}
   ];
   var nodes=document.querySelectorAll('.eco-node'),info=document.getElementById('ecoInfo'),iT=document.getElementById('ecoInfoTitle'),iD=document.getElementById('ecoInfoDesc'),iDot=document.getElementById('ecoInfoDot'),iA=document.getElementById('ecoInfoArrow'),btn=document.getElementById('ecoPlayBtn'),pi=null;
   if(!nodes.length)return;
