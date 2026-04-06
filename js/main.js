@@ -37,18 +37,18 @@ document.addEventListener('DOMContentLoaded',()=>{
 function initGrowthSlider(){
     const s=document.getElementById('growthSlider');if(!s)return;
     const data=[
-        {year:1,height:3,diameter:8,volume:0.02,co2:120},
-        {year:2,height:5,diameter:12,volume:0.06,co2:200},
-        {year:3,height:7,diameter:16,volume:0.12,co2:300},
-        {year:4,height:10,diameter:22,volume:0.35,co2:420},
-        {year:5,height:12,diameter:26,volume:0.55,co2:500},
-        {year:6,height:14,diameter:30,volume:0.75,co2:540},
-        {year:7,height:16,diameter:34,volume:1.0,co2:570},
-        {year:8,height:17,diameter:36,volume:1.2,co2:580},
-        {year:9,height:18,diameter:38,volume:1.4,co2:590},
-        {year:10,height:19,diameter:40,volume:1.7,co2:595},
-        {year:11,height:19.5,diameter:43,volume:1.85,co2:598},
-        {year:12,height:20,diameter:45,volume:2.0,co2:600}
+        {year:1,height:3,diameter:8,volume:0.01,co2:40},
+        {year:2,height:5,diameter:12,volume:0.04,co2:80},
+        {year:3,height:7,diameter:16,volume:0.08,co2:130},
+        {year:4,height:10,diameter:22,volume:0.2,co2:180},
+        {year:5,height:12,diameter:26,volume:0.35,co2:220},
+        {year:6,height:14,diameter:30,volume:0.5,co2:250},
+        {year:7,height:16,diameter:34,volume:0.7,co2:270},
+        {year:8,height:17,diameter:36,volume:0.85,co2:285},
+        {year:9,height:18,diameter:38,volume:1.0,co2:295},
+        {year:10,height:19,diameter:40,volume:1.1,co2:300},
+        {year:11,height:19.5,diameter:43,volume:1.25,co2:300},
+        {year:12,height:20,diameter:45,volume:1.4,co2:300}
     ];
     const el=id=>document.getElementById(id);
     const update=()=>{
@@ -59,10 +59,8 @@ function initGrowthSlider(){
         if(el('growthDiameter'))el('growthDiameter').textContent=d.diameter+'cm';
         if(el('growthVolume'))el('growthVolume').textContent=d.volume.toFixed(2)+' m\u00B3';
         if(el('growthCo2'))el('growthCo2').textContent=d.co2+' kg';
-        // Market value per tree
         if(el('growthMarketLow'))el('growthMarketLow').textContent='$'+Math.round(d.volume*1695).toLocaleString('de-DE');
         if(el('growthMarketHigh'))el('growthMarketHigh').textContent='$'+Math.round(d.volume*2119).toLocaleString('de-DE');
-        // Visual tree
         const trunk=el('treeTrunk'),crown=el('treeCrown');
         if(trunk){trunk.style.height=(40+(d.year/12)*200)+'px';trunk.style.width=(12+(d.diameter/45)*16)+'px'}
         if(crown){const sz=60+(d.year/12)*160;crown.style.width=sz+'px';crown.style.height=(sz*.85)+'px';crown.style.bottom=(90+(d.year/12)*200)+'px'}
@@ -72,11 +70,11 @@ function initGrowthSlider(){
 
 function initConfigurator(){
     const s=document.getElementById('configSlider');if(!s)return;
-    const PRICE_PER_TREE=250;
+    const PRICE_PER_TREE=249;
     const TREES_PER_HA=625;
-    const VOLUME_PER_TREE=2.0; // m3 at maturity
-    const CO2_PER_TREE=600; // kg/year
-    const MARKET_LOW=1695; // $/m3 quality B
+    const VOLUME_PER_TREE=1.4;
+    const CO2_PER_TREE=300;
+    const MARKET_LOW=1695;
     const MARKET_HIGH=2119;
     const el=id=>document.getElementById(id);
     const update=()=>{
@@ -94,7 +92,6 @@ function initConfigurator(){
         if(el('configVolume'))el('configVolume').textContent=vol.toLocaleString('de-DE');
         if(el('configMarketLow'))el('configMarketLow').textContent='$'+Math.round(mktLow).toLocaleString('de-DE');
         if(el('configMarketHigh'))el('configMarketHigh').textContent='$'+Math.round(mktHigh).toLocaleString('de-DE');
-        // Forest bars
         const bars=document.querySelectorAll('.forest-bar');
         bars.forEach((b,i)=>{const active=i<Math.ceil((t/800)*bars.length);b.classList.toggle('active',active);b.style.height=active?(30+Math.random()*60)+'px':'8px'});
     };
