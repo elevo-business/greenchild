@@ -135,9 +135,9 @@
 
 <section class="cta-band"><div class="container reveal"><h2>Dein Baum wartet auf dich</h2><p>Ab 249 € pro Baum. Jederzeit besuchbar.</p><div class="btn-group" style="justify-content:center;"><a href="/de/baumbesitzer.html" class="btn btn-white btn-lg">Baumbesitzer werden</a><a href="/de/kontakt.html" class="btn btn-lg" style="border:1.5px solid rgba(255,255,255,.25);color:#fff;">Plantage besuchen</a></div></div></section>
 
-<footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert.</p></div><div><h5>Unternehmen</h5><ul><li><a href="/de/ueber-uns.html">Über uns</a></li><li><a href="/de/plantagen.html">Plantagen</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div><div><h5>Wissen</h5><ul><li><a href="/de/kiri-baum.html">Der Kiri-Baum</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li></ul></div><div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="/cdn-cgi/l/email-protection#dbb2b5bdb49bbca9bebeb5b8b3b2b7bff5beae"><span class="__cf_email__" data-cfemail="157c7b737a55726770707b767d7c79713b7060">[email&#160;protected]</span></a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2025 Greenchild Group LLC</span><div class="footer-legal"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div></div></div></footer>
+<footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert.</p></div><div><h5>Unternehmen</h5><ul><li><a href="/de/ueber-uns.html">Über uns</a></li><li><a href="/de/plantagen.html">Plantagen</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div><div><h5>Wissen</h5><ul><li><a href="/de/kiri-baum.html">Der Kiri-Baum</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li></ul></div><div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="mailto:info@greenchild.eu">info@greenchild.eu</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2025 Greenchild Group LLC</span><div class="footer-legal"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div></div></div></footer>
 <div class="lightbox" id="lightbox"><button class="lightbox-close">&times;</button><img src="" alt=""></div>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/js/main.js"></script>
+<script src="/js/main.js"></script>
 <script>
 (function(){
   var d=[
@@ -154,4 +154,8 @@
   if(!nodes.length)return;
   nodes.forEach(function(n){n.addEventListener('click',function(){show(parseInt(this.dataset.idx))})});
   function show(i){var x=d[i];nodes.forEach(function(n){n.classList.remove('active')});nodes[i].classList.add('active');iDot.style.background=x.color;iT.textContent=x.title;iD.textContent=x.desc;iA.textContent='\u2192 '+x.next;info.classList.add('show')}
-  window.ecoTogglePlay=function(){if(pi){clearInterval(pi);pi=nu
+  window.ecoTogglePlay=function(){if(pi){clearInterval(pi);pi=null;btn.classList.remove('playing');btn.textContent='Kreislauf starten';return}btn.classList.add('playing');btn.textContent='Stoppen';var i=0;show(0);pi=setInterval(function(){i=(i+1)%d.length;show(i)},2000)};
+})();
+</script>
+</body>
+</html>
