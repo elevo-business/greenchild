@@ -100,3 +100,30 @@ function initConfigurator(){
     };
     s.addEventListener('input',update);update();
 }
+
+// Dropdown Nav — mobile touch support
+(function(){
+    var drops=document.querySelectorAll('.nav-dropdown');
+    if(!drops.length)return;
+    drops.forEach(function(d){
+        var link=d.querySelector('.nav-link');
+        if(!link)return;
+        link.addEventListener('click',function(e){
+            // On touch/mobile: first tap opens, second navigates
+            if(window.innerWidth<=900)return; // mobile uses hamburger, not dropdowns
+            if(!d.classList.contains('open')){
+                e.preventDefault();
+                // Close others
+                drops.forEach(function(o){o.classList.remove('open')});
+                d.classList.add('open');
+            }
+            // If already open, let click navigate
+        });
+    });
+    // Close dropdowns on click outside
+    document.addEventListener('click',function(e){
+        if(!e.target.closest('.nav-dropdown')){
+            drops.forEach(function(d){d.classList.remove('open')});
+        }
+    });
+})();
