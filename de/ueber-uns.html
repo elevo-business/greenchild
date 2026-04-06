@@ -3,137 +3,72 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Über uns — Greenchild Group</title>
-<meta name="description" content="Greenchild Group — seit 2009. Ca. 360 Hektar Paulownia-Plantagen in 3 Ländern.">
+<title>Kontakt — Greenchild</title>
+<meta name="description" content="Kontaktiere Greenchild. Werde Baumbesitzer ab 249 € oder lass dich beraten.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
-.trust-numbers{display:grid;grid-template-columns:repeat(5,1fr);gap:0;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)}
-.trust-num-item{text-align:center;padding:36px 16px;border-right:1px solid var(--border)}.trust-num-item:last-child{border-right:none}
-.trust-num-val{font-family:var(--font-h);font-size:clamp(28px,3.5vw,44px);font-weight:800;color:var(--green);line-height:1}
-.trust-num-label{font-size:11px;font-weight:500;color:var(--text-muted);margin-top:8px;text-transform:uppercase;letter-spacing:.08em}
-.story-block{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center}
-.story-img-wrap{position:relative;border-radius:var(--radius-lg);overflow:hidden}
-.story-img-wrap img{width:100%;height:400px;object-fit:cover}
-.story-img-wrap .story-year-badge{position:absolute;top:20px;left:20px;background:var(--green);color:var(--white);padding:8px 18px;border-radius:var(--radius-full);font-family:var(--font-h);font-size:13px;font-weight:700}
-.trust-pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.trust-pillar{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px 24px;text-align:center;position:relative;overflow:hidden;transition:all .45s var(--ease)}
-.trust-pillar:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--border-hover)}
-.trust-pillar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--green-light));transform:scaleX(0);transition:transform .4s;transform-origin:left}
-.trust-pillar:hover::after{transform:scaleX(1)}
-.trust-pillar .icon-box{margin:0 auto 16px}.trust-pillar h4{font-size:16px;margin-bottom:8px}.trust-pillar p{font-size:13.5px;color:var(--text-muted);line-height:1.65}
-.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.proof-card{border-radius:var(--radius-lg);overflow:hidden;position:relative;aspect-ratio:3/4}
-.proof-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}.proof-card:hover img{transform:scale(1.05)}
-.proof-card-overlay{position:absolute;bottom:0;left:0;right:0;padding:32px 24px 28px;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.4) 50%,transparent 100%);color:#fff}
-.proof-card-overlay p{font-size:14.5px;font-weight:500;line-height:1.55;text-shadow:0 1px 6px rgba(0,0,0,.4)}
-.timeline-v2{position:relative;max-width:800px;margin:0 auto}
-.timeline-v2::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--green-pale),var(--green),var(--green-pale));transform:translateX(-50%)}
-.tl-item{display:grid;grid-template-columns:1fr auto 1fr;gap:24px;margin-bottom:48px;align-items:start}
-.tl-item:nth-child(odd) .tl-content{text-align:right}.tl-item:nth-child(odd) .tl-spacer{order:1}.tl-item:nth-child(even) .tl-content{order:1}
-.tl-dot{width:18px;height:18px;border-radius:50%;background:var(--green);border:4px solid var(--bg);box-shadow:0 0 0 2px var(--green);position:relative;z-index:2;margin-top:4px;justify-self:center}
-.tl-year{font-family:var(--font-h);font-size:22px;font-weight:800;color:var(--green);margin-bottom:4px}
-.tl-text{font-size:14.5px;color:var(--text-muted);line-height:1.65}.tl-text strong{color:var(--text)}
-.tl-highlight{background:var(--green-pale);border-radius:var(--radius);padding:8px 14px;display:inline-block;margin-top:8px;font-size:11px;font-weight:600;color:var(--green-dark);letter-spacing:.04em}
-.ops-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.ops-card{background:var(--bg-warm);border-radius:var(--radius-lg);padding:32px 28px}
-.ops-card h4{font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:10px}.ops-card h4 i{width:20px;height:20px;color:var(--green)}
-.ops-card p{font-size:14px;color:var(--text-muted);line-height:1.7}
-.ops-card ul{margin-top:12px;display:flex;flex-direction:column;gap:8px}
-.ops-card li{font-size:13px;color:var(--text-body);display:flex;align-items:flex-start;gap:8px;line-height:1.55}
-.ops-card li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);margin-top:6px;flex-shrink:0}
-.locations-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.loc-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;transition:all .3s}
-.loc-card:hover{border-color:var(--border-hover);box-shadow:var(--shadow-sm)}
-.loc-flag{font-size:11px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px}
-.loc-card h4{font-size:15px;margin-bottom:6px}.loc-card p{font-size:13px;color:var(--text-muted);line-height:1.6}
-.team-lead-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
-.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.team-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px 24px;text-align:center;transition:all .4s var(--ease)}.team-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-.team-avatar{width:110px;height:110px;border-radius:50%;margin:0 auto 16px;overflow:hidden;background:var(--bg-warm);border:3px solid var(--border);position:relative}.team-avatar img{width:100%;height:100%;object-fit:cover}
-.team-badge{position:absolute;bottom:-2px;right:-2px;background:var(--green);color:var(--white);font-size:9px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);border:2px solid var(--white);z-index:2}
-.team-card h4{font-size:17px;margin-bottom:4px}.team-role{font-family:var(--font-body);font-size:12px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
-.team-bio{font-size:13.5px;color:var(--text-muted);line-height:1.65}
-.team-photo-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:40px}
-.team-photo-strip img{width:100%;height:180px;object-fit:cover;border-radius:var(--radius)}
-.env-banner{position:relative;overflow:hidden}.env-banner .env-bg{position:absolute;inset:0;z-index:0}.env-banner .env-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.25)}.env-banner .container{position:relative;z-index:1}
-.env-stats{display:flex;gap:48px;justify-content:center;flex-wrap:wrap;margin-top:40px}
-.env-stat-num{font-family:var(--font-h);font-size:48px;font-weight:800;color:var(--green-light);line-height:1}
-.env-stat-label{font-size:12px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
-.quote-band-v2{background:var(--green-deep);padding:88px 0;text-align:center;position:relative;overflow:hidden}
-.quote-band-v2::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,168,107,.06),transparent 70%)}
-.quote-mark{font-family:var(--font-h);font-size:80px;color:var(--green-light);line-height:1;opacity:.4;margin-bottom:-20px}
-.quote-v2{font-family:var(--font-h);font-size:clamp(18px,2.8vw,28px);font-weight:600;color:#fff;line-height:1.45;max-width:680px;margin:0 auto 20px;font-style:italic}
-.quote-attr-v2{font-size:14px;color:rgba(255,255,255,.4)}
-@media(max-width:900px){.trust-numbers{grid-template-columns:repeat(5,1fr)}.trust-num-item{padding:24px 8px}.trust-num-val{font-size:22px}.trust-num-label{font-size:9px}.story-block{grid-template-columns:1fr;gap:32px}.story-img-wrap img{height:280px}.trust-pillars{grid-template-columns:repeat(2,1fr)}.tl-item{grid-template-columns:auto 1fr;gap:16px}.tl-item:nth-child(odd) .tl-content{text-align:left}.tl-spacer{display:none}.tl-item:nth-child(even) .tl-content{order:0}.ops-grid{grid-template-columns:1fr}.locations-strip{grid-template-columns:repeat(3,1fr)}.quote-band-v2{padding:56px 0}.proof-grid{grid-template-columns:1fr 1fr}.env-stats{gap:32px}.env-stat-num{font-size:36px}.team-lead-grid{grid-template-columns:1fr 1fr}.team-grid{grid-template-columns:1fr 1fr}.team-photo-strip{grid-template-columns:repeat(3,1fr)}.team-photo-strip img{height:150px}}
-@media(max-width:600px){.trust-numbers{grid-template-columns:repeat(3,1fr)}.trust-num-item:nth-child(n+4){border-top:1px solid var(--border)}.trust-num-item{padding:20px 8px}.trust-num-val{font-size:20px}.trust-num-label{font-size:8px}.trust-pillars{grid-template-columns:1fr}.story-img-wrap img{height:220px}.tl-year{font-size:18px}.quote-mark{font-size:48px;margin-bottom:-12px}.quote-v2{font-size:17px}.ops-card{padding:24px 20px}.ops-card li{font-size:12.5px}.proof-grid{grid-template-columns:1fr}.proof-card{aspect-ratio:16/10}.env-stats{flex-direction:column;align-items:center;gap:20px}.env-stat-num{font-size:32px}.locations-strip{grid-template-columns:1fr;gap:10px}.loc-card{padding:18px}.loc-card h4{font-size:14px}.team-lead-grid{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr}.team-card{padding:24px 20px}.team-avatar{width:90px;height:90px}.team-card h4{font-size:16px}.team-bio{font-size:12.5px}.team-photo-strip{grid-template-columns:repeat(3,1fr);gap:6px}.team-photo-strip img{height:120px}}
+.contact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:flex-start}
+.contact-form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);padding:44px;box-shadow:var(--shadow)}
+.contact-channels{display:flex;flex-direction:column;gap:16px}
+.contact-channel{display:flex;align-items:flex-start;gap:16px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:all .3s}
+.contact-channel:hover{border-color:var(--border-hover)}
+.contact-channel .icon-box{flex-shrink:0;width:44px;height:44px;border-radius:11px;margin-bottom:0}
+.contact-channel h4{font-size:15px;margin-bottom:4px}.contact-channel p{font-size:13px;color:var(--text-muted)}
+.contact-channel a{font-size:15px;font-weight:600}
+.locations-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px}
+.location-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.location-card h4{font-size:15px;margin-bottom:8px}.location-card p{font-size:14px;color:var(--text-muted);line-height:1.65}
+.trust-signals{display:flex;gap:20px;margin-top:20px;flex-wrap:wrap}
+.trust-signal{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted)}
+.trust-signal i{width:16px;height:16px;color:var(--green)}
+.name-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr;gap:40px}.locations-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.contact-form-card{padding:24px 18px;border-radius:var(--radius-lg)}.contact-form-card h3{font-size:20px}.contact-form-card p{font-size:13px;margin-bottom:22px}.contact-form-card .form-label{font-size:12px}.contact-form-card .form-input,.contact-form-card .form-textarea,.contact-form-card .form-select{padding:13px 15px;font-size:16px;border-radius:10px}.contact-form-card .btn-lg{padding:16px;font-size:15px}.name-fields{grid-template-columns:1fr;gap:0}.contact-channel{padding:18px;gap:12px}.contact-channel h4{font-size:14px}.contact-channel a{font-size:14px}.contact-channel p{font-size:12px}.contact-channel .icon-box{width:40px;height:40px;border-radius:10px}.locations-grid{grid-template-columns:1fr;gap:12px}.location-card{padding:20px}.location-card h4{font-size:14px}.location-card p{font-size:13px}.trust-signals{gap:14px;margin-top:16px}.trust-signal{font-size:12px}}
 </style>
 </head>
 <body>
 <div class="scroll-progress" id="scrollProgress"></div>
-<header class="header" id="header"><div class="header-inner"><a href="/de/" class="logo"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" class="logo-img"></a><nav class="nav"><a href="/de/" class="nav-link">Start</a><a href="/de/ueber-uns.html" class="nav-link active">Über uns</a><a href="/de/kiri-baum.html" class="nav-link">Der Kiri-Baum</a><a href="/de/plantagen.html" class="nav-link">Plantagen</a><a href="/de/baumbesitzer.html" class="nav-link">Baumbesitzer werden</a><a href="/de/kontakt.html" class="nav-link">Kontakt</a><div class="nav-divider"></div><a href="/en/about.html" class="nav-lang">EN</a><a href="/de/kontakt.html" class="btn btn-primary btn-sm nav-cta">Gespräch anfragen</a></nav><button class="hamburger" id="menuToggle" aria-label="Menü"><span></span><span></span><span></span></button></div></header>
+<header class="header" id="header"><div class="header-inner"><a href="/de/" class="logo"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" class="logo-img"></a><nav class="nav"><a href="/de/" class="nav-link">Start</a><a href="/de/ueber-uns.html" class="nav-link">Über uns</a><a href="/de/kiri-baum.html" class="nav-link">Der Kiri-Baum</a><a href="/de/plantagen.html" class="nav-link">Plantagen</a><a href="/de/baumbesitzer.html" class="nav-link">Baumbesitzer werden</a><a href="/de/kontakt.html" class="nav-link active">Kontakt</a><div class="nav-divider"></div><a href="/en/contact.html" class="nav-lang">EN</a></nav><button class="hamburger" id="menuToggle" aria-label="Menü"><span></span><span></span><span></span></button></div></header>
 <div class="mobile-nav" id="mobileNav"><a href="/de/">Start</a><a href="/de/ueber-uns.html">Über uns</a><a href="/de/kiri-baum.html">Der Kiri-Baum</a><a href="/de/plantagen.html">Plantagen</a><a href="/de/baumbesitzer.html">Baumbesitzer werden</a><a href="/de/kontakt.html">Kontakt</a><a href="/en/">English</a><a href="/de/kontakt.html" class="btn btn-primary" style="margin-top:16px;text-align:center;">Gespräch anfragen</a></div>
 
-<section class="page-hero" style="min-height:75vh;"><div class="hero-bg"><img src="/assets/img/team-action.jpg" alt="Greenchild Team"></div><div class="hero-overlay" style="background:linear-gradient(160deg,rgba(8,30,20,.88) 0%,rgba(12,46,32,.45) 40%,rgba(8,30,20,.85) 100%);"></div><div class="hero-grain"></div><div class="container"><div class="label light" style="animation:fadeUp .8s .2s both;">Über Greenchild Group</div><h1 style="animation:fadeUp .8s .4s both;">Was als Experiment begann,<br><span style="color:var(--green-light)">ist heute Europas Zukunft.</span></h1><p style="animation:fadeUp .8s .6s both;">Seit 2009 bauen wir die Infrastruktur für nachhaltigen Edelholz-Anbau. Ca. 360 Hektar in 3 Ländern, ca. 225.000 Bäume — jeder einzelne gehört einem Baumbesitzer.</p><div class="hero-data-strip" style="animation:fadeUp .8s .8s both;"><div class="hero-data-item"><div class="hero-data-num">2009</div><div class="hero-data-label">Gegründet</div></div><div class="hero-data-item"><div class="hero-data-num">ca. 360</div><div class="hero-data-label">Hektar</div></div><div class="hero-data-item"><div class="hero-data-num">3</div><div class="hero-data-label">Länder</div></div></div></div></section>
+<section class="page-hero" style="min-height:55vh;"><div class="hero-bg"><img src="/assets/img/team-young.jpg" alt="Greenchild Team"></div><div class="hero-overlay" style="background:linear-gradient(180deg,rgba(8,30,20,.85) 0%,rgba(12,46,32,.65) 100%);"></div><div class="hero-grain"></div><div class="container"><div class="label light" style="animation:fadeUp .8s .2s both;">Persönlicher Kontakt</div><h1 style="animation:fadeUp .8s .4s both;">Bereit für<br>ein Gespräch?</h1><p style="animation:fadeUp .8s .6s both;">Kein Call-Center, keine Warteschleife. Du sprichst direkt mit den Gründern.</p></div></section>
 
-<section class="bg-white" style="padding-top:0;margin-top:-40px;position:relative;z-index:5;"><div class="container"><div class="trust-numbers reveal">
-  <div class="trust-num-item"><div class="trust-num-val" data-count="15" data-suffix="+">0</div><div class="trust-num-label">Jahre Erfahrung</div></div>
-  <div class="trust-num-item"><div class="trust-num-val" data-count="360">0</div><div class="trust-num-label">Hektar Plantagen</div></div>
-  <div class="trust-num-item"><div class="trust-num-val" data-count="225000">0</div><div class="trust-num-label">Bäume gepflanzt</div></div>
-  <div class="trust-num-item"><div class="trust-num-val">3</div><div class="trust-num-label">Länder</div></div>
-  <div class="trust-num-item"><div class="trust-num-val" data-count="200">0</div><div class="trust-num-label">Bienenvölker</div></div>
+<section class="bg-white"><div class="container"><div class="contact-grid">
+    <div class="contact-form-card reveal">
+        <h3 style="margin-bottom:8px;">Schreib uns</h3>
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:28px;">Wir melden uns innerhalb von 24 Stunden.</p>
+        <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="DEIN_WEB3FORMS_KEY">
+            <input type="hidden" name="subject" value="Greenchild — Neue Anfrage">
+            <input type="hidden" name="from_name" value="Greenchild Website">
+            <input type="checkbox" name="botcheck" style="display:none;">
+            <div class="name-fields">
+                <div class="form-group"><label class="form-label">Vorname *</label><input type="text" name="vorname" class="form-input" required></div>
+                <div class="form-group"><label class="form-label">Nachname *</label><input type="text" name="nachname" class="form-input" required></div>
+            </div>
+            <div class="form-group"><label class="form-label">E-Mail *</label><input type="email" name="email" class="form-input" required></div>
+            <div class="form-group"><label class="form-label">Interesse</label><select name="interesse" class="form-input form-select"><option value="">Bitte wählen</option><option value="baumbesitzer">Baumbesitzer werden</option><option value="info">Mehr erfahren</option><option value="besuch">Plantage besuchen</option><option value="partner">Partnerschaft</option><option value="sonstiges">Sonstiges</option></select></div>
+            <div class="form-group"><label class="form-label">Nachricht (optional)</label><textarea name="nachricht" class="form-textarea" rows="4" placeholder="Was möchtest du uns mitteilen?"></textarea></div>
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Nachricht senden</button>
+            <div class="trust-signals"><div class="trust-signal"><i data-lucide="check"></i> Kostenlos</div><div class="trust-signal"><i data-lucide="check"></i> Antwort in 24h</div><div class="trust-signal"><i data-lucide="check"></i> Kein Spam</div></div>
+        </form>
+    </div>
+    <div>
+        <div class="contact-channels reveal reveal-delay-1">
+            <div class="contact-channel"><div class="icon-box green"><i data-lucide="phone"></i></div><div><h4>Telefon (DE)</h4><a href="tel:+4915119133331">+49 151 191 333 31</a><p>Mo–Fr, 9–18 Uhr</p></div></div>
+            <div class="contact-channel"><div class="icon-box green"><i data-lucide="phone"></i></div><div><h4>Telefon (DE)</h4><a href="tel:+4916090979090">+49 160 909 790 90</a><p>Mo–Fr, 9–18 Uhr</p></div></div>
+            <div class="contact-channel"><div class="icon-box green"><i data-lucide="message-circle"></i></div><div><h4>WhatsApp</h4><a href="https://wa.me/4915119133331" target="_blank" rel="noopener">Chat starten</a><p>Schnellster Weg</p></div></div>
+            <div class="contact-channel"><div class="icon-box green"><i data-lucide="mail"></i></div><div><h4>E-Mail</h4><a href="/cdn-cgi/l/email-protection#f49d9a929bb4938691919a979c9d9890da9181"><span class="__cf_email__" data-cfemail="375e595158775045525259545f5e5b53195242">[email&#160;protected]</span></a><p>Antwort in 24h</p></div></div>
+        </div>
+        <div class="locations-grid reveal reveal-delay-2">
+            <div class="location-card"><h4>Hauptsitz &amp; Plantage</h4><p>Greenchild Group LLC<br>M.Meha, Greenchild Street<br>70000 Ferizaj, Kosovo<br><a href="tel:+38343918333">+383 43 918 333</a></p></div>
+            <div class="location-card"><h4>Büro London</h4><p>Greenchild Group Ltd.<br>Unit 3 Cedar Court<br>1 Royal Oak Yard<br>London SE1 3GA, UK</p></div>
+        </div>
+    </div>
 </div></div></section>
 
-<section class="bg-white"><div class="container"><div class="story-block"><div class="reveal"><div class="label">Unsere Geschichte</div><h2>Von 4 Hektar Experiment zu ca. 360 Hektar in 3 Ländern</h2><p style="margin:20px 0;">2009 standen wir zum ersten Mal vor einem Paulownia-Setzling. Ein Baum, der in einem Jahr wächst, wofür andere zehn brauchen. Dessen Holz weltweit als Edelholz gehandelt wird. Was als Experiment auf 4 Hektar begann, ist heute die größte private Paulownia-Operation in Südosteuropa.</p><p style="margin-bottom:24px;">Kosovo, Nordmazedonien, Kroatien — drei Länder, ein Qualitätsstandard. Jeder Baum wird gepflegt, dokumentiert und seinem Besitzer zugeordnet.</p></div><div class="story-img-wrap reveal reveal-delay-1"><img src="/assets/img/team-planting.jpg" alt="Greenchild Team"><div class="story-year-badge">Seit 2009</div></div></div></div></section>
-
-<section class="bg-light"><div class="container"><div class="section-header center reveal"><div class="label center">Transparenz als Prinzip</div><h2>Warum Baumbesitzer uns vertrauen</h2></div><div class="trust-pillars"><div class="trust-pillar reveal"><div class="icon-box green"><i data-lucide="map-pin"></i></div><h4>Jederzeit besuchbar</h4><p>Deine Bäume stehen auf unserer Plantage. Du kannst sie jederzeit besuchen.</p></div><div class="trust-pillar reveal reveal-delay-1"><div class="icon-box green"><i data-lucide="file-check"></i></div><h4>Baum-Zertifikat</h4><p>Eigentumsnachweis mit GPS-Koordinaten und deinem Namen.</p></div><div class="trust-pillar reveal reveal-delay-2"><div class="icon-box green"><i data-lucide="shield-check"></i></div><h4>Nicht-invasive Hybride</h4><p>Patentierte Greenchild-Kiri. Labor an der Universität Skopje.</p></div><div class="trust-pillar reveal reveal-delay-3"><div class="icon-box green"><i data-lucide="camera"></i></div><h4>24/7 Überwachung</h4><p>Videoüberwachung und professionelles Team vor Ort.</p></div></div></div></section>
-
-<section class="bg-white"><div class="container"><div class="section-header center reveal"><div class="label center">Unsere Baumbesitzer</div><h2>Sie kommen. Sie sehen. Sie wissen.</h2></div><div class="proof-grid reveal"><div class="proof-card"><img src="/assets/img/investor-visit-man.jpg" alt="Baumbesitzer" loading="lazy"><div class="proof-card-overlay"><p>Baumbesitzer vor Ort — Bäume über 6 Meter hoch.</p></div></div><div class="proof-card"><img src="/assets/img/investor-visit-woman.jpg" alt="Baumbesitzerin" loading="lazy"><div class="proof-card-overlay"><p>Persönlicher Besuch — greifbarer Sachwert.</p></div></div><div class="proof-card"><img src="/assets/img/investor-tour.jpg" alt="Plantagenführung" loading="lazy"><div class="proof-card-overlay"><p>Geführte Tour für alle Baumbesitzer.</p></div></div></div></div></section>
-
-<div class="quote-band-v2"><div class="container reveal"><div class="quote-mark">"</div><div class="quote-v2">Wir wollten nie ein Unternehmen bauen, das Bäume verkauft. Wir wollten ein Unternehmen bauen, dem man seine Bäume anvertraut.</div><div class="quote-attr-v2">— Greenchild Gründerteam</div></div></div>
-
-<section class="bg-white"><div class="container">
-  <div class="section-header center reveal"><div class="label center">Führungsteam</div><h2>Die Menschen hinter Greenchild</h2><p>Erfahrung aus Landwirtschaft, Wissenschaft und Wirtschaft — vereint in einer Mission.</p></div>
-  <div class="team-lead-grid">
-    <div class="team-card reveal"><div class="team-avatar"><img src="/assets/img/team-nazim.jpg" alt="Nazim Azemi" style="object-position:center 25%;"><div class="team-badge">Gründer</div></div><h4>Nazim Azemi</h4><div class="team-role">Gründer &amp; Geschäftsführer</div><p class="team-bio">Visionär hinter Greenchild. Seit 2009 im Paulownia-Anbau. Hat das Unternehmen von 4 Hektar zu ca. 360 Hektar in 3 Ländern aufgebaut.</p></div>
-    <div class="team-card reveal reveal-delay-1"><div class="team-avatar"><img src="/assets/img/team-josef.jpg" alt="Josef Fürnkas" style="object-position:center 20%;"><div class="team-badge">Investor</div></div><h4>Josef Fürnkas</h4><div class="team-role">Strategischer Investor</div><p class="team-bio">Erfahrener Unternehmer und strategischer Partner. Sein Engagement und Netzwerk treiben das internationale Wachstum voran.</p></div>
-  </div>
-  <div class="team-grid">
-    <div class="team-card reveal"><div class="team-avatar"><img src="/assets/img/team-jeton.jpg" alt="Dr. Jeton Shala" style="object-position:center top;"></div><h4>Dr. Jeton Shala</h4><div class="team-role">Labor- &amp; Forschungsdirektor</div><p class="team-bio">Doktor der Pharmazie. 20+ Jahre Erfahrung. Leitet die ISO-Implementierung und Entwicklung der patentierten Greenchild-Kiri.</p></div>
-    <div class="team-card reveal reveal-delay-1"><div class="team-avatar"><img src="/assets/img/team-sonja.jpg" alt="Prof. Dr. Sonja Simic" style="object-position:center 15%;"></div><h4>Prof. Dr. Sonja Simic</h4><div class="team-role">Wissenschaftliche Beraterin</div><p class="team-bio">25+ Jahre Pflanzen-Biotechnologie an der Universität Skopje. Spezialistin für Mikropropagation. 65+ Publikationen.</p></div>
-    <div class="team-card reveal reveal-delay-2"><div class="team-avatar"><img src="/assets/img/team-andreas.jpg" alt="Andreas Dering" style="object-position:center 15%;"></div><h4>Andreas Dering</h4><div class="team-role">Fachberater Agrar</div><p class="team-bio">Geschäftsführer Maschinenring Rheinland-West. Experte für landwirtschaftliche Großbetriebe und nachhaltige Entwicklung.</p></div>
-  </div>
-  <div class="team-photo-strip reveal"><img src="/assets/img/team-planting.jpg" alt="Pflanzung" loading="lazy"><img src="/assets/img/worker-portrait.jpg" alt="Team" loading="lazy"><img src="/assets/img/team-wood-logs.jpg" alt="Holz" loading="lazy"><img src="/assets/img/team-young.jpg" alt="Team" loading="lazy"><img src="/assets/img/team-action.jpg" alt="Arbeit" loading="lazy"></div>
-</div></section>
-
-<section class="bg-light"><div class="container">
-  <div class="section-header center reveal"><div class="label center">Meilensteine</div><h2>15 Jahre, die zählen</h2></div>
-  <div class="timeline-v2">
-    <div class="tl-item reveal"><div class="tl-content"><div class="tl-year">2009</div><div class="tl-text"><strong>Der Anfang.</strong> Erste Paulownia-Experimente in Südosteuropa.</div></div><div class="tl-dot"></div><div class="tl-spacer"></div></div>
-    <div class="tl-item reveal"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><div class="tl-year">2020</div><div class="tl-text"><strong>Greenchild Group LLC.</strong> Phoenix One in Kosovo: 35 Hektar.</div><div class="tl-highlight">Unternehmensgründung</div></div></div>
-    <div class="tl-item reveal"><div class="tl-content"><div class="tl-year">2022</div><div class="tl-text"><strong>85 Hektar.</strong> Erste Baumbesitzer aus DACH.</div><div class="tl-highlight">DACH-Expansion</div></div><div class="tl-dot"></div><div class="tl-spacer"></div></div>
-    <div class="tl-item reveal"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><div class="tl-year">2023</div><div class="tl-text"><strong>Nordmazedonien.</strong> Expansion auf 2 Länder.</div></div></div>
-    <div class="tl-item reveal"><div class="tl-content"><div class="tl-year">2024</div><div class="tl-text"><strong>Kroatien.</strong> Drittes Land. Eigenes Labor an der Universität Skopje.</div><div class="tl-highlight">3 Länder + Labor</div></div><div class="tl-dot"></div><div class="tl-spacer"></div></div>
-    <div class="tl-item reveal"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><div class="tl-year">2025</div><div class="tl-text"><strong>Ca. 360 Hektar.</strong> Ca. 225.000 Bäume. 200 Bienenvölker. Patentierte Greenchild-Kiri Hybride.</div><div class="tl-highlight">Aktueller Stand</div></div></div>
-  </div>
-</div></section>
-
-<section class="bg-white"><div class="container"><div class="section-header center reveal"><div class="label center">So arbeiten wir</div><h2>Professioneller Betrieb auf jedem Level</h2></div><div class="ops-grid"><div class="ops-card reveal"><h4><i data-lucide="microscope"></i> Forschung &amp; Labor</h4><p>Labor an der Universität Ss. Kyrill und Method in Skopje.</p><ul><li>Mikropropagation unter Prof. Dr. Simic</li><li>Patentierte Greenchild-Kiri Hybride</li><li>Nicht-invasive, kontrollierte Vermehrung</li><li>ISO-Standards in Implementierung</li></ul></div><div class="ops-card reveal reveal-delay-1"><h4><i data-lucide="trees"></i> Plantagenbetrieb</h4><p>Professionelles Team in 3 Ländern.</p><ul><li>Erfahrene Forstexperten und Landwirte</li><li>200 Bienenvölker im Ökosystem</li><li>GPS-dokumentierte Parzellen</li><li>Schafe zur natürlichen Bodenpflege</li></ul></div><div class="ops-card reveal reveal-delay-2"><h4><i data-lucide="lock"></i> Sicherheit</h4><p>Dein Eigentum ist geschützt.</p><ul><li>Videoüberwachung 24/7</li><li>Zaun- und Zugangskontrolle</li><li>Persönliches Baum-Zertifikat</li><li>Transparente Berichterstattung</li></ul></div></div></div></section>
-
-<section class="bg-warm"><div class="container">
-  <div class="section-header center reveal"><div class="label center">Unsere Standorte</div><h2>Drei Länder. Ein Standard.</h2></div>
-  <div class="locations-strip">
-    <div class="loc-card reveal"><div class="loc-flag">Kosovo</div><h4>Phoenix One</h4><p>Ca. 200 ha in Ferizaj. Hauptplantage und Verwaltung.</p></div>
-    <div class="loc-card reveal reveal-delay-1"><div class="loc-flag">Nordmazedonien</div><h4>Ca. 100 ha</h4><p>Expansion 2023. Labor an der Universität Skopje.</p></div>
-    <div class="loc-card reveal reveal-delay-2"><div class="loc-flag">Kroatien</div><h4>Ca. 60 ha</h4><p>Adriaregion. Expansion 2024.</p></div>
-  </div>
-</div></section>
-
-<section class="env-banner" style="padding:100px 0;"><div class="env-bg"><img src="/assets/img/team-action.jpg" alt="Plantage"></div><div class="container" style="text-align:center;"><div class="label center" style="color:var(--green-light);">Umweltbeitrag</div><h2 style="color:#fff;margin-bottom:16px;">Jeder Baum zählt</h2><p style="color:rgba(255,255,255,.65);max-width:520px;margin:0 auto 40px;font-size:16px;">Ca. 360 Hektar aktiver Klimaschutz. Paulownia bindet deutlich mehr CO₂ als andere Baumarten.</p><div class="env-stats"><div><div class="env-stat-num">ca. 360</div><div class="env-stat-label">Hektar Plantagen</div></div><div><div class="env-stat-num" data-count="200">0</div><div class="env-stat-label">Bienenvölker</div></div><div><div class="env-stat-num">3</div><div class="env-stat-label">Länder</div></div></div></div></section>
-
-<section class="cta-band"><div class="container reveal"><h2>Werde Teil der Geschichte</h2><p>Sprich direkt mit den Gründern.</p><div class="btn-group" style="justify-content:center;"><a href="/de/kontakt.html" class="btn btn-white btn-lg">Erstgespräch anfragen</a><a href="/de/baumbesitzer.html" class="btn btn-lg" style="border:1.5px solid rgba(255,255,255,.25);color:#fff;">Baumbesitzer werden</a></div></div></section>
-
-<footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert. Ca. 360 Hektar in 3 Ländern.</p></div><div><h5>Unternehmen</h5><ul><li><a href="/de/ueber-uns.html">Über uns</a></li><li><a href="/de/plantagen.html">Plantagen</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div><div><h5>Wissen</h5><ul><li><a href="/de/kiri-baum.html">Der Kiri-Baum</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li></ul></div><div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="/cdn-cgi/l/email-protection#0861666e67486f7a6d6d666b6061646c266d7d"><span class="__cf_email__" data-cfemail="20494e464f60475245454e4348494c440e4555">[email&#160;protected]</span></a></li><li style="color:var(--text-inv-muted);font-size:13px;margin-top:8px;">Greenchild Group LLC<br>Ferizaj, Kosovo</li></ul></div></div><div class="footer-bottom"><span>&copy; 2025 Greenchild Group LLC</span><div class="footer-legal"><a href="#">Impres
+<footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert.</p></div><div><h5>Unternehmen</h5><ul><li><a href="/de/ueber-uns.html">Über uns</a></li><li><a href="/de/plantagen.html">Plantagen</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div><div><h5>Wissen</h5><ul><li><a href="/de/kiri-baum.html">Der Kiri-Baum</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li></ul></div><div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="/cdn-cgi/l/email-protection#e48d8a828ba4839681818a878c8d8880ca8191"><span class="__cf_email__" data-cfemail="7811161e17381f0a1d1d161b1011141c561d0d">[email&#160;protected]</span></a></li>
