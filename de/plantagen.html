@@ -57,7 +57,6 @@
 .eco-info-title{font-family:var(--font-h);font-size:15px;font-weight:700;color:var(--text)}
 .eco-info-arrow{font-size:11px;color:var(--text-dim);margin-left:auto;font-weight:500}
 .eco-info-desc{font-family:var(--font-body);font-size:13.5px;color:var(--text-muted);line-height:1.65}
-
 .eco-controls{display:flex;justify-content:center;gap:10px;margin-top:20px}
 .eco-btn{font-family:var(--font-body);font-size:12px;font-weight:600;padding:8px 22px;border-radius:var(--radius-full);border:1.5px solid var(--border);background:var(--white);color:var(--text);cursor:pointer;transition:all .3s}
 .eco-btn:hover{border-color:var(--green);color:var(--green);background:var(--green-soft)}
@@ -73,9 +72,11 @@
 .eco-particle:nth-child(2){animation-delay:-2s;opacity:.25;width:4px;height:4px}
 .eco-particle:nth-child(3){animation-delay:-4.5s;opacity:.35;width:3px;height:3px}
 .eco-particle:nth-child(4){animation-delay:-6.5s;opacity:.2;width:4px;height:4px}
-@media(max-width:900px){.advantage-grid{grid-template-columns:1fr 1fr}.country-grid{grid-template-columns:repeat(3,1fr)}.bee-banner{flex-direction:column;text-align:center}.eco-wrap{max-width:420px}.eco-orbit{width:340px;height:340px;margin:-170px 0 0 -170px}.eco-icon{width:48px;height:48px}.eco-icon i{width:20px;height:20px}.eco-node-label{font-size:10.5px}.eco-center-tree{width:60px;height:60px}}
-@media(max-width:600px){.advantage-grid{grid-template-columns:1fr}.country-grid{grid-template-columns:1fr}.country-ha{font-size:28px}.bee-banner{padding:24px 20px}.bee-num{font-size:26px}.eco-wrap{max-width:300px}.eco-icon{width:40px;height:40px}.eco-icon i{width:16px;height:16px}.eco-node-label{font-size:9px;margin-top:2px}.eco-center-tree{width:44px;height:44px}.eco-center-tree i{width:18px;height:18px}.eco-center-text{font-size:8.5px}.eco-info{padding:16px 18px;margin-top:20px;max-width:100%}.eco-info-title{font-size:14px}.eco-info-desc{font-size:12.5px}.eco-particle{display:none}.eco-orbit{width:300px;height:300px;margin:-150px 0 0 -150px}
-.eco-controls{margin-top:14px}}
+
+/* VIDEO FIX */
+.video-wrapper{position:relative;border-radius:var(--radius-xl);overflow:hidden;aspect-ratio:16/9;max-width:900px;margin:0 auto;box-shadow:var(--shadow-lg);background:#000}
+.video-wrapper video{display:block;width:100%;height:100%;object-fit:cover}
+
 /* DROPDOWN NAV */
 .nav-dropdown{position:relative}
 .nav-dropdown>.nav-link{display:flex;align-items:center;gap:4px}
@@ -92,9 +93,11 @@
 .header-transparent.scrolled .nav-sub a{color:var(--text-body)}
 .header-transparent.scrolled .nav-sub a:hover{background:var(--green-soft);color:var(--green)}
 
-/* DESKTOP PADDING FIX */
 @media(min-width:1200px){.container{padding:0 48px}}
 @media(min-width:1400px){.container{padding:0 64px}}
+@media(max-width:900px){.advantage-grid{grid-template-columns:1fr 1fr}.country-grid{grid-template-columns:repeat(3,1fr)}.bee-banner{flex-direction:column;text-align:center}.eco-wrap{max-width:420px}.eco-orbit{width:340px;height:340px;margin:-170px 0 0 -170px}.eco-icon{width:48px;height:48px}.eco-icon i{width:20px;height:20px}.eco-node-label{font-size:10.5px}.eco-center-tree{width:60px;height:60px}}
+@media(max-width:600px){.advantage-grid{grid-template-columns:1fr}.country-grid{grid-template-columns:1fr}.country-ha{font-size:28px}.bee-banner{padding:24px 20px}.bee-num{font-size:26px}.eco-wrap{max-width:300px}.eco-icon{width:40px;height:40px}.eco-icon i{width:16px;height:16px}.eco-node-label{font-size:9px;margin-top:2px}.eco-center-tree{width:44px;height:44px}.eco-center-tree i{width:18px;height:18px}.eco-center-text{font-size:8.5px}.eco-info{padding:16px 18px;margin-top:20px;max-width:100%}.eco-info-title{font-size:14px}.eco-info-desc{font-size:12.5px}.eco-particle{display:none}.eco-orbit{width:300px;height:300px;margin:-150px 0 0 -150px}
+.eco-controls{margin-top:14px}}
 </style>
 </head>
 <body>
@@ -144,20 +147,14 @@
   <div class="eco-controls" style="margin-bottom:28px;"><button class="eco-btn" id="ecoPlayBtn" onclick="ecoTogglePlay()" style="background:rgba(45,212,160,.15);border-color:rgba(45,212,160,.4);color:var(--green-light);font-size:14px;padding:12px 28px;">Kreislauf starten</button></div>
   <div class="eco-wrap reveal">
     <svg class="eco-svg" viewBox="0 0 540 540">
-      <!-- Outer glow ring -->
       <circle cx="270" cy="270" r="210" fill="none" stroke="rgba(45,212,160,.05)" stroke-width="40"/>
-      <!-- THE GREENCHILD RING — thick green circle like the logo -->
       <circle cx="270" cy="270" r="205" fill="none" stroke="rgba(0,168,107,.15)" stroke-width="28"/>
       <circle cx="270" cy="270" r="205" fill="none" stroke="#00A86B" stroke-width="22" opacity=".3"/>
       <circle cx="270" cy="270" r="205" fill="none" stroke="#00A86B" stroke-width="3" opacity=".6"/>
-      <!-- Inner ring edge -->
       <circle cx="270" cy="270" r="193" fill="none" stroke="rgba(45,212,160,.08)" stroke-width="1"/>
-      <!-- Outer ring edge -->
       <circle cx="270" cy="270" r="217" fill="none" stroke="rgba(45,212,160,.08)" stroke-width="1"/>
-      <!-- Subtle flow animation on ring -->
       <circle cx="270" cy="270" r="205" fill="none" class="eco-flow" stroke="rgba(45,212,160,.2)" stroke-width="2"/>
     </svg>
-    <!-- Orbiting dot (Greenchild logo dot) -->
     <div class="eco-orbit"><div class="eco-orbit-dot"></div></div>
     <div class="eco-center"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="width:140px;height:140px;object-fit:contain;filter:brightness(2.2) drop-shadow(0 0 24px rgba(0,168,107,.5)) drop-shadow(0 0 50px rgba(45,212,160,.25));margin:0 auto 10px;"><div class="eco-center-text" style="color:rgba(255,255,255,.55);font-size:11px;letter-spacing:.18em;">Ökosystem</div></div>
     <div class="eco-node eco-sonne" style="left:50%;top:5%;" data-idx="0"><div class="eco-icon" style="background:rgba(239,159,39,.12);border-color:rgba(239,159,39,.4);backdrop-filter:blur(8px);"><i data-lucide="sun" style="color:#F5C842;"></i></div><div class="eco-node-label" style="color:rgba(255,255,255,.7);">Sonne</div></div>
@@ -170,16 +167,15 @@
     <div class="eco-node eco-co2" style="left:18%;top:18%;" data-idx="7"><div class="eco-icon" style="background:rgba(29,158,117,.12);border-color:rgba(29,158,117,.4);backdrop-filter:blur(8px);"><i data-lucide="wind" style="color:#3DE8B0;"></i></div><div class="eco-node-label" style="color:rgba(255,255,255,.7);">CO₂</div></div>
   </div>
   <div class="eco-info" id="ecoInfo" style="background:rgba(255,255,255,.1);border:2px solid rgba(45,212,160,.3);backdrop-filter:blur(16px);"><div class="eco-info-head"><div class="eco-info-dot" id="ecoInfoDot"></div><div class="eco-info-title" id="ecoInfoTitle" style="color:#fff;">Tippe auf ein Element</div><div class="eco-info-arrow" id="ecoInfoArrow" style="color:rgba(255,255,255,.3);"></div></div><div class="eco-info-desc" id="ecoInfoDesc" style="color:rgba(255,255,255,.55);">Entdecke, wie jedes Element im Ökosystem zusammenspielt.</div></div>
-
 </div></section>
 
-
-<!-- DROHNEN-VIDEO -->
+<!-- DROHNEN-VIDEO (FIXED) -->
 <section class="bg-warm"><div class="container">
   <div class="section-header center reveal"><div class="label center">Aus der Luft</div><h2>Unsere Plantage von oben</h2></div>
-  <div class="reveal" style="position:relative;border-radius:var(--radius-xl);overflow:hidden;aspect-ratio:16/9;max-width:900px;margin:0 auto;box-shadow:var(--shadow-lg);">
-    <video controls playsinline poster="/assets/img/drone-aerial-topdown.jpg" style="width:100%;height:100%;object-fit:cover;">
+  <div class="video-wrapper reveal">
+    <video controls playsinline preload="metadata" poster="/assets/img/drone-aerial-topdown.jpg">
       <source src="/assets/video/videodrohne2.mp4" type="video/mp4">
+      Dein Browser unterstützt kein HTML5-Video.
     </video>
   </div>
 </div></section>
@@ -189,9 +185,10 @@
 
 <section class="cta-band"><div class="container reveal"><h2>Dein Baum wartet auf dich</h2><p>Ab 249 € pro Baum. Jederzeit besuchbar.</p><div class="btn-group" style="justify-content:center;"><a href="/de/baumbesitzer.html" class="btn btn-white btn-lg">Baumbesitzer werden</a><a href="/de/kontakt.html" class="btn btn-lg" style="border:1.5px solid rgba(255,255,255,.25);color:#fff;">Plantage besuchen</a></div></div></section>
 
-<footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert.</p></div><div><h5>Unternehmen</h5><ul><li><a href="/de/ueber-uns.html">Über uns</a></li><li><a href="/de/plantagen.html">Plantagen</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div><div><h5>Wissen</h5><ul><li><a href="/de/kiri-baum.html">Der Kiri-Baum</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li></ul></div><div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="/cdn-cgi/l/email-protection#553c3b333a15322730303b363d3c39317b3020"><span class="__cf_email__" data-cfemail="325b5c545d72554057575c515a5b5e561c5747">[email&#160;protected]</span></a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2025 Greenchild Group LLC</span><div class="footer-legal"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div></div></div></footer>
+<footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert.</p></div><div><h5>Unternehmen</h5><ul><li><a href="/de/ueber-uns.html">Über uns</a></li><li><a href="/de/plantagen.html">Plantagen</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div><div><h5>Wissen</h5><ul><li><a href="/de/kiri-baum.html">Der Kiri-Baum</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li></ul></div><div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="mailto:info@greenchild.eu">info@greenchild.eu</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2025 Greenchild Group LLC</span><div class="footer-legal"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div></div></div></footer>
 <div class="lightbox" id="lightbox"><button class="lightbox-close">&times;</button><img src="" alt=""></div>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/js/main.js"></script>
+<!-- email-decode.min.js ENTFERNT — bricht nachfolgendes JS (Cloudflare Scrape Shield > Email Obfuscation > OFF) -->
+<script src="/js/main.js"></script>
 <script>
 (function(){
   var d=[
