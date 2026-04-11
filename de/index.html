@@ -154,6 +154,13 @@
 .header-transparent.scrolled .nav-sub{background:var(--white);border-color:var(--border)}
 .header-transparent.scrolled .nav-sub a{color:var(--text-body)}
 .header-transparent.scrolled .nav-sub a:hover{background:var(--green-soft);color:var(--green)}
+
+/* DESKTOP PADDING FIX */
+@media(min-width:1200px){.container{padding:0 48px}}
+@media(min-width:1400px){.container{padding:0 64px}}
+
+/* HERO PADDING FIX */
+.hero-home .hero-content{padding-left:var(--pad);padding-right:var(--pad);max-width:var(--max-w);margin:0 auto}
 </style>
 </head>
 <body>
@@ -292,7 +299,7 @@
 <section style="position:relative;padding:0;overflow:hidden;">
   <div style="position:relative;aspect-ratio:21/9;max-height:500px;overflow:hidden;">
     <video autoplay muted loop playsinline style="position:absolute;top:50%;left:50%;width:110%;height:110%;transform:translate(-50%,-50%);object-fit:cover;">
-      <source src="/assets/video/drone-approach.mp4" type="video/mp4">
+      <source src="/assets/video/videodrohne1.mp4" type="video/mp4">
     </video>
     <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,46,32,.3) 0%,transparent 30%,transparent 70%,rgba(12,46,32,.3) 100%);pointer-events:none;"></div>
   </div>
