@@ -63,7 +63,7 @@
 .eco-btn.playing{background:var(--green);color:var(--white);border-color:var(--green)}
 @keyframes flowDash{to{stroke-dashoffset:-24}}
 @keyframes orbitDot{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.eco-orbit{position:absolute;top:50%;left:50%;width:410px;height:410px;margin:-205px 0 0 -205px;border-radius:50%;animation:orbitDot 25s linear infinite;z-index:5;pointer-events:none}
+.eco-orbit{position:absolute;top:50%;left:50%;width:410px;height:410px;margin:-205px 0 0 -205px;border-radius:50%;z-index:5;pointer-events:none;transition:none}
 .eco-orbit-dot{position:absolute;top:-9px;left:50%;margin-left:-9px;width:18px;height:18px;border-radius:50%;background:#2DD4A0;box-shadow:0 0 20px rgba(45,212,160,.7),0 0 50px rgba(45,212,160,.3);z-index:5}
 .eco-orbit-dot::after{content:'';position:absolute;inset:4px;border-radius:50%;background:#fff;opacity:.5}
 .eco-flow{stroke-dasharray:6 18;animation:flowDash 2s linear infinite}
@@ -201,11 +201,90 @@
     {title:'Paulownia-Baum',color:'#00A86B',next:'CO₂',desc:'Bis zu 5 Meter Wachstum pro Jahr. Nach 8–12 Jahren liefert jeder Baum ca. 1,1–1,4 m³ Edelholz.'},
     {title:'CO₂-Bindung',color:'#1D9E75',next:'Sonne',desc:'Jeder Baum bindet ca. 300 kg CO₂ pro Jahr. Ca. 360 Hektar = Millionen Kilogramm CO₂-Reduktion.'}
   ];
-  var nodes=document.querySelectorAll('.eco-node'),info=document.getElementById('ecoInfo'),iT=document.getElementById('ecoInfoTitle'),iD=document.getElementById('ecoInfoDesc'),iDot=document.getElementById('ecoInfoDot'),iA=document.getElementById('ecoInfoArrow'),btn=document.getElementById('ecoPlayBtn'),pi=null;
-  if(!nodes.length)return;
-  nodes.forEach(function(n){n.addEventListener('click',function(){show(parseInt(this.dataset.idx))})});
-  function show(i){var x=d[i];nodes.forEach(function(n){n.classList.remove('active')});nodes[i].classList.add('active');iDot.style.background=x.color;iT.textContent=x.title;iD.textContent=x.desc;iA.textContent='\u2192 '+x.next;info.classList.add('show')}
-  window.ecoTogglePlay=function(){if(pi){clearInterval(pi);pi=null;btn.classList.remove('playing');btn.textContent='Kreislauf starten';return}btn.classList.add('playing');btn.textContent='Stoppen';var i=0;show(0);pi=setInterval(function(){i=(i+1)%d.length;show(i)},4500)};
+  var nodes=document.querySelectorAll('.eco-node'),
+      orbit=document.querySelector('.eco-orbit'),
+      info=document.getElementById('ecoInfo'),
+      iT=document.getElementById('ecoInfoTitle'),
+      iD=document.getElementById('ecoInfoDesc'),
+      iDot=document.getElementById('ecoInfoDot'),
+      iA=document.getElementById('ecoInfoArrow'),
+      btn=document.getElementById('ecoPlayBtn'),
+      playing=false, raf=null, angle=0, lastTime=0, activeIdx=-1,
+      SPEED=360/25, /* Grad pro Sekunde — 25s für volle Umdrehung */
+      NODE_ANGLES=[0,45,90,135,180,225,270,315]; /* 8 Nodes gleichmäßig verteilt */
+
+  if(!nodes.length||!orbit)return;
+
+  /* Dot auf Startposition setzen (oben, 0°) */
+  orbit.style.transform='rotate(0deg)';
+
+  /* Manueller Klick auf Nodes */
+  nodes.forEach(function(n){
+    n.addEventListener('click',function(){
+      var idx=parseInt(this.dataset.idx);
+      show(idx);
+      /* Dot zum angeklickten Node springen */
+      angle=NODE_ANGLES[idx];
+      orbit.style.transform='rotate('+angle+'deg)';
+    });
+  });
+
+  function show(i){
+    if(i===activeIdx)return; /* Kein Doppel-Trigger */
+    activeIdx=i;
+    var x=d[i];
+    nodes.forEach(function(n){n.classList.remove('active')});
+    nodes[i].classList.add('active');
+    iDot.style.background=x.color;
+    iT.textContent=x.title;
+    iD.textContent=x.desc;
+    iA.textContent='\u2192 '+x.next;
+    info.classList.add('show');
+    /* Pulse-Effekt auf aktiven Node */
+    var icon=nodes[i].querySelector('.eco-icon');
+    if(icon){icon.style.transform='scale(1.2)';setTimeout(function(){icon.style.transform=''},400)}
+  }
+
+  /* Welcher Node ist am nächsten zum aktuellen Winkel? */
+  function getClosestNode(a){
+    var norm=((a%360)+360)%360;
+    var best=0,bestDist=360;
+    for(var i=0;i<NODE_ANGLES.length;i++){
+      var dist=Math.abs(norm-NODE_ANGLES[i]);
+      if(dist>180)dist=360-dist;
+      if(dist<bestDist){bestDist=dist;best=i}
+    }
+    return bestDist<12?best:-1; /* Nur triggern wenn Dot nah genug (±12°) */
+  }
+
+  function tick(time){
+    if(!playing)return;
+    if(!lastTime)lastTime=time;
+    var dt=(time-lastTime)/1000;
+    lastTime=time;
+    angle+=SPEED*dt;
+    orbit.style.transform='rotate('+angle+'deg)';
+    var closest=getClosestNode(angle);
+    if(closest>=0)show(closest);
+    raf=requestAnimationFrame(tick);
+  }
+
+  window.ecoTogglePlay=function(){
+    if(playing){
+      playing=false;
+      if(raf)cancelAnimationFrame(raf);
+      raf=null;lastTime=0;
+      btn.classList.remove('playing');
+      btn.textContent='Kreislauf starten';
+      return;
+    }
+    playing=true;
+    lastTime=0;
+    btn.classList.add('playing');
+    btn.textContent='Stoppen';
+    show(getClosestNode(angle)>=0?getClosestNode(angle):0);
+    raf=requestAnimationFrame(tick);
+  };
 })();
 </script>
 </body>
