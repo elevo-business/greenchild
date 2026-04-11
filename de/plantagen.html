@@ -28,7 +28,7 @@
 .bee-icon i{width:28px;height:28px;color:var(--green)}
 .bee-num{font-family:var(--font-h);font-size:32px;font-weight:800;color:var(--green)}
 /* ECOSYSTEM */
-.eco-wrap{position:relative;width:100%;max-width:620px;margin:0 auto;aspect-ratio:1/1}
+.eco-wrap{position:relative;width:100%;max-width:660px;margin:0 auto;aspect-ratio:1/1}
 .eco-svg{position:absolute;inset:0;width:100%;height:100%;z-index:1}
 .eco-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:3;pointer-events:none}
 .eco-center-tree{width:84px;height:84px;margin:0 auto 10px;border-radius:50%;background:var(--green-pale);border:1.5px solid rgba(0,168,107,.15);display:flex;align-items:center;justify-content:center}
@@ -63,14 +63,18 @@
 .eco-btn:hover{border-color:var(--green);color:var(--green);background:var(--green-soft)}
 .eco-btn.playing{background:var(--green);color:var(--white);border-color:var(--green)}
 @keyframes flowDash{to{stroke-dashoffset:-24}}
+@keyframes orbitDot{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.eco-orbit{position:absolute;top:50%;left:50%;width:410px;height:410px;margin:-205px 0 0 -205px;border-radius:50%;animation:orbitDot 25s linear infinite;z-index:5;pointer-events:none}
+.eco-orbit-dot{position:absolute;top:-9px;left:50%;margin-left:-9px;width:18px;height:18px;border-radius:50%;background:#2DD4A0;box-shadow:0 0 20px rgba(45,212,160,.7),0 0 50px rgba(45,212,160,.3);z-index:5}
+.eco-orbit-dot::after{content:'';position:absolute;inset:4px;border-radius:50%;background:#fff;opacity:.5}
 .eco-flow{stroke-dasharray:6 18;animation:flowDash 2s linear infinite}
 @keyframes ecoParticle{0%{offset-distance:0%}100%{offset-distance:100%}}
 .eco-particle{width:5px;height:5px;border-radius:50%;background:var(--green);position:absolute;opacity:.45;offset-path:circle(38% at 50% 50%);animation:ecoParticle 8s linear infinite;pointer-events:none}
 .eco-particle:nth-child(2){animation-delay:-2s;opacity:.25;width:4px;height:4px}
 .eco-particle:nth-child(3){animation-delay:-4.5s;opacity:.35;width:3px;height:3px}
 .eco-particle:nth-child(4){animation-delay:-6.5s;opacity:.2;width:4px;height:4px}
-@media(max-width:900px){.advantage-grid{grid-template-columns:1fr 1fr}.country-grid{grid-template-columns:repeat(3,1fr)}.bee-banner{flex-direction:column;text-align:center}.eco-wrap{max-width:420px}.eco-icon{width:48px;height:48px}.eco-icon i{width:20px;height:20px}.eco-node-label{font-size:10.5px}.eco-center-tree{width:60px;height:60px}}
-@media(max-width:600px){.advantage-grid{grid-template-columns:1fr}.country-grid{grid-template-columns:1fr}.country-ha{font-size:28px}.bee-banner{padding:24px 20px}.bee-num{font-size:26px}.eco-wrap{max-width:300px}.eco-icon{width:40px;height:40px}.eco-icon i{width:16px;height:16px}.eco-node-label{font-size:9px;margin-top:2px}.eco-center-tree{width:44px;height:44px}.eco-center-tree i{width:18px;height:18px}.eco-center-text{font-size:8.5px}.eco-info{padding:16px 18px;margin-top:20px;max-width:100%}.eco-info-title{font-size:14px}.eco-info-desc{font-size:12.5px}.eco-particle{display:none}
+@media(max-width:900px){.advantage-grid{grid-template-columns:1fr 1fr}.country-grid{grid-template-columns:repeat(3,1fr)}.bee-banner{flex-direction:column;text-align:center}.eco-wrap{max-width:420px}.eco-orbit{width:340px;height:340px;margin:-170px 0 0 -170px}.eco-icon{width:48px;height:48px}.eco-icon i{width:20px;height:20px}.eco-node-label{font-size:10.5px}.eco-center-tree{width:60px;height:60px}}
+@media(max-width:600px){.advantage-grid{grid-template-columns:1fr}.country-grid{grid-template-columns:1fr}.country-ha{font-size:28px}.bee-banner{padding:24px 20px}.bee-num{font-size:26px}.eco-wrap{max-width:300px}.eco-icon{width:40px;height:40px}.eco-icon i{width:16px;height:16px}.eco-node-label{font-size:9px;margin-top:2px}.eco-center-tree{width:44px;height:44px}.eco-center-tree i{width:18px;height:18px}.eco-center-text{font-size:8.5px}.eco-info{padding:16px 18px;margin-top:20px;max-width:100%}.eco-info-title{font-size:14px}.eco-info-desc{font-size:12.5px}.eco-particle{display:none}.eco-orbit{width:300px;height:300px;margin:-150px 0 0 -150px}
 .eco-controls{margin-top:14px}}
 /* DROPDOWN NAV */
 .nav-dropdown{position:relative}
@@ -136,34 +140,22 @@
   <div class="eco-controls" style="margin-bottom:28px;"><button class="eco-btn" id="ecoPlayBtn" onclick="ecoTogglePlay()" style="background:rgba(45,212,160,.15);border-color:rgba(45,212,160,.4);color:var(--green-light);font-size:14px;padding:12px 28px;">Kreislauf starten</button></div>
   <div class="eco-wrap reveal">
     <svg class="eco-svg" viewBox="0 0 540 540">
-      <!-- Greenchild Logo Circle = Ecosystem Ring -->
-      <circle cx="270" cy="270" r="205" fill="none" stroke="rgba(0,168,107,.08)" stroke-width="60"/>
-      <circle cx="270" cy="270" r="205" fill="none" stroke="#00A86B" stroke-width="18" opacity=".35"/>
-      <circle cx="270" cy="270" r="205" fill="none" stroke="#00A86B" stroke-width="2" opacity=".5"/>
-      <!-- Inner + outer glow -->
-      <circle cx="270" cy="270" r="220" fill="none" stroke="rgba(45,212,160,.08)" stroke-width="1"/>
-      <circle cx="270" cy="270" r="190" fill="none" stroke="rgba(45,212,160,.08)" stroke-width="1"/>
-      <!-- Orbiting dot (the logo dot) -->
-      <circle r="10" fill="#00A86B" opacity=".9" filter="url(#dotGlow)">
-        <animateMotion dur="30s" repeatCount="indefinite">
-          <mpath href="#orbitPath"/>
-        </animateMotion>
-      </circle>
-      <circle r="6" fill="#2DD4A0">
-        <animateMotion dur="30s" repeatCount="indefinite">
-          <mpath href="#orbitPath"/>
-        </animateMotion>
-      </circle>
-      <path id="orbitPath" d="M475,270 A205,205 0 1,1 474.9,269.9 Z" fill="none"/>
-      <defs>
-        <filter id="dotGlow" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="6" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
+      <!-- Outer glow ring -->
+      <circle cx="270" cy="270" r="210" fill="none" stroke="rgba(45,212,160,.05)" stroke-width="40"/>
+      <!-- THE GREENCHILD RING — thick green circle like the logo -->
+      <circle cx="270" cy="270" r="205" fill="none" stroke="rgba(0,168,107,.15)" stroke-width="28"/>
+      <circle cx="270" cy="270" r="205" fill="none" stroke="#00A86B" stroke-width="22" opacity=".3"/>
+      <circle cx="270" cy="270" r="205" fill="none" stroke="#00A86B" stroke-width="3" opacity=".6"/>
+      <!-- Inner ring edge -->
+      <circle cx="270" cy="270" r="193" fill="none" stroke="rgba(45,212,160,.08)" stroke-width="1"/>
+      <!-- Outer ring edge -->
+      <circle cx="270" cy="270" r="217" fill="none" stroke="rgba(45,212,160,.08)" stroke-width="1"/>
+      <!-- Subtle flow animation on ring -->
+      <circle cx="270" cy="270" r="205" fill="none" class="eco-flow" stroke="rgba(45,212,160,.2)" stroke-width="2"/>
     </svg>
-    <div class="eco-particle"></div><div class="eco-particle"></div><div class="eco-particle"></div><div class="eco-particle"></div>
-    <div class="eco-center"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="width:58px;height:58px;object-fit:contain;filter:brightness(2) drop-shadow(0 0 12px rgba(0,168,107,.4));margin:0 auto 8px;"><div class="eco-center-text" style="color:rgba(255,255,255,.55);font-size:11px;letter-spacing:.18em;">Ökosystem</div></div>
+    <!-- Orbiting dot (Greenchild logo dot) -->
+    <div class="eco-orbit"><div class="eco-orbit-dot"></div></div>
+    <div class="eco-center"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="width:80px;height:80px;object-fit:contain;filter:brightness(2.2) drop-shadow(0 0 20px rgba(0,168,107,.5)) drop-shadow(0 0 40px rgba(45,212,160,.2));margin:0 auto 10px;"><div class="eco-center-text" style="color:rgba(255,255,255,.55);font-size:11px;letter-spacing:.18em;">Ökosystem</div></div>
     <div class="eco-node eco-sonne" style="left:50%;top:5%;" data-idx="0"><div class="eco-icon" style="background:rgba(239,159,39,.12);border-color:rgba(239,159,39,.4);backdrop-filter:blur(8px);"><i data-lucide="sun" style="color:#F5C842;"></i></div><div class="eco-node-label" style="color:rgba(255,255,255,.7);">Sonne</div></div>
     <div class="eco-node eco-wasser" style="left:82%;top:18%;" data-idx="1"><div class="eco-icon" style="background:rgba(55,138,221,.12);border-color:rgba(55,138,221,.4);backdrop-filter:blur(8px);"><i data-lucide="droplets" style="color:#5BA8EE;"></i></div><div class="eco-node-label" style="color:rgba(255,255,255,.7);">Wasser</div></div>
     <div class="eco-node eco-erde" style="left:95%;top:50%;" data-idx="2"><div class="eco-icon" style="background:rgba(160,132,90,.12);border-color:rgba(160,132,90,.4);backdrop-filter:blur(8px);"><i data-lucide="layers" style="color:#C4A56C;"></i></div><div class="eco-node-label" style="color:rgba(255,255,255,.7);">Erde</div></div>
