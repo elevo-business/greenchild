@@ -127,10 +127,11 @@
 
 <!-- ÖKOSYSTEM -->
 <section id="ecosystem" style="position:relative;padding:120px 0;overflow:hidden;">
-  <div style="position:absolute;inset:0;z-index:0;"><img src="/assets/img/plantation-corridor.jpg" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(.18) saturate(.7);"></div>
-  <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(12,46,32,.5) 0%,rgba(10,15,12,.85) 50%,rgba(12,46,32,.5) 100%);"></div>
+  <div style="position:absolute;inset:0;z-index:0;"><img src="/assets/img/plantation-corridor.jpg" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(.35) saturate(.7);"></div>
+  <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(12,46,32,.3) 0%,rgba(10,15,12,.55) 50%,rgba(12,46,32,.3) 100%);"></div>
   <div class="container" style="position:relative;z-index:2;">
   <div class="section-header center reveal"><div class="label center" style="color:var(--green-light);">Das Ökosystem</div><h2 style="color:#fff;">Ein Kreislauf, der sich selbst erneuert</h2><p style="color:rgba(255,255,255,.55);">Sonne, Wasser, Boden, Bienen und Schafe arbeiten zusammen. Nichts wird verschwendet.</p></div>
+  <div class="eco-controls" style="margin-bottom:28px;"><button class="eco-btn" id="ecoPlayBtn" onclick="ecoTogglePlay()" style="background:rgba(45,212,160,.15);border-color:rgba(45,212,160,.4);color:var(--green-light);font-size:14px;padding:12px 28px;">Kreislauf starten</button></div>
   <div class="eco-wrap reveal">
     <svg class="eco-svg" viewBox="0 0 540 540"><circle cx="270" cy="270" r="205" fill="none" stroke="rgba(45,212,160,.07)" stroke-width="50"/><circle cx="270" cy="270" r="205" fill="none" stroke="rgba(45,212,160,.2)" stroke-width="1" stroke-dasharray="3 9"/><circle cx="270" cy="270" r="205" fill="none" class="eco-flow" stroke="rgba(45,212,160,.4)" stroke-width="1.5"/><g fill="var(--green-light)" opacity=".2"><polygon points="270,64 276,76 264,76" transform="rotate(22.5 270 270)"/><polygon points="270,64 276,76 264,76" transform="rotate(112.5 270 270)"/><polygon points="270,64 276,76 264,76" transform="rotate(202.5 270 270)"/><polygon points="270,64 276,76 264,76" transform="rotate(292.5 270 270)"/></g></svg>
     <div class="eco-particle"></div><div class="eco-particle"></div><div class="eco-particle"></div><div class="eco-particle"></div>
@@ -145,7 +146,7 @@
     <div class="eco-node eco-co2" style="left:18%;top:18%;" data-idx="7"><div class="eco-icon" style="background:rgba(29,158,117,.12);border-color:rgba(29,158,117,.4);backdrop-filter:blur(8px);"><i data-lucide="wind" style="color:#3DE8B0;"></i></div><div class="eco-node-label" style="color:rgba(255,255,255,.7);">CO₂</div></div>
   </div>
   <div class="eco-info" id="ecoInfo" style="background:rgba(255,255,255,.1);border:2px solid rgba(45,212,160,.3);backdrop-filter:blur(16px);"><div class="eco-info-head"><div class="eco-info-dot" id="ecoInfoDot"></div><div class="eco-info-title" id="ecoInfoTitle" style="color:#fff;">Tippe auf ein Element</div><div class="eco-info-arrow" id="ecoInfoArrow" style="color:rgba(255,255,255,.3);"></div></div><div class="eco-info-desc" id="ecoInfoDesc" style="color:rgba(255,255,255,.55);">Entdecke, wie jedes Element im Ökosystem zusammenspielt.</div></div>
-  <div class="eco-controls"><button class="eco-btn" id="ecoPlayBtn" onclick="ecoTogglePlay()" style="background:rgba(45,212,160,.15);border-color:rgba(45,212,160,.4);color:var(--green-light);font-size:14px;padding:12px 28px;">Kreislauf starten</button></div>
+
 </div></section>
 
 <!-- GALERIE -->
