@@ -57,6 +57,10 @@
 .eco-info-title{font-family:var(--font-h);font-size:15px;font-weight:700;color:var(--text)}
 .eco-info-arrow{font-size:11px;color:var(--text-dim);margin-left:auto;font-weight:500}
 .eco-info-desc{font-family:var(--font-body);font-size:13.5px;color:var(--text-muted);line-height:1.65}
+
+@keyframes ecoLogoSpin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.eco-logo-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:110px;height:110px;border-radius:50%;border:3px solid rgba(45,212,160,.25);animation:ecoLogoSpin 30s linear infinite;z-index:3;pointer-events:none}
+.eco-logo-ring::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;background:var(--green-light);box-shadow:0 0 16px rgba(45,212,160,.5)}
 .eco-controls{display:flex;justify-content:center;gap:10px;margin-top:20px}
 .eco-btn{font-family:var(--font-body);font-size:12px;font-weight:600;padding:8px 22px;border-radius:var(--radius-full);border:1.5px solid var(--border);background:var(--white);color:var(--text);cursor:pointer;transition:all .3s}
 .eco-btn:hover{border-color:var(--green);color:var(--green);background:var(--green-soft)}
@@ -69,7 +73,11 @@
 .eco-particle:nth-child(3){animation-delay:-4.5s;opacity:.35;width:3px;height:3px}
 .eco-particle:nth-child(4){animation-delay:-6.5s;opacity:.2;width:4px;height:4px}
 @media(max-width:900px){.advantage-grid{grid-template-columns:1fr 1fr}.country-grid{grid-template-columns:repeat(3,1fr)}.bee-banner{flex-direction:column;text-align:center}.eco-wrap{max-width:420px}.eco-icon{width:48px;height:48px}.eco-icon i{width:20px;height:20px}.eco-node-label{font-size:10.5px}.eco-center-tree{width:60px;height:60px}}
-@media(max-width:600px){.advantage-grid{grid-template-columns:1fr}.country-grid{grid-template-columns:1fr}.country-ha{font-size:28px}.bee-banner{padding:24px 20px}.bee-num{font-size:26px}.eco-wrap{max-width:300px}.eco-icon{width:40px;height:40px}.eco-icon i{width:16px;height:16px}.eco-node-label{font-size:9px;margin-top:2px}.eco-center-tree{width:44px;height:44px}.eco-center-tree i{width:18px;height:18px}.eco-center-text{font-size:8.5px}.eco-info{padding:16px 18px;margin-top:20px;max-width:100%}.eco-info-title{font-size:14px}.eco-info-desc{font-size:12.5px}.eco-particle{display:none}.eco-controls{margin-top:14px}}
+@media(max-width:600px){.advantage-grid{grid-template-columns:1fr}.country-grid{grid-template-columns:1fr}.country-ha{font-size:28px}.bee-banner{padding:24px 20px}.bee-num{font-size:26px}.eco-wrap{max-width:300px}.eco-icon{width:40px;height:40px}.eco-icon i{width:16px;height:16px}.eco-node-label{font-size:9px;margin-top:2px}.eco-center-tree{width:44px;height:44px}.eco-center-tree i{width:18px;height:18px}.eco-center-text{font-size:8.5px}.eco-info{padding:16px 18px;margin-top:20px;max-width:100%}.eco-info-title{font-size:14px}.eco-info-desc{font-size:12.5px}.eco-particle{display:none}
+@keyframes ecoLogoSpin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.eco-logo-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:110px;height:110px;border-radius:50%;border:3px solid rgba(45,212,160,.25);animation:ecoLogoSpin 30s linear infinite;z-index:3;pointer-events:none}
+.eco-logo-ring::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;background:var(--green-light);box-shadow:0 0 16px rgba(45,212,160,.5)}
+.eco-controls{margin-top:14px}}
 /* DROPDOWN NAV */
 .nav-dropdown{position:relative}
 .nav-dropdown>.nav-link{display:flex;align-items:center;gap:4px}
@@ -135,7 +143,7 @@
   <div class="eco-wrap reveal">
     <svg class="eco-svg" viewBox="0 0 540 540"><circle cx="270" cy="270" r="205" fill="none" stroke="rgba(45,212,160,.07)" stroke-width="50"/><circle cx="270" cy="270" r="205" fill="none" stroke="rgba(45,212,160,.2)" stroke-width="1" stroke-dasharray="3 9"/><circle cx="270" cy="270" r="205" fill="none" class="eco-flow" stroke="rgba(45,212,160,.4)" stroke-width="1.5"/><g fill="var(--green-light)" opacity=".2"><polygon points="270,64 276,76 264,76" transform="rotate(22.5 270 270)"/><polygon points="270,64 276,76 264,76" transform="rotate(112.5 270 270)"/><polygon points="270,64 276,76 264,76" transform="rotate(202.5 270 270)"/><polygon points="270,64 276,76 264,76" transform="rotate(292.5 270 270)"/></g></svg>
     <div class="eco-particle"></div><div class="eco-particle"></div><div class="eco-particle"></div><div class="eco-particle"></div>
-    <div class="eco-center"><div class="eco-center-tree" style="background:rgba(0,168,107,.12);border-color:rgba(45,212,160,.25);"><i data-lucide="trees" style="color:var(--green-light);"></i></div><div class="eco-center-text" style="color:rgba(255,255,255,.45);">Kreislauf</div></div>
+    <div class="eco-center"><img src="https://greenchild.eu/wp-content/uploads/2025/07/b2396e78.png" alt="Greenchild" style="width:52px;height:52px;object-fit:contain;filter:brightness(1.8);margin:0 auto 6px;"><div class="eco-center-text" style="color:rgba(255,255,255,.5);font-size:10px;">Ökosystem</div></div><div class="eco-logo-ring"></div>
     <div class="eco-node eco-sonne" style="left:50%;top:5%;" data-idx="0"><div class="eco-icon" style="background:rgba(239,159,39,.12);border-color:rgba(239,159,39,.4);backdrop-filter:blur(8px);"><i data-lucide="sun" style="color:#F5C842;"></i></div><div class="eco-node-label" style="color:rgba(255,255,255,.7);">Sonne</div></div>
     <div class="eco-node eco-wasser" style="left:82%;top:18%;" data-idx="1"><div class="eco-icon" style="background:rgba(55,138,221,.12);border-color:rgba(55,138,221,.4);backdrop-filter:blur(8px);"><i data-lucide="droplets" style="color:#5BA8EE;"></i></div><div class="eco-node-label" style="color:rgba(255,255,255,.7);">Wasser</div></div>
     <div class="eco-node eco-erde" style="left:95%;top:50%;" data-idx="2"><div class="eco-icon" style="background:rgba(160,132,90,.12);border-color:rgba(160,132,90,.4);backdrop-filter:blur(8px);"><i data-lucide="layers" style="color:#C4A56C;"></i></div><div class="eco-node-label" style="color:rgba(255,255,255,.7);">Erde</div></div>
