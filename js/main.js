@@ -39,6 +39,8 @@ function initGrowthSlider(){
         {year:11,height:19.1,diameter:42,volume:1.23,co2:299},
         {year:12,height:19.7,diameter:44,volume:1.37,co2:301}
     ];
+    /* Holzpreis: Schnittholz ca. 400 €/m³ */
+    var PRICE_PER_M3 = 400;
     var el=function(id){return document.getElementById(id)};
     var update=function(){
         var d=data[parseInt(s.value)-1];
@@ -48,8 +50,9 @@ function initGrowthSlider(){
         if(el('growthDiameter'))el('growthDiameter').textContent=d.diameter+'cm';
         if(el('growthVolume'))el('growthVolume').textContent='ca. '+d.volume.toFixed(2)+' m\u00B3';
         if(el('growthCo2'))el('growthCo2').textContent='ca. '+d.co2+' kg';
-        if(el('growthMarketLow'))el('growthMarketLow').textContent='$'+Math.round(d.volume*1695).toLocaleString('de-DE');
-        if(el('growthMarketHigh'))el('growthMarketHigh').textContent='$'+Math.round(d.volume*2119).toLocaleString('de-DE');
+        /* EUR statt USD */
+        if(el('growthMarketLow'))el('growthMarketLow').textContent='\u20AC'+Math.round(d.volume*PRICE_PER_M3*0.8).toLocaleString('de-DE');
+        if(el('growthMarketHigh'))el('growthMarketHigh').textContent='\u20AC'+Math.round(d.volume*PRICE_PER_M3*1.1).toLocaleString('de-DE');
         // Visual tree
         var pct=d.year/12;
         var trunk=el('treeTrunk'),crown=el('treeCrown');
@@ -84,7 +87,10 @@ function initGrowthSlider(){
 
 function initConfigurator(){
     var s=document.getElementById('configSlider');if(!s)return;
-    var PRICE=249,HA=625,VOL=1.37,CO2=301,MLO=1695,MHI=2119;
+    /* Preis pro Baum, Bäume pro Hektar, Holzvolumen bei Reife, CO2/Jahr */
+    var PRICE=249, HA=625, VOL=1.37, CO2=301;
+    /* Holzpreis: Schnittholz ca. 400 €/m³ — Range ±20% */
+    var MPRICE=400;
     var el=function(id){return document.getElementById(id)};
     var update=function(){
         var t=parseInt(s.value),area=t/HA,vol=t*VOL,co2=t*CO2,price=t*PRICE;
@@ -93,8 +99,9 @@ function initConfigurator(){
         if(el('configArea'))el('configArea').textContent=area.toFixed(2).replace('.',',');
         if(el('configCo2'))el('configCo2').textContent='ca. '+co2.toLocaleString('de-DE');
         if(el('configVolume'))el('configVolume').textContent='ca. '+Math.round(vol).toLocaleString('de-DE');
-        if(el('configMarketLow'))el('configMarketLow').textContent='$'+Math.round(vol*MLO).toLocaleString('de-DE');
-        if(el('configMarketHigh'))el('configMarketHigh').textContent='$'+Math.round(vol*MHI).toLocaleString('de-DE');
+        /* EUR statt USD */
+        if(el('configMarketLow'))el('configMarketLow').textContent='\u20AC'+Math.round(vol*MPRICE*0.8).toLocaleString('de-DE');
+        if(el('configMarketHigh'))el('configMarketHigh').textContent='\u20AC'+Math.round(vol*MPRICE*1.1).toLocaleString('de-DE');
         var bars=document.querySelectorAll('.forest-bar');
         bars.forEach(function(b,i){var active=i<Math.ceil((t/800)*bars.length);b.classList.toggle('active',active);b.style.height=active?(30+Math.random()*60)+'px':'8px'});
     };
@@ -109,18 +116,14 @@ function initConfigurator(){
         var link=d.querySelector('.nav-link');
         if(!link)return;
         link.addEventListener('click',function(e){
-            // On touch/mobile: first tap opens, second navigates
-            if(window.innerWidth<=900)return; // mobile uses hamburger, not dropdowns
+            if(window.innerWidth<=900)return;
             if(!d.classList.contains('open')){
                 e.preventDefault();
-                // Close others
                 drops.forEach(function(o){o.classList.remove('open')});
                 d.classList.add('open');
             }
-            // If already open, let click navigate
         });
     });
-    // Close dropdowns on click outside
     document.addEventListener('click',function(e){
         if(!e.target.closest('.nav-dropdown')){
             drops.forEach(function(d){d.classList.remove('open')});
