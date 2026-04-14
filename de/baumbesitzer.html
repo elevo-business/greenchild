@@ -23,6 +23,7 @@
 .step-h{text-align:center;position:relative}
 .step-h-num{width:56px;height:56px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:20px;font-weight:800;margin:0 auto 20px;position:relative;z-index:2;box-shadow:0 4px 16px var(--green-glow)}
 .step-h h4{font-size:16px;margin-bottom:8px}.step-h p{font-size:14px;color:var(--text-muted);line-height:1.6}
+.steps-5{grid-template-columns:repeat(5,1fr)}
 .cert-preview{display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:center}
 .cert-mockup{background:var(--white);border:2px solid var(--border);border-radius:var(--radius-lg);padding:44px 36px;text-align:center;position:relative;box-shadow:var(--shadow-lg)}
 .cert-mockup::before{content:'';position:absolute;top:-1px;left:20%;right:20%;height:3px;background:linear-gradient(90deg,transparent,var(--green),transparent);border-radius:0 0 4px 4px}
@@ -34,8 +35,8 @@
 .cert-detail strong{color:var(--text-dim);display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
 .proof-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
 .proof-strip img{width:100%;height:220px;object-fit:cover;border-radius:var(--radius-lg)}
-@media(max-width:900px){.included-grid{grid-template-columns:1fr 1fr}.steps-h{grid-template-columns:1fr 1fr;gap:24px}.steps-h::before{display:none}.cert-preview{grid-template-columns:1fr}.proof-strip{grid-template-columns:1fr 1fr}.proof-strip img{height:200px}}
-@media(max-width:600px){.included-grid{grid-template-columns:1fr}.included-item{padding:20px;gap:14px}.steps-h{grid-template-columns:1fr;gap:24px}.step-h{display:flex;align-items:flex-start;gap:16px;text-align:left}.step-h-num{width:44px;height:44px;font-size:17px;margin:0;flex-shrink:0}.cert-preview{gap:32px}.cert-mockup{padding:28px 20px}.proof-strip{grid-template-columns:1fr}.proof-strip img{height:200px}.price-big{font-size:44px;padding:28px 0 4px}.price-per{font-size:14px;margin-bottom:24px}}
+@media(max-width:900px){.included-grid{grid-template-columns:1fr 1fr}.steps-h,.steps-5{grid-template-columns:1fr 1fr!important}.steps-h::before{display:none}.cert-preview{grid-template-columns:1fr}.proof-strip{grid-template-columns:1fr 1fr}.proof-strip img{height:200px}}
+@media(max-width:600px){.included-grid{grid-template-columns:1fr}.included-item{padding:20px;gap:14px}.steps-h,.steps-5{grid-template-columns:1fr!important;gap:20px}.step-h{display:flex;align-items:flex-start;gap:16px;text-align:left}.step-h-num{width:44px;height:44px;font-size:17px;margin:0;flex-shrink:0}.cert-preview{gap:32px}.cert-mockup{padding:28px 20px}.proof-strip{grid-template-columns:1fr}.proof-strip img{height:200px}.price-big{font-size:44px;padding:28px 0 4px}.price-per{font-size:14px;margin-bottom:24px}}
 .nav-dropdown{position:relative}.nav-dropdown>.nav-link{display:flex;align-items:center;gap:4px}.nav-dropdown>.nav-link::after{content:'';width:4px;height:4px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);transition:transform .3s;margin-top:-2px}.nav-dropdown:hover>.nav-link::after{transform:rotate(-135deg)}.nav-sub{position:absolute;top:100%;left:0;min-width:180px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:6px;box-shadow:var(--shadow);opacity:0;visibility:hidden;transform:translateY(8px);transition:all .25s var(--ease);z-index:100}.nav-dropdown:hover .nav-sub,.nav-dropdown.open .nav-sub{opacity:1;visibility:visible;transform:translateY(4px)}.nav-sub a{display:block;padding:10px 14px;font-size:13px;font-weight:500;color:var(--text-body);border-radius:var(--radius-sm);text-decoration:none;transition:all .2s}.nav-sub a:hover{background:var(--green-soft);color:var(--green)}.header-transparent .nav-sub{background:rgba(12,46,32,.92);border-color:rgba(255,255,255,.1);backdrop-filter:blur(16px)}.header-transparent .nav-sub a{color:rgba(255,255,255,.7)}.header-transparent .nav-sub a:hover{background:rgba(255,255,255,.08);color:#fff}.header-transparent.scrolled .nav-sub{background:var(--white);border-color:var(--border)}.header-transparent.scrolled .nav-sub a{color:var(--text-body)}.header-transparent.scrolled .nav-sub a:hover{background:var(--green-soft);color:var(--green)}
 @media(min-width:1200px){.container{padding:0 48px}}@media(min-width:1400px){.container{padding:0 64px}}
 </style>
@@ -63,7 +64,7 @@
 </div></section>
 
 <section class="bg-light"><div class="container"><div class="section-header center reveal"><div class="label center">So funktioniert es</div><h2>In 5 Schritten zum Baumbesitzer</h2></div>
-<div class="steps-h" style="grid-template-columns:repeat(5,1fr);">
+<div class="steps-h steps-5">
   <div class="step-h reveal"><div class="step-h-num">1</div><div><h4>Erstgespräch</h4><p>Persönlich, unverbindlich, transparent. Wir lernen uns kennen.</p></div></div>
   <div class="step-h reveal reveal-delay-1"><div class="step-h-num">2</div><div><h4>Bäume wählen</h4><p>Gemeinsam bestimmen wir die passende Anzahl.</p></div></div>
   <div class="step-h reveal reveal-delay-2"><div class="step-h-num">3</div><div><h4>Kaufvertrag</h4><p>Transparent und digital per E-Mail.</p></div></div>
