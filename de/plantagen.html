@@ -166,13 +166,8 @@
 
 <section class="bg-white"><div class="container">
   <div class="section-header center reveal"><div class="label center">Drohnenflug</div><h2>Die Plantage von oben</h2></div>
-  <div class="video-wrapper reveal" style="margin-bottom:32px;">
-    <video autoplay muted loop playsinline>
-      <source src="/assets/video/videodrohne1.mp4" type="video/mp4">
-    </video>
-  </div>
-  <div class="video-wrapper reveal reveal-delay-1">
-    <video autoplay muted loop playsinline>
+  <div class="video-wrapper reveal">
+    <video id="droneVideo" autoplay muted loop playsinline webkit-playsinline preload="auto">
       <source src="/assets/video/videodrohne2.mp4" type="video/mp4">
     </video>
   </div>
@@ -261,6 +256,20 @@
     show(getClosestNode(angle)>=0?getClosestNode(angle):0);
     raf=requestAnimationFrame(tick);
   };
+})();
+</script>
+<script>
+(function(){
+  var v=document.getElementById('droneVideo');
+  if(!v)return;
+  function tryPlay(){v.play().catch(function(){});}
+  tryPlay();
+  document.addEventListener('scroll',function once(){tryPlay();document.removeEventListener('scroll',once);},{passive:true});
+  document.addEventListener('touchstart',function once(){tryPlay();document.removeEventListener('touchstart',once);},{passive:true});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting)tryPlay();});
+  },{threshold:0.25});
+  io.observe(v);
 })();
 </script>
 </body>
