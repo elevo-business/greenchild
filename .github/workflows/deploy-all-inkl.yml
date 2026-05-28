@@ -23,8 +23,6 @@ on:
   push:
     branches:
       - main
-      # TEMPORAER zum Verifizieren des Fixes auf diesem Branch:
-      - claude/clever-planck-uKo2s
   workflow_dispatch:
     inputs:
       dry_run:
