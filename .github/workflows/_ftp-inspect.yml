@@ -1,6 +1,7 @@
 # TEMPORAER: listet read-only das FTP-Verzeichnis auf, um den richtigen
-# Zielordner (FTP_SERVER_DIR) zu ermitteln. Schreibt nichts. Nach Klaerung
-# des Pfads wird diese Datei wieder geloescht.
+# Zielordner (FTP_SERVER_DIR) zu ermitteln. Schreibt nichts. Nutzt dieselbe
+# FTP-Bibliothek (basic-ftp) wie das Deploy, plus harte Timeouts.
+# Nach Klaerung des Pfads wird diese Datei wieder geloescht.
 
 name: FTP-Verzeichnis inspizieren (temporaer)
 
@@ -9,9 +10,14 @@ on:
     branches:
       - claude/clever-planck-uKo2s
 
+concurrency:
+  group: ftp-inspect
+  cancel-in-progress: true
+
 jobs:
   inspect:
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     steps:
       - name: Remote-Verzeichnis auflisten (read-only)
         env:
@@ -19,10 +25,37 @@ jobs:
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-          echo "===== Top-Level des FTP-Roots ====="
-          lftp -u "$FTP_USERNAME,$FTP_PASSWORD" "ftps://$FTP_SERVER" \
-            -e "set ssl:verify-certificate no; set ftp:ssl-allow true; cls -l .; bye"
-          echo "===== Rekursiv (erste 200 Pfade) ====="
-          lftp -u "$FTP_USERNAME,$FTP_PASSWORD" "ftps://$FTP_SERVER" \
-            -e "set ssl:verify-certificate no; set ftp:ssl-allow true; find .; bye" | head -200
+          npm install basic-ftp@5 --no-save --silent
+          cat > inspect.mjs <<'EOF'
+          import { Client } from "basic-ftp";
+          const client = new Client(15000);
+          try {
+            await client.access({
+              host: process.env.FTP_SERVER,
+              user: process.env.FTP_USERNAME,
+              password: process.env.FTP_PASSWORD,
+              secure: true,
+              secureOptions: { rejectUnauthorized: false },
+            });
+            console.log("===== Top-Level des FTP-Roots =====");
+            const root = await client.list("/");
+            for (const f of root) {
+              console.log((f.isDirectory ? "[DIR] " : "      ") + f.name);
+            }
+            for (const f of root) {
+              if (!f.isDirectory) continue;
+              try {
+                const sub = await client.list("/" + f.name);
+                console.log("\n----- Inhalt von /" + f.name + " (max 60) -----");
+                for (const s of sub.slice(0, 60)) {
+                  console.log("   " + (s.isDirectory ? "[DIR] " : "") + s.name);
+                }
+              } catch (e) {
+                console.log("  (kann /" + f.name + " nicht lesen: " + e.message + ")");
+              }
+            }
+          } finally {
+            client.close();
+          }
+          EOF
+          node inspect.mjs
