@@ -1,0 +1,54 @@
+# Deployt die Website automatisch per FTPS auf den All-Inkl-Webspace.
+#
+# Einmalige Einrichtung (GitHub -> Repo -> Settings -> Secrets and variables -> Actions):
+#   Secrets (Tab "Secrets"):
+#     FTP_SERVER     Host aus KAS -> FTP-Zugang, z.B. wXXXXXX.kasserver.com
+#     FTP_USERNAME   FTP-Benutzername
+#     FTP_PASSWORD   FTP-Passwort
+#   Variable (Tab "Variables", optional):
+#     FTP_SERVER_DIR Zielordner auf dem Webspace (Standard: ./).
+#                    Auf den Document-Root der Domain setzen, falls der
+#                    FTP-Benutzer nicht direkt dorthin zeigt, z.B. /domain.tld/
+#
+# Danach: jeder Push auf "main" deployt automatisch.
+# Manueller Start (auch Trockenlauf) ueber Actions -> "Deploy to All-Inkl" -> Run workflow.
+
+name: Deploy to All-Inkl
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Trockenlauf (nichts hochladen, nur anzeigen)"
+        type: boolean
+        default: false
+
+concurrency:
+  group: deploy-all-inkl
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: FTPS Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          server-dir: ${{ vars.FTP_SERVER_DIR || './' }}
+          dry-run: ${{ inputs.dry_run || false }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/node_modules/**
+            **/*.md
