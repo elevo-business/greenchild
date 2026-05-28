@@ -1,21 +1,21 @@
-# Deployt die Website automatisch per FTPS auf den All-Inkl-Webspace.
+# Deployt die Website per FTPS auf den All-Inkl-Webspace.
 #
-# Es wird in ZWEI Ordner deployt, weil beide byte-identisch dieselbe Seite
-# enthalten und unklar ist, welcher die Live-Domain ausliefert:
-#   1) /greenchild.at/        (Domain-Ordner)
-#   2) /<FTP_USERNAME>/        (Home-Ordner, Name = FTP-Benutzer; via Secret)
-# So wird garantiert der richtige aktualisiert und beide bleiben synchron.
-# Der Backup-Ordner "AlterStand" im Home-Ordner bleibt unangetastet
-# (liegt nicht im Repo, kein clean-slate => wird nicht geloescht).
+# Eigener Uploader (basic-ftp) mit Reconnect+Retry pro Datei, weil All-Inkl
+# (ProFTPD) einzelne FTPS-Datenverbindungen sporadisch zuruecksetzt
+# (ECONNRESET). Die fertige SamKirkland-Action brach dabei komplett ab.
 #
-# Einmalige Einrichtung (GitHub -> Repo -> Settings -> Secrets and variables
-# -> Actions -> Tab "Secrets"):
-#   FTP_SERVER     Host aus KAS, z.B. wXXXXXX.kasserver.com
-#   FTP_USERNAME   FTP-Benutzername (zugleich Name des Home-Ordners)
-#   FTP_PASSWORD   FTP-Passwort
+# Es wird in ZWEI Ordner deployt (beide enthalten byte-identisch dieselbe
+# Seite, unklar welcher live ist):
+#   1) /greenchild.at/
+#   2) /<FTP_USERNAME>/   (Home-Ordner; Name via Secret, kein Klartext)
+# Nicht-destruktiv: es wird nur hoch-/ueberschrieben, nichts geloescht.
+# Der Backup-Ordner "AlterStand" liegt nicht im Repo und bleibt unberuehrt.
 #
-# Danach: jeder Push auf "main" deployt automatisch.
-# Manueller Start / Trockenlauf: Actions -> "Deploy to All-Inkl" -> Run workflow.
+# Secrets (Settings -> Secrets and variables -> Actions):
+#   FTP_SERVER, FTP_USERNAME, FTP_PASSWORD
+#
+# Push auf main deployt automatisch. Manueller Start / Trockenlauf:
+# Actions -> "Deploy to All-Inkl" -> Run workflow.
 
 name: Deploy to All-Inkl
 
@@ -37,40 +37,90 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy -> /greenchild.at/
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          server-dir: /greenchild.at/
-          dry-run: ${{ inputs.dry_run || false }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/node_modules/**
-            **/*.md
+      - name: Staging vorbereiten (nur Website-Dateien)
+        run: |
+          mkdir -p _site
+          cp -r assets css js de en sq index.html _site/
+          echo "Staging-Inhalt:"; ls -1 _site
 
-      - name: Deploy -> /<FTP_USERNAME>/ (Home-Ordner)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          server-dir: /${{ secrets.FTP_USERNAME }}/
-          dry-run: ${{ inputs.dry_run || false }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/node_modules/**
-            **/*.md
-            # Backup-Ordner auf dem Server niemals anfassen:
-            AlterStand/**
+      - name: Deploy in beide Ordner (FTPS, mit Retry)
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          DRY_RUN: ${{ inputs.dry_run || false }}
+        run: |
+          npm install basic-ftp@5 --no-save --silent
+          cat > deploy.mjs <<'EOF'
+          import { Client } from "basic-ftp";
+          import fs from "node:fs";
+          import path from "node:path";
+
+          const HOST = process.env.FTP_SERVER;
+          const USER = process.env.FTP_USERNAME;
+          const PASS = process.env.FTP_PASSWORD;
+          const DRY = process.env.DRY_RUN === "true";
+          const LOCAL = "_site";
+          const targets = ["/greenchild.at/", `/${USER}/`];
+          const mask = (s) => s.split(USER).join("<USER>");
+
+          function walk(dir, base = "") {
+            const out = [];
+            for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+              const rel = base ? `${base}/${e.name}` : e.name;
+              if (e.isDirectory()) out.push(...walk(path.join(dir, e.name), rel));
+              else out.push(rel);
+            }
+            return out;
+          }
+
+          async function connect() {
+            const c = new Client(30000);
+            c.ftp.verbose = false;
+            await c.access({
+              host: HOST, user: USER, password: PASS, secure: true,
+              secureOptions: { rejectUnauthorized: false },
+            });
+            return c;
+          }
+
+          async function deployTarget(target, files) {
+            console.log(`\n### Ziel ${mask(target)} — ${files.length} Dateien`);
+            if (DRY) { console.log("  Trockenlauf: kein Upload."); return; }
+            let c = await connect();
+            let lastDir = null;
+            let done = 0;
+            for (const rel of files) {
+              const sub = path.dirname(rel);
+              const remoteDir = sub === "." ? target : `${target}${sub}`;
+              for (let attempt = 1; ; attempt++) {
+                try {
+                  if (remoteDir !== lastDir) { await c.ensureDir(remoteDir); lastDir = remoteDir; }
+                  await c.uploadFrom(path.join(LOCAL, rel), path.basename(rel));
+                  break;
+                } catch (e) {
+                  if (attempt >= 6) throw new Error(`${rel}: ${e.message}`);
+                  console.log(`  ! ${rel} Versuch ${attempt} (${e.code || e.message}) — reconnect`);
+                  try { c.close(); } catch {}
+                  await new Promise((r) => setTimeout(r, Math.min(attempt * 2000, 8000)));
+                  c = await connect();
+                  lastDir = null;
+                }
+              }
+              if (++done % 10 === 0 || done === files.length) console.log(`  ${done}/${files.length}`);
+            }
+            c.close();
+            console.log(`### Fertig: ${mask(target)}`);
+          }
+
+          const files = walk(LOCAL);
+          console.log(`Lokale Dateien: ${files.length}`);
+          for (const t of targets) await deployTarget(t, files);
+          console.log("\nAlle Ziele abgeschlossen.");
+          EOF
+          node deploy.mjs
