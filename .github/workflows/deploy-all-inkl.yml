@@ -19,8 +19,6 @@ on:
   push:
     branches:
       - main
-      # Temporaer zum Verifizieren: laeuft auf diesem Branch nur als Trockenlauf.
-      - claude/clever-planck-uKo2s
   workflow_dispatch:
     inputs:
       dry_run:
