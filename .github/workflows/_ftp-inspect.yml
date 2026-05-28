@@ -1,0 +1,28 @@
+# TEMPORAER: listet read-only das FTP-Verzeichnis auf, um den richtigen
+# Zielordner (FTP_SERVER_DIR) zu ermitteln. Schreibt nichts. Nach Klaerung
+# des Pfads wird diese Datei wieder geloescht.
+
+name: FTP-Verzeichnis inspizieren (temporaer)
+
+on:
+  push:
+    branches:
+      - claude/clever-planck-uKo2s
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remote-Verzeichnis auflisten (read-only)
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          echo "===== Top-Level des FTP-Roots ====="
+          lftp -u "$FTP_USERNAME,$FTP_PASSWORD" "ftps://$FTP_SERVER" \
+            -e "set ssl:verify-certificate no; set ftp:ssl-allow true; cls -l .; bye"
+          echo "===== Rekursiv (erste 200 Pfade) ====="
+          lftp -u "$FTP_USERNAME,$FTP_PASSWORD" "ftps://$FTP_SERVER" \
+            -e "set ssl:verify-certificate no; set ftp:ssl-allow true; find .; bye" | head -200
