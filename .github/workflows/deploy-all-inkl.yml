@@ -1,17 +1,21 @@
 # Deployt die Website automatisch per FTPS auf den All-Inkl-Webspace.
 #
-# Einmalige Einrichtung (GitHub -> Repo -> Settings -> Secrets and variables -> Actions):
-#   Secrets (Tab "Secrets"):
-#     FTP_SERVER     Host aus KAS -> FTP-Zugang, z.B. wXXXXXX.kasserver.com
-#     FTP_USERNAME   FTP-Benutzername
-#     FTP_PASSWORD   FTP-Passwort
-#   Variable (Tab "Variables", optional):
-#     FTP_SERVER_DIR Zielordner auf dem Webspace (Standard: ./).
-#                    Auf den Document-Root der Domain setzen, falls der
-#                    FTP-Benutzer nicht direkt dorthin zeigt, z.B. /domain.tld/
+# Es wird in ZWEI Ordner deployt, weil beide byte-identisch dieselbe Seite
+# enthalten und unklar ist, welcher die Live-Domain ausliefert:
+#   1) /greenchild.at/        (Domain-Ordner)
+#   2) /<FTP_USERNAME>/        (Home-Ordner, Name = FTP-Benutzer; via Secret)
+# So wird garantiert der richtige aktualisiert und beide bleiben synchron.
+# Der Backup-Ordner "AlterStand" im Home-Ordner bleibt unangetastet
+# (liegt nicht im Repo, kein clean-slate => wird nicht geloescht).
+#
+# Einmalige Einrichtung (GitHub -> Repo -> Settings -> Secrets and variables
+# -> Actions -> Tab "Secrets"):
+#   FTP_SERVER     Host aus KAS, z.B. wXXXXXX.kasserver.com
+#   FTP_USERNAME   FTP-Benutzername (zugleich Name des Home-Ordners)
+#   FTP_PASSWORD   FTP-Passwort
 #
 # Danach: jeder Push auf "main" deployt automatisch.
-# Manueller Start (auch Trockenlauf) ueber Actions -> "Deploy to All-Inkl" -> Run workflow.
+# Manueller Start / Trockenlauf: Actions -> "Deploy to All-Inkl" -> Run workflow.
 
 name: Deploy to All-Inkl
 
@@ -37,19 +41,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: FTPS Deploy
+      - name: Deploy -> /greenchild.at/
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
-          server-dir: ${{ vars.FTP_SERVER_DIR || './' }}
-          # Nur "main" deployt wirklich; jeder andere Branch ist immer Trockenlauf.
-          dry-run: ${{ inputs.dry_run || github.ref != 'refs/heads/main' }}
+          server-dir: /greenchild.at/
+          dry-run: ${{ inputs.dry_run || false }}
           exclude: |
             **/.git*
             **/.git*/**
             **/.github/**
             **/node_modules/**
             **/*.md
+
+      - name: Deploy -> /<FTP_USERNAME>/ (Home-Ordner)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          server-dir: /${{ secrets.FTP_USERNAME }}/
+          dry-run: ${{ inputs.dry_run || false }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/node_modules/**
+            **/*.md
+            # Backup-Ordner auf dem Server niemals anfassen:
+            AlterStand/**
