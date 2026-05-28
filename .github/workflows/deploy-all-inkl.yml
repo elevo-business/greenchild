@@ -19,6 +19,8 @@ on:
   push:
     branches:
       - main
+      # Temporaer zum Verifizieren: laeuft auf diesem Branch nur als Trockenlauf.
+      - claude/clever-planck-uKo2s
   workflow_dispatch:
     inputs:
       dry_run:
@@ -45,7 +47,8 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           server-dir: ${{ vars.FTP_SERVER_DIR || './' }}
-          dry-run: ${{ inputs.dry_run || false }}
+          # Nur "main" deployt wirklich; jeder andere Branch ist immer Trockenlauf.
+          dry-run: ${{ inputs.dry_run || github.ref != 'refs/heads/main' }}
           exclude: |
             **/.git*
             **/.git*/**
