@@ -1,9 +1,8 @@
-# TEMPORAER: listet read-only das FTP-Verzeichnis auf, um den richtigen
-# Zielordner (FTP_SERVER_DIR) zu ermitteln. Schreibt nichts. Nutzt dieselbe
-# FTP-Bibliothek (basic-ftp) wie das Deploy, plus harte Timeouts.
-# Nach Klaerung des Pfads wird diese Datei wieder geloescht.
+# TEMPORAER: ermittelt read-only, welcher FTP-Ordner die Live-Domain
+# greenchild.at ausliefert (= Docroot fuer FTP_SERVER_DIR).
+# Schreibt NICHTS auf den Server. Wird nach Klaerung wieder geloescht.
 
-name: FTP-Verzeichnis inspizieren (temporaer)
+name: Docroot ermitteln (temporaer)
 
 on:
   push:
@@ -15,47 +14,133 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  inspect:
+  detect:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 4
     steps:
-      - name: Remote-Verzeichnis auflisten (read-only)
+      - name: Docroot detektieren (read-only)
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          SITE_URL: "https://greenchild.at"
         run: |
           npm install basic-ftp@5 --no-save --silent
-          cat > inspect.mjs <<'EOF'
+          cat > detect.mjs <<'EOF'
           import { Client } from "basic-ftp";
+          import { createHash } from "node:crypto";
+          import { Writable } from "node:stream";
+
+          const SITE = process.env.SITE_URL.replace(/\/+$/, "");
+          const sha = (b) => createHash("sha256").update(b).digest("hex").slice(0, 16);
+
+          async function ftpRead(client, path) {
+            let buf = Buffer.alloc(0);
+            const w = new Writable({ write(c, e, cb) { buf = Buffer.concat([buf, c]); cb(); } });
+            await client.downloadTo(w, path);
+            return buf;
+          }
+          async function http(url) {
+            try {
+              const r = await fetch(url, { redirect: "follow" });
+              const b = Buffer.from(await r.arrayBuffer());
+              return { status: r.status, finalUrl: r.url, hash: sha(b), bytes: b.length };
+            } catch (e) { return { error: e.message }; }
+          }
+
           const client = new Client(15000);
+          const verdict = [];
           try {
             await client.access({
-              host: process.env.FTP_SERVER,
-              user: process.env.FTP_USERNAME,
-              password: process.env.FTP_PASSWORD,
-              secure: true,
+              host: process.env.FTP_SERVER, user: process.env.FTP_USERNAME,
+              password: process.env.FTP_PASSWORD, secure: true,
               secureOptions: { rejectUnauthorized: false },
             });
-            console.log("===== Top-Level des FTP-Roots =====");
+
             const root = await client.list("/");
-            for (const f of root) {
-              console.log((f.isDirectory ? "[DIR] " : "      ") + f.name);
-            }
-            for (const f of root) {
-              if (!f.isDirectory) continue;
+            const dirs = root.filter((f) => f.isDirectory).map((f) => f.name);
+            const skip = new Set(["logs", "cgi-bin", "chat", "tmp", ".well-known"]);
+            const candidates = [];
+            for (const d of dirs) {
+              if (skip.has(d)) continue;
               try {
-                const sub = await client.list("/" + f.name);
-                console.log("\n----- Inhalt von /" + f.name + " (max 60) -----");
-                for (const s of sub.slice(0, 60)) {
-                  console.log("   " + (s.isDirectory ? "[DIR] " : "") + s.name);
+                const sub = await client.list("/" + d);
+                if (sub.some((s) => s.name === "index.html")) {
+                  candidates.push({
+                    dir: d,
+                    children: sub.map((s) => s.name),
+                    hasAlterStand: sub.some((s) => s.isDirectory && s.name === "AlterStand"),
+                  });
                 }
-              } catch (e) {
-                console.log("  (kann /" + f.name + " nicht lesen: " + e.message + ")");
-              }
+              } catch {}
             }
+            console.log("Kandidaten-Ordner (mit index.html):", candidates.map((c) => c.dir).join(", ") || "(keine)");
+
+            // 1) FTP-Hash jeder Kandidaten-Startseite
+            for (const c of candidates) {
+              try {
+                c.indexHash = sha(await ftpRead(client, "/" + c.dir + "/index.html"));
+                console.log(`FTP  /${c.dir}/index.html  sha=${c.indexHash}`);
+              } catch (e) { console.log(`FTP  /${c.dir}/index.html  Fehler: ${e.message}`); }
+            }
+
+            // 2) Live-Startseite ueber HTTP
+            const live = await http(SITE + "/");
+            console.log("HTTP", SITE + "/", "->", JSON.stringify(live));
+
+            // 3) Treffer per Hash-Vergleich
+            const hashMatches = candidates.filter((c) => c.indexHash && live.hash && c.indexHash === live.hash);
+            if (hashMatches.length === 1) {
+              verdict.push(`Hash-Vergleich: Live-Startseite == /${hashMatches[0].dir}/index.html`);
+            } else if (hashMatches.length > 1) {
+              verdict.push(`Hash mehrdeutig (identische Kopien in: ${hashMatches.map((c) => c.dir).join(", ")}) -> AlterStand-Test entscheidet`);
+            } else {
+              verdict.push("Hash-Vergleich: kein eindeutiger Treffer (Live evtl. veraendert/blockiert) -> AlterStand-Test entscheidet");
+            }
+
+            // 4) AlterStand-Test (existiert nur in genau einem Kandidaten)
+            const alt = candidates.find((c) => c.hasAlterStand);
+            if (alt) {
+              let probePath = "/AlterStand/";
+              try {
+                const inner = await client.list("/" + alt.dir + "/AlterStand");
+                const file = inner.find((s) => !s.isDirectory);
+                if (file) probePath = "/AlterStand/" + file.name;
+              } catch {}
+              const r1 = await http(SITE + probePath);
+              console.log("HTTP", SITE + probePath, "->", JSON.stringify(r1));
+              const reachable = typeof r1.status === "number" && r1.status >= 200 && r1.status < 400;
+              if (reachable) {
+                verdict.push(`AlterStand-Test: ${SITE}${probePath} erreichbar (${r1.status}) => Docroot ist der "${alt.dir}"-Ordner`);
+              } else {
+                const other = candidates.filter((c) => c.dir !== alt.dir).map((c) => c.dir);
+                verdict.push(`AlterStand-Test: ${SITE}${probePath} NICHT erreichbar (${r1.status ?? r1.error}) => Docroot ist NICHT "${alt.dir}", sondern: ${other.join(" / ") || "(unklar)"}`);
+              }
+            } else {
+              verdict.push("Kein AlterStand-Ordner gefunden -> nur Hash-Signal verfuegbar");
+            }
+
+            // 5) Empfehlung
+            let pick = null;
+            if (hashMatches.length === 1) pick = hashMatches[0].dir;
+            else if (alt) {
+              const r = await http(SITE + "/AlterStand/");
+              const altReachable = typeof r.status === "number" && r.status >= 200 && r.status < 400;
+              if (altReachable) pick = alt.dir;
+              else { const o = candidates.filter((c) => c.dir !== alt.dir); if (o.length === 1) pick = o[0].dir; }
+            }
+            console.log("\n================ ERGEBNIS ================");
+            verdict.forEach((v) => console.log("- " + v));
+            if (pick) {
+              const masked = pick === process.env.FTP_USERNAME;
+              console.log(`\n=> FTP_SERVER_DIR setzen auf: /${masked ? "<dein-ftp-benutzername>" : pick}/`);
+              if (masked) console.log("   (Ordnername = dein FTP-Benutzer, hier maskiert; du kennst ihn)");
+            } else {
+              console.log("\n=> Kein eindeutiges Ergebnis. Bitte den Pfad in KAS pruefen.");
+            }
+            console.log("==========================================");
           } finally {
             client.close();
           }
           EOF
-          node inspect.mjs
+          node detect.mjs
