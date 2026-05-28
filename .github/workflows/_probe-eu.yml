@@ -1,0 +1,99 @@
+# TEMPORAER: prueft read-only, was greenchild.eu live ausliefert, und
+# ermittelt den FTP-Docroot dieser Domain. Schreibt NICHTS. Wird danach
+# wieder geloescht.
+
+name: greenchild.eu pruefen (temporaer)
+
+on:
+  push:
+    branches:
+      - claude/clever-planck-uKo2s
+
+concurrency:
+  group: ftp-inspect
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Live-HTTP + FTP-Docroot pruefen (read-only)
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          npm install basic-ftp@5 --no-save --silent
+          cat > probe.mjs <<'EOF'
+          import { Client } from "basic-ftp";
+
+          async function http(url) {
+            try {
+              const r = await fetch(url, { redirect: "follow" });
+              const text = await r.text();
+              return { status: r.status, finalUrl: r.url, bytes: text.length, text };
+            } catch (e) { return { error: String(e.message || e) }; }
+          }
+          const head = (t) => (t || "").slice(0, 0); // noop
+
+          // 1) Was liefert greenchild.eu aus?
+          const bases = ["https://greenchild.eu", "https://www.greenchild.eu",
+                         "http://greenchild.eu"];
+          let live = null, liveBase = null;
+          for (const b of bases) {
+            const r = await http(b + "/");
+            console.log(`HTTP ${b}/  ->  ${r.status ?? "ERR:" + r.error} ${r.finalUrl ? "(final " + r.finalUrl + ")" : ""} ${r.bytes ?? ""}B`);
+            if (!live && r.status && r.status < 400 && r.text) { live = r; liveBase = b; }
+          }
+
+          if (live) {
+            // Logo-img src in der ausgelieferten HTML finden
+            const imgs = [...live.text.matchAll(/<img[^>]*class="logo-img"[^>]*>/gi)].map((m) => m[0]);
+            const srcs = [...live.text.matchAll(/<img[^>]*class="logo-img"[^>]*src="([^"]+)"|<img[^>]*src="([^"]+)"[^>]*class="logo-img"/gi)]
+              .map((m) => m[1] || m[2]);
+            console.log("\nHeader-Logo <img> in ausgelieferter HTML:");
+            console.log("  ", imgs[0] || "(kein logo-img gefunden)");
+            const usesLocal = live.text.includes('src="/assets/img/logo-greenchild.png" alt="Greenchild" class="logo-img"');
+            const usesOld = live.text.includes("greenchild.eu/wp-content/uploads/2025/07/b2396e78.png");
+            console.log("  -> nutzt LOKALES Logo (neue HTML):", usesLocal);
+            console.log("  -> enthaelt ALTE greenchild.eu-Logo-URL:", usesOld);
+
+            // Asset-Status pruefen
+            for (const p of ["/assets/img/logo-greenchild.png", "/assets/img/hero-plantation-sunset.jpg"]) {
+              const r = await http(liveBase + p);
+              console.log(`HTTP ${liveBase}${p}  ->  ${r.status ?? "ERR:" + r.error} ${r.bytes ?? ""}B`);
+            }
+          } else {
+            console.log("\n!! greenchild.eu von hier nicht erreichbar.");
+          }
+
+          // 2) FTP: alle Domain-Ordner + index-Datei + ob logo vorhanden
+          console.log("\n===== FTP-Struktur =====");
+          const c = new Client(15000);
+          try {
+            await c.access({ host: process.env.FTP_SERVER, user: process.env.FTP_USERNAME,
+              password: process.env.FTP_PASSWORD, secure: true,
+              secureOptions: { rejectUnauthorized: false } });
+            const root = await c.list("/");
+            for (const f of root) {
+              const tag = f.isDirectory ? "[DIR]" : "     ";
+              console.log(`${tag} /${f.name}`);
+              if (f.isDirectory && !["logs","cgi-bin","tmp",".well-known"].includes(f.name)) {
+                try {
+                  const sub = await c.list("/" + f.name);
+                  const hasIndexHtml = sub.some((s) => s.name === "index.html");
+                  const hasIndexHtm = sub.some((s) => s.name === "index.htm");
+                  const hasAssets = sub.some((s) => s.isDirectory && s.name === "assets");
+                  let hasLogo = false;
+                  if (hasAssets) {
+                    try { const im = await c.list("/" + f.name + "/assets/img");
+                      hasLogo = im.some((s) => s.name === "logo-greenchild.png"); } catch {}
+                  }
+                  console.log(`        index.html=${hasIndexHtml} index.htm=${hasIndexHtm} assets/=${hasAssets} logo-greenchild.png=${hasLogo}`);
+                } catch (e) { console.log("        (nicht lesbar: " + e.message + ")"); }
+              }
+            }
+          } finally { c.close(); }
+          EOF
+          node probe.mjs
