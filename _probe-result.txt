@@ -1,0 +1,21 @@
+HTTP https://greenchild.eu/  ->  200 (final https://greenchild.eu/) 191B
+HTTP https://www.greenchild.eu/  ->  200 (final https://www.greenchild.eu/) 191B
+HTTP http://greenchild.eu/  ->  200 (final https://greenchild.eu/) 191B
+
+Header-Logo <img> in ausgelieferter HTML:
+   (kein logo-img gefunden)
+  -> nutzt LOKALES Logo (neue HTML): false
+  -> enthaelt ALTE greenchild.eu-Logo-URL: false
+HTTP https://greenchild.eu/assets/img/logo-greenchild.png  ->  200 1245B
+HTTP https://greenchild.eu/assets/img/hero-plantation-sunset.jpg  ->  200 553104B
+
+===== FTP-Struktur =====
+      /index.htm
+[DIR] /greenchild.eu
+        index.html=true index.htm=false assets/=true logo-greenchild.png=true
+[DIR] /greenchild.at
+        index.html=true index.htm=false assets/=true logo-greenchild.png=true
+[DIR] /w0212cc6
+        index.html=true index.htm=false assets/=true logo-greenchild.png=true
+[DIR] /logs
+[DIR] /cgi-bin
