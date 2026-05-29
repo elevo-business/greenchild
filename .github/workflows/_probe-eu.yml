@@ -1,6 +1,6 @@
-# TEMPORAER: prueft read-only, was greenchild.eu live ausliefert, und
-# ermittelt den FTP-Docroot dieser Domain. Schreibt NICHTS. Wird danach
-# wieder geloescht.
+# TEMPORAER: zeigt was greenchild.eu/ genau ausliefert (Body) und den
+# Inhalt der index.html jedes Domain-Ordners. Read-only, schreibt nur
+# das Ergebnis _probe-result.txt zurueck. Wird danach geloescht.
 
 name: greenchild.eu pruefen (temporaer)
 
@@ -24,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Live-HTTP + FTP-Docroot pruefen (read-only)
+      - name: Live-Body + index.html je Ordner (read-only)
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
@@ -33,6 +33,7 @@ jobs:
           npm install basic-ftp@5 --no-save --silent
           cat > probe.mjs <<'EOF'
           import { Client } from "basic-ftp";
+          import { Writable } from "node:stream";
 
           async function http(url) {
             try {
@@ -41,64 +42,43 @@ jobs:
               return { status: r.status, finalUrl: r.url, bytes: text.length, text };
             } catch (e) { return { error: String(e.message || e) }; }
           }
-          const head = (t) => (t || "").slice(0, 0); // noop
 
-          // 1) Was liefert greenchild.eu aus?
-          const bases = ["https://greenchild.eu", "https://www.greenchild.eu",
-                         "http://greenchild.eu"];
-          let live = null, liveBase = null;
-          for (const b of bases) {
-            const r = await http(b + "/");
-            console.log(`HTTP ${b}/  ->  ${r.status ?? "ERR:" + r.error} ${r.finalUrl ? "(final " + r.finalUrl + ")" : ""} ${r.bytes ?? ""}B`);
-            if (!live && r.status && r.status < 400 && r.text) { live = r; liveBase = b; }
+          // 1) WAS genau liefert greenchild.eu/ aus? Body komplett zeigen.
+          const r = await http("https://greenchild.eu/");
+          console.log(`HTTP https://greenchild.eu/  ->  ${r.status ?? "ERR:" + r.error}  ${r.bytes ?? ""}B  (final ${r.finalUrl})`);
+          console.log("----- BODY von greenchild.eu/ -----");
+          console.log((r.text || "").slice(0, 2000));
+          console.log("----- ENDE BODY -----");
+
+          // 2) FTP: index.html jedes Domain-Ordners herunterladen + inspizieren
+          async function ftpRead(client, path) {
+            let buf = Buffer.alloc(0);
+            const w = new Writable({ write(c, e, cb) { buf = Buffer.concat([buf, c]); cb(); } });
+            await client.downloadTo(w, path);
+            return buf.toString("utf8");
           }
-
-          if (live) {
-            // Logo-img src in der ausgelieferten HTML finden
-            const imgs = [...live.text.matchAll(/<img[^>]*class="logo-img"[^>]*>/gi)].map((m) => m[0]);
-            const srcs = [...live.text.matchAll(/<img[^>]*class="logo-img"[^>]*src="([^"]+)"|<img[^>]*src="([^"]+)"[^>]*class="logo-img"/gi)]
-              .map((m) => m[1] || m[2]);
-            console.log("\nHeader-Logo <img> in ausgelieferter HTML:");
-            console.log("  ", imgs[0] || "(kein logo-img gefunden)");
-            const usesLocal = live.text.includes('src="/assets/img/logo-greenchild.png" alt="Greenchild" class="logo-img"');
-            const usesOld = live.text.includes("greenchild.eu/wp-content/uploads/2025/07/b2396e78.png");
-            console.log("  -> nutzt LOKALES Logo (neue HTML):", usesLocal);
-            console.log("  -> enthaelt ALTE greenchild.eu-Logo-URL:", usesOld);
-
-            // Asset-Status pruefen
-            for (const p of ["/assets/img/logo-greenchild.png", "/assets/img/hero-plantation-sunset.jpg"]) {
-              const r = await http(liveBase + p);
-              console.log(`HTTP ${liveBase}${p}  ->  ${r.status ?? "ERR:" + r.error} ${r.bytes ?? ""}B`);
-            }
-          } else {
-            console.log("\n!! greenchild.eu von hier nicht erreichbar.");
-          }
-
-          // 2) FTP: alle Domain-Ordner + index-Datei + ob logo vorhanden
-          console.log("\n===== FTP-Struktur =====");
           const c = new Client(15000);
           try {
             await c.access({ host: process.env.FTP_SERVER, user: process.env.FTP_USERNAME,
               password: process.env.FTP_PASSWORD, secure: true,
               secureOptions: { rejectUnauthorized: false } });
             const root = await c.list("/");
-            for (const f of root) {
-              const tag = f.isDirectory ? "[DIR]" : "     ";
-              console.log(`${tag} /${f.name}`);
-              if (f.isDirectory && !["logs","cgi-bin","tmp",".well-known"].includes(f.name)) {
-                try {
-                  const sub = await c.list("/" + f.name);
-                  const hasIndexHtml = sub.some((s) => s.name === "index.html");
-                  const hasIndexHtm = sub.some((s) => s.name === "index.htm");
-                  const hasAssets = sub.some((s) => s.isDirectory && s.name === "assets");
-                  let hasLogo = false;
-                  if (hasAssets) {
-                    try { const im = await c.list("/" + f.name + "/assets/img");
-                      hasLogo = im.some((s) => s.name === "logo-greenchild.png"); } catch {}
-                  }
-                  console.log(`        index.html=${hasIndexHtml} index.htm=${hasIndexHtm} assets/=${hasAssets} logo-greenchild.png=${hasLogo}`);
-                } catch (e) { console.log("        (nicht lesbar: " + e.message + ")"); }
-              }
+            try {
+              const rootIdx = await ftpRead(c, "/index.htm");
+              console.log(`\n===== /index.htm (Root, ${rootIdx.length}B) =====`);
+              console.log(rootIdx.slice(0, 1500));
+            } catch (e) { console.log("\n/index.htm nicht lesbar: " + e.message); }
+
+            const dirs = root.filter((f) => f.isDirectory && !["logs","cgi-bin","tmp",".well-known"].includes(f.name));
+            for (const d of dirs) {
+              console.log(`\n===== /${d.name}/index.html =====`);
+              try {
+                const html = await ftpRead(c, "/" + d.name + "/index.html");
+                const usesLocal = html.includes('src="/assets/img/logo-greenchild.png"');
+                const usesOld = html.includes("greenchild.eu/wp-content/uploads/2025/07/b2396e78.png");
+                console.log(`   Groesse=${html.length}B  lokalesLogo=${usesLocal}  alteURL=${usesOld}`);
+                console.log("   erste 160 Zeichen:", JSON.stringify(html.slice(0, 160)));
+              } catch (e) { console.log("   (nicht lesbar: " + e.message + ")"); }
             }
           } finally { c.close(); }
           EOF
@@ -109,5 +89,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add _probe-result.txt
-          git commit -m "chore: Probe-Ergebnis greenchild.eu [skip ci]" || echo "nichts zu committen"
+          git commit -m "chore: Probe-Ergebnis v2 greenchild.eu [skip ci]" || echo "nichts zu committen"
           git push origin HEAD:claude/clever-planck-uKo2s
