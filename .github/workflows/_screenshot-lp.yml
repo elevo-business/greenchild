@@ -1,0 +1,73 @@
+# TEMPORAER: rendert die Landingpage headless (Desktop + Mobil) und legt
+# Screenshots ins Repo, damit das Layout vor dem Deploy geprueft werden kann.
+# Wird danach entfernt.
+
+name: LP Screenshot (temporaer)
+
+on:
+  push:
+    branches:
+      - claude/clever-planck-uKo2s
+    paths:
+      - lp/**
+      - js/lp-realwert-form.js
+      - .github/workflows/_screenshot-lp.yml
+
+concurrency:
+  group: screenshot-lp
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  shot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Playwright installieren
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm i -D playwright@latest --silent
+          npx playwright install --with-deps chromium
+
+      - name: Seite rendern + Screenshots
+        run: |
+          python3 -m http.server 8080 >/dev/null 2>&1 &
+          sleep 2
+          cat > shot.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          const URL = 'http://localhost:8080/lp/sachwert/';
+          const settle = async (p) => {
+            await p.waitForTimeout(2200);
+            await p.evaluate(() => {
+              document.querySelectorAll('.reveal').forEach(e => { e.style.opacity = 1; e.style.animation = 'none'; });
+              document.querySelectorAll('[data-count]').forEach(e => {
+                const t = +e.getAttribute('data-count'); const s = e.getAttribute('data-suffix') || '';
+                e.textContent = t.toLocaleString('de-DE') + s;
+              });
+            });
+            await p.waitForTimeout(400);
+          };
+          const b = await chromium.launch();
+          const d = await b.newPage({ viewport: { width: 1440, height: 900 } });
+          await d.goto(URL, { waitUntil: 'load' }); await settle(d);
+          await d.screenshot({ path: '_lp-desktop.png', fullPage: true });
+          const m = await b.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true });
+          await m.goto(URL, { waitUntil: 'load' }); await settle(m);
+          await m.screenshot({ path: '_lp-mobile.png', fullPage: true });
+          await b.close();
+          console.log('Screenshots erstellt.');
+          EOF
+          node shot.mjs
+
+      - name: Screenshots committen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _lp-desktop.png _lp-mobile.png
+          git commit -m "chore: LP-Screenshots [skip ci]" || echo "nichts zu committen"
+          git push origin HEAD:claude/clever-planck-uKo2s

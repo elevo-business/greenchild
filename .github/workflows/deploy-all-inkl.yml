@@ -41,7 +41,7 @@ jobs:
       - name: Staging vorbereiten (nur Website-Dateien)
         run: |
           mkdir -p _site
-          cp -r assets css js de en sq index.html _site/
+          cp -r assets css js de en sq lp index.html _site/
           echo "Staging-Inhalt:"; ls -1 _site
 
       - name: Deploy in alle Ordner (FTPS, mit Retry)
