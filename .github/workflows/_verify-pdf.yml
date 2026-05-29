@@ -1,0 +1,70 @@
+# Temporaerer Probe-Workflow: prueft, ob das Live-PDF korrekt ausgeliefert wird.
+# Laeuft auf einem Actions-Runner (hat Internet, anders als die Dev-Umgebung),
+# laedt das PDF von der Live-Domain, verifiziert es und committet das Ergebnis
+# nach _pdf-verify.txt zurueck auf den Branch. Wird danach wieder entfernt.
+name: _verify-pdf
+
+on:
+  push:
+    branches: [claude/clever-planck-uKo2s]
+    paths: ['.github/workflows/_verify-pdf.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Live-PDF pruefen
+        run: |
+          REL="assets/downloads/sachwertvergleich-2026.pdf"
+          LOCAL_SHA=$(sha256sum "$REL" | cut -d' ' -f1)
+          LOCAL_SIZE=$(stat -c%s "$REL")
+
+          probe () {
+            url="$1"; code=000; ct=""; size=0
+            for i in $(seq 1 18); do
+              out=$(curl -s -m 25 -o /tmp/dl.bin -w "%{http_code}|%{content_type}|%{size_download}" "$url" 2>/dev/null || echo "000||0")
+              code=${out%%|*}; rest=${out#*|}; ct=${rest%%|*}; size=${rest##*|}
+              [ "$code" = "200" ] && break
+              sleep 10
+            done
+            magic=$(head -c 5 /tmp/dl.bin 2>/dev/null | tr -d '\000')
+            sha=$(sha256sum /tmp/dl.bin 2>/dev/null | cut -d' ' -f1)
+            echo "URL: $url"
+            echo "  HTTP-Status : $code"
+            echo "  Content-Type: $ct"
+            echo "  Groesse     : $size bytes (Repo: $LOCAL_SIZE)"
+            echo "  Magic-Bytes : '$magic' (erwartet: %PDF)"
+            echo "  SHA256      : $sha"
+            if [ "$code" = "200" ] && [ "$magic" = "%PDF" ] && [ "$sha" = "$LOCAL_SHA" ]; then
+              echo "  ERGEBNIS    : OK - echtes PDF, byte-identisch mit Repo"
+            elif [ "$code" = "200" ] && [ "$magic" = "%PDF" ]; then
+              echo "  ERGEBNIS    : PDF wird ausgeliefert, weicht aber vom Repo ab (evtl. alter Stand)"
+            else
+              echo "  ERGEBNIS    : FEHLER - kein gueltiges PDF unter dieser URL"
+            fi
+          }
+
+          {
+            echo "=== Verifizierung Sachwertvergleich-PDF ==="
+            echo "Zeitpunkt (UTC): $(date -u '+%Y-%m-%d %H:%M:%S')"
+            echo "Repo-SHA256    : $LOCAL_SHA"
+            echo
+            probe "https://greenchild.eu/assets/downloads/sachwertvergleich-2026.pdf"
+            echo
+            probe "https://greenchild.at/assets/downloads/sachwertvergleich-2026.pdf"
+          } | tee _pdf-verify.txt
+
+      - name: Ergebnis zurueck committen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _pdf-verify.txt
+          git commit -m "chore: PDF-Live-Verifizierung [skip ci]" || echo "nichts zu committen"
+          git push origin HEAD:claude/clever-planck-uKo2s
