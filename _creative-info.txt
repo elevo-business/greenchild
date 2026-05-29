@@ -2,10 +2,10 @@
 codec_name=h264
 width=1080
 height=1920
-duration=34.734700
+duration=38.938900
 
 === Ergebnis ===
-Video: 7.4M
+Video: 1.8M
 width=720
 height=1280
-Poster: 304K
+Poster: 100K
