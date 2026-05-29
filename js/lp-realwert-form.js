@@ -1,7 +1,7 @@
 (function () {
   var API_TOKEN = '9fae1a7473002abdf89ade65319dc14a1c828a28';
   var BASE = 'https://api.pipedrive.com/v1';
-  var PDF_URL = '/assets/downloads/realwert-vergleich-2026.pdf';
+  var PDF_URL = '/assets/downloads/sachwertvergleich-2026.pdf';
 
   var form = document.getElementById('realwertForm');
   if (!form) return;
@@ -32,7 +32,8 @@
       '<div class="lp-success">' +
         '<div class="succ-ic"><i data-lucide="check"></i></div>' +
         '<h3>Vielen Dank!</h3>' +
-        '<p>Ihr Realwert-Vergleich 2026 wird heruntergeladen. Sollte der Download nicht automatisch starten, klicken Sie hier:</p>' +
+        '<p>Ihr Sachwertvergleich 2026 wird gerade heruntergeladen. <strong>Wir melden uns in Kürze telefonisch bei Ihnen, um Ihren persönlichen Termin abzustimmen.</strong></p>' +
+        '<p style="font-size:13px;margin-bottom:14px;">Download nicht automatisch gestartet?</p>' +
         '<a href="' + PDF_URL + '" download target="_blank" rel="noopener" class="btn btn-primary btn-lg" style="justify-content:center;">PDF herunterladen</a>' +
       '</div>';
     if (window.lucide) lucide.createIcons();
@@ -63,7 +64,7 @@
     var telefon = val('telefon');
     var consent = form.querySelector('[name="consent"]');
 
-    if (!vorname || !nachname || !email) return;
+    if (!vorname || !nachname || !email || !telefon) return;
     if (consent && !consent.checked) { consent.focus(); return; }
 
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet …'; }
@@ -85,11 +86,11 @@
         var personId = res.data.id;
 
         var leadData = {
-          title: 'Lead-Magnet: Realwert-Vergleich 2026 — ' + vorname + ' ' + nachname,
+          title: 'Lead-Magnet: Sachwertvergleich 2026 — ' + vorname + ' ' + nachname,
           person_id: personId
         };
-        var note = 'Quelle: Landingpage „Sachwert" — Realwert-Vergleich 2026 angefordert.';
-        if (telefon) note += '\nTelefon: ' + telefon;
+        var note = 'Quelle: Landingpage „Sachwert" — Sachwertvergleich 2026 angefordert.\nZiel: persönlichen Termin vereinbaren.';
+        note += '\nTelefon: ' + telefon;
 
         return Promise.all([
           fetch(BASE + '/leads?api_token=' + API_TOKEN, {
