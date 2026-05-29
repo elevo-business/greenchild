@@ -13,11 +13,17 @@ concurrency:
   group: ftp-inspect
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   probe:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Live-HTTP + FTP-Docroot pruefen (read-only)
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
@@ -96,4 +102,12 @@ jobs:
             }
           } finally { c.close(); }
           EOF
-          node probe.mjs
+          node probe.mjs | tee _probe-result.txt
+
+      - name: Ergebnis zurueck ins Repo committen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _probe-result.txt
+          git commit -m "chore: Probe-Ergebnis greenchild.eu [skip ci]" || echo "nichts zu committen"
+          git push origin HEAD:claude/clever-planck-uKo2s
