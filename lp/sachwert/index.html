@@ -32,25 +32,33 @@
 .lp-hero .hero-orb-1{width:460px;height:460px;top:-120px;right:-140px;background:radial-gradient(circle,rgba(0,168,107,.12),transparent 70%)}
 .lp-hero .hero-orb-2{width:340px;height:340px;bottom:-100px;left:-120px;background:radial-gradient(circle,rgba(45,212,160,.08),transparent 70%)}
 .lp-hero .container{position:relative;z-index:4}
-.lp-hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
-.lp-hero h1{color:#fff;font-size:clamp(32px,4.4vw,56px);line-height:1.06;margin-bottom:22px}
+.lp-hero-center{max-width:680px;margin:0 auto;text-align:center}
+.lp-hero h1{color:#fff;font-size:clamp(30px,4.6vw,54px);line-height:1.07;margin-bottom:16px}
 .lp-hero h1 .hl{color:var(--green-light)}
-.lp-hero .lp-sub{font-size:18px;color:rgba(255,255,255,.72);line-height:1.7;max-width:520px;margin-bottom:32px}
-.lp-hero .btn-group{margin-bottom:22px}
-.lp-trust-row{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;color:rgba(255,255,255,.6)}
+.lp-hero .lp-sub{font-size:17px;color:rgba(255,255,255,.72);line-height:1.7;max-width:520px;margin:0 auto}
+.lp-hero .btn-group{margin:4px 0 18px;justify-content:center}
+.lp-trust-row{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;font-size:13.5px;color:rgba(255,255,255,.6)}
 .lp-trust-row span{display:inline-flex;align-items:center;gap:7px}
 .lp-trust-row i{width:16px;height:16px;color:var(--green-light)}
 
-/* Video-Frame (9:16) */
-.lp-video-wrap{display:flex;justify-content:center}
-.lp-video-frame{position:relative;width:100%;max-width:300px;aspect-ratio:9/16;border-radius:26px;overflow:hidden;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12)}
-.lp-video-frame video{width:100%;height:100%;object-fit:cover;display:block}
-.lp-video-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(to top,rgba(0,0,0,.35),rgba(0,0,0,.1));border:none;cursor:pointer;transition:opacity .3s}
+/* Video-Frame (9:16) — startet stumm im Autoplay, Klick = Ton an */
+.lp-video-wrap{display:flex;justify-content:center;margin:26px 0 8px}
+.lp-video-frame{position:relative;width:100%;max-width:316px;aspect-ratio:9/16;border-radius:26px;overflow:hidden;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.14)}
+.lp-video-frame video{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
+.lp-video-play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:30px;gap:12px;background:linear-gradient(to top,rgba(0,0,0,.45),rgba(0,0,0,.04) 55%);border:none;cursor:pointer;transition:opacity .3s}
 .lp-video-play.hidden{opacity:0;pointer-events:none}
-.lp-video-play .pp{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(0,0,0,.3);transition:transform .3s}
-.lp-video-play:hover .pp{transform:scale(1.08)}
-.lp-video-play .pp i{width:30px;height:30px;color:var(--green-deep);margin-left:4px}
-.lp-video-badge{position:absolute;top:14px;left:14px;z-index:3;background:rgba(0,168,107,.92);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:var(--radius-full)}
+.lp-video-play .pp{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(0,0,0,.35);animation:pulse-glow 3s infinite}
+.lp-video-play .pp i{width:26px;height:26px;color:var(--green-deep)}
+.lp-video-play .pp-label{color:#fff;font-size:13.5px;font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.55)}
+.lp-video-play:hover .pp{transform:scale(1.07)}
+
+/* Baumbesitzer-Story */
+.lp-story{display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:center;max-width:1000px;margin:0 auto}
+.lp-story-img{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg)}
+.lp-story-img img{width:100%;height:100%;min-height:380px;object-fit:cover;display:block}
+.lp-story-text p{font-size:16.5px;color:var(--text-body);line-height:1.8;margin-bottom:14px}
+.lp-quote{font-family:var(--font-h);font-size:21px;font-weight:700;color:var(--green-dark);line-height:1.45;border-left:3px solid var(--green);padding-left:20px;margin:22px 0 12px}
+.lp-story-note{font-size:12px;color:var(--text-dim)}
 
 /* ===== LP: Hook ===== */
 .lp-hook{max-width:760px;margin:0 auto;text-align:center}
@@ -104,11 +112,12 @@
 .lp-sticky .btn{width:100%;justify-content:center}
 
 @media(max-width:900px){
-  .lp-hero-grid{grid-template-columns:1fr;gap:40px}
-  .lp-hero{padding:120px 0 70px}
-  .lp-video-frame{max-width:270px}
+  .lp-hero{padding:118px 0 64px}
+  .lp-video-frame{max-width:280px}
   .lp-benefits{grid-template-columns:1fr;gap:14px}
   .lp-magnet{grid-template-columns:1fr;gap:36px}
+  .lp-story{grid-template-columns:1fr;gap:26px}
+  .lp-story-img img{min-height:240px}
 }
 @media(max-width:600px){
   .lp-form-card{padding:28px 20px}
@@ -143,28 +152,28 @@
     <div class="hero-orb hero-orb-1"></div>
     <div class="hero-orb hero-orb-2"></div>
     <div class="container">
-        <div class="lp-hero-grid">
-            <div class="lp-hero-text">
-                <div class="label light" style="animation:fadeUp .8s .1s both;">Greenchild — Realwert-Vergleich 2026</div>
-                <h1 style="animation:fadeUp .8s .25s both;">Der Sachwert, den Ihr Bankberater Ihnen <span class="hl">nie empfehlen wird.</span></h1>
-                <p class="lp-sub" style="animation:fadeUp .8s .4s both;">Echte Paulownia-Bäume als physisches Eigentum – mit Ihrem Namen, vererbbar, verteilt auf 255&nbsp;Hektar in 3&nbsp;Ländern. Während Ihr Sparkonto durch Inflation schrumpft, wachsen sie bis zu 3&nbsp;Meter pro Jahr.</p>
-                <div class="btn-group" style="animation:fadeUp .8s .55s both;">
-                    <a href="#anfordern" class="btn btn-primary-glow btn-lg">Realwert-Vergleich 2026 kostenlos sichern</a>
-                </div>
-                <div class="lp-trust-row" style="animation:fadeUp .8s .7s both;">
-                    <span><i data-lucide="check-circle"></i> 100&nbsp;% kostenlos</span>
-                    <span><i data-lucide="lock"></i> Unverbindlich</span>
-                    <span><i data-lucide="clock"></i> In 30&nbsp;Sekunden</span>
-                </div>
-            </div>
+        <div class="lp-hero-center">
+            <div class="label light center" style="animation:fadeUp .8s .1s both;">Greenchild — Realwert-Vergleich 2026</div>
+            <h1 style="animation:fadeUp .8s .25s both;">Der Sachwert, den Ihr Bankberater Ihnen <span class="hl">nie empfehlen wird.</span></h1>
+            <p class="lp-sub" style="animation:fadeUp .8s .4s both;">Sehen Sie selbst, warum echte Bäume der Sachwert sind, über den niemand spricht.</p>
             <div class="lp-video-wrap" style="animation:fadeUp .8s .5s both;">
                 <div class="lp-video-frame">
-                    <span class="lp-video-badge">Ansehen mit Ton</span>
-                    <video id="heroVideo" poster="/assets/img/lp-sachwert-hero-poster.jpg" playsinline preload="metadata">
+                    <video id="heroVideo" poster="/assets/img/lp-sachwert-hero-poster.jpg" playsinline autoplay muted loop preload="metadata">
                         <source src="/assets/video/lp-sachwert-hero.mp4" type="video/mp4">
                     </video>
-                    <button class="lp-video-play" id="heroPlay" aria-label="Video abspielen"><span class="pp"><i data-lucide="play"></i></span></button>
+                    <button class="lp-video-play" id="heroPlay" aria-label="Ton einschalten">
+                        <span class="pp"><i data-lucide="volume-2"></i></span>
+                        <span class="pp-label">Mit Ton ansehen</span>
+                    </button>
                 </div>
+            </div>
+            <div class="btn-group" style="animation:fadeUp .8s .6s both;">
+                <a href="#anfordern" class="btn btn-primary-glow btn-lg">Realwert-Vergleich 2026 kostenlos sichern</a>
+            </div>
+            <div class="lp-trust-row" style="animation:fadeUp .8s .7s both;">
+                <span><i data-lucide="check-circle"></i> 100&nbsp;% kostenlos</span>
+                <span><i data-lucide="lock"></i> Unverbindlich</span>
+                <span><i data-lucide="clock"></i> In 30&nbsp;Sekunden</span>
             </div>
         </div>
     </div>
@@ -195,6 +204,23 @@
             <div class="stat"><div class="stat-num" data-count="160000">0</div><div class="stat-label">Bäume gepflanzt</div></div>
             <div class="stat"><div class="stat-num" data-count="3" data-suffix=" m">0</div><div class="stat-label">Wachstum pro Jahr</div></div>
             <div class="stat"><div class="stat-num" data-count="15" data-suffix="+">0</div><div class="stat-label">Jahre Erfahrung</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- BAUMBESITZER-STORY -->
+<section class="bg-warm">
+    <div class="container">
+        <div class="section-header center reveal"><div class="label center">Eine Geschichte</div><h2>Was ein Baum bedeuten kann</h2></div>
+        <div class="lp-story reveal">
+            <div class="lp-story-img"><img src="/assets/img/investor-visit-man.jpg" alt="Baumbesitzer auf der Greenchild-Plantage" loading="lazy"></div>
+            <div class="lp-story-text">
+                <p>Andreas, 57, hatte sein Leben lang gearbeitet, gespart, vorgesorgt. Doch als er Jahr für Jahr zusah, wie sein Erspartes still an Wert verlor – und seine Bank ihm schon das nächste Zertifikat verkaufen wollte – wusste er: <strong>So nicht.</strong></p>
+                <p>Was er seinen beiden Enkeln einmal hinterlassen wollte, sollte man anfassen können. Etwas, das wächst, während alles andere schwankt – natürlich statt gezüchtet.</p>
+                <p>Heute tragen 60 Paulownia-Bäume die Namen seiner Enkel, gepflanzt in ihrem Geburtsjahr. Jedes Frühjahr fährt Andreas hin, misst, wie weit sie gewachsen sind, und macht ein Foto. Die Bäume sind längst größer als die Kinder.</p>
+                <blockquote class="lp-quote">„Ich hinterlasse ihnen keine Zahl auf einem Bildschirm. Ich hinterlasse ihnen etwas Lebendiges – mit ihrem Namen darauf."</blockquote>
+                <p class="lp-story-note">* Exemplarische Darstellung eines typischen Baumbesitzers.</p>
+            </div>
         </div>
     </div>
 </section>
@@ -297,12 +323,13 @@
 </div>
 
 <script>
-// Hero-Video: Tap-to-Play mit Ton
+// Hero-Video: startet stumm im Autoplay, Klick aktiviert den Ton
 (function(){
   var v=document.getElementById('heroVideo'), btn=document.getElementById('heroPlay');
   if(!v||!btn) return;
-  btn.addEventListener('click',function(){ v.play(); v.setAttribute('controls','controls'); btn.classList.add('hidden'); });
-  v.addEventListener('pause',function(){ if(v.currentTime>0 && !v.ended){} });
+  function unmute(){ v.muted=false; v.setAttribute('controls','controls'); if(v.paused) v.play(); btn.classList.add('hidden'); }
+  btn.addEventListener('click',unmute);
+  v.addEventListener('click',function(){ if(v.muted) unmute(); });
 })();
 // Header: scrolled-State
 (function(){
