@@ -19,8 +19,6 @@ on:
   push:
     branches:
       - main
-      # TEMPORAER zum Verifizieren des eu-Deploys auf diesem Branch:
-      - claude/clever-planck-uKo2s
   workflow_dispatch:
     inputs:
       dry_run:
@@ -31,9 +29,6 @@ on:
 concurrency:
   group: deploy-all-inkl
   cancel-in-progress: true
-
-permissions:
-  contents: write
 
 jobs:
   deploy:
@@ -125,28 +120,3 @@ jobs:
           console.log("\nAlle Ziele abgeschlossen.");
           EOF
           node deploy.mjs
-
-      - name: Verifizieren greenchild.eu/de/ (nur auf diesem Branch)
-        if: github.ref != 'refs/heads/main' && (inputs.dry_run != true)
-        run: |
-          cat > verify.mjs <<'EOF'
-          const base = "https://greenchild.eu";
-          const paths = ["/", "/de/", "/en/", "/assets/img/logo-greenchild.png"];
-          for (const p of paths) {
-            try {
-              const r = await fetch(base + p, { redirect: "follow" });
-              const b = Buffer.from(await r.arrayBuffer());
-              const t = b.toString("utf8");
-              const local = t.includes('src="/assets/img/logo-greenchild.png"');
-              const old = t.includes("greenchild.eu/wp-content/uploads/2025/07/b2396e78.png");
-              const extra = p.endsWith(".png") ? "" : `lokalesLogo=${local} alteURL=${old}`;
-              console.log(`${p}  ->  ${r.status}  ${b.length}B  (final ${r.url})  ${extra}`);
-            } catch (e) { console.log(`${p}  ->  ERR ${e.message}`); }
-          }
-          EOF
-          node verify.mjs | tee _deploy-verify.txt
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add _deploy-verify.txt
-          git commit -m "chore: deploy-verify greenchild.eu [skip ci]" || echo "nichts zu committen"
-          git push origin HEAD:claude/clever-planck-uKo2s
