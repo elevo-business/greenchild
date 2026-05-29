@@ -32,8 +32,8 @@ jobs:
 
       - name: Creative herunterladen, optimieren, Poster erzeugen
         env:
-          # Plantation Walk 2663 (deutsche Tonspur)
-          FILE_ID: "1rLOB_TK8GkfO1zIAoTcbVkSYBJb3A2_E"
+          # Bifurkacioni 2629 (Hero-Creative)
+          FILE_ID: "1H5O-6HVg1Nj5EPkw8cT5dKdjm6hfX8fz"
           BASENAME: "lp-sachwert-hero"
         run: |
           set -e
