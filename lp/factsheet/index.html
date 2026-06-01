@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greenchild — Investoren-Factsheet kostenlos sichern</title>
+<meta name="description" content="Der schnellste Baum der Welt als Sachwert. Kostenloses Investoren-Factsheet: Kennzahlen, CO₂-Daten & Projektdetails – sofort als PDF.">
+<meta name="robots" content="noindex, follow">
+<meta property="og:title" content="Investieren Sie in den schnellsten Baum der Welt">
+<meta property="og:description" content="Kostenloses Investoren-Factsheet: Kennzahlen, CO₂-Daten & Projektdetails – sofort als PDF.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/assets/img/hero-plantation-sunset.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="icon" type="image/png" href="/assets/img/logo-greenchild.png">
+<link rel="apple-touch-icon" href="/assets/img/logo-greenchild.png">
+<style>
+/* ===== LP: Header ===== */
+.lp-header{position:fixed;top:0;left:0;width:100%;z-index:10000;background:transparent;transition:all .4s var(--ease)}
+.lp-header.scrolled{background:rgba(250,252,251,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 4px 30px rgba(10,58,42,.05)}
+.lp-header .header-inner{display:flex;align-items:center;justify-content:space-between;max-width:var(--max-w);margin:0 auto;padding:16px var(--pad)}
+.lp-header .logo-img{height:34px;width:auto;filter:brightness(1.5);transition:filter .3s}
+.lp-header.scrolled .logo-img{filter:none}
+.lp-header .lp-head-cta{font-size:13px;padding:11px 22px}
+
+/* ===== LP: Hero (split: Pitch + Formular) ===== */
+.lp-hero{position:relative;background:linear-gradient(165deg,var(--green-forest) 0%,var(--green-deep) 70%,#08231A 100%);color:var(--text-inv);overflow:hidden;padding:140px 0 80px}
+.lp-hero .hero-orb-1{width:460px;height:460px;top:-120px;right:-140px;background:radial-gradient(circle,rgba(0,168,107,.12),transparent 70%)}
+.lp-hero .hero-orb-2{width:340px;height:340px;bottom:-100px;left:-120px;background:radial-gradient(circle,rgba(45,212,160,.08),transparent 70%)}
+.lp-hero .container{position:relative;z-index:4}
+.lp-hero-split{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.lp-scan-badge{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;letter-spacing:.04em;color:var(--green-light);background:rgba(45,212,160,.1);border:1px solid rgba(45,212,160,.3);padding:8px 16px;border-radius:100px;margin-bottom:22px}
+.lp-scan-badge i{width:15px;height:15px}
+.lp-hero h1{color:#fff;font-size:clamp(30px,4.4vw,50px);line-height:1.08;margin-bottom:18px}
+.lp-hero h1 .hl{color:var(--green-light)}
+.lp-hero .lp-sub{font-size:17px;color:rgba(255,255,255,.74);line-height:1.7;max-width:480px;margin-bottom:18px}
+.lp-hero .lp-motto{font-family:var(--font-h);font-size:16px;font-weight:700;color:#fff;margin-bottom:26px}
+.lp-trust-row{display:flex;gap:20px;flex-wrap:wrap;font-size:13.5px;color:rgba(255,255,255,.62)}
+.lp-trust-row span{display:inline-flex;align-items:center;gap:7px}
+.lp-trust-row i{width:16px;height:16px;color:var(--green-light)}
+
+/* Formular-Karte */
+.lp-form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);padding:36px;box-shadow:var(--shadow-lg)}
+.lp-form-card .lp-form-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:12px}
+.lp-form-card .lp-form-eyebrow i{width:15px;height:15px}
+.lp-form-card h3{margin-bottom:6px;font-size:22px}
+.lp-form-card .lp-form-sub{font-size:14px;color:var(--text-muted);margin-bottom:22px}
+.lp-form .name-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.lp-form .form-group{margin-bottom:14px}
+.lp-form .form-label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:7px}
+.lp-form .form-input{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);transition:all .25s var(--ease);font-size:15px}
+.lp-form .form-input:focus{outline:none;border-color:var(--green);background:#fff;box-shadow:0 0 0 3px var(--green-soft)}
+.lp-consent{display:flex;gap:10px;align-items:flex-start;margin:4px 0 18px;font-size:12.5px;color:var(--text-muted);line-height:1.55}
+.lp-consent input{margin-top:3px;width:16px;height:16px;accent-color:var(--green);flex-shrink:0}
+.lp-consent a{color:var(--green);text-decoration:underline}
+.lp-form .trust-signals{display:flex;gap:16px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.lp-form .trust-signal{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
+.lp-form .trust-signal i{width:14px;height:14px;color:var(--green)}
+.lp-form-result{margin-top:16px;padding:14px 18px;border-radius:10px;font-size:14px;font-weight:500}
+.lp-success{text-align:center;padding:14px 0}
+.lp-success .succ-ic{width:64px;height:64px;border-radius:50%;background:var(--green-pale);color:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+.lp-success .succ-ic i{width:32px;height:32px}
+.lp-success h3{margin-bottom:8px}
+.lp-success p{font-size:14.5px;color:var(--text-muted);margin-bottom:18px}
+
+/* ===== LP: Das erhalten Sie ===== */
+.lp-deliver{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.lp-pdf-visual{display:inline-flex;align-items:center;gap:14px;margin-top:36px;padding:14px 18px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.lp-pdf-visual .pdf-ic{width:42px;height:42px;border-radius:10px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green)}
+.lp-pdf-visual .pdf-ic i{width:22px;height:22px}
+.lp-pdf-visual .pdf-meta strong{display:block;font-family:var(--font-h);font-size:14px;color:var(--text)}
+.lp-pdf-visual .pdf-meta span{font-size:12px;color:var(--text-muted)}
+
+/* ===== LP: Vorteile ===== */
+.lp-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+
+/* ===== LP: Quote ===== */
+.lp-quote-band{max-width:760px;margin:0 auto;text-align:center}
+.lp-quote-band blockquote{font-family:var(--font-h);font-size:clamp(20px,2.6vw,28px);font-weight:700;color:var(--green-dark);line-height:1.4}
+.lp-quote-band .qsrc{font-size:13.5px;color:var(--text-muted);margin-top:16px}
+
+/* ===== LP: Gespräch ===== */
+.lp-talk{background:linear-gradient(170deg,var(--green-forest),var(--green-deep));color:var(--text-inv);text-align:center}
+.lp-talk h2{color:#fff;margin-bottom:16px}
+.lp-talk p{font-size:17px;color:rgba(255,255,255,.7);max-width:560px;margin:0 auto 32px}
+
+/* Sticky Mobile CTA */
+.lp-sticky{position:fixed;left:0;right:0;bottom:0;z-index:9000;display:none;padding:12px 16px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--border);box-shadow:0 -4px 24px rgba(10,58,42,.08)}
+.lp-sticky .btn{width:100%;justify-content:center}
+
+@media(max-width:980px){
+  .lp-hero{padding:112px 0 56px}
+  .lp-hero-split{grid-template-columns:1fr;gap:34px}
+  .lp-hero .lp-sub,.lp-hero h1{max-width:none}
+  .lp-deliver{grid-template-columns:1fr;gap:14px}
+  .lp-benefits{grid-template-columns:1fr;gap:14px}
+}
+@media(max-width:600px){
+  .lp-form-card{padding:26px 20px}
+  .lp-form .name-fields{grid-template-columns:1fr}
+  .lp-sticky{display:block}
+  body{padding-bottom:76px}
+  .lp-header .lp-head-cta{display:none}
+}
+/* Legal Overlays */
+.legal-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
+.legal-overlay.active{display:flex}
+.legal-content{background:var(--white,#fff);border-radius:16px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:48px 40px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.3);text-align:left}
+.legal-content h2{font-family:var(--font-h,Manrope,sans-serif);font-size:24px;font-weight:800;margin-bottom:24px;color:var(--text,#1a2332)}
+.legal-content h3{font-family:var(--font-h,Manrope,sans-serif);font-size:16px;font-weight:700;margin:24px 0 8px;color:var(--text,#1a2332)}
+.legal-content p{font-size:14px;line-height:1.7;color:var(--text-body,#4a5568);margin-bottom:12px}
+.legal-content a{color:var(--green,#00A86B);text-decoration:underline}
+.legal-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border:none;background:var(--bg-warm,#f5f5f0);border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text,#1a2332);transition:all .2s}
+.legal-close:hover{background:var(--green-soft,#e6f5ec);color:var(--green,#00A86B)}
+@media(max-width:600px){.legal-content{padding:32px 20px;border-radius:12px}}
+</style>
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<header class="lp-header" id="header"><div class="header-inner">
+    <a href="/de/" class="logo"><img src="/assets/img/logo-greenchild.png" alt="Greenchild" class="logo-img"></a>
+    <a href="#factsheet" class="btn btn-primary btn-sm lp-head-cta">Factsheet sichern</a>
+</div></header>
+
+<!-- HERO + FORMULAR -->
+<section class="lp-hero">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="container">
+        <div class="lp-hero-split">
+            <div class="lp-hero-pitch">
+                <div class="lp-scan-badge" style="animation:fadeUp .8s .1s both;"><i data-lucide="qr-code"></i> Schön, dass Sie unser Kärtchen gescannt haben</div>
+                <h1 style="animation:fadeUp .8s .2s both;">Investieren Sie in den <span class="hl">schnellsten Baum der Welt.</span></h1>
+                <p class="lp-sub" style="animation:fadeUp .8s .35s both;">Echte Paulownia-Bäume als physisches Eigentum – auf ca. 255&nbsp;Hektar in 3&nbsp;Ländern. Sichern Sie sich jetzt das kostenlose Investoren-Factsheet mit allen Zahlen.</p>
+                <p class="lp-motto" style="animation:fadeUp .8s .45s both;">Für Sie. Für die Erde. Für unsere Kinder.</p>
+                <div class="lp-trust-row" style="animation:fadeUp .8s .55s both;">
+                    <span><i data-lucide="check-circle"></i> 100&nbsp;% kostenlos</span>
+                    <span><i data-lucide="download"></i> Sofort als PDF</span>
+                    <span><i data-lucide="clock"></i> In 30&nbsp;Sekunden</span>
+                </div>
+            </div>
+            <div class="lp-form-card" id="factsheet" style="animation:fadeUp .8s .4s both;">
+                <div id="formInner">
+                    <span class="lp-form-eyebrow"><i data-lucide="file-text"></i> Investoren-Factsheet 2026</span>
+                    <h3>Jetzt kostenlos sichern</h3>
+                    <p class="lp-form-sub">Tragen Sie Ihre Daten ein – der Download startet sofort.</p>
+                    <form id="factsheetForm" class="lp-form" novalidate>
+                        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none;">
+                        <div class="name-fields">
+                            <div class="form-group"><label class="form-label">Vorname *</label><input type="text" name="vorname" class="form-input" autocomplete="given-name" required></div>
+                            <div class="form-group"><label class="form-label">Nachname *</label><input type="text" name="nachname" class="form-input" autocomplete="family-name" required></div>
+                        </div>
+                        <div class="form-group"><label class="form-label">E-Mail *</label><input type="email" name="email" class="form-input" autocomplete="email" required></div>
+                        <div class="form-group"><label class="form-label">Telefon *</label><input type="tel" name="telefon" class="form-input" autocomplete="tel" required></div>
+                        <label class="lp-consent"><input type="checkbox" name="consent" required><span>Ich bin einverstanden, dass Greenchild mich kontaktiert, und habe die <a href="#" onclick="event.preventDefault();document.getElementById('datenschutzOverlay').classList.add('active')">Datenschutzerklärung</a> gelesen.</span></label>
+                        <button type="submit" class="btn btn-primary-glow btn-lg" style="width:100%;justify-content:center;">Investoren-Factsheet kostenlos sichern</button>
+                        <div class="trust-signals">
+                            <div class="trust-signal"><i data-lucide="lock"></i> SSL-verschlüsselt</div>
+                            <div class="trust-signal"><i data-lucide="shield"></i> Kein Spam</div>
+                            <div class="trust-signal"><i data-lucide="x-circle"></i> Jederzeit widerrufbar</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DAS ERHALTEN SIE -->
+<section class="bg-white">
+    <div class="container">
+        <div class="section-header center reveal"><div class="label center">Im Factsheet enthalten</div><h2>Alle Zahlen auf einen Blick</h2><p>Genau das, wofür Sie gescannt haben – kompakt, ehrlich und sofort als PDF.</p></div>
+        <div class="lp-deliver">
+            <div class="card reveal"><div class="icon-box green"><i data-lucide="bar-chart-3"></i></div><h4>Kennzahlen</h4><p>Preis pro Baum, Flächen in 3&nbsp;Ländern, Wachstum, Holzvolumen und Marktpreise – die harten Fakten zum Investment.</p></div>
+            <div class="card reveal reveal-delay-1"><div class="icon-box green"><i data-lucide="leaf"></i></div><h4>CO₂-Daten</h4><p>Wie viel CO₂ ein Paulownia-Baum jährlich bindet – über und unter der Erde. Ihr messbarer Beitrag zum Klima.</p></div>
+            <div class="card reveal reveal-delay-2"><div class="icon-box green"><i data-lucide="map"></i></div><h4>Projektdetails</h4><p>Wie das Eigentum funktioniert, der Weg vom Setzling zum Edelholz und der Vollservice – Schritt für Schritt erklärt.</p></div>
+        </div>
+        <div style="text-align:center;">
+            <div class="lp-pdf-visual reveal">
+                <span class="pdf-ic"><i data-lucide="file-text"></i></span>
+                <span class="pdf-meta"><strong>Greenchild Investoren-Factsheet 2026</strong><span>PDF · 2 Seiten · sofortiger Download</span></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- KENNZAHLEN / STATS -->
+<section class="bg-light">
+    <div class="container">
+        <div class="section-header center reveal"><div class="label center">Greenchild in Zahlen</div><h2>Kein Konzept – bereits gewachsene Realität</h2></div>
+        <div class="stat-grid reveal" style="grid-template-columns:repeat(4,1fr);">
+            <div class="stat"><div class="stat-num" data-count="255">0</div><div class="stat-label">Hektar in 3 Ländern</div></div>
+            <div class="stat"><div class="stat-num" data-count="160000">0</div><div class="stat-label">Bäume gepflanzt</div></div>
+            <div class="stat"><div class="stat-num" data-count="300" data-suffix=" kg">0</div><div class="stat-label">CO₂ pro Baum / Jahr</div></div>
+            <div class="stat"><div class="stat-num" data-count="15" data-suffix="+">0</div><div class="stat-label">Jahre Erfahrung</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- WARUM PAULOWNIA -->
+<section class="bg-white">
+    <div class="container">
+        <div class="section-header center reveal"><div class="label center">Warum Paulownia</div><h2>Kein Finanzprodukt. Ein echter Sachwert.</h2><p>Keine Aktie, kein Beteiligungspapier – sondern reale Bäume mit Ihrem Namen, die Sie an Generationen weitergeben.</p></div>
+        <div class="lp-benefits">
+            <div class="card reveal"><div class="icon-box green"><i data-lucide="tree-pine"></i></div><h4>Physisches Eigentum</h4><p>Reale Bäume mit Ihrem Namen und Baum-Zertifikat. Etwas, das Sie tatsächlich besitzen und jederzeit besuchen können.</p></div>
+            <div class="card reveal reveal-delay-1"><div class="icon-box green"><i data-lucide="trending-up"></i></div><h4>Wächst gegen die Inflation</h4><p>Einer der am schnellsten wachsenden Bäume der Welt – bis zu 3&nbsp;Meter pro Jahr. Ihr Sachwert steigt mit jedem Jahr.</p></div>
+            <div class="card reveal reveal-delay-2"><div class="icon-box green"><i data-lucide="shield-check"></i></div><h4>Auf 3 Länder verteilt</h4><p>255&nbsp;Hektar bereits gepflanzt, verteilt auf drei Länder – damit selbst Naturereignisse Ihr Eigentum nicht gefährden.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- QUOTE -->
+<section class="bg-warm">
+    <div class="container">
+        <div class="lp-quote-band reveal">
+            <div class="label center">Was ein Baum bedeuten kann</div>
+            <blockquote>„Ich hinterlasse meinen Enkeln keine Zahl auf einem Bildschirm. Ich hinterlasse ihnen etwas Lebendiges – mit ihrem Namen darauf."</blockquote>
+            <div class="qsrc">— Andreas, Baumbesitzer seit 2021</div>
+        </div>
+    </div>
+</section>
+
+<!-- GESPRÄCH -->
+<section class="lp-talk">
+    <div class="container">
+        <div class="reveal" style="max-width:680px;margin:0 auto;">
+            <div class="label light center">Der nächste Schritt</div>
+            <h2>Lieber direkt sprechen?</h2>
+            <p>Wenn Sie die Zahlen überzeugen, vereinbaren wir am besten einen persönlichen Termin – telefonisch oder per Video, rund 20&nbsp;Minuten und völlig unverbindlich.</p>
+            <a href="/de/kontakt.html" class="btn btn-white btn-lg">Persönlichen Termin vereinbaren</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer"><div class="container">
+    <div class="footer-grid">
+        <div class="footer-brand"><img loading="lazy" src="/assets/img/logo-greenchild.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert. Ca. 255 Hektar in 3 Ländern.</p></div>
+        <div><h5>Greenchild</h5><ul><li><a href="/de/">Zur Hauptseite</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div>
+        <div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="mailto:info@greenchild.eu">info@greenchild.eu</a></li><li style="color:var(--text-inv-muted);font-size:13px;margin-top:8px;">Greenchild LLC<br>Ferizaj, Kosovo</li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>&copy; 2026 Greenchild LLC</span><div class="footer-legal"><a href="#" onclick="event.preventDefault();document.getElementById('impressumOverlay').classList.add('active')">Impressum</a><a href="#" onclick="event.preventDefault();document.getElementById('datenschutzOverlay').classList.add('active')">Datenschutz</a></div></div>
+</div></footer>
+
+<!-- Sticky Mobile CTA -->
+<div class="lp-sticky"><a href="#factsheet" class="btn btn-primary-glow">Investoren-Factsheet sichern</a></div>
+
+<!-- LEGAL OVERLAYS -->
+<div class="legal-overlay" id="impressumOverlay">
+  <div class="legal-content">
+    <button class="legal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button>
+    <h2>Impressum</h2>
+    <p><strong>Greenchild LLC</strong><br>M.Meha, Greenchild Street<br>70000 Ferizaj, Kosovo</p>
+    <p><strong>Vertretungsberechtigt:</strong><br>Geschäftsführung der Greenchild LLC</p>
+    <p><strong>Kontakt:</strong><br>Telefon (DE): <a href="tel:+4915119133331">+49 151 191 333 31</a><br>Telefon (Kosovo): <a href="tel:+38343918333">+383 43 918 333</a><br>E-Mail: <a href="mailto:info@greenchild.eu">info@greenchild.eu</a></p>
+  </div>
+</div>
+<div class="legal-overlay" id="datenschutzOverlay">
+  <div class="legal-content">
+    <button class="legal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button>
+    <h2>Datenschutzerklärung</h2>
+    <h3>1. Verantwortlicher</h3>
+    <p>Greenchild LLC<br>M.Meha, Greenchild Street<br>70000 Ferizaj, Kosovo<br>E-Mail: <a href="mailto:info@greenchild.eu">info@greenchild.eu</a></p>
+    <h3>2. Verarbeitung der Formulardaten</h3>
+    <p>Wenn Sie das Formular zur Anforderung des „Investoren-Factsheet" ausfüllen, verarbeiten wir die angegebenen Daten (Name, E-Mail, Telefon), um Ihnen das PDF bereitzustellen und Sie auf Wunsch zu kontaktieren (Art. 6 Abs. 1 lit. a und b DSGVO). Zur Verwaltung der Anfragen nutzen wir das CRM-System Pipedrive (Pipedrive OÜ, Estland).</p>
+    <h3>3. SSL-Verschlüsselung</h3>
+    <p>Diese Website nutzt aus Sicherheitsgründen eine SSL-Verschlüsselung.</p>
+    <h3>4. Google Fonts &amp; Icons</h3>
+    <p>Wir nutzen Google Fonts und Lucide Icons über externe CDNs. Beim Seitenaufruf werden Daten an deren Server übertragen.</p>
+    <h3>5. Ihre Rechte</h3>
+    <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch. Kontakt: <a href="mailto:info@greenchild.eu">info@greenchild.eu</a></p>
+  </div>
+</div>
+
+<script>
+// Header: scrolled-State + Scroll-Progress
+(function(){
+  var h=document.getElementById('header'); if(!h) return;
+  var sp=document.getElementById('scrollProgress');
+  function onScroll(){
+    h.classList.toggle('scrolled', window.scrollY>20);
+    if(sp){ var d=document.documentElement; var p=d.scrollTop/((d.scrollHeight-d.clientHeight)||1); sp.style.width=(p*100)+'%'; }
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+// Reveal-Animationen
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.style.opacity=1;}); return; }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.style.animation='fadeUp .8s var(--ease) both'; io.unobserve(en.target);} });
+  },{threshold:.12});
+  els.forEach(function(e){ e.style.opacity=0; var d=e.className.match(/reveal-delay-(\d)/); if(d){e.style.animationDelay=(d[1]*0.12)+'s';} io.observe(e); });
+})();
+// Counter
+(function(){
+  var nums=document.querySelectorAll('[data-count]');
+  if(!('IntersectionObserver' in window)){ return; }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var el=en.target, target=parseInt(el.getAttribute('data-count'),10), suf=el.getAttribute('data-suffix')||'', t0=null;
+      function step(ts){ if(!t0)t0=ts; var p=Math.min((ts-t0)/1400,1); var val=Math.floor(p*target); el.textContent=val.toLocaleString('de-DE')+suf; if(p<1)requestAnimationFrame(step); else el.textContent=target.toLocaleString('de-DE')+suf; }
+      requestAnimationFrame(step); io.unobserve(el);
+    });
+  },{threshold:.4});
+  nums.forEach(function(n){ io.observe(n); });
+})();
+</script>
+<script src="/js/lp-factsheet-form.js"></script>
+<script>if(window.lucide)lucide.createIcons();</script>
+</body>
+</html>
