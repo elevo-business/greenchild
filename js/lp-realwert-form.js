@@ -9,11 +9,54 @@
   var submitBtn = form.querySelector('button[type="submit"]');
   var originalText = submitBtn ? submitBtn.textContent : '';
 
+  // Budget-Stufen → Pipedrive-Mapping.
+  // tag = sichtbarer Prioritäts-Marker im Lead-Titel, value = sortierbarer Lead-Wert (€).
+  var BUDGET_MAP = {
+    'info':        { label: 'Erst einmal informieren', tag: 'INFO',        value: 0 },
+    'bis-2500':    { label: 'bis 2.500 €',             tag: '€ bis 2,5k',  value: 2500 },
+    '2500-10000':  { label: '2.500 – 10.000 €',         tag: '€€ 2,5–10k',  value: 10000 },
+    '10000-25000': { label: '10.000 – 25.000 €',        tag: '€€€ 10–25k',  value: 25000 },
+    '25000-plus':  { label: 'über 25.000 €',            tag: '€€€€ 25k+',   value: 50000 }
+  };
+
   function val(name) {
     var el = form.querySelector('[name="' + name + '"]');
     return el ? el.value.trim() : '';
   }
 
+  /* ---------- Schritt-Navigation ---------- */
+  var step1 = form.querySelector('[data-step="1"]');
+  var step2 = form.querySelector('[data-step="2"]');
+  var dots = form.querySelectorAll('.step-dot');
+  var toStep2 = document.getElementById('toStep2');
+  var backStep1 = document.getElementById('backStep1');
+
+  function setStep(n) {
+    step1.hidden = (n !== 1);
+    step2.hidden = (n !== 2);
+    dots.forEach(function (d) {
+      d.classList.toggle('active', parseInt(d.getAttribute('data-dot'), 10) <= n);
+    });
+  }
+
+  if (toStep2) {
+    toStep2.addEventListener('click', function () {
+      var budget = form.querySelector('[name="budget"]:checked');
+      if (!budget) {
+        var firstOpt = form.querySelector('.qual-opt');
+        if (firstOpt) firstOpt.focus();
+        return;
+      }
+      setStep(2);
+      var firstInput = step2.querySelector('input,select');
+      if (firstInput) firstInput.focus();
+    });
+  }
+  if (backStep1) {
+    backStep1.addEventListener('click', function () { setStep(1); });
+  }
+
+  /* ---------- Erfolg / Fehler ---------- */
   function startDownload() {
     var a = document.createElement('a');
     a.href = PDF_URL;
@@ -52,19 +95,25 @@
     form.appendChild(msg);
   }
 
+  /* ---------- Absenden ---------- */
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
     var bot = form.querySelector('[name="botcheck"]');
     if (bot && bot.checked) return;
 
+    var budgetEl = form.querySelector('[name="budget"]:checked');
+    if (!budgetEl) { setStep(1); return; }
+    var budget = BUDGET_MAP[budgetEl.value] || { label: budgetEl.value, tag: '?', value: 0 };
+
     var vorname = val('vorname');
     var nachname = val('nachname');
     var email = val('email');
     var telefon = val('telefon');
+    var erreichbarkeit = val('erreichbarkeit');
     var consent = form.querySelector('[name="consent"]');
 
-    if (!vorname || !nachname || !email || !telefon) return;
+    if (!vorname || !nachname || !email || !telefon || !erreichbarkeit) return;
     if (consent && !consent.checked) { consent.focus(); return; }
 
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet …'; }
@@ -85,12 +134,23 @@
         if (!res.success) throw new Error('person');
         var personId = res.data.id;
 
+        // Tag im Titel → Vertrieb sieht die Priorität sofort in der Lead-Inbox.
         var leadData = {
-          title: 'Lead-Magnet: Sachwertvergleich 2026 — ' + vorname + ' ' + nachname,
+          title: '[' + budget.tag + '] Sachwertvergleich 2026 — ' + vorname + ' ' + nachname,
           person_id: personId
         };
-        var note = 'Quelle: Landingpage „Sachwert" — Sachwertvergleich 2026 angefordert.\nZiel: persönlichen Termin vereinbaren.';
-        note += '\nTelefon: ' + telefon;
+        // Lead-Value → in Pipedrive sortier-/filterbar (heiße Leads zuerst).
+        if (budget.value > 0) {
+          leadData.value = { amount: budget.value, currency: 'EUR' };
+        }
+
+        var note =
+          'Quelle: Landingpage „Sachwert" — Sachwertvergleich 2026 angefordert.\n' +
+          'Ziel: persönlichen Termin vereinbaren.\n' +
+          '— — —\n' +
+          'Investitionsrahmen: ' + budget.label + '\n' +
+          'Beste Erreichbarkeit: ' + erreichbarkeit + '\n' +
+          'Telefon: ' + telefon;
 
         return Promise.all([
           fetch(BASE + '/leads?api_token=' + API_TOKEN, {
