@@ -239,7 +239,8 @@ $leadData = array('title' => $title, 'person_id' => $personId);
 if (!$isKontakt && $budget['value'] > 0) {
   $leadData['value'] = array('amount' => $budget['value'], 'currency' => 'EUR');
 }
-pd_post($BASE . '/leads?api_token=' . urlencode($API_TOKEN), $leadData);
+$leadRes = pd_post($BASE . '/leads?api_token=' . urlencode($API_TOKEN), $leadData);
+$leadId = (!empty($leadRes['success']) && !empty($leadRes['data']['id'])) ? $leadRes['data']['id'] : null;
 
 // ---- 3) Notiz mit allen Qualifizierungs-Daten ----
 $noteLines = array('Quelle: ' . $srcLabel . '.');
@@ -256,10 +257,9 @@ if ($isKontakt) {
   if ($variant !== '')        { $noteLines[] = 'A/B-Variante: ' . $variant; }
 }
 
-pd_post($BASE . '/notes?api_token=' . urlencode($API_TOKEN), array(
-  'content'   => implode("\n", $noteLines),
-  'person_id' => $personId,
-));
+$noteData = array('content' => implode("\n", $noteLines), 'person_id' => $personId);
+if ($leadId) { $noteData['lead_id'] = $leadId; }  // an den Lead hängen → im Lead sichtbar
+pd_post($BASE . '/notes?api_token=' . urlencode($API_TOKEN), $noteData);
 
 // ---- 4) Meta Conversions API: 'Lead' serverseitig melden (Dedup via event_id) ----
 $contentName = $isKontakt
