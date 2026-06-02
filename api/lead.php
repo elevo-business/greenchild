@@ -16,6 +16,9 @@
  *   3) Fallback-Konstante unten (bitte nach dem Deploy per Token-Rotation ersetzen)
  */
 
+// Keine PHP-Warnungen in die JSON-Antwort lecken lassen (Shared-Hosting).
+@ini_set('display_errors', '0');
+
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
@@ -41,7 +44,7 @@ function read_secret_file($filename) {
     __DIR__ . '/../' . $filename,     // Dokument-Root (Fallback, per .htaccess gesperrt)
   );
   foreach ($paths as $p) {
-    if (is_readable($p)) { return trim(file_get_contents($p)); }
+    if (@is_readable($p)) { return trim(@file_get_contents($p)); }
   }
   return '';
 }
