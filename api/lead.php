@@ -62,6 +62,7 @@ $META_CAPI_TOKEN = getenv('META_CAPI_TOKEN');
 if (!$META_CAPI_TOKEN) { $META_CAPI_TOKEN = read_secret_file('meta-capi-token.txt'); }
 if (!$META_PIXEL_ID)  { $META_PIXEL_ID  = '1314610516838484'; }
 $META_TEST_EVENT_CODE = getenv('META_TEST_EVENT_CODE'); // optional, nur zum Testen im Events Manager
+if (!$META_TEST_EVENT_CODE) { $META_TEST_EVENT_CODE = read_secret_file('meta-test-code.txt'); }
 
 // ---- Eingabe lesen (JSON-Body) ----
 $raw = file_get_contents('php://input');
