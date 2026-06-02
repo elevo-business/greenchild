@@ -175,7 +175,7 @@ function pd_post($url, $payload) {
  * Deduplizierung mit dem Browser-Pixel. Best-effort: Fehler brechen den
  * Lead-Flow nicht ab.
  */
-function meta_send_lead($pixelId, $token, $version, $eventId, $sourceUrl, $email, $telefon, $fbp, $fbc, $customData, $testCode) {
+function meta_send_lead($pixelId, $token, $version, $eventId, $sourceUrl, $email, $telefon, $vorname, $nachname, $fbp, $fbc, $customData, $testCode) {
   if (!$pixelId || !$token) { return; }
 
   $ud = array();
@@ -187,6 +187,8 @@ function meta_send_lead($pixelId, $token, $version, $eventId, $sourceUrl, $email
     elseif (strpos($d, '0') === 0)   { $d = '49' . substr($d, 1); }
     if ($d !== '') { $ud['ph'] = array(hash('sha256', $d)); }
   }
+  if ($vorname !== '')  { $ud['fn'] = array(hash('sha256', strtolower(trim($vorname)))); }
+  if ($nachname !== '') { $ud['ln'] = array(hash('sha256', strtolower(trim($nachname)))); }
   if ($fbp !== '') { $ud['fbp'] = $fbp; }
   if ($fbc !== '') { $ud['fbc'] = $fbc; }
   if (!empty($_SERVER['REMOTE_ADDR']))     { $ud['client_ip_address'] = $_SERVER['REMOTE_ADDR']; }
@@ -266,6 +268,6 @@ $customData = array(
   'content_name' => $contentName,
   'lead_source'  => $source,
 );
-meta_send_lead($META_PIXEL_ID, $META_CAPI_TOKEN, 'v19.0', $eventId, $eventSourceUrl, $email, $telefon, $fbp, $fbc, $customData, $META_TEST_EVENT_CODE);
+meta_send_lead($META_PIXEL_ID, $META_CAPI_TOKEN, 'v19.0', $eventId, $eventSourceUrl, $email, $telefon, $vorname, $nachname, $fbp, $fbc, $customData, $META_TEST_EVENT_CODE);
 
 respond(true, 'ok');
