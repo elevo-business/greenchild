@@ -12,7 +12,7 @@
  *
  * Token-Quelle (in dieser Reihenfolge):
  *   1) Umgebungsvariable PIPEDRIVE_API_TOKEN (empfohlen)
- *   2) Datei ../pipedrive-token.txt OBERHALB des Webroots (nicht im Repo)
+ *   2) Datei pipedrive-token.txt OBERHALB des Webroots (FTP-Home, nicht im Repo)
  *   3) Fallback-Konstante unten (bitte nach dem Deploy per Token-Rotation ersetzen)
  */
 
@@ -30,14 +30,25 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   respond(false, 'Method not allowed');
 }
 
+/**
+ * Liest eine Secret-Datei. Bevorzugt OBERHALB des Webroots (FTP-Home), damit
+ * der Token niemals über die URL abrufbar ist; Doc-Root nur als Fallback
+ * (zusätzlich per .htaccess gesperrt).
+ */
+function read_secret_file($filename) {
+  $paths = array(
+    __DIR__ . '/../../' . $filename,  // FTP-Home, oberhalb des Webroots → NICHT per URL erreichbar
+    __DIR__ . '/../' . $filename,     // Dokument-Root (Fallback, per .htaccess gesperrt)
+  );
+  foreach ($paths as $p) {
+    if (is_readable($p)) { return trim(file_get_contents($p)); }
+  }
+  return '';
+}
+
 // ---- Token laden (serverseitig) ----
 $API_TOKEN = getenv('PIPEDRIVE_API_TOKEN');
-if (!$API_TOKEN) {
-  $tokenFile = __DIR__ . '/../pipedrive-token.txt';
-  if (is_readable($tokenFile)) {
-    $API_TOKEN = trim(file_get_contents($tokenFile));
-  }
-}
+if (!$API_TOKEN) { $API_TOKEN = read_secret_file('pipedrive-token.txt'); }
 if (!$API_TOKEN) {
   // Fallback – nach Deploy bitte Token in Pipedrive rotieren und oben (ENV/Datei) hinterlegen.
   $API_TOKEN = '9fae1a7473002abdf89ade65319dc14a1c828a28';
@@ -45,16 +56,11 @@ if (!$API_TOKEN) {
 $BASE = 'https://api.pipedrive.com/v1';
 
 // ---- Meta Conversions API: Config laden (serverseitig) ----
-// Pixel-ID darf öffentlich sein; der Access-Token NICHT → nur ENV/Datei/Konstante hier.
+// Pixel-ID darf öffentlich sein; der Access-Token NICHT → nur ENV/Datei hier.
 $META_PIXEL_ID = getenv('META_PIXEL_ID');
 $META_CAPI_TOKEN = getenv('META_CAPI_TOKEN');
-if (!$META_CAPI_TOKEN) {
-  $metaTokenFile = __DIR__ . '/../meta-capi-token.txt';
-  if (is_readable($metaTokenFile)) { $META_CAPI_TOKEN = trim(file_get_contents($metaTokenFile)); }
-}
-// 👉 Optional hier eintragen, falls ihr keine ENV/Datei nutzt:
+if (!$META_CAPI_TOKEN) { $META_CAPI_TOKEN = read_secret_file('meta-capi-token.txt'); }
 if (!$META_PIXEL_ID)  { $META_PIXEL_ID  = '1314610516838484'; }
-// $META_CAPI_TOKEN  = '...';  // besser per ENV/Datei oberhalb des Webroots
 $META_TEST_EVENT_CODE = getenv('META_TEST_EVENT_CODE'); // optional, nur zum Testen im Events Manager
 
 // ---- Eingabe lesen (JSON-Body) ----
