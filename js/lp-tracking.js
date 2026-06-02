@@ -13,7 +13,7 @@
  */
 (function () {
   // 👉 HIER deine Meta-Pixel-ID (= Dataset-ID aus dem Events Manager):
-  var META_PIXEL_ID = ''; // z. B. '1234567890987654'
+  var META_PIXEL_ID = '1314610516838484';
 
   window.dataLayer = window.dataLayer || [];
 

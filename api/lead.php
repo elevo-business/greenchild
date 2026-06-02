@@ -53,7 +53,7 @@ if (!$META_CAPI_TOKEN) {
   if (is_readable($metaTokenFile)) { $META_CAPI_TOKEN = trim(file_get_contents($metaTokenFile)); }
 }
 // 👉 Optional hier eintragen, falls ihr keine ENV/Datei nutzt:
-if (!$META_PIXEL_ID)  { $META_PIXEL_ID  = ''; } // z. B. '1234567890987654'
+if (!$META_PIXEL_ID)  { $META_PIXEL_ID  = '1314610516838484'; }
 // $META_CAPI_TOKEN  = '...';  // besser per ENV/Datei oberhalb des Webroots
 $META_TEST_EVENT_CODE = getenv('META_TEST_EVENT_CODE'); // optional, nur zum Testen im Events Manager
 
