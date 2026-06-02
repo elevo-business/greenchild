@@ -123,11 +123,17 @@
 
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet …'; }
 
+    var eventId = window.gcEventId ? window.gcEventId() : ('lead.' + Date.now());
     var payload = {
       source: SOURCE, variant: variant,
       vorname: vorname, nachname: nachname, email: email, telefon: telefon,
       erreichbarkeit: erreichbarkeit, budget: budgetEl ? budgetEl.value : '',
-      consent: true, botcheck: ''
+      consent: true, botcheck: '',
+      // Meta Conversions API (serverseitig) – Dedup + besseres Matching:
+      event_id: eventId,
+      event_source_url: location.href,
+      fbp: window.gcCookie ? window.gcCookie('_fbp') : '',
+      fbc: window.gcCookie ? window.gcCookie('_fbc') : ''
     };
 
     fetch(ENDPOINT, {
@@ -138,7 +144,7 @@
       .then(function (r) { return r.json(); })
       .then(function (res) {
         if (!res || !res.success) throw new Error('lead');
-        track('Lead', { source: SOURCE, variant: variant, content_name: 'Investoren-Factsheet 2026', budget: budgetEl ? budgetEl.value : '' });
+        track('Lead', { source: SOURCE, variant: variant, content_name: 'Investoren-Factsheet 2026', budget: budgetEl ? budgetEl.value : '', value: 0, eventID: eventId });
         showSuccess();
       })
       .catch(function () { showError(); });

@@ -44,6 +44,19 @@ if (!$API_TOKEN) {
 }
 $BASE = 'https://api.pipedrive.com/v1';
 
+// ---- Meta Conversions API: Config laden (serverseitig) ----
+// Pixel-ID darf öffentlich sein; der Access-Token NICHT → nur ENV/Datei/Konstante hier.
+$META_PIXEL_ID = getenv('META_PIXEL_ID');
+$META_CAPI_TOKEN = getenv('META_CAPI_TOKEN');
+if (!$META_CAPI_TOKEN) {
+  $metaTokenFile = __DIR__ . '/../meta-capi-token.txt';
+  if (is_readable($metaTokenFile)) { $META_CAPI_TOKEN = trim(file_get_contents($metaTokenFile)); }
+}
+// 👉 Optional hier eintragen, falls ihr keine ENV/Datei nutzt:
+if (!$META_PIXEL_ID)  { $META_PIXEL_ID  = ''; } // z. B. '1234567890987654'
+// $META_CAPI_TOKEN  = '...';  // besser per ENV/Datei oberhalb des Webroots
+$META_TEST_EVENT_CODE = getenv('META_TEST_EVENT_CODE'); // optional, nur zum Testen im Events Manager
+
 // ---- Eingabe lesen (JSON-Body) ----
 $raw = file_get_contents('php://input');
 $in = json_decode($raw, true);
@@ -67,6 +80,12 @@ $variant        = field($in, 'variant');  // optional (A/B-Test)
 $interesse      = field($in, 'interesse');  // nur Kontaktformular
 $nachricht      = field($in, 'nachricht');  // nur Kontaktformular
 $consent        = !empty($in['consent']);
+
+// Meta Conversions API (Dedup + Matching)
+$eventId        = field($in, 'event_id');
+$eventSourceUrl = field($in, 'event_source_url');
+$fbp            = field($in, 'fbp');
+$fbc            = field($in, 'fbc');
 
 $isKontakt = ($source === 'kontakt');
 
@@ -143,6 +162,46 @@ function pd_post($url, $payload) {
   return json_decode(@file_get_contents($url, false, $ctx), true);
 }
 
+/**
+ * Sendet das 'Lead'-Event an die Meta Conversions API (serverseitig).
+ * E-Mail/Telefon werden SHA-256-gehasht (Meta-Pflicht). event_id sorgt für
+ * Deduplizierung mit dem Browser-Pixel. Best-effort: Fehler brechen den
+ * Lead-Flow nicht ab.
+ */
+function meta_send_lead($pixelId, $token, $version, $eventId, $sourceUrl, $email, $telefon, $fbp, $fbc, $customData, $testCode) {
+  if (!$pixelId || !$token) { return; }
+
+  $ud = array();
+  if ($email !== '')   { $ud['em'] = array(hash('sha256', strtolower(trim($email)))); }
+  if ($telefon !== '') {
+    // Auf Ziffern reduzieren und grob nach E.164 (DE = +49) normalisieren.
+    $d = preg_replace('/\D+/', '', $telefon);
+    if (strpos($d, '00') === 0)      { $d = substr($d, 2); }
+    elseif (strpos($d, '0') === 0)   { $d = '49' . substr($d, 1); }
+    if ($d !== '') { $ud['ph'] = array(hash('sha256', $d)); }
+  }
+  if ($fbp !== '') { $ud['fbp'] = $fbp; }
+  if ($fbc !== '') { $ud['fbc'] = $fbc; }
+  if (!empty($_SERVER['REMOTE_ADDR']))     { $ud['client_ip_address'] = $_SERVER['REMOTE_ADDR']; }
+  if (!empty($_SERVER['HTTP_USER_AGENT']))  { $ud['client_user_agent'] = $_SERVER['HTTP_USER_AGENT']; }
+
+  $event = array(
+    'event_name'    => 'Lead',
+    'event_time'    => time(),
+    'action_source' => 'website',
+    'user_data'     => $ud,
+    'custom_data'   => $customData,
+  );
+  if ($eventId !== '')   { $event['event_id'] = $eventId; }
+  if ($sourceUrl !== '') { $event['event_source_url'] = $sourceUrl; }
+
+  $body = array('data' => array($event));
+  if ($testCode) { $body['test_event_code'] = $testCode; }
+
+  $url = 'https://graph.facebook.com/' . $version . '/' . $pixelId . '/events?access_token=' . urlencode($token);
+  pd_post($url, $body);
+}
+
 // ---- 1) Person anlegen ----
 $personData = array(
   'name'  => $vorname . ' ' . $nachname,
@@ -189,5 +248,17 @@ pd_post($BASE . '/notes?api_token=' . urlencode($API_TOKEN), array(
   'content'   => implode("\n", $noteLines),
   'person_id' => $personId,
 ));
+
+// ---- 4) Meta Conversions API: 'Lead' serverseitig melden (Dedup via event_id) ----
+$contentName = $isKontakt
+  ? 'Kontaktanfrage'
+  : (($source === 'factsheet') ? 'Investoren-Factsheet 2026' : 'Sachwertvergleich 2026');
+$customData = array(
+  'currency'     => 'EUR',
+  'value'        => $isKontakt ? 0 : $budget['value'],
+  'content_name' => $contentName,
+  'lead_source'  => $source,
+);
+meta_send_lead($META_PIXEL_ID, $META_CAPI_TOKEN, 'v19.0', $eventId, $eventSourceUrl, $email, $telefon, $fbp, $fbc, $customData, $META_TEST_EVENT_CODE);
 
 respond(true, 'ok');

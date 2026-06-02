@@ -28,10 +28,18 @@
       submitBtn.textContent = '...';
     }
 
+    function cookie(name) {
+      var m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+      return m ? m.pop() : '';
+    }
+    var eventId = 'lead.' + Date.now() + '.' + Math.random().toString(36).slice(2, 10);
+
     var payload = {
       source: 'kontakt',
       vorname: vorname, nachname: nachname, email: email,
-      interesse: interesse, nachricht: nachricht, botcheck: ''
+      interesse: interesse, nachricht: nachricht, botcheck: '',
+      event_id: eventId, event_source_url: location.href,
+      fbp: cookie('_fbp'), fbc: cookie('_fbc')
     };
 
     fetch(ENDPOINT, {
@@ -42,7 +50,7 @@
       .then(function (r) { return r.json(); })
       .then(function (res) {
         if (!res || !res.success) throw new Error('lead');
-        if (window.gcTrack) window.gcTrack('Lead', { source: 'kontakt', interesse: interesse });
+        if (window.gcTrack) window.gcTrack('Lead', { source: 'kontakt', interesse: interesse, value: 0, eventID: eventId });
         showResult(true);
         form.reset();
       })
