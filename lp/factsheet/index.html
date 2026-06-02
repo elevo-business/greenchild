@@ -116,6 +116,31 @@
 .legal-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border:none;background:var(--bg-warm,#f5f5f0);border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text,#1a2332);transition:all .2s}
 .legal-close:hover{background:var(--green-soft,#e6f5ec);color:var(--green,#00A86B)}
 @media(max-width:600px){.legal-content{padding:32px 20px;border-radius:12px}}
+
+/* ===== LP: 2-Schritt Qualifizierungs-Formular ===== */
+.lp-steps-bar{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.lp-steps-bar .step-dot{flex:1;height:5px;border-radius:3px;background:var(--border);transition:background .3s var(--ease)}
+.lp-steps-bar .step-dot.active{background:var(--green)}
+.lp-step[hidden]{display:none}
+.lp-step-q{font-family:var(--font-h);font-size:16.5px;font-weight:700;color:var(--text);margin-bottom:4px}
+.lp-step-hint{font-size:13px;color:var(--text-muted);margin-bottom:16px}
+.qual-options{display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
+.qual-opt{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s var(--ease);background:var(--bg)}
+.qual-opt:hover{border-color:var(--green);background:#fff}
+.qual-opt input{position:absolute;opacity:0;width:0;height:0}
+.qual-opt .qual-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;position:relative;transition:all .2s var(--ease)}
+.qual-opt .qual-txt{font-size:14.5px;font-weight:600;color:var(--text)}
+.qual-opt .qual-sub{display:block;font-size:12px;font-weight:400;color:var(--text-muted);margin-top:1px}
+.qual-opt:has(input:checked){border-color:var(--green);background:var(--green-soft);box-shadow:0 0 0 3px var(--green-soft)}
+.qual-opt:has(input:checked) .qual-radio{border-color:var(--green);background:var(--green)}
+.qual-opt:has(input:checked) .qual-radio:after{content:"";position:absolute;inset:4px;border-radius:50%;background:#fff}
+.lp-form select.form-input{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2300A86B' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:42px;cursor:pointer}
+.step-actions{display:flex;gap:10px;margin-top:18px}
+.btn-back{background:transparent;border:1.5px solid var(--border);color:var(--text-muted);border-radius:var(--radius-sm);padding:0 18px;font-weight:600;font-size:14px;cursor:pointer;transition:all .2s}
+.btn-back:hover{border-color:var(--text-muted);color:var(--text)}
+.step-actions .btn{flex:1}
+.lp-form .form-hint{font-size:12px;color:var(--text-muted);margin-top:6px;display:flex;align-items:center;gap:6px}
+.lp-form .form-hint i{width:13px;height:13px;color:var(--green)}
 </style>
 </head>
 <body>
@@ -150,14 +175,54 @@
                     <p class="lp-form-sub">Tragen Sie Ihre Daten ein – der Download startet sofort.</p>
                     <form id="factsheetForm" class="lp-form" novalidate>
                         <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none;">
-                        <div class="name-fields">
-                            <div class="form-group"><label class="form-label">Vorname *</label><input type="text" name="vorname" class="form-input" autocomplete="given-name" required></div>
-                            <div class="form-group"><label class="form-label">Nachname *</label><input type="text" name="nachname" class="form-input" autocomplete="family-name" required></div>
+
+                        <div class="lp-steps-bar" aria-hidden="true">
+                            <span class="step-dot active" data-dot="1"></span>
+                            <span class="step-dot" data-dot="2"></span>
                         </div>
-                        <div class="form-group"><label class="form-label">E-Mail *</label><input type="email" name="email" class="form-input" autocomplete="email" required></div>
-                        <div class="form-group"><label class="form-label">Telefon *</label><input type="tel" name="telefon" class="form-input" autocomplete="tel" required></div>
-                        <label class="lp-consent"><input type="checkbox" name="consent" required><span>Ich bin einverstanden, dass Greenchild mich kontaktiert, und habe die <a href="#" onclick="event.preventDefault();document.getElementById('datenschutzOverlay').classList.add('active')">Datenschutzerklärung</a> gelesen.</span></label>
-                        <button type="submit" class="btn btn-primary-glow btn-lg" style="width:100%;justify-content:center;">Investoren-Factsheet kostenlos sichern</button>
+
+                        <!-- Schritt 1: Qualifizierung (nur in A/B-Variante 'qualify' sichtbar) -->
+                        <div class="lp-step" data-step="1">
+                            <p class="lp-step-q">Damit wir Ihr Factsheet richtig einordnen:</p>
+                            <p class="lp-step-hint">In welchem Rahmen denken Sie? Unverbindlich – hilft uns nur, Sie passend zu beraten.</p>
+                            <div class="qual-options">
+                                <label class="qual-opt"><input type="radio" name="budget" value="info"><span class="qual-radio"></span><span class="qual-txt">Erst einmal informieren<span class="qual-sub">Noch unsicher</span></span></label>
+                                <label class="qual-opt"><input type="radio" name="budget" value="bis-2500"><span class="qual-radio"></span><span class="qual-txt">bis 2.500 €<span class="qual-sub">ca. 1–10 Bäume</span></span></label>
+                                <label class="qual-opt"><input type="radio" name="budget" value="2500-10000"><span class="qual-radio"></span><span class="qual-txt">2.500 – 10.000 €<span class="qual-sub">ca. 10–40 Bäume</span></span></label>
+                                <label class="qual-opt"><input type="radio" name="budget" value="10000-25000"><span class="qual-radio"></span><span class="qual-txt">10.000 – 25.000 €<span class="qual-sub">ca. 40–100 Bäume</span></span></label>
+                                <label class="qual-opt"><input type="radio" name="budget" value="25000-plus"><span class="qual-radio"></span><span class="qual-txt">über 25.000 €<span class="qual-sub">100+ Bäume</span></span></label>
+                            </div>
+                            <div class="step-actions">
+                                <button type="button" class="btn btn-primary-glow btn-lg" id="toStep2" style="justify-content:center;">Weiter</button>
+                            </div>
+                        </div>
+
+                        <!-- Schritt 2: Kontakt -->
+                        <div class="lp-step" data-step="2" hidden>
+                            <div class="name-fields">
+                                <div class="form-group"><label class="form-label">Vorname *</label><input type="text" name="vorname" class="form-input" autocomplete="given-name" required></div>
+                                <div class="form-group"><label class="form-label">Nachname *</label><input type="text" name="nachname" class="form-input" autocomplete="family-name" required></div>
+                            </div>
+                            <div class="form-group"><label class="form-label">E-Mail *</label><input type="email" name="email" class="form-input" autocomplete="email" inputmode="email" required></div>
+                            <div class="form-group"><label class="form-label">Telefon *</label><input type="tel" name="telefon" class="form-input" autocomplete="tel" inputmode="tel" required>
+                                <span class="form-hint"><i data-lucide="phone"></i> Für die persönliche Terminabstimmung – wir rufen nicht ungefragt an.</span>
+                            </div>
+                            <div class="form-group"><label class="form-label">Beste Erreichbarkeit</label>
+                                <select name="erreichbarkeit" class="form-input">
+                                    <option value="" selected>Bitte wählen … (optional)</option>
+                                    <option value="Vormittag (8–12 Uhr)">Vormittag (8–12 Uhr)</option>
+                                    <option value="Nachmittag (12–17 Uhr)">Nachmittag (12–17 Uhr)</option>
+                                    <option value="Abend (17–20 Uhr)">Abend (17–20 Uhr)</option>
+                                    <option value="Egal / jederzeit">Egal / jederzeit</option>
+                                </select>
+                            </div>
+                            <label class="lp-consent"><input type="checkbox" name="consent" required><span>Ich bin einverstanden, dass Greenchild mich kontaktiert, und habe die <a href="#" onclick="event.preventDefault();document.getElementById('datenschutzOverlay').classList.add('active')">Datenschutzerklärung</a> gelesen.</span></label>
+                            <div class="step-actions">
+                                <button type="button" class="btn-back" id="backStep1">Zurück</button>
+                                <button type="submit" class="btn btn-primary-glow btn-lg" style="justify-content:center;">Gratis-Factsheet jetzt sichern</button>
+                            </div>
+                        </div>
+
                         <div class="trust-signals">
                             <div class="trust-signal"><i data-lucide="lock"></i> SSL-verschlüsselt</div>
                             <div class="trust-signal"><i data-lucide="shield"></i> Kein Spam</div>
@@ -311,6 +376,7 @@
   nums.forEach(function(n){ io.observe(n); });
 })();
 </script>
+<script src="/js/lp-tracking.js"></script>
 <script src="/js/lp-factsheet-form.js"></script>
 <script>if(window.lucide)lucide.createIcons();</script>
 </body>
