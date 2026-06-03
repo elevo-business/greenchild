@@ -28,8 +28,8 @@ function respond($ok, $msg = '') {
   exit;
 }
 
-// Nur POST zulassen.
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+// Nur POST zulassen (Ausnahme: Selbsttest per GET).
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' && !isset($_GET['selftest'])) {
   respond(false, 'Method not allowed');
 }
 
@@ -66,6 +66,20 @@ if (!$META_CAPI_TOKEN) { $META_CAPI_TOKEN = read_secret_file('meta-capi-token.tx
 if (!$META_PIXEL_ID)  { $META_PIXEL_ID  = '1314610516838484'; }
 $META_TEST_EVENT_CODE = getenv('META_TEST_EVENT_CODE'); // optional, nur zum Testen im Events Manager
 if (!$META_TEST_EVENT_CODE) { $META_TEST_EVENT_CODE = read_secret_file('meta-test-code.txt'); }
+
+// ---- Selbsttest (GET ?selftest=1): zeigt Config-Status, KEINE Secrets ----
+if (isset($_GET['selftest'])) {
+  echo json_encode(array(
+    'ok'                  => true,
+    'pixel_id_set'        => $META_PIXEL_ID !== '',
+    'capi_token_loaded'   => $META_CAPI_TOKEN !== '',
+    'pipedrive_token'     => ($API_TOKEN === '9fae1a7473002abdf89ade65319dc14a1c828a28') ? 'fallback' : 'datei_oder_env',
+    'test_code_active'    => $META_TEST_EVENT_CODE !== '',
+    'curl'                => function_exists('curl_init'),
+    'allow_url_fopen'     => (bool) ini_get('allow_url_fopen'),
+  ));
+  exit;
+}
 
 // ---- Eingabe lesen (JSON-Body) ----
 $raw = file_get_contents('php://input');
@@ -271,6 +285,18 @@ $customData = array(
   'content_name' => $contentName,
   'lead_source'  => $source,
 );
+// Klick-ID (fbc) aus dem fbclid der Anzeigen-URL bauen, falls der Pixel
+// geblockt war und kein _fbc-Cookie gesetzt wurde → sonst keine Ad-Zuordnung.
+if ($fbc === '' && $eventSourceUrl !== '') {
+  $q = parse_url($eventSourceUrl, PHP_URL_QUERY);
+  if ($q) {
+    parse_str($q, $qs);
+    if (!empty($qs['fbclid'])) {
+      $fbc = 'fb.1.' . round(microtime(true) * 1000) . '.' . $qs['fbclid'];
+    }
+  }
+}
+
 meta_send_lead($META_PIXEL_ID, $META_CAPI_TOKEN, 'v19.0', $eventId, $eventSourceUrl, $email, $telefon, $vorname, $nachname, $fbp, $fbc, $customData, $META_TEST_EVENT_CODE);
 
 respond(true, 'ok');
