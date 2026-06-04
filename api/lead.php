@@ -69,15 +69,28 @@ if (!$META_TEST_EVENT_CODE) { $META_TEST_EVENT_CODE = read_secret_file('meta-tes
 
 // ---- Selbsttest (GET ?selftest=1): zeigt Config-Status, KEINE Secrets ----
 if (isset($_GET['selftest'])) {
-  // Token live bei Meta prüfen (ob er für dieses Dataset gültig ist) – ohne Event zu senden.
+  // CAPI live testen: ein harmloses 'SelfTest'-Event SENDEN (das tun wir ja auch real).
+  // events_received => Token darf senden. Fehler => Token/Permission-Problem.
   $capiValid = null; $capiError = '';
   if ($META_CAPI_TOKEN !== '' && $META_PIXEL_ID !== '' && function_exists('curl_init')) {
-    $u = 'https://graph.facebook.com/v19.0/' . $META_PIXEL_ID . '?fields=id,name&access_token=' . urlencode($META_CAPI_TOKEN);
+    $u = 'https://graph.facebook.com/v19.0/' . $META_PIXEL_ID . '/events?access_token=' . urlencode($META_CAPI_TOKEN);
+    $payload = array('data' => array(array(
+      'event_name'    => 'SelfTest',
+      'event_time'    => time(),
+      'action_source' => 'website',
+      'event_id'      => 'selftest_' . time(),
+    )));
     $ch = curl_init($u);
-    curl_setopt_array($ch, array(CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 10));
+    curl_setopt_array($ch, array(
+      CURLOPT_POST => true,
+      CURLOPT_POSTFIELDS => json_encode($payload),
+      CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_TIMEOUT => 10,
+    ));
     $r = curl_exec($ch); curl_close($ch);
     $j = json_decode($r, true);
-    if (is_array($j) && !empty($j['id'])) { $capiValid = true; }
+    if (is_array($j) && isset($j['events_received'])) { $capiValid = true; }
     else { $capiValid = false; $capiError = isset($j['error']['message']) ? $j['error']['message'] : 'unbekannte Antwort'; }
   }
   echo json_encode(array(
