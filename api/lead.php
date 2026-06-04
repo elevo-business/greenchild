@@ -69,10 +69,23 @@ if (!$META_TEST_EVENT_CODE) { $META_TEST_EVENT_CODE = read_secret_file('meta-tes
 
 // ---- Selbsttest (GET ?selftest=1): zeigt Config-Status, KEINE Secrets ----
 if (isset($_GET['selftest'])) {
+  // Token live bei Meta prüfen (ob er für dieses Dataset gültig ist) – ohne Event zu senden.
+  $capiValid = null; $capiError = '';
+  if ($META_CAPI_TOKEN !== '' && $META_PIXEL_ID !== '' && function_exists('curl_init')) {
+    $u = 'https://graph.facebook.com/v19.0/' . $META_PIXEL_ID . '?fields=id,name&access_token=' . urlencode($META_CAPI_TOKEN);
+    $ch = curl_init($u);
+    curl_setopt_array($ch, array(CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 10));
+    $r = curl_exec($ch); curl_close($ch);
+    $j = json_decode($r, true);
+    if (is_array($j) && !empty($j['id'])) { $capiValid = true; }
+    else { $capiValid = false; $capiError = isset($j['error']['message']) ? $j['error']['message'] : 'unbekannte Antwort'; }
+  }
   echo json_encode(array(
     'ok'                  => true,
     'pixel_id_set'        => $META_PIXEL_ID !== '',
     'capi_token_loaded'   => $META_CAPI_TOKEN !== '',
+    'capi_token_valid'    => $capiValid,
+    'capi_error'          => $capiError,
     'pipedrive_token'     => ($API_TOKEN === '9fae1a7473002abdf89ade65319dc14a1c828a28') ? 'fallback' : 'datei_oder_env',
     'test_code_active'    => $META_TEST_EVENT_CODE !== '',
     'curl'                => function_exists('curl_init'),
