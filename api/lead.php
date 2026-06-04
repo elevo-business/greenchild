@@ -79,6 +79,11 @@ if (isset($_GET['selftest'])) {
       'event_time'    => time(),
       'action_source' => 'website',
       'event_id'      => 'selftest_' . time(),
+      'user_data'     => array(  // CAPI verlangt user_data bei JEDEM Event
+        'client_ip_address' => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0',
+        'client_user_agent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'selftest',
+        'em'                => array(hash('sha256', 'selftest@greenchild.eu')),
+      ),
     )));
     $ch = curl_init($u);
     curl_setopt_array($ch, array(
