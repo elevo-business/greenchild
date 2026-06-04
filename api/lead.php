@@ -28,8 +28,9 @@ function respond($ok, $msg = '') {
   exit;
 }
 
-// Nur POST zulassen (Ausnahme: Selbsttest per GET).
-if ($_SERVER['REQUEST_METHOD'] !== 'POST' && !isset($_GET['selftest'])) {
+// Nur POST zulassen (Ausnahme: Selbsttest per GET mit Schlüssel).
+$SELFTEST_OK = (isset($_GET['selftest']) && $_GET['selftest'] === 'gc-diag-2026');
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' && !$SELFTEST_OK) {
   respond(false, 'Method not allowed');
 }
 
@@ -67,8 +68,8 @@ if (!$META_PIXEL_ID)  { $META_PIXEL_ID  = '1314610516838484'; }
 $META_TEST_EVENT_CODE = getenv('META_TEST_EVENT_CODE'); // optional, nur zum Testen im Events Manager
 if (!$META_TEST_EVENT_CODE) { $META_TEST_EVENT_CODE = read_secret_file('meta-test-code.txt'); }
 
-// ---- Selbsttest (GET ?selftest=1): zeigt Config-Status, KEINE Secrets ----
-if (isset($_GET['selftest'])) {
+// ---- Selbsttest (GET ?selftest=gc-diag-2026): Config-Status, KEINE Secrets ----
+if ($SELFTEST_OK) {
   // CAPI live testen: ein harmloses 'SelfTest'-Event SENDEN (das tun wir ja auch real).
   // events_received => Token darf senden. Fehler => Token/Permission-Problem.
   $capiValid = null; $capiError = '';
