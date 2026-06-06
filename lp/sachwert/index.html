@@ -183,31 +183,30 @@
 .gc-stat-label{font-size:11.5px;font-weight:600;color:var(--text-muted);margin-top:7px;text-transform:uppercase;letter-spacing:.04em;line-height:1.3}
 @media(max-width:680px){.gc-stats{grid-template-columns:repeat(2,1fr);gap:10px}.gc-stat{padding:20px 12px}}
 
-/* ===== Holz-Marktwert-Rechner ===== */
-.gc-calc{max-width:760px;margin:0 auto;background:var(--bg-warm,#f7faf8);border:1px solid var(--border);border-radius:var(--radius-xl);padding:32px;box-shadow:var(--shadow-sm)}
-.gc-calc-control{margin-bottom:24px}
-.gc-calc-control label{display:block;font-size:15px;font-weight:600;color:var(--text);margin-bottom:14px}
-.gc-calc-control label strong{color:var(--green);font-size:18px}
-.gc-calc-range{width:100%;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:var(--bg-alt,#e6ece9);outline:none;cursor:pointer}
-.gc-calc-range::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,168,107,.4)}
-.gc-calc-range::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid #fff}
-.gc-calc-rangelabels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-top:6px}
-.gc-calc-results{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
-.gc-calc-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 16px;text-align:center}
-.gc-calc-card--accent{border-color:var(--green);background:var(--green-soft)}
-.gc-calc-k{font-size:11.5px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.03em;line-height:1.3;min-height:30px}
-.gc-calc-v{font-family:var(--font-h);font-size:clamp(18px,3.6vw,24px);font-weight:800;color:var(--green-dark);margin:8px 0 6px;line-height:1.1}
-.gc-calc-note{font-size:11px;color:var(--text-dim);line-height:1.4}
-.gc-calc-disclaimer{display:flex;gap:10px;align-items:flex-start;font-size:11.5px;color:var(--text-muted);line-height:1.55;background:var(--bg-alt,#f3f5f4);border-radius:10px;padding:14px 16px}
-.gc-calc-disclaimer i{width:16px;height:16px;color:var(--green);flex-shrink:0;margin-top:2px}
-.gc-calc-cta{text-align:center;margin-top:22px}
+/* ===== Holz-Marktwert-Rechner (Logik der Homepage) ===== */
+.config-box{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);padding:48px;max-width:900px;margin:0 auto;box-shadow:var(--shadow-sm)}
+.config-count{font-family:var(--font-h);font-size:72px;font-weight:800;color:var(--green);line-height:1;text-align:center}
+.config-count-label{font-size:16px;font-weight:400;color:var(--text-muted);text-align:center;margin-bottom:32px}
+.config-range{width:100%;-webkit-appearance:none;appearance:none;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--green-pale),var(--bg-alt));outline:none;cursor:pointer}
+.config-range::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--green);cursor:pointer;box-shadow:0 4px 16px var(--green-glow);border:3px solid var(--white)}
+.config-range::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid var(--white)}
+.config-range-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);font-weight:500;margin-bottom:32px}
+.config-results{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.config-result-card{background:var(--bg);border-radius:var(--radius);padding:20px 14px;text-align:center}
+.config-result-value{font-family:var(--font-h);font-size:20px;font-weight:700;color:var(--text);line-height:1;margin-bottom:4px}
+.config-result-label{font-size:10px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.config-result-icon{margin-bottom:8px}.config-result-icon i{width:20px;height:20px;color:var(--green)}
+.config-market-box{background:linear-gradient(135deg,var(--green-deep),#0D4A35);border-radius:var(--radius-lg);padding:28px;text-align:center;margin-bottom:32px}
+.config-market-value{font-family:var(--font-h);font-size:32px;font-weight:800;color:var(--green-light);line-height:1}
+.config-market-label{font-size:13px;color:rgba(255,255,255,.5);margin-top:0;margin-bottom:6px}
+.config-market-source{font-size:10px;color:rgba(255,255,255,.4);margin-top:12px;line-height:1.5}
 @media(max-width:680px){
-  .gc-calc{padding:22px 16px}
-  .gc-calc-results{grid-template-columns:1fr;gap:10px}
-  .gc-calc-card{display:flex;align-items:center;justify-content:space-between;text-align:left;padding:14px 16px}
-  .gc-calc-card .gc-calc-k{min-height:0;flex:1}
-  .gc-calc-card .gc-calc-v{margin:0 0 0 12px;text-align:right;white-space:nowrap}
-  .gc-calc-card .gc-calc-note{display:none}
+  .config-box{padding:28px 18px}
+  .config-results{grid-template-columns:repeat(2,1fr)}
+  .config-count{font-size:48px}
+  .config-market-value{font-size:24px}
+  .config-result-value{font-size:17px}
+  .config-range-labels{font-size:10px}
 }
 </style>
 </head>
@@ -369,36 +368,27 @@
         <div class="section-header center reveal">
             <div class="label center">Sachwert zum Anfassen</div>
             <h2>Holz-Marktwert-Rechner</h2>
-            <p>Schätzen Sie den <strong>Materialwert des Holzes</strong> Ihrer Bäume – auf Basis aktueller Marktpreise. Eine unverbindliche Beispielrechnung, kein Finanzprodukt.</p>
+            <p>Schätzen Sie den <strong>Materialwert des Holzes</strong> Ihrer Bäume – auf Basis aktueller Marktpreise. Unverbindliche Beispielrechnung, kein Finanzprodukt.</p>
         </div>
-        <div class="gc-calc reveal">
-            <div class="gc-calc-control">
-                <label for="calcTrees">Anzahl Bäume: <strong id="calcTreesVal">10</strong></label>
-                <input type="range" id="calcTrees" min="1" max="200" value="10" step="1" class="gc-calc-range" aria-label="Anzahl Bäume">
-                <div class="gc-calc-rangelabels"><span>1 Baum</span><span>200 Bäume</span></div>
+        <div class="config-box reveal">
+            <div class="config-count" id="configCount">100</div>
+            <div class="config-count-label">Paulownia-Bäume</div>
+            <div style="max-width:560px;margin:0 auto 8px;">
+                <input type="range" min="100" max="800" value="100" step="25" class="config-range" id="configSlider" aria-label="Anzahl Bäume">
+                <div class="config-range-labels"><span>100 Bäume</span><span>800 Bäume</span></div>
             </div>
-            <div class="gc-calc-results">
-                <div class="gc-calc-card">
-                    <div class="gc-calc-k">Kaufpreis</div>
-                    <div class="gc-calc-v" id="calcPrice">2.490 €</div>
-                    <div class="gc-calc-note">249 € pro Baum · Vollservice inklusive</div>
-                </div>
-                <div class="gc-calc-card">
-                    <div class="gc-calc-k">Geschätztes Holzvolumen bei Ernte</div>
-                    <div class="gc-calc-v" id="calcVolume">13 – 16 m³</div>
-                    <div class="gc-calc-note">ca. 1,3–1,6 m³ pro Baum nach 8–12 Jahren</div>
-                </div>
-                <div class="gc-calc-card gc-calc-card--accent">
-                    <div class="gc-calc-k">Geschätzter Holz-Marktwert</div>
-                    <div class="gc-calc-v" id="calcValue">5.200 – 6.400 €</div>
-                    <div class="gc-calc-note">akt. Marktpreis Paulownia-Schnittholz ca. 400 €/m³</div>
-                </div>
+            <div class="config-results">
+                <div class="config-result-card"><div class="config-result-icon"><i data-lucide="wallet"></i></div><div class="config-result-value" id="configPrice">24.900 €</div><div class="config-result-label">Kaufpreis</div></div>
+                <div class="config-result-card"><div class="config-result-icon"><i data-lucide="map-pin"></i></div><div class="config-result-value"><span id="configArea">0,16</span> ha</div><div class="config-result-label">Fläche</div></div>
+                <div class="config-result-card"><div class="config-result-icon"><i data-lucide="wind"></i></div><div class="config-result-value"><span id="configCo2">ca. 30.100</span> kg</div><div class="config-result-label">CO₂ / Jahr</div></div>
+                <div class="config-result-card"><div class="config-result-icon"><i data-lucide="axe"></i></div><div class="config-result-value"><span id="configVolume">ca. 137</span> m³</div><div class="config-result-label">Holz bei Reife</div></div>
             </div>
-            <p class="gc-calc-disclaimer">
-                <i data-lucide="info"></i>
-                <span>Unverbindliche Beispielrechnung auf Basis aktueller Marktpreise und durchschnittlicher Holzvolumina. <strong>Kein Finanzprodukt, keine Kapitalanlage im Sinne des VermAnlG, keine Anlageberatung und keine Zusicherung künftiger Werte oder Erträge.</strong> Holzmengen und Marktpreise schwanken – der tatsächliche Wert kann höher oder niedriger ausfallen. Greenchild verkauft physisches Baumeigentum, keine Rendite.</span>
-            </p>
-            <div class="gc-calc-cta">
+            <div class="config-market-box">
+                <div class="config-market-label">Geschätzter Marktwert des Holzes bei Reife</div>
+                <div class="config-market-value"><span id="configMarketLow">€43.840</span> – <span id="configMarketHigh">€60.280</span></div>
+                <div class="config-market-source">Paulownia-Schnittholz (ca. 400 €/m³). Unverbindliche Beispielrechnung – kein Finanzprodukt, keine Kapitalanlage i.S.d. VermAnlG, keine Anlageberatung, keine Zusicherung künftiger Werte. Marktpreise schwanken, keine Renditeversprechen.</div>
+            </div>
+            <div style="text-align:center;">
                 <a href="#anfordern" class="btn btn-primary-glow btn-lg">Kostenlosen Sachwertvergleich sichern</a>
             </div>
         </div>
@@ -517,22 +507,22 @@
 })();
 </script>
 <script>
-// Holz-Marktwert-Rechner (Beispielrechnung, kein Finanzprodukt)
+// Holz-Marktwert-Rechner — identische Logik wie der Homepage-Rechner (configSlider)
 (function(){
-  var slider=document.getElementById('calcTrees');
-  if(!slider) return;
-  var PRICE=249, VOL_LO=1.3, VOL_HI=1.6, PRICE_M3=400;
-  function eur(n){ return Math.round(n).toLocaleString('de-DE')+' €'; }
-  function m3(n){ return n.toLocaleString('de-DE',{maximumFractionDigits:1}); }
+  var s=document.getElementById('configSlider'); if(!s) return;
+  var PRICE=249, HA=625, VOL=1.37, CO2=301, MPRICE=400;
+  var el=function(id){return document.getElementById(id)};
   function update(){
-    var n=parseInt(slider.value,10)||1;
-    document.getElementById('calcTreesVal').textContent=n;
-    document.getElementById('calcPrice').textContent=eur(n*PRICE);
-    document.getElementById('calcVolume').textContent=m3(n*VOL_LO)+' – '+m3(n*VOL_HI)+' m³';
-    document.getElementById('calcValue').textContent=eur(n*VOL_LO*PRICE_M3)+' – '+eur(n*VOL_HI*PRICE_M3);
+    var t=parseInt(s.value,10)||0, area=t/HA, vol=t*VOL, co2=t*CO2, price=t*PRICE;
+    if(el('configCount'))el('configCount').textContent=t;
+    if(el('configPrice'))el('configPrice').textContent=price.toLocaleString('de-DE')+' €';
+    if(el('configArea'))el('configArea').textContent=area.toFixed(2).replace('.',',');
+    if(el('configCo2'))el('configCo2').textContent='ca. '+co2.toLocaleString('de-DE');
+    if(el('configVolume'))el('configVolume').textContent='ca. '+Math.round(vol).toLocaleString('de-DE');
+    if(el('configMarketLow'))el('configMarketLow').textContent='€'+Math.round(vol*MPRICE*0.8).toLocaleString('de-DE');
+    if(el('configMarketHigh'))el('configMarketHigh').textContent='€'+Math.round(vol*MPRICE*1.1).toLocaleString('de-DE');
   }
-  slider.addEventListener('input',update);
-  update();
+  s.addEventListener('input',update); update();
 })();
 </script>
 <script src="/js/lp-tracking.js"></script>
