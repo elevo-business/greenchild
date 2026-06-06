@@ -175,6 +175,40 @@
   .lp-form-card{padding:24px 18px}
   .container{padding-left:18px;padding-right:18px}
 }
+
+/* ===== Kennzahlen (robust, kein Clipping) ===== */
+.gc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.gc-stat{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px 14px;text-align:center}
+.gc-stat-num{font-family:var(--font-h);font-weight:800;color:var(--green);line-height:1;font-size:clamp(22px,4.4vw,34px)}
+.gc-stat-label{font-size:11.5px;font-weight:600;color:var(--text-muted);margin-top:7px;text-transform:uppercase;letter-spacing:.04em;line-height:1.3}
+@media(max-width:680px){.gc-stats{grid-template-columns:repeat(2,1fr);gap:10px}.gc-stat{padding:20px 12px}}
+
+/* ===== Holz-Marktwert-Rechner ===== */
+.gc-calc{max-width:760px;margin:0 auto;background:var(--bg-warm,#f7faf8);border:1px solid var(--border);border-radius:var(--radius-xl);padding:32px;box-shadow:var(--shadow-sm)}
+.gc-calc-control{margin-bottom:24px}
+.gc-calc-control label{display:block;font-size:15px;font-weight:600;color:var(--text);margin-bottom:14px}
+.gc-calc-control label strong{color:var(--green);font-size:18px}
+.gc-calc-range{width:100%;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:var(--bg-alt,#e6ece9);outline:none;cursor:pointer}
+.gc-calc-range::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,168,107,.4)}
+.gc-calc-range::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid #fff}
+.gc-calc-rangelabels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-top:6px}
+.gc-calc-results{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.gc-calc-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 16px;text-align:center}
+.gc-calc-card--accent{border-color:var(--green);background:var(--green-soft)}
+.gc-calc-k{font-size:11.5px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.03em;line-height:1.3;min-height:30px}
+.gc-calc-v{font-family:var(--font-h);font-size:clamp(18px,3.6vw,24px);font-weight:800;color:var(--green-dark);margin:8px 0 6px;line-height:1.1}
+.gc-calc-note{font-size:11px;color:var(--text-dim);line-height:1.4}
+.gc-calc-disclaimer{display:flex;gap:10px;align-items:flex-start;font-size:11.5px;color:var(--text-muted);line-height:1.55;background:var(--bg-alt,#f3f5f4);border-radius:10px;padding:14px 16px}
+.gc-calc-disclaimer i{width:16px;height:16px;color:var(--green);flex-shrink:0;margin-top:2px}
+.gc-calc-cta{text-align:center;margin-top:22px}
+@media(max-width:680px){
+  .gc-calc{padding:22px 16px}
+  .gc-calc-results{grid-template-columns:1fr;gap:10px}
+  .gc-calc-card{display:flex;align-items:center;justify-content:space-between;text-align:left;padding:14px 16px}
+  .gc-calc-card .gc-calc-k{min-height:0;flex:1}
+  .gc-calc-card .gc-calc-v{margin:0 0 0 12px;text-align:right;white-space:nowrap}
+  .gc-calc-card .gc-calc-note{display:none}
+}
 </style>
 </head>
 <body>
@@ -320,11 +354,53 @@
             <div class="card reveal reveal-delay-1"><div class="icon-box green"><i data-lucide="trending-up"></i></div><h4>Wächst gegen die Inflation</h4><p>Einer der am schnellsten wachsenden Bäume Europas – bis zu 3&nbsp;Meter pro Jahr. Ihr Sachwert steigt, während das Sparkonto schrumpft.</p></div>
             <div class="card reveal reveal-delay-2"><div class="icon-box green"><i data-lucide="shield-check"></i></div><h4>Auf 3 Länder verteilt</h4><p>255&nbsp;Hektar bereits gepflanzt, verteilt auf drei Länder – damit selbst Naturkatastrophen Ihr Eigentum nicht zerstören können.</p></div>
         </div>
-        <div class="stat-grid lp-stats4 reveal" style="margin-top:40px;">
-            <div class="stat"><div class="stat-num" data-count="255">0</div><div class="stat-label">Hektar in 3 Ländern</div></div>
-            <div class="stat"><div class="stat-num" data-count="160000">0</div><div class="stat-label">Bäume gepflanzt</div></div>
-            <div class="stat"><div class="stat-num" data-count="3" data-suffix=" m">0</div><div class="stat-label">Wachstum pro Jahr</div></div>
-            <div class="stat"><div class="stat-num" data-count="15" data-suffix="+">0</div><div class="stat-label">Jahre Erfahrung</div></div>
+        <div class="gc-stats reveal" style="margin-top:40px;">
+            <div class="gc-stat"><div class="gc-stat-num" data-count="255">0</div><div class="gc-stat-label">Hektar in 3 Ländern</div></div>
+            <div class="gc-stat"><div class="gc-stat-num" data-count="160000">0</div><div class="gc-stat-label">Bäume gepflanzt</div></div>
+            <div class="gc-stat"><div class="gc-stat-num" data-count="3" data-suffix=" m">0</div><div class="gc-stat-label">Wachstum pro Jahr</div></div>
+            <div class="gc-stat"><div class="gc-stat-num" data-count="15" data-suffix="+">0</div><div class="gc-stat-label">Jahre Erfahrung</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- HOLZ-MARKTWERT-RECHNER -->
+<section class="bg-white">
+    <div class="container">
+        <div class="section-header center reveal">
+            <div class="label center">Sachwert zum Anfassen</div>
+            <h2>Holz-Marktwert-Rechner</h2>
+            <p>Schätzen Sie den <strong>Materialwert des Holzes</strong> Ihrer Bäume – auf Basis aktueller Marktpreise. Eine unverbindliche Beispielrechnung, kein Finanzprodukt.</p>
+        </div>
+        <div class="gc-calc reveal">
+            <div class="gc-calc-control">
+                <label for="calcTrees">Anzahl Bäume: <strong id="calcTreesVal">10</strong></label>
+                <input type="range" id="calcTrees" min="1" max="200" value="10" step="1" class="gc-calc-range" aria-label="Anzahl Bäume">
+                <div class="gc-calc-rangelabels"><span>1 Baum</span><span>200 Bäume</span></div>
+            </div>
+            <div class="gc-calc-results">
+                <div class="gc-calc-card">
+                    <div class="gc-calc-k">Kaufpreis</div>
+                    <div class="gc-calc-v" id="calcPrice">2.490 €</div>
+                    <div class="gc-calc-note">249 € pro Baum · Vollservice inklusive</div>
+                </div>
+                <div class="gc-calc-card">
+                    <div class="gc-calc-k">Geschätztes Holzvolumen bei Ernte</div>
+                    <div class="gc-calc-v" id="calcVolume">13 – 16 m³</div>
+                    <div class="gc-calc-note">ca. 1,3–1,6 m³ pro Baum nach 8–12 Jahren</div>
+                </div>
+                <div class="gc-calc-card gc-calc-card--accent">
+                    <div class="gc-calc-k">Geschätzter Holz-Marktwert</div>
+                    <div class="gc-calc-v" id="calcValue">5.200 – 6.400 €</div>
+                    <div class="gc-calc-note">akt. Marktpreis Paulownia-Schnittholz ca. 400 €/m³</div>
+                </div>
+            </div>
+            <p class="gc-calc-disclaimer">
+                <i data-lucide="info"></i>
+                <span>Unverbindliche Beispielrechnung auf Basis aktueller Marktpreise und durchschnittlicher Holzvolumina. <strong>Kein Finanzprodukt, keine Kapitalanlage im Sinne des VermAnlG, keine Anlageberatung und keine Zusicherung künftiger Werte oder Erträge.</strong> Holzmengen und Marktpreise schwanken – der tatsächliche Wert kann höher oder niedriger ausfallen. Greenchild verkauft physisches Baumeigentum, keine Rendite.</span>
+            </p>
+            <div class="gc-calc-cta">
+                <a href="#anfordern" class="btn btn-primary-glow btn-lg">Kostenlosen Sachwertvergleich sichern</a>
+            </div>
         </div>
     </div>
 </section>
@@ -438,6 +514,25 @@
     });
   },{threshold:.4});
   nums.forEach(function(n){ io.observe(n); });
+})();
+</script>
+<script>
+// Holz-Marktwert-Rechner (Beispielrechnung, kein Finanzprodukt)
+(function(){
+  var slider=document.getElementById('calcTrees');
+  if(!slider) return;
+  var PRICE=249, VOL_LO=1.3, VOL_HI=1.6, PRICE_M3=400;
+  function eur(n){ return Math.round(n).toLocaleString('de-DE')+' €'; }
+  function m3(n){ return n.toLocaleString('de-DE',{maximumFractionDigits:1}); }
+  function update(){
+    var n=parseInt(slider.value,10)||1;
+    document.getElementById('calcTreesVal').textContent=n;
+    document.getElementById('calcPrice').textContent=eur(n*PRICE);
+    document.getElementById('calcVolume').textContent=m3(n*VOL_LO)+' – '+m3(n*VOL_HI)+' m³';
+    document.getElementById('calcValue').textContent=eur(n*VOL_LO*PRICE_M3)+' – '+eur(n*VOL_HI*PRICE_M3);
+  }
+  slider.addEventListener('input',update);
+  update();
 })();
 </script>
 <script src="/js/lp-tracking.js"></script>
