@@ -161,6 +161,20 @@
 .btn-back{background:transparent;border:1.5px solid var(--border);color:var(--text-muted);border-radius:var(--radius-sm);padding:0 18px;font-weight:600;font-size:14px;cursor:pointer;transition:all .2s}
 .btn-back:hover{border-color:var(--text-muted);color:var(--text)}
 .step-actions .btn{flex:1}
+
+/* ===== Mobile-Optimierung ===== */
+.stat-grid.lp-stats4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:680px){
+  .stat-grid.lp-stats4{grid-template-columns:repeat(2,1fr)}
+  .lp-hero{padding:104px 0 56px}
+  .lp-hero h1{font-size:clamp(26px,7vw,40px)}
+  .lp-hero .lp-sub{font-size:15.5px}
+  .lp-video-frame{max-width:248px}
+  .lp-benefits{grid-template-columns:1fr}
+  .lp-magnet{gap:28px}
+  .lp-form-card{padding:24px 18px}
+  .container{padding-left:18px;padding-right:18px}
+}
 </style>
 </head>
 <body>
@@ -306,7 +320,7 @@
             <div class="card reveal reveal-delay-1"><div class="icon-box green"><i data-lucide="trending-up"></i></div><h4>Wächst gegen die Inflation</h4><p>Einer der am schnellsten wachsenden Bäume Europas – bis zu 3&nbsp;Meter pro Jahr. Ihr Sachwert steigt, während das Sparkonto schrumpft.</p></div>
             <div class="card reveal reveal-delay-2"><div class="icon-box green"><i data-lucide="shield-check"></i></div><h4>Auf 3 Länder verteilt</h4><p>255&nbsp;Hektar bereits gepflanzt, verteilt auf drei Länder – damit selbst Naturkatastrophen Ihr Eigentum nicht zerstören können.</p></div>
         </div>
-        <div class="stat-grid reveal" style="grid-template-columns:repeat(4,1fr);margin-top:40px;">
+        <div class="stat-grid lp-stats4 reveal" style="margin-top:40px;">
             <div class="stat"><div class="stat-num" data-count="255">0</div><div class="stat-label">Hektar in 3 Ländern</div></div>
             <div class="stat"><div class="stat-num" data-count="160000">0</div><div class="stat-label">Bäume gepflanzt</div></div>
             <div class="stat"><div class="stat-num" data-count="3" data-suffix=" m">0</div><div class="stat-label">Wachstum pro Jahr</div></div>
@@ -428,6 +442,15 @@
 </script>
 <script src="/js/lp-tracking.js"></script>
 <script src="/js/lp-realwert-form.js"></script>
-<script>if(window.lucide)lucide.createIcons();</script>
+<script>
+(function(){
+  var n=0;
+  (function go(){
+    if(window.lucide&&window.lucide.createIcons){ lucide.createIcons(); return; }
+    if(n++<80){ setTimeout(go,100); }
+  })();
+  window.addEventListener('load',function(){ if(window.lucide&&window.lucide.createIcons) lucide.createIcons(); });
+})();
+</script>
 </body>
 </html>
