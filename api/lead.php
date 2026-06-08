@@ -162,7 +162,7 @@ $isKontakt = ($source === 'kontakt');
 
 // ---- Validierung ----
 // Telefon ist Pflicht für die Lead-Magnet-LPs, beim Kontaktformular optional.
-if ($vorname === '' || $nachname === '' || $email === '') {
+if ($vorname === '' || $nachname === '' || $email === '' || (!$isKontakt && $telefon === '')) {
   respond(false, 'Pflichtfelder fehlen');
 }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
