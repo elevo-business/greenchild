@@ -99,13 +99,28 @@ if ($SELFTEST_OK) {
     if (is_array($j) && isset($j['events_received'])) { $capiValid = true; }
     else { $capiValid = false; $capiError = isset($j['error']['message']) ? $j['error']['message'] : 'unbekannte Antwort'; }
   }
+  // Pipedrive-Token live testen (GET /users/me) → erkennt rotierten/ungültigen Token
+  $pdValid = null; $pdError = '';
+  if ($API_TOKEN !== '') {
+    $pu = $BASE . '/users/me?api_token=' . urlencode($API_TOKEN);
+    if (function_exists('curl_init')) {
+      $ch2 = curl_init($pu);
+      curl_setopt_array($ch2, array(CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 10));
+      $pr = curl_exec($ch2); curl_close($ch2);
+    } else { $pr = @file_get_contents($pu); }
+    $pj = json_decode($pr, true);
+    if (is_array($pj) && !empty($pj['success'])) { $pdValid = true; }
+    else { $pdValid = false; $pdError = isset($pj['error']) ? $pj['error'] : 'ungültig/keine Antwort'; }
+  }
   echo json_encode(array(
-    'ok'                  => true,
-    'pixel_id_set'        => $META_PIXEL_ID !== '',
-    'capi_token_loaded'   => $META_CAPI_TOKEN !== '',
-    'capi_token_valid'    => $capiValid,
-    'capi_error'          => $capiError,
-    'pipedrive_token'     => ($API_TOKEN === '9fae1a7473002abdf89ade65319dc14a1c828a28') ? 'fallback' : 'datei_oder_env',
+    'ok'                    => true,
+    'pixel_id_set'          => $META_PIXEL_ID !== '',
+    'capi_token_loaded'     => $META_CAPI_TOKEN !== '',
+    'capi_token_valid'      => $capiValid,
+    'capi_error'            => $capiError,
+    'pipedrive_token'       => ($API_TOKEN === '9fae1a7473002abdf89ade65319dc14a1c828a28') ? 'fallback' : 'datei_oder_env',
+    'pipedrive_token_valid' => $pdValid,
+    'pipedrive_error'       => $pdError,
     'test_code_active'    => $META_TEST_EVENT_CODE !== '',
     'curl'                => function_exists('curl_init'),
     'allow_url_fopen'     => (bool) ini_get('allow_url_fopen'),
@@ -147,7 +162,7 @@ $isKontakt = ($source === 'kontakt');
 
 // ---- Validierung ----
 // Telefon ist Pflicht für die Lead-Magnet-LPs, beim Kontaktformular optional.
-if ($vorname === '' || $nachname === '' || $email === '' || (!$isKontakt && $telefon === '')) {
+if ($vorname === '' || $nachname === '' || $email === '') {
   respond(false, 'Pflichtfelder fehlen');
 }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -299,7 +314,7 @@ if ($isKontakt) {
   $noteLines[] = '— — —';
   $noteLines[] = 'Investitionsrahmen: ' . $budget['label'];
   if ($erreichbarkeit !== '') { $noteLines[] = 'Beste Erreichbarkeit: ' . $erreichbarkeit; }
-  $noteLines[] = 'Telefon: ' . $telefon;
+  if ($telefon !== '') { $noteLines[] = 'Telefon: ' . $telefon; }
   if ($variant !== '')        { $noteLines[] = 'A/B-Variante: ' . $variant; }
 }
 

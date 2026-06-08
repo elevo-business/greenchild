@@ -100,7 +100,7 @@
         erreichbarkeit = val('erreichbarkeit');
     var consent = form.querySelector('[name="consent"]');
 
-    if (!vorname || !nachname || !email || !telefon) return;
+    if (!vorname || !nachname || !email) return;
     if (consent && !consent.checked) { consent.focus(); return; }
 
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet …'; }
