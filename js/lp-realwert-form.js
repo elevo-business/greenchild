@@ -15,6 +15,52 @@
   }
   function track(name, params) { if (window.gcTrack) window.gcTrack(name, params); }
 
+  /* ---------- Validierung: gültige Telefonnummer ---------- */
+  // Lenient genug, um echte (inkl. internationale) Nummern durchzulassen,
+  // streng genug, um „123", „asdf" oder leere Eingaben abzufangen.
+  // Gleiche Regel serverseitig in api/lead.php.
+  function isValidPhone(s) {
+    var raw = (s || '').trim();
+    if (!raw) return false;
+    if (/[^0-9+()\/.\-\s]/.test(raw)) return false;   // nur Telefon-Zeichen
+    if ((raw.match(/\+/g) || []).length > 1) return false; // max. ein '+'
+    if (raw.indexOf('+') > 0) return false;            // '+' nur am Anfang
+    var digits = raw.replace(/\D/g, '');
+    return digits.length >= 7 && digits.length <= 15;
+  }
+
+  function fieldError(name, message) {
+    var el = form.querySelector('[name="' + name + '"]');
+    if (!el) return;
+    el.setAttribute('aria-invalid', 'true');
+    el.style.borderColor = '#dc2626';
+    var grp = el.closest('.form-group') || el.parentNode;
+    var err = grp.querySelector('.field-err');
+    if (!err) {
+      err = document.createElement('div');
+      err.className = 'field-err';
+      err.style.cssText = 'color:#dc2626;font-size:12.5px;margin-top:5px;';
+      grp.appendChild(err);
+    }
+    err.textContent = message;
+    el.focus();
+  }
+
+  function clearFieldError(name) {
+    var el = form.querySelector('[name="' + name + '"]');
+    if (!el) return;
+    el.removeAttribute('aria-invalid');
+    el.style.borderColor = '';
+    var grp = el.closest('.form-group') || el.parentNode;
+    var err = grp.querySelector('.field-err');
+    if (err) err.remove();
+  }
+
+  var telEl = form.querySelector('[name="telefon"]');
+  if (telEl) {
+    telEl.addEventListener('input', function () { clearFieldError('telefon'); });
+  }
+
   /* ---------- Schritt-Navigation ---------- */
   var step1 = form.querySelector('[data-step="1"]');
   var step2 = form.querySelector('[data-step="2"]');
@@ -101,6 +147,11 @@
     var consent = form.querySelector('[name="consent"]');
 
     if (!vorname || !nachname || !email || !telefon) return;
+    if (!isValidPhone(telefon)) {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalText; }
+      fieldError('telefon', 'Bitte eine gültige Telefonnummer eingeben (mind. 7 Ziffern).');
+      return;
+    }
     if (consent && !consent.checked) { consent.focus(); return; }
 
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet …'; }

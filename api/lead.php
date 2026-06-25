@@ -168,6 +168,21 @@ if ($vorname === '' || $nachname === '' || $email === '' || (!$isKontakt && $tel
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
   respond(false, 'E-Mail ungültig');
 }
+// Telefon muss eine gültige Nummer sein (gleiche Regel wie im LP-JS):
+// nur Telefon-Zeichen, '+' nur am Anfang, 7–15 Ziffern. Beim Kontaktformular
+// nur prüfen, wenn überhaupt eine Nummer angegeben wurde (dort optional).
+if ($telefon !== '') {
+  $phoneOk = true;
+  if (preg_match('~[^0-9+()/.\-\s]~', $telefon)) { $phoneOk = false; }
+  if (substr_count($telefon, '+') > 1) { $phoneOk = false; }
+  if (strpos($telefon, '+') > 0) { $phoneOk = false; }
+  $phoneDigits = preg_replace('/\D/', '', $telefon);
+  $len = strlen($phoneDigits);
+  if ($len < 7 || $len > 15) { $phoneOk = false; }
+  if (!$phoneOk) {
+    respond(false, 'Telefonnummer ungültig');
+  }
+}
 // Consent-Checkbox haben nur die LP-Formulare; Kontaktformular hat sie nicht.
 if (!$isKontakt && !$consent) {
   respond(false, 'Einwilligung fehlt');
