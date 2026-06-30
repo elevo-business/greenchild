@@ -1,6 +1,6 @@
 (function () {
   var ENDPOINT = '/api/lead.php';
-  var SOURCE = 'sachwert';
+  var SOURCE = (typeof window !== 'undefined' && window.GC_LEAD_SOURCE) || 'sachwert';
   var PDF_URL = '/assets/downloads/sachwertvergleich-2026.pdf';
 
   var form = document.getElementById('realwertForm');
