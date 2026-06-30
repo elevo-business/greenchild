@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Greenchild — Instagram Posts</title>
+<style>
+/* === Greenchild Brand Tokens (aus css/style.css) === */
+:root{
+  --green:#00A86B;--green-dark:#008F5A;--green-deep:#0C2E20;--green-forest:#0A3A2A;
+  --green-light:#2DD4A0;--green-pale:#E8F7F0;--gold:#C4993C;--gold-light:#E3C77E;
+  --font-h:'Manrope','Helvetica Neue',sans-serif;
+  --font-body:'Outfit','Helvetica Neue',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#1a1a1a;font-family:var(--font-body)}
+.sheet{display:flex;flex-wrap:wrap;gap:40px;padding:40px}
+
+.post{
+  position:relative;width:1080px;height:1080px;overflow:hidden;
+  color:#fff;font-family:var(--font-body);flex:0 0 auto;
+}
+.post .bg{position:absolute;inset:0;z-index:0}
+.post .bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.03)}
+/* legibility gradient: light at top, deep green at bottom */
+.post .scrim{position:absolute;inset:0;z-index:1;background:
+  linear-gradient(167deg,rgba(8,30,20,.30) 0%,rgba(8,30,20,.10) 30%,rgba(10,42,29,.62) 66%,rgba(7,26,18,.93) 100%)}
+.post .scrim-left{position:absolute;inset:0;z-index:1;background:
+  linear-gradient(95deg,rgba(7,26,18,.55) 0%,rgba(7,26,18,.12) 42%,transparent 64%)}
+/* subtle film grain */
+.post .grain{position:absolute;inset:0;z-index:2;opacity:.055;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* thin inner brand frame */
+.post .frame{position:absolute;inset:34px;z-index:3;border:1.5px solid rgba(255,255,255,.16);border-radius:6px;pointer-events:none}
+
+.post .inner{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;
+  justify-content:space-between;padding:84px 78px}
+
+/* top row */
+.topbar{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:14px}
+.brand img{height:46px;width:auto;filter:brightness(0) invert(1)}
+.brand .wm{font-family:var(--font-h);font-weight:800;font-size:30px;letter-spacing:-.02em;color:#fff}
+.url{font-family:var(--font-body);font-weight:500;font-size:18px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.62)}
+
+/* eyebrow label (mirrors website .label) */
+.eyebrow{display:flex;align-items:center;gap:18px;margin-bottom:26px}
+.eyebrow::before{content:'';width:46px;height:2px;background:var(--green-light)}
+.eyebrow span{font-family:var(--font-body);font-weight:600;font-size:19px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--green-light)}
+
+/* headline + sub */
+.headline{font-family:var(--font-h);font-weight:800;font-size:92px;line-height:1.0;
+  letter-spacing:-.025em;color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.30)}
+.headline .accent{color:var(--green-light)}
+.headline.quote{font-size:74px;line-height:1.12;font-weight:700;max-width:880px}
+.headline.price{font-size:128px;letter-spacing:-.03em}
+.sub{margin-top:30px;max-width:680px;font-family:var(--font-body);font-weight:300;
+  font-size:27px;line-height:1.52;color:rgba(255,255,255,.86)}
+.sub b{font-weight:600;color:#fff}
+
+/* stat cards */
+.stats{display:flex;gap:16px;margin-top:46px}
+.stat{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
+  border-radius:18px;padding:26px 24px;backdrop-filter:blur(10px)}
+.stat .v{font-family:var(--font-h);font-weight:800;font-size:42px;line-height:1;color:var(--green-light)}
+.stat .l{margin-top:10px;font-size:17px;font-weight:400;letter-spacing:.02em;
+  color:rgba(255,255,255,.66);line-height:1.35}
+
+/* pill row (process / trust chips) */
+.pills{display:flex;flex-wrap:wrap;gap:12px;margin-top:42px}
+.pill{display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:14px 24px;
+  font-size:20px;font-weight:500;color:rgba(255,255,255,.92)}
+.pill .num{font-family:var(--font-h);font-weight:800;color:var(--green-light);font-size:20px}
+.pill .dot{width:9px;height:9px;border-radius:50%;background:var(--green-light)}
+
+/* CTA button look */
+.cta{display:inline-flex;align-items:center;gap:14px;margin-top:46px;align-self:flex-start;
+  background:var(--green);color:#fff;font-family:var(--font-body);font-weight:600;
+  font-size:24px;padding:22px 44px;border-radius:100px}
+.cta .arrow{font-size:24px}
+.contact{margin-top:30px;font-size:21px;font-weight:400;color:rgba(255,255,255,.78);letter-spacing:.01em}
+.contact b{color:#fff;font-weight:600}
+
+/* gold variant for value post */
+.post.gold .eyebrow::before{background:var(--gold-light)}
+.post.gold .eyebrow span{color:var(--gold-light)}
+.post.gold .headline .accent,.post.gold .stat .v,.post.gold .pill .num,.post.gold .pill .dot{color:var(--gold-light)}
+
+.bottomrow{display:flex;align-items:flex-end;justify-content:space-between}
+.tagline{font-family:var(--font-body);font-weight:300;font-size:18px;letter-spacing:.04em;
+  color:rgba(255,255,255,.55)}
+.spacer{flex:1}
+</style>
+</head>
+<body>
+<div class="sheet" id="sheet"></div>
+<script>
+const IMG = "file:///home/user/greenchild/assets/img/";
+const LOGO = IMG + "logo-greenchild.png";
+
+const posts = [
+  { id:1, bg:"hero-plantation-sunset.jpg", eyebrow:"Greenchild · Seit 2009",
+    headline:"Ihr Baum.<br><span class='accent'>Ihr Sachwert.</span>",
+    sub:"Paulownia-Bäume als <b>physisches Eigentum</b> — mit persönlichem Baum-Zertifikat. Auf ca. 255 Hektar in 3 Ländern." },
+
+  { id:2, bg:"plantation-corridor.jpg", eyebrow:"Der Kiri-Baum",
+    headline:"Das schnellste<br><span class='accent'>Edelholz</span> der Welt",
+    sub:"Paulownia wächst rund <b>10× schneller als Eiche</b> — und wird weltweit für Möbel, Surfboards und Instrumente gehandelt.",
+    stats:[["20 m","Höhe in 12 Jahren"],["1,4 m³","Edelholz pro Baum"],["~300 kg","CO₂ pro Jahr"]] },
+
+  { id:3, bg:"drone-plantation-mountains.jpg", eyebrow:"Im Vergleich",
+    headline:"20 Meter.<br><span class='accent'>In 10 Jahren.</span>",
+    sub:"Eine Eiche schafft in derselben Zeit 2 Meter. Paulownia produziert in <b>10 Jahren</b> das Holzvolumen einer Eiche in <b>100</b>.",
+    stats:[["20 m","Paulownia / 10 J."],["2 m","Eiche / 10 J."],["8–12 J.","bis zur Ernte"]] },
+
+  { id:4, bg:"investor-tour.jpg", gold:true, eyebrow:"Ihr Sachwert",
+    headline:"<span class='price'>Ab 249 €</span><br>pro Baum",
+    sub:"<b>Vollservice inklusive</b> — Pflanzung, Pflege und Ernte. Kein Finanzprodukt, sondern ein greifbarer Vermögensgegenstand.",
+    pills:[["Physisches Eigentum"],["Baum-Zertifikat mit GPS"],["Jederzeit besuchbar"]] },
+
+  { id:5, bg:"seedlings-greenhouse-wide.jpg", eyebrow:"Der Weg des Baumes",
+    headline:"Vom Reagenzglas<br>zum <span class='accent'>Edelholz</span>",
+    sub:"5 dokumentierte Schritte — von der Mikropropagation im Labor bis zur Ernte nach 8–12 Jahren. Jeder Baum nachverfolgbar.",
+    pills:[["01","Labor"],["02","Pflanzung"],["03","Wachstum"],["04","Ernte"],["05","Edelholz"]] },
+
+  { id:6, bg:"beekeeper-hives-wide.jpg", eyebrow:"Lebendiges Ökosystem",
+    headline:"200 Bienenvölker.<br><span class='accent'>Ein lebendes Zeichen.</span>",
+    sub:"Keine Monokultur — ein funktionierendes Ökosystem. Die Bienen sind der Beweis: <b>chemie- und pestizidfrei</b>.",
+    stats:[["200","Bienenvölker"],["1","Vollzeit-Imker"],["365","Tage im Jahr"]] },
+
+  { id:7, bg:"ecosystem-sunlight.jpg", eyebrow:"Ihr Beitrag zur Umwelt",
+    headline:"Die Lunge<br><span class='accent'>unserer Erde</span>",
+    sub:"Paulownia bindet deutlich mehr CO₂ als andere Bäume. Ca. 255 Hektar aktiver Klimaschutz — für Sie, für die Erde, für unsere Kinder.",
+    stats:[["~300 kg","CO₂ pro Baum / Jahr"],["+300 kg","CO₂ aus dem Boden"],["255 ha","in 3 Ländern"]] },
+
+  { id:8, bg:"investor-group-plantation.jpg", eyebrow:"Warum Baumbesitzer uns vertrauen",
+    headline:"<span class='quote-mark'>„</span>Ein Unternehmen, dem man seine Bäume anvertraut.",
+    quote:true,
+    sub:"Jeder Baum wird gepflegt, dokumentiert und seinem Besitzer zugeordnet. Sie kommen. Sie sehen. Sie wissen.<br>— Greenchild Gründerteam" },
+
+  { id:9, bg:"drone-aerial-topdown.jpg", eyebrow:"Greenchild · Seit 2009",
+    headline:"Werden Sie<br><span class='accent'>Baumbesitzer</span>",
+    sub:"Sichern Sie sich Ihren Sachwert, der mit der Natur wächst. Vereinbaren Sie Ihr unverbindliches Erstgespräch.",
+    cta:"Erstgespräch anfragen",
+    contact:"<b>greenchild.eu</b>  ·  info@greenchild.eu  ·  +49 151 191 333 31" },
+];
+
+function card(p){
+  const stats = p.stats ? `<div class="stats">${p.stats.map(s=>`<div class="stat"><div class="v">${s[0]}</div><div class="l">${s[1]}</div></div>`).join("")}</div>` : "";
+  const pills = p.pills ? `<div class="pills">${p.pills.map(s=> s.length>1
+        ? `<div class="pill"><span class="num">${s[0]}</span>${s[1]}</div>`
+        : `<div class="pill"><span class="dot"></span>${s[0]}</div>`).join("")}</div>` : "";
+  const cta = p.cta ? `<div class="cta">${p.cta}<span class="arrow">→</span></div>` : "";
+  const contact = p.contact ? `<div class="contact">${p.contact}</div>` : "";
+  const hl = `headline${p.quote?' quote':''}`;
+  return `
+  <section class="post${p.gold?' gold':''}" id="p${p.id}">
+    <div class="bg"><img src="${IMG+p.bg}"></div>
+    <div class="scrim"></div><div class="scrim-left"></div>
+    <div class="grain"></div><div class="frame"></div>
+    <div class="inner">
+      <div class="topbar">
+        <div class="brand"><img src="${LOGO}"></div>
+        <div class="url">greenchild.eu</div>
+      </div>
+      <div class="spacer"></div>
+      <div>
+        <div class="eyebrow"><span>${p.eyebrow}</span></div>
+        <div class="${hl}">${p.headline}</div>
+        ${p.sub?`<div class="sub">${p.sub}</div>`:""}
+        ${stats}${pills}${cta}${contact}
+        <div class="bottomrow" style="margin-top:48px">
+          <div class="tagline">Ihr Baum. Ihr Sachwert. Ihr Beitrag.</div>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+document.getElementById("sheet").innerHTML = posts.map(card).join("");
+</script>
+</body>
+</html>
