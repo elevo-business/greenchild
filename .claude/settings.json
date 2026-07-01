@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Pipedrive__updateActivity",
+      "mcp__Pipedrive__getActivities",
+      "mcp__Pipedrive__getActivity",
+      "mcp__Pipedrive__searchPersons"
+    ]
+  }
+}
