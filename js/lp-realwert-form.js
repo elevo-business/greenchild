@@ -85,6 +85,11 @@
         if (firstOpt) firstOpt.focus();
         return;
       }
+      var berufField = form.querySelector('[name="beruf"]');
+      if (berufField && !form.querySelector('[name="beruf"]:checked')) {
+        berufField.closest('.qual-opt').focus();
+        return;
+      }
       setStep(2);
       track('LP_Step2', { source: SOURCE, budget: budget.value });
       var firstInput = step2.querySelector('input,select');
@@ -172,6 +177,7 @@
       source: SOURCE,
       vorname: vorname, nachname: nachname, email: email, telefon: telefon,
       erreichbarkeit: erreichbarkeit, budget: budgetEl.value, consent: true,
+      beruf: (form.querySelector('[name="beruf"]:checked') || {value:''}).value,
       botcheck: '',
       // Meta Conversions API (serverseitig) – Dedup + besseres Matching:
       event_id: eventId,

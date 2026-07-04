@@ -145,6 +145,7 @@ $nachname       = field($in, 'nachname');
 $email          = field($in, 'email');
 $telefon        = field($in, 'telefon');
 $erreichbarkeit = field($in, 'erreichbarkeit');
+$beruf          = field($in, 'beruf');
 $budgetKey      = field($in, 'budget');
 $source         = field($in, 'source');   // 'sachwert' | 'factsheet' | 'kontakt'
 $variant        = field($in, 'variant');  // optional (A/B-Test)
@@ -329,6 +330,7 @@ if ($isKontakt) {
   $noteLines[] = '— — —';
   $noteLines[] = 'Investitionsrahmen: ' . $budget['label'];
   if ($erreichbarkeit !== '') { $noteLines[] = 'Beste Erreichbarkeit: ' . $erreichbarkeit; }
+  if ($beruf !== '') { $noteLines[] = 'Beruflich: ' . $beruf; }
   if ($telefon !== '') { $noteLines[] = 'Telefon: ' . $telefon; }
   if ($variant !== '')        { $noteLines[] = 'A/B-Variante: ' . $variant; }
 }
