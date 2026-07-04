@@ -266,6 +266,7 @@
                         <div class="lp-steps-bar" aria-hidden="true">
                             <span class="step-dot active" data-dot="1"></span>
                             <span class="step-dot" data-dot="2"></span>
+                            <span class="step-dot" data-dot="3"></span>
                         </div>
 
                         <!-- Schritt 1: Qualifizierung -->
@@ -279,7 +280,16 @@
                                 <label class="qual-opt"><input type="radio" name="budget" value="10000-25000"><span class="qual-radio"></span><span class="qual-txt">10.000 – 25.000 €<span class="qual-sub">ca. 40–100 Bäume</span></span></label>
                                 <label class="qual-opt"><input type="radio" name="budget" value="25000-plus"><span class="qual-radio"></span><span class="qual-txt">über 25.000 €<span class="qual-sub">100+ Bäume</span></span></label>
                             </div>
-                            <p class="lp-step-q" style="margin-top:22px;">Was machen Sie beruflich?</p>
+                            <div class="step-actions">
+                                <button type="button" class="btn btn-primary-glow btn-lg js-next" style="justify-content:center;">Weiter</button>
+                            </div>
+                        </div>
+
+                        <!-- Schritt 2: Kontakt -->
+                        
+                        <div class="lp-step" data-step="2" hidden>
+                            <p class="lp-step-q">Was machen Sie beruflich?</p>
+                            <p class="lp-step-hint">Eine Angabe genügt, damit wir im Gespräch direkt zum Punkt kommen.</p>
                             <div class="qual-options">
                                 <label class="qual-opt"><input type="radio" name="beruf" value="Angestellt" required><span class="qual-radio"></span><span class="qual-txt">Angestellt</span></label>
                                 <label class="qual-opt"><input type="radio" name="beruf" value="Selbständig / Unternehmer"><span class="qual-radio"></span><span class="qual-txt">Selbständig / Unternehmer</span></label>
@@ -288,12 +298,12 @@
                                 <label class="qual-opt"><input type="radio" name="beruf" value="Sonstiges"><span class="qual-radio"></span><span class="qual-txt">Sonstiges</span></label>
                             </div>
                             <div class="step-actions">
-                                <button type="button" class="btn btn-primary-glow btn-lg" id="toStep2" style="justify-content:center;">Weiter</button>
+                                <button type="button" class="btn-back js-back">Zurück</button>
+                                <button type="button" class="btn btn-primary-glow btn-lg js-next" style="justify-content:center;">Weiter</button>
                             </div>
                         </div>
 
-                        <!-- Schritt 2: Kontakt -->
-                        <div class="lp-step" data-step="2" hidden>
+                        <div class="lp-step" data-step="3" hidden>
                             <div class="name-fields">
                                 <div class="form-group"><label class="form-label">Vorname *</label><input type="text" name="vorname" class="form-input" autocomplete="given-name" required></div>
                                 <div class="form-group"><label class="form-label">Nachname *</label><input type="text" name="nachname" class="form-input" autocomplete="family-name" required></div>
@@ -311,7 +321,7 @@
                             </div>
                             <label class="lp-consent"><input type="checkbox" name="consent" required><span>Ich bin einverstanden, dass Greenchild mich kontaktiert, und habe die <a href="#" onclick="event.preventDefault();document.getElementById('datenschutzOverlay').classList.add('active')">Datenschutzerklärung</a> gelesen.</span></label>
                             <div class="step-actions">
-                                <button type="button" class="btn-back" id="backStep1">Zurück</button>
+                                <button type="button" class="btn-back js-back">Zurück</button>
                                 <button type="submit" class="btn btn-primary-glow btn-lg" style="justify-content:center;">Rückruf anfordern</button>
                             </div>
                         </div>
@@ -550,7 +560,7 @@
 </script>
 <script>window.GC_LEAD_SOURCE='baumbesitzer';window.GC_SUCCESS_MODE='callback';</script>
 <script src="/js/lp-tracking.js?v=cb1"></script>
-<script src="/js/lp-realwert-form.js?v=cb3"></script>
+<script src="/js/lp-realwert-form.js?v=cb4"></script>
 <script>
 (function(){
   var n=0;

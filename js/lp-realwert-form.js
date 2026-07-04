@@ -61,44 +61,66 @@
     telEl.addEventListener('input', function () { clearFieldError('telefon'); });
   }
 
-  /* ---------- Schritt-Navigation ---------- */
-  var step1 = form.querySelector('[data-step="1"]');
-  var step2 = form.querySelector('[data-step="2"]');
+  /* ---------- Schritt-Navigation (generisch, 2..n Schritte) ---------- */
+  var steps = Array.prototype.slice.call(form.querySelectorAll('.lp-step'));
   var dots = form.querySelectorAll('.step-dot');
-  var toStep2 = document.getElementById('toStep2');
-  var backStep1 = document.getElementById('backStep1');
+  var totalSteps = steps.length;
+  var currentStep = 1;
   var startedTracked = false;
 
   function setStep(n) {
-    step1.hidden = (n !== 1);
-    step2.hidden = (n !== 2);
+    currentStep = n;
+    steps.forEach(function (s) {
+      s.hidden = (parseInt(s.getAttribute('data-step'), 10) !== n);
+    });
     dots.forEach(function (d) {
       d.classList.toggle('active', parseInt(d.getAttribute('data-dot'), 10) <= n);
     });
   }
 
-  if (toStep2) {
-    toStep2.addEventListener('click', function () {
-      var budget = form.querySelector('[name="budget"]:checked');
-      if (!budget) {
-        var firstOpt = form.querySelector('.qual-opt');
+  // Pflicht-Radios im aktuellen Schritt: jede Gruppe braucht eine Auswahl
+  function validateStep(n) {
+    var box = form.querySelector('[data-step="' + n + '"]');
+    if (!box) return true;
+    var radios = box.querySelectorAll('input[type="radio"]');
+    var seen = {};
+    for (var i = 0; i < radios.length; i++) {
+      var name = radios[i].getAttribute('name');
+      if (seen[name]) continue;
+      seen[name] = true;
+      if (!form.querySelector('[name="' + name + '"]:checked')) {
+        var firstOpt = box.querySelector('.qual-opt');
         if (firstOpt) firstOpt.focus();
-        return;
+        return false;
       }
-      var berufField = form.querySelector('[name="beruf"]');
-      if (berufField && !form.querySelector('[name="beruf"]:checked')) {
-        berufField.closest('.qual-opt').focus();
-        return;
-      }
-      setStep(2);
-      track('LP_Step2', { source: SOURCE, budget: budget.value });
-      var firstInput = step2.querySelector('input,select');
-      if (firstInput) firstInput.focus();
-    });
+    }
+    return true;
   }
-  if (backStep1) {
-    backStep1.addEventListener('click', function () { setStep(1); });
+
+  function goNext() {
+    if (!validateStep(currentStep)) return;
+    var next = currentStep + 1;
+    if (next > totalSteps) return;
+    setStep(next);
+    track('LP_Step' + next, { source: SOURCE });
+    var box = form.querySelector('[data-step="' + next + '"]');
+    var f = box ? box.querySelector('input:not([type="radio"]),select') : null;
+    if (f) f.focus();
   }
+  function goBack() { if (currentStep > 1) setStep(currentStep - 1); }
+
+  function bindAll(sel, fn) {
+    var els = form.querySelectorAll(sel);
+    for (var i = 0; i < els.length; i++) els[i].addEventListener('click', fn);
+  }
+  bindAll('.js-next', goNext);
+  bindAll('.js-back', goBack);
+  // Legacy-IDs der bestehenden LPs
+  var toStep2 = document.getElementById('toStep2');
+  if (toStep2 && !toStep2.classList.contains('js-next')) toStep2.addEventListener('click', goNext);
+  var backStep1 = document.getElementById('backStep1');
+  if (backStep1 && !backStep1.classList.contains('js-back')) backStep1.addEventListener('click', goBack);
+
   form.addEventListener('change', function () {
     if (!startedTracked) { startedTracked = true; track('LP_Form_Start', { source: SOURCE }); }
   });
