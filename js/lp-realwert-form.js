@@ -113,8 +113,8 @@
         '<div class="lp-success">' +
           '<div class="succ-ic"><i data-lucide="phone-call"></i></div>' +
           '<h3>Eingetragen!</h3>' +
-          '<p><strong>Wir rufen Sie zu Ihrer Wunschzeit zurück.</strong> Der Anruf kommt von der Nummer +49 151 191 333 31, gerne einspeichern.</p>' +
-          '<p style="font-size:13px;color:var(--text-muted);">Rund 15 Minuten, unverbindlich und ohne Verkaufsdruck.</p>' +
+          '<p><strong>Geschafft! Wir melden uns zu Ihrer Wunschzeit persönlich bei Ihnen.</strong> Meist schon am selben Werktag.</p>' +
+          '<p style="font-size:13px;color:var(--text-muted);">Das Gespräch dauert nur ein paar Minuten und ist völlig unverbindlich. Kleiner Tipp: Falls sich in den nächsten Tagen eine unbekannte Nummer meldet, sind wir das wahrscheinlich.</p>' +
         '</div>';
       if (window.lucide) lucide.createIcons();
       return;
