@@ -281,7 +281,8 @@ function meta_send_lead($pixelId, $token, $version, $eventId, $sourceUrl, $email
     'user_data'     => $ud,
     'custom_data'   => $customData,
   );
-  if ($eventId !== '')   { $event['event_id'] = $eventId; }
+  if ($eventId === '') { $eventId = 'srv.' . uniqid('', true); }
+  $event['event_id'] = $eventId;
   if ($sourceUrl !== '') { $event['event_source_url'] = $sourceUrl; }
 
   $body = array('data' => array($event));
