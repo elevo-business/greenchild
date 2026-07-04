@@ -108,6 +108,17 @@
   function showSuccess() {
     var inner = document.getElementById('formInner');
     if (!inner) return;
+    if (window.GC_SUCCESS_MODE === 'callback') {
+      inner.innerHTML =
+        '<div class="lp-success">' +
+          '<div class="succ-ic"><i data-lucide="phone-call"></i></div>' +
+          '<h3>Eingetragen!</h3>' +
+          '<p><strong>Wir rufen Sie zu Ihrer Wunschzeit zurück.</strong> Der Anruf kommt von der Nummer +49 151 191 333 31, gerne einspeichern.</p>' +
+          '<p style="font-size:13px;color:var(--text-muted);">Rund 15 Minuten, unverbindlich und ohne Verkaufsdruck.</p>' +
+        '</div>';
+      if (window.lucide) lucide.createIcons();
+      return;
+    }
     inner.innerHTML =
       '<div class="lp-success">' +
         '<div class="succ-ic"><i data-lucide="check"></i></div>' +
