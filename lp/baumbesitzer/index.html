@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta name="facebook-domain-verification" content="5konvik8fs1p9alveuvt8mdmnt1cbq" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greenchild — Echte Baumbesitzer erzählen | Interviews</title>
+<meta name="description" content="Echte Paulownia-Bäume als physisches Eigentum – vererbbar, inflationssicher, auf 255 Hektar in 3 Ländern. Sachwertvergleich 2026 kostenlos sichern.">
+<meta name="robots" content="noindex, follow">
+<meta property="og:title" content="Der Sachwert, der wächst – während alles andere schwankt.">
+<meta property="og:description" content="Echte Paulownia-Bäume als physisches Eigentum. Sachwertvergleich 2026 kostenlos herunterladen.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/assets/img/hero-plantation-sunset.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="icon" type="image/png" href="/assets/img/logo-greenchild.png">
+<link rel="apple-touch-icon" href="/assets/img/logo-greenchild.png">
+<style>
+/* ===== LP: Header (minimal, conversion-fokussiert) ===== */
+.lp-header{position:fixed;top:0;left:0;width:100%;z-index:10000;background:transparent;transition:all .4s var(--ease)}
+.lp-header.scrolled{background:rgba(250,252,251,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 4px 30px rgba(10,58,42,.05)}
+.lp-header .header-inner{display:flex;align-items:center;justify-content:space-between;max-width:var(--max-w);margin:0 auto;padding:16px var(--pad)}
+.lp-header .logo-img{height:34px;width:auto;filter:brightness(1.5);transition:filter .3s}
+.lp-header.scrolled .logo-img{filter:none}
+.lp-header .lp-head-cta{font-size:13px;padding:11px 22px}
+.lp-header.scrolled .lp-head-cta{}
+
+/* ===== LP: Hero ===== */
+.lp-hero{position:relative;background:linear-gradient(165deg,var(--green-forest) 0%,var(--green-deep) 70%,#08231A 100%);color:var(--text-inv);overflow:hidden;padding:150px 0 90px}
+.lp-hero .hero-orb-1{width:460px;height:460px;top:-120px;right:-140px;background:radial-gradient(circle,rgba(0,168,107,.12),transparent 70%)}
+.lp-hero .hero-orb-2{width:340px;height:340px;bottom:-100px;left:-120px;background:radial-gradient(circle,rgba(45,212,160,.08),transparent 70%)}
+.lp-hero .container{position:relative;z-index:4}
+.lp-hero-center{max-width:680px;margin:0 auto;text-align:center}
+.lp-hero h1{color:#fff;font-size:clamp(30px,4.6vw,54px);line-height:1.07;margin-bottom:16px}
+.lp-hero h1 .hl{color:var(--green-light)}
+.lp-hero .lp-sub{font-size:17px;color:rgba(255,255,255,.72);line-height:1.7;max-width:520px;margin:0 auto}
+.lp-hero .btn-group{margin:4px 0 18px;justify-content:center}
+.lp-trust-row{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;font-size:13.5px;color:rgba(255,255,255,.6)}
+.lp-trust-row span{display:inline-flex;align-items:center;gap:7px}
+.lp-trust-row i{width:16px;height:16px;color:var(--green-light)}
+
+/* Video-Frame (9:16) — startet stumm im Autoplay, Klick = Ton an */
+.lp-video-wrap{display:flex;justify-content:center;margin:26px 0 8px}
+.lp-video-frame{position:relative;width:100%;max-width:640px;aspect-ratio:16/9;border-radius:26px;overflow:hidden;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.14)}
+.lp-video-frame video{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
+.lp-video-play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:30px;gap:12px;background:linear-gradient(to top,rgba(0,0,0,.45),rgba(0,0,0,.04) 55%);border:none;cursor:pointer;transition:opacity .3s}
+.lp-video-play.hidden{opacity:0;pointer-events:none}
+.lp-video-play .pp{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(0,0,0,.35);animation:pulse-glow 3s infinite}
+.lp-video-play .pp i{width:26px;height:26px;color:var(--green-deep)}
+.lp-video-play .pp-label{color:#fff;font-size:13.5px;font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.55)}
+.lp-video-play:hover .pp{transform:scale(1.07)}
+
+/* Baumbesitzer-Story */
+.lp-story{display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:center;max-width:1000px;margin:0 auto}
+.lp-story-img{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg)}
+.lp-story-img img{width:100%;height:100%;min-height:380px;object-fit:cover;display:block}
+.lp-story-text p{font-size:16.5px;color:var(--text-body);line-height:1.8;margin-bottom:14px}
+.lp-quote{font-family:var(--font-h);font-size:21px;font-weight:700;color:var(--green-dark);line-height:1.45;border-left:3px solid var(--green);padding-left:20px;margin:22px 0 12px}
+.lp-story-note{font-size:12px;color:var(--text-dim)}
+
+/* ===== LP: Hook ===== */
+.lp-hook{max-width:760px;margin:0 auto;text-align:center}
+.lp-hook h2{margin-bottom:20px}
+.lp-hook p{font-size:18px;color:var(--text-body);line-height:1.8}
+.lp-hook .hl{color:var(--green-dark);font-weight:600}
+
+/* ===== LP: Vorteile ===== */
+.lp-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+
+/* ===== LP: Lead-Magnet ===== */
+.lp-magnet{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.lp-magnet-list{margin:24px 0 0}
+.lp-magnet-list li{display:flex;gap:12px;align-items:flex-start;padding:9px 0;font-size:15.5px;color:var(--text-body)}
+.lp-magnet-list i{width:20px;height:20px;color:var(--green);flex-shrink:0;margin-top:3px}
+.lp-pdf-visual{display:inline-flex;align-items:center;gap:14px;margin-top:28px;padding:14px 18px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.lp-pdf-visual .pdf-ic{width:42px;height:42px;border-radius:10px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green)}
+.lp-pdf-visual .pdf-ic i{width:22px;height:22px}
+.lp-pdf-visual .pdf-meta strong{display:block;font-family:var(--font-h);font-size:14px;color:var(--text)}
+.lp-pdf-visual .pdf-meta span{font-size:12px;color:var(--text-muted)}
+
+/* Formular-Karte */
+.lp-form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);padding:40px;box-shadow:var(--shadow-lg)}
+.lp-form-card h3{margin-bottom:6px}
+.lp-form-card .lp-form-sub{font-size:14px;color:var(--text-muted);margin-bottom:24px}
+.lp-form .name-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.lp-form .form-group{margin-bottom:16px}
+.lp-form .form-label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:7px}
+.lp-form .form-input{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);transition:all .25s var(--ease);font-size:15px}
+.lp-form .form-input:focus{outline:none;border-color:var(--green);background:#fff;box-shadow:0 0 0 3px var(--green-soft)}
+.lp-consent{display:flex;gap:10px;align-items:flex-start;margin:4px 0 20px;font-size:12.5px;color:var(--text-muted);line-height:1.55}
+.lp-consent input{margin-top:3px;width:16px;height:16px;accent-color:var(--green);flex-shrink:0}
+.lp-consent a{color:var(--green);text-decoration:underline}
+.lp-form .trust-signals{display:flex;gap:18px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.lp-form .trust-signal{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
+.lp-form .trust-signal i{width:14px;height:14px;color:var(--green)}
+.lp-form-result{margin-top:16px;padding:14px 18px;border-radius:10px;font-size:14px;font-weight:500}
+.lp-success{text-align:center;padding:20px 0}
+.lp-success .succ-ic{width:64px;height:64px;border-radius:50%;background:var(--green-pale);color:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+.lp-success .succ-ic i{width:32px;height:32px}
+.lp-success h3{margin-bottom:8px}
+.lp-success p{font-size:14.5px;color:var(--text-muted);margin-bottom:20px}
+
+/* ===== LP: Gespräch-CTA ===== */
+.lp-talk{background:linear-gradient(170deg,var(--green-forest),var(--green-deep));color:var(--text-inv);text-align:center}
+.lp-talk h2{color:#fff;margin-bottom:16px}
+.lp-talk p{font-size:17px;color:rgba(255,255,255,.7);max-width:560px;margin:0 auto 32px}
+
+/* Sticky Mobile CTA */
+.lp-sticky{position:fixed;left:0;right:0;bottom:0;z-index:9000;display:none;padding:12px 16px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--border);box-shadow:0 -4px 24px rgba(10,58,42,.08)}
+.lp-sticky .btn{width:100%;justify-content:center}
+
+@media(max-width:900px){
+  .lp-hero{padding:118px 0 64px}
+  .lp-video-frame{max-width:280px}
+  .lp-benefits{grid-template-columns:1fr;gap:14px}
+  .lp-magnet{grid-template-columns:1fr;gap:36px}
+  .lp-story{grid-template-columns:1fr;gap:26px}
+  .lp-story-img img{min-height:240px}
+}
+@media(max-width:600px){
+  .lp-form-card{padding:28px 20px}
+  .lp-form .name-fields{grid-template-columns:1fr}
+  .lp-sticky{display:block}
+  body{padding-bottom:76px}
+  .lp-header .lp-head-cta{display:none}
+}
+/* Legal Overlays */
+.legal-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
+.legal-overlay.active{display:flex}
+.legal-content{background:var(--white,#fff);border-radius:16px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:48px 40px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.3);text-align:left}
+.legal-content h2{font-family:var(--font-h,Manrope,sans-serif);font-size:24px;font-weight:800;margin-bottom:24px;color:var(--text,#1a2332)}
+.legal-content h3{font-family:var(--font-h,Manrope,sans-serif);font-size:16px;font-weight:700;margin:24px 0 8px;color:var(--text,#1a2332)}
+.legal-content p{font-size:14px;line-height:1.7;color:var(--text-body,#4a5568);margin-bottom:12px}
+.legal-content a{color:var(--green,#00A86B);text-decoration:underline}
+.legal-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border:none;background:var(--bg-warm,#f5f5f0);border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text,#1a2332);transition:all .2s}
+.legal-close:hover{background:var(--green-soft,#e6f5ec);color:var(--green,#00A86B)}
+@media(max-width:600px){.legal-content{padding:32px 20px;border-radius:12px}}
+
+/* ===== LP: 2-Schritt Qualifizierungs-Formular ===== */
+.lp-steps-bar{display:flex;align-items:center;gap:8px;margin-bottom:22px}
+.lp-steps-bar .step-dot{flex:1;height:5px;border-radius:3px;background:var(--border);transition:background .3s var(--ease)}
+.lp-steps-bar .step-dot.active{background:var(--green)}
+.lp-step[hidden]{display:none}
+.lp-step-q{font-family:var(--font-h);font-size:16.5px;font-weight:700;color:var(--text);margin-bottom:4px}
+.lp-step-hint{font-size:13px;color:var(--text-muted);margin-bottom:16px}
+.qual-options{display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
+.qual-opt{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s var(--ease);background:var(--bg)}
+.qual-opt:hover{border-color:var(--green);background:#fff}
+.qual-opt input{position:absolute;opacity:0;width:0;height:0}
+.qual-opt .qual-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;position:relative;transition:all .2s var(--ease)}
+.qual-opt .qual-txt{font-size:14.5px;font-weight:600;color:var(--text)}
+.qual-opt .qual-sub{display:block;font-size:12px;font-weight:400;color:var(--text-muted);margin-top:1px}
+.qual-opt:has(input:checked){border-color:var(--green);background:var(--green-soft);box-shadow:0 0 0 3px var(--green-soft)}
+.qual-opt:has(input:checked) .qual-radio{border-color:var(--green);background:var(--green)}
+.qual-opt:has(input:checked) .qual-radio:after{content:"";position:absolute;inset:4px;border-radius:50%;background:#fff}
+.lp-form select.form-input{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2300A86B' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:42px;cursor:pointer}
+.step-actions{display:flex;gap:10px;margin-top:18px}
+.btn-back{background:transparent;border:1.5px solid var(--border);color:var(--text-muted);border-radius:var(--radius-sm);padding:0 18px;font-weight:600;font-size:14px;cursor:pointer;transition:all .2s}
+.btn-back:hover{border-color:var(--text-muted);color:var(--text)}
+.step-actions .btn{flex:1}
+
+/* ===== Mobile-Optimierung ===== */
+.stat-grid.lp-stats4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:680px){
+  .stat-grid.lp-stats4{grid-template-columns:repeat(2,1fr)}
+  .lp-hero{padding:104px 0 56px}
+  .lp-hero h1{font-size:clamp(26px,7vw,40px)}
+  .lp-hero .lp-sub{font-size:15.5px}
+  .lp-video-frame{max-width:248px}
+  .lp-benefits{grid-template-columns:1fr}
+  .lp-magnet{gap:28px}
+  .lp-form-card{padding:24px 18px}
+  .container{padding-left:18px;padding-right:18px}
+}
+
+/* ===== Kennzahlen (robust, kein Clipping) ===== */
+.gc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.gc-stat{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px 14px;text-align:center}
+.gc-stat-num{font-family:var(--font-h);font-weight:800;color:var(--green);line-height:1;font-size:clamp(22px,4.4vw,34px)}
+.gc-stat-label{font-size:11.5px;font-weight:600;color:var(--text-muted);margin-top:7px;text-transform:uppercase;letter-spacing:.04em;line-height:1.3}
+@media(max-width:680px){.gc-stats{grid-template-columns:repeat(2,1fr);gap:10px}.gc-stat{padding:20px 12px}}
+
+/* ===== Holz-Marktwert-Rechner (Logik der Homepage) ===== */
+.config-box{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);padding:48px;max-width:900px;margin:0 auto;box-shadow:var(--shadow-sm)}
+.config-count{font-family:var(--font-h);font-size:72px;font-weight:800;color:var(--green);line-height:1;text-align:center}
+.config-count-label{font-size:16px;font-weight:400;color:var(--text-muted);text-align:center;margin-bottom:32px}
+.config-range{width:100%;-webkit-appearance:none;appearance:none;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--green-pale),var(--bg-alt));outline:none;cursor:pointer}
+.config-range::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--green);cursor:pointer;box-shadow:0 4px 16px var(--green-glow);border:3px solid var(--white)}
+.config-range::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid var(--white)}
+.config-range-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);font-weight:500;margin-bottom:32px}
+.config-results{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.config-result-card{background:var(--bg);border-radius:var(--radius);padding:20px 14px;text-align:center}
+.config-result-value{font-family:var(--font-h);font-size:20px;font-weight:700;color:var(--text);line-height:1;margin-bottom:4px}
+.config-result-label{font-size:10px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.config-result-icon{margin-bottom:8px}.config-result-icon i{width:20px;height:20px;color:var(--green)}
+.config-market-box{background:linear-gradient(135deg,var(--green-deep),#0D4A35);border-radius:var(--radius-lg);padding:28px;text-align:center;margin-bottom:32px}
+.config-market-value{font-family:var(--font-h);font-size:32px;font-weight:800;color:var(--green-light);line-height:1}
+.config-market-label{font-size:13px;color:rgba(255,255,255,.5);margin-top:0;margin-bottom:6px}
+.config-market-source{font-size:10px;color:rgba(255,255,255,.4);margin-top:12px;line-height:1.5}
+@media(max-width:680px){
+  .config-box{padding:28px 18px}
+  .config-results{grid-template-columns:repeat(2,1fr)}
+  .config-count{font-size:48px}
+  .config-market-value{font-size:24px}
+  .config-result-value{font-size:17px}
+  .config-range-labels{font-size:10px}
+}
+</style>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xfljij0bkr");
+</script>
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<header class="lp-header" id="header"><div class="header-inner">
+    <a href="/de/" class="logo"><img src="/assets/img/logo-greenchild.png" alt="Greenchild" class="logo-img"></a>
+    <a href="#anfordern" class="btn btn-primary btn-sm lp-head-cta">Vergleich sichern</a>
+</div></header>
+
+<!-- HERO -->
+<section class="lp-hero">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="container">
+        <div class="lp-hero-center">
+            <div class="label light center" style="animation:fadeUp .8s .1s both;">Greenchild — Baumbesitzer im Interview</div>
+            <h1 style="animation:fadeUp .8s .25s both;">Sie haben es bereits getan. <span class="hl">Hören Sie, warum.</span></h1>
+            <p class="lp-sub" style="animation:fadeUp .8s .4s both;">Acht Baumbesitzer vor der Kamera: ungeschnitten, in ihren eigenen Worten, auf der Plantage und zuhause.</p>
+            <div class="lp-video-wrap" style="animation:fadeUp .8s .5s both;">
+                <div class="lp-video-frame">
+                    <video id="heroVideo" poster="/assets/img/interviews/i1.jpg" playsinline autoplay muted loop preload="metadata">
+                        <source src="/assets/video/interviews/i1_720.mp4" type="video/mp4">
+                    </video>
+                    <button class="lp-video-play" id="heroPlay" aria-label="Ton einschalten">
+                        <span class="pp"><i data-lucide="volume-2"></i></span>
+                        <span class="pp-label">Mit Ton ansehen</span>
+                    </button>
+                </div>
+            </div>
+            <div class="btn-group" style="animation:fadeUp .8s .6s both;">
+                <a href="#anfordern" class="btn btn-primary-glow btn-lg">Sachwertvergleich 2026 kostenlos sichern</a>
+            </div>
+            <div class="lp-trust-row" style="animation:fadeUp .8s .7s both;">
+                <span><i data-lucide="check-circle"></i> 100&nbsp;% kostenlos</span>
+                <span><i data-lucide="lock"></i> Unverbindlich</span>
+                <span><i data-lucide="clock"></i> In 30&nbsp;Sekunden</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- INTERVIEWS -->
+<section class="bg-white" id="interviews">
+  <div class="container">
+    <div class="section-header center reveal"><div class="label center">Die Interviews</div><h2>Acht Baumbesitzer, acht Gespräche</h2><p>Klicken Sie auf ein Interview und hören Sie zu. Keine Skripte, keine Schauspieler.</p></div>
+    <div class="iv-grid reveal">
+      <div class="iv-card"><video controls preload="none" poster="/assets/img/interviews/i1.jpg"><source src="/assets/video/interviews/i1_720.mp4" type="video/mp4"></video><div class="iv-name">Dr. Dorothee Becker</div></div>
+      <div class="iv-card"><video controls preload="none" poster="/assets/img/interviews/i2.jpg"><source src="/assets/video/interviews/i2_720.mp4" type="video/mp4"></video><div class="iv-name">Stephan Becker</div></div>
+      <div class="iv-card"><video controls preload="none" poster="/assets/img/interviews/i3.jpg"><source src="/assets/video/interviews/i3_720.mp4" type="video/mp4"></video><div class="iv-name">Theodor Länge</div></div>
+      <div class="iv-card"><video controls preload="none" poster="/assets/img/interviews/i4.jpg"><source src="/assets/video/interviews/i4_720.mp4" type="video/mp4"></video><div class="iv-name">Josef Fürnkäs</div></div>
+      <div class="iv-card"><video controls preload="none" poster="/assets/img/interviews/i5.jpg"><source src="/assets/video/interviews/i5_720.mp4" type="video/mp4"></video><div class="iv-name">Udo Martens</div></div>
+      <div class="iv-card"><video controls preload="none" poster="/assets/img/interviews/i6.jpg"><source src="/assets/video/interviews/i6_720.mp4" type="video/mp4"></video><div class="iv-name">Ulrich Steige</div></div>
+      <div class="iv-card"><video controls preload="none" poster="/assets/img/interviews/i7.jpg"><source src="/assets/video/interviews/i7_720.mp4" type="video/mp4"></video><div class="iv-name">Sabine Wagner</div></div>
+      <div class="iv-card"><video controls preload="none" poster="/assets/img/interviews/i8.jpg"><source src="/assets/video/interviews/i8_720.mp4" type="video/mp4"></video><div class="iv-name">Sigrid Länge</div></div>
+    </div>
+  </div>
+</section>
+<style>
+.iv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:34px}
+.iv-card{position:relative;border-radius:16px;overflow:hidden;background:#000;box-shadow:var(--shadow-lg);cursor:pointer}
+.iv-card video{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.iv-name{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 10px;background:linear-gradient(to top,rgba(0,0,0,.72),transparent);color:#fff;font-size:13.5px;font-weight:600;pointer-events:none}
+@media(max-width:900px){.iv-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.iv-card video').forEach(function(v){
+    v.addEventListener('play',function(){
+      document.querySelectorAll('.iv-card video').forEach(function(o){if(o!==v)o.pause();});
+    });
+  });
+});
+</script>
+
+<!-- LEAD-MAGNET / FORMULAR -->
+<section class="bg-white" id="anfordern">
+    <div class="container">
+        <div class="lp-magnet">
+            <div class="lp-magnet-text reveal">
+                <div class="label">Kostenloser Download</div>
+                <h2>Der Sachwertvergleich 2026</h2>
+                <p style="font-size:16.5px;color:var(--text-body);line-height:1.8;margin-top:12px;">Ein unabhängiger Vergleich, in dem wir <strong>acht verschiedene Sachwert-Klassen</strong> gegenüberstellen – und ehrlich auch unsere eigene Einordnung zeigen. Vergleichen Sie selbst und entscheiden Sie, ob das etwas für Sie ist.</p>
+                <ul class="lp-magnet-list">
+                    <li><i data-lucide="check"></i> Paulownia im direkten Vergleich zu Aktien, Anleihen, Gold &amp; Immobilien</li>
+                    <li><i data-lucide="check"></i> 8 Sachwert-Klassen objektiv gegenübergestellt</li>
+                    <li><i data-lucide="check"></i> Ehrliche Einordnung – inklusive unserer eigenen Position</li>
+                    <li><i data-lucide="check"></i> Sofort als PDF, komplett kostenlos &amp; unverbindlich</li>
+                </ul>
+                <div class="lp-pdf-visual">
+                    <span class="pdf-ic"><i data-lucide="file-text"></i></span>
+                    <span class="pdf-meta"><strong>Sachwertvergleich 2026</strong><span>PDF · sofortiger Download</span></span>
+                </div>
+            </div>
+            <div class="lp-form-card reveal reveal-delay-1">
+                <div id="formInner">
+                    <h3>Jetzt kostenlos herunterladen</h3>
+                    <p class="lp-form-sub">Tragen Sie Ihre Daten ein – der Download startet sofort.</p>
+                    <form id="realwertForm" class="lp-form" novalidate>
+                        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none;">
+
+                        <div class="lp-steps-bar" aria-hidden="true">
+                            <span class="step-dot active" data-dot="1"></span>
+                            <span class="step-dot" data-dot="2"></span>
+                        </div>
+
+                        <!-- Schritt 1: Qualifizierung -->
+                        <div class="lp-step" data-step="1">
+                            <p class="lp-step-q">Damit wir Ihren Vergleich richtig einordnen:</p>
+                            <p class="lp-step-hint">In welchem Rahmen denken Sie? Unverbindlich – hilft uns nur, Sie passend zu beraten.</p>
+                            <div class="qual-options">
+                                <label class="qual-opt"><input type="radio" name="budget" value="info" required><span class="qual-radio"></span><span class="qual-txt">Erst einmal informieren<span class="qual-sub">Noch unsicher</span></span></label>
+                                <label class="qual-opt"><input type="radio" name="budget" value="bis-2500"><span class="qual-radio"></span><span class="qual-txt">bis 2.500 €<span class="qual-sub">ca. 1–10 Bäume</span></span></label>
+                                <label class="qual-opt"><input type="radio" name="budget" value="2500-10000"><span class="qual-radio"></span><span class="qual-txt">2.500 – 10.000 €<span class="qual-sub">ca. 10–40 Bäume</span></span></label>
+                                <label class="qual-opt"><input type="radio" name="budget" value="10000-25000"><span class="qual-radio"></span><span class="qual-txt">10.000 – 25.000 €<span class="qual-sub">ca. 40–100 Bäume</span></span></label>
+                                <label class="qual-opt"><input type="radio" name="budget" value="25000-plus"><span class="qual-radio"></span><span class="qual-txt">über 25.000 €<span class="qual-sub">100+ Bäume</span></span></label>
+                            </div>
+                            <div class="step-actions">
+                                <button type="button" class="btn btn-primary-glow btn-lg" id="toStep2" style="justify-content:center;">Weiter</button>
+                            </div>
+                        </div>
+
+                        <!-- Schritt 2: Kontakt -->
+                        <div class="lp-step" data-step="2" hidden>
+                            <div class="name-fields">
+                                <div class="form-group"><label class="form-label">Vorname *</label><input type="text" name="vorname" class="form-input" autocomplete="given-name" required></div>
+                                <div class="form-group"><label class="form-label">Nachname *</label><input type="text" name="nachname" class="form-input" autocomplete="family-name" required></div>
+                            </div>
+                            <div class="form-group"><label class="form-label">E-Mail *</label><input type="email" name="email" class="form-input" autocomplete="email" required></div>
+                            <div class="form-group"><label class="form-label">Telefon *</label><input type="tel" name="telefon" class="form-input" autocomplete="tel" inputmode="tel" placeholder="z. B. 0151 19133331" required><small class="form-hint" style="display:block;margin-top:5px;font-size:12.5px;color:var(--text-muted,#6b7280);">Bitte eine gültige Telefonnummer angeben – wir melden uns persönlich.</small></div>
+                            <div class="form-group"><label class="form-label">Beste Erreichbarkeit</label>
+                                <select name="erreichbarkeit" class="form-input">
+                                    <option value="" selected>Bitte wählen … (optional)</option>
+                                    <option value="Vormittag (8–12 Uhr)">Vormittag (8–12 Uhr)</option>
+                                    <option value="Nachmittag (12–17 Uhr)">Nachmittag (12–17 Uhr)</option>
+                                    <option value="Abend (17–20 Uhr)">Abend (17–20 Uhr)</option>
+                                    <option value="Egal / jederzeit">Egal / jederzeit</option>
+                                </select>
+                            </div>
+                            <label class="lp-consent"><input type="checkbox" name="consent" required><span>Ich bin einverstanden, dass Greenchild mich kontaktiert, und habe die <a href="#" onclick="event.preventDefault();document.getElementById('datenschutzOverlay').classList.add('active')">Datenschutzerklärung</a> gelesen.</span></label>
+                            <div class="step-actions">
+                                <button type="button" class="btn-back" id="backStep1">Zurück</button>
+                                <button type="submit" class="btn btn-primary-glow btn-lg" style="justify-content:center;">Jetzt kostenlos herunterladen</button>
+                            </div>
+                        </div>
+
+                        <div class="trust-signals">
+                            <div class="trust-signal"><i data-lucide="lock"></i> SSL-verschlüsselt</div>
+                            <div class="trust-signal"><i data-lucide="shield"></i> Kein Spam</div>
+                            <div class="trust-signal"><i data-lucide="x-circle"></i> Jederzeit widerrufbar</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOOK -->
+<section class="bg-white">
+    <div class="container">
+        <div class="lp-hook reveal">
+            <div class="label center">Eine ehrliche Frage</div>
+            <h2>Was hinterlassen Sie Ihren Kindern?</h2>
+            <p>Einen ETF, Immobilien oder Gold – Werte, die schwanken, an Faktoren gekoppelt sind oder an Wert verlieren? Oder etwas, das <span class="hl">beständig ist, das wächst, wenn alles andere schwankt</span> – natürlich statt gezüchtet, und das Ihnen niemand nehmen kann?</p>
+        </div>
+    </div>
+</section>
+
+<!-- VORTEILE -->
+<section class="bg-light">
+    <div class="container">
+        <div class="section-header center reveal"><div class="label center">Warum Paulownia</div><h2>Kein Finanzprodukt. Ein echter Sachwert.</h2><p>Keine Aktie, kein Beteiligungspapier – sondern reale Bäume mit Ihrem Namen, die Sie an Generationen weitergeben.</p></div>
+        <div class="lp-benefits">
+            <div class="card reveal"><div class="icon-box green"><i data-lucide="tree-pine"></i></div><h4>Physisches Eigentum</h4><p>Reale Bäume mit Ihrem Namen und Baum-Zertifikat. Etwas, das Sie tatsächlich besitzen und jederzeit innerhalb von zwei Stunden erreichen.</p></div>
+            <div class="card reveal reveal-delay-1"><div class="icon-box green"><i data-lucide="trending-up"></i></div><h4>Wächst gegen die Inflation</h4><p>Einer der am schnellsten wachsenden Bäume Europas – bis zu 3&nbsp;Meter pro Jahr. Ihr Sachwert steigt, während das Sparkonto schrumpft.</p></div>
+            <div class="card reveal reveal-delay-2"><div class="icon-box green"><i data-lucide="shield-check"></i></div><h4>Auf 3 Länder verteilt</h4><p>255&nbsp;Hektar bereits gepflanzt, verteilt auf drei Länder – damit selbst Naturkatastrophen Ihr Eigentum nicht zerstören können.</p></div>
+        </div>
+        <div class="gc-stats reveal" style="margin-top:40px;">
+            <div class="gc-stat"><div class="gc-stat-num" data-count="255">0</div><div class="gc-stat-label">Hektar in 3 Ländern</div></div>
+            <div class="gc-stat"><div class="gc-stat-num" data-count="160000">0</div><div class="gc-stat-label">Bäume gepflanzt</div></div>
+            <div class="gc-stat"><div class="gc-stat-num" data-count="3" data-suffix=" m">0</div><div class="gc-stat-label">Wachstum pro Jahr</div></div>
+            <div class="gc-stat"><div class="gc-stat-num" data-count="15" data-suffix="+">0</div><div class="gc-stat-label">Jahre Erfahrung</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- HOLZ-MARKTWERT-RECHNER -->
+<section class="bg-white">
+    <div class="container">
+        <div class="section-header center reveal">
+            <div class="label center">Sachwert zum Anfassen</div>
+            <h2>Holz-Marktwert-Rechner</h2>
+            <p>Schätzen Sie den <strong>Materialwert des Holzes</strong> Ihrer Bäume – auf Basis aktueller Marktpreise. Unverbindliche Beispielrechnung, kein Finanzprodukt.</p>
+        </div>
+        <div class="config-box reveal">
+            <div class="config-count" id="configCount">100</div>
+            <div class="config-count-label">Paulownia-Bäume</div>
+            <div style="max-width:560px;margin:0 auto 8px;">
+                <input type="range" min="100" max="800" value="100" step="25" class="config-range" id="configSlider" aria-label="Anzahl Bäume">
+                <div class="config-range-labels"><span>100 Bäume</span><span>800 Bäume</span></div>
+            </div>
+            <div class="config-results">
+                <div class="config-result-card"><div class="config-result-icon"><i data-lucide="wallet"></i></div><div class="config-result-value" id="configPrice">24.900 €</div><div class="config-result-label">Kaufpreis</div></div>
+                <div class="config-result-card"><div class="config-result-icon"><i data-lucide="map-pin"></i></div><div class="config-result-value"><span id="configArea">0,16</span> ha</div><div class="config-result-label">Fläche</div></div>
+                <div class="config-result-card"><div class="config-result-icon"><i data-lucide="wind"></i></div><div class="config-result-value"><span id="configCo2">ca. 30.100</span> kg</div><div class="config-result-label">CO₂ / Jahr</div></div>
+                <div class="config-result-card"><div class="config-result-icon"><i data-lucide="axe"></i></div><div class="config-result-value"><span id="configVolume">ca. 137</span> m³</div><div class="config-result-label">Holz bei Reife</div></div>
+            </div>
+            <div class="config-market-box">
+                <div class="config-market-label">Geschätzter Marktwert des Holzes bei Reife</div>
+                <div class="config-market-value"><span id="configMarketLow">€43.840</span> – <span id="configMarketHigh">€60.280</span></div>
+                <div class="config-market-source">Paulownia-Schnittholz (ca. 400 €/m³). Unverbindliche Beispielrechnung – kein Finanzprodukt, keine Kapitalanlage i.S.d. VermAnlG, keine Anlageberatung, keine Zusicherung künftiger Werte. Marktpreise schwanken, keine Renditeversprechen.</div>
+            </div>
+            <div style="text-align:center;">
+                <a href="#anfordern" class="btn btn-primary-glow btn-lg">Kostenlosen Sachwertvergleich sichern</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BAUMBESITZER-STORY -->
+<section class="bg-warm">
+    <div class="container">
+        <div class="section-header center reveal"><div class="label center">Eine Geschichte</div><h2>Was ein Baum bedeuten kann</h2></div>
+        <div class="lp-story reveal">
+            <div class="lp-story-img"><img src="/assets/img/investor-visit-man.jpg" alt="Baumbesitzer auf der Greenchild-Plantage" loading="lazy"></div>
+            <div class="lp-story-text">
+                <p>Andreas, 57, hatte sein Leben lang gearbeitet, gespart, vorgesorgt. Doch als er Jahr für Jahr zusah, wie sein Erspartes still an Wert verlor – und seine Bank ihm schon das nächste Zertifikat verkaufen wollte – wusste er: <strong>So nicht.</strong></p>
+                <p>Was er seinen beiden Enkeln einmal hinterlassen wollte, sollte man anfassen können. Etwas, das wächst, während alles andere schwankt – natürlich statt gezüchtet.</p>
+                <p>Heute tragen 60 Paulownia-Bäume die Namen seiner Enkel, gepflanzt in ihrem Geburtsjahr. Jedes Frühjahr fährt Andreas hin, misst, wie weit sie gewachsen sind, und macht ein Foto. Die Bäume sind längst größer als die Kinder.</p>
+                <blockquote class="lp-quote">„Ich hinterlasse ihnen keine Zahl auf einem Bildschirm. Ich hinterlasse ihnen etwas Lebendiges – mit ihrem Namen darauf."</blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GESPRÄCH -->
+<section class="lp-talk">
+    <div class="container">
+        <div class="reveal" style="max-width:680px;margin:0 auto;">
+            <div class="label light center">Der nächste Schritt</div>
+            <h2>Sichern Sie sich Ihren persönlichen Termin.</h2>
+            <p>Wenn der Vergleich Ihr Interesse weckt, vereinbaren wir am besten einen persönlichen Termin – telefonisch oder per Video, rund 20 Minuten und völlig unverbindlich. Dort zeige ich Ihnen weit mehr, als in ein Video passt.</p>
+            <a href="/de/kontakt.html" class="btn btn-white btn-lg">Persönlichen Termin vereinbaren</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer"><div class="container">
+    <div class="footer-grid">
+        <div class="footer-brand"><img loading="lazy" src="/assets/img/logo-greenchild.png" alt="Greenchild" style="height:32px;margin-bottom:16px;filter:brightness(1.5);"><p>Paulownia-Bäume als Sachwert. Ca. 255 Hektar in 3 Ländern.</p></div>
+        <div><h5>Greenchild</h5><ul><li><a href="/de/">Zur Hauptseite</a></li><li><a href="/de/baumbesitzer.html">Baumbesitzer werden</a></li><li><a href="/de/kontakt.html">Kontakt</a></li></ul></div>
+        <div><h5>Kontakt</h5><ul><li><a href="tel:+4915119133331">+49 151 191 333 31</a></li><li><a href="mailto:info@greenchild.eu">info@greenchild.eu</a></li><li style="color:var(--text-inv-muted);font-size:13px;margin-top:8px;">Greenchild LLC<br>Ferizaj, Kosovo</li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>&copy; 2026 Greenchild LLC</span><div class="footer-legal"><a href="#" onclick="event.preventDefault();document.getElementById('impressumOverlay').classList.add('active')">Impressum</a><a href="#" onclick="event.preventDefault();document.getElementById('datenschutzOverlay').classList.add('active')">Datenschutz</a></div></div>
+</div></footer>
+
+<!-- Sticky Mobile CTA -->
+<div class="lp-sticky"><a href="#anfordern" class="btn btn-primary-glow">Sachwertvergleich kostenlos sichern</a></div>
+
+<!-- LEGAL OVERLAYS -->
+<div class="legal-overlay" id="impressumOverlay">
+  <div class="legal-content">
+    <button class="legal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button>
+    <h2>Impressum</h2>
+    <p><strong>Greenchild LLC</strong><br>M.Meha, Greenchild Street<br>70000 Ferizaj, Kosovo</p>
+    <p><strong>Vertretungsberechtigt:</strong><br>Geschäftsführung der Greenchild LLC</p>
+    <p><strong>Kontakt:</strong><br>Telefon (DE): <a href="tel:+4915119133331">+49 151 191 333 31</a><br>Telefon (Kosovo): <a href="tel:+38343918333">+383 43 918 333</a><br>E-Mail: <a href="mailto:info@greenchild.eu">info@greenchild.eu</a></p>
+  </div>
+</div>
+<div class="legal-overlay" id="datenschutzOverlay">
+  <div class="legal-content">
+    <button class="legal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button>
+    <h2>Datenschutzerklärung</h2>
+    <p style="font-size:12.5px;color:var(--text-dim,#8a94a0);margin-bottom:18px;">Stand: Juli 2026</p>
+
+    <h3>1. Verantwortlicher</h3>
+    <p>Greenchild LLC<br>M.Meha, Greenchild Street<br>70000 Ferizaj, Kosovo<br>E-Mail: <a href="mailto:info@greenchild.eu">info@greenchild.eu</a> · Telefon: +49 151 191 333 31</p>
+    <p>Diese Datenschutzerklärung gilt für die Websites greenchild.eu, greenchild.at sowie die zugehörigen Landingpages.</p>
+
+    <h3>2. Allgemeines zur Datenverarbeitung</h3>
+    <p>Wir verarbeiten personenbezogene Daten nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie unserer Inhalte und Leistungen erforderlich ist oder Sie eingewilligt haben. Rechtsgrundlagen sind insbesondere Art. 6 Abs. 1 lit. a (Einwilligung), lit. b (Vertrag/vorvertragliche Maßnahmen) und lit. f (berechtigtes Interesse) DSGVO.</p>
+
+    <h3>3. Hosting &amp; Server-Logfiles</h3>
+    <p>Diese Website wird bei ALL-INKL.COM – Neue Medien Münnich (Hauptstraße 68, 02742 Friedersdorf, Deutschland) gehostet. Beim Aufruf werden automatisch technische Daten in Server-Logfiles gespeichert: IP-Adresse, Datum/Uhrzeit, aufgerufene Seite, übertragene Datenmenge, Browsertyp und Betriebssystem. Zweck ist der sichere und stabile Betrieb; Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Ein Auftragsverarbeitungsvertrag (Art. 28 DSGVO) liegt vor.</p>
+
+    <h3>4. SSL-/TLS-Verschlüsselung</h3>
+    <p>Diese Website nutzt aus Sicherheitsgründen eine SSL-/TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie am Schloss-Symbol in der Adresszeile Ihres Browsers.</p>
+
+    <h3>5. Cloudflare (CDN)</h3>
+    <p>Zur sicheren und schnellen Auslieferung nutzen wir Cloudflare, Inc. (101 Townsend St, San Francisco, CA 94107, USA). Ihre Anfrage wird über Cloudflare-Server geleitet; dabei wird die IP-Adresse verarbeitet. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Der Datentransfer in die USA erfolgt auf Grundlage der EU-Standardvertragsklauseln. Datenschutzerklärung: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com/privacypolicy</a>.</p>
+
+    <h3>6. Google Fonts &amp; Icons</h3>
+    <p>Wir binden Schriftarten (Google Fonts, Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland) sowie Icons (Lucide über das CDN unpkg.com) ein. Beim Laden wird eine Verbindung zu den Servern der Anbieter hergestellt und Ihre IP-Adresse übertragen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (ansprechende Darstellung). Google: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</p>
+
+    <h3>7. Kontakt- und Anforderungsformulare</h3>
+    <p>Wenn Sie ein Formular ausfüllen (z. B. Kontakt- oder Sachwertvergleich-Formular), verarbeiten wir die von Ihnen angegebenen Daten (u. a. Name, E-Mail-Adresse, Telefonnummer, Anliegen sowie ggf. Angaben zum Investitionsrahmen und zur Erreichbarkeit), um Ihre Anfrage zu bearbeiten, Ihnen die angeforderten Unterlagen bereitzustellen und Sie auf Wunsch zu kontaktieren. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Durchführung vorvertraglicher Maßnahmen) sowie Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), soweit Sie einer Kontaktaufnahme zugestimmt haben.</p>
+    <p>Empfänger / Auftragsverarbeiter: Zur Übermittlung von Kontaktanfragen nutzen wir Web3Forms; zur Verwaltung von Anfragen und Interessenten das CRM-System Pipedrive (Pipedrive OÜ, Paldiski mnt 80, 10617 Tallinn, Estland). Mit den Anbietern bestehen Auftragsverarbeitungsverträge (Art. 28 DSGVO). Wir speichern Ihre Angaben, bis der Zweck entfällt oder Sie die Löschung verlangen; gesetzliche Aufbewahrungsfristen bleiben unberührt.</p>
+
+    <h3>8. Kontaktaufnahme (Telefon, E-Mail, Messenger)</h3>
+    <p>Haben Sie einer telefonischen Kontaktaufnahme oder einer Kontaktaufnahme per Messenger (z. B. WhatsApp) zugestimmt, verarbeiten wir Ihre Kontaktdaten zu diesem Zweck auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Sie können die Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+
+    <h3>9. Meta-Pixel &amp; Conversions API (Facebook/Instagram)</h3>
+    <p>Sofern Sie eingewilligt haben, nutzen wir auf unseren Landingpages den Meta-Pixel sowie die Conversions API der Meta Platforms Ireland Ltd. (4 Grand Canal Square, Dublin 2, Irland). Damit messen wir die Wirksamkeit unserer Werbeanzeigen und optimieren die Ausspielung. Verarbeitet werden u. a. Nutzungs- und Ereignisdaten sowie – zur besseren Zuordnung – gehashte (pseudonymisierte) Angaben wie E-Mail-Adresse oder Telefonnummer. Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). Eine Übermittlung in die USA kann stattfinden (Standardvertragsklauseln bzw. EU-US Data Privacy Framework). Datenschutz: <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener">facebook.com/privacy/policy</a>. Ihre Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+
+    <h3>10. Microsoft Clarity (Reichweitenanalyse)</h3>
+    <p>Sofern Sie eingewilligt haben, nutzen wir Microsoft Clarity der Microsoft Corporation (One Microsoft Way, Redmond, WA 98052, USA). Clarity erstellt aggregierte Heatmaps und pseudonymisierte Sitzungsaufzeichnungen (Maus-, Scroll- und Klickverhalten), um die Nutzung unserer Website zu verstehen und zu verbessern. Eingaben in Formularfelder werden von Clarity standardmäßig maskiert. Es werden Cookies bzw. vergleichbare Technologien eingesetzt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO (Einwilligung); eine Übermittlung in die USA kann stattfinden. Datenschutz: <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">privacy.microsoft.com</a>. Ihre Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+
+    <h3>11. Cookies &amp; Einwilligung</h3>
+    <p>Technisch notwendige Cookies setzen wir auf Grundlage von § 25 Abs. 2 TTDSG bzw. Art. 6 Abs. 1 lit. f DSGVO ein. Nicht notwendige Dienste (insbesondere Meta-Pixel/CAPI und Microsoft Clarity) werden nur nach Ihrer aktiven Einwilligung geladen (§ 25 Abs. 1 TTDSG, Art. 6 Abs. 1 lit. a DSGVO). Ihre Einwilligung ist freiwillig und jederzeit mit Wirkung für die Zukunft widerrufbar.</p>
+
+    <h3>12. Empfänger in Drittländern</h3>
+    <p>Einzelne der genannten Dienste (Cloudflare, Meta, Microsoft) können Daten in die USA übermitteln. Soweit dort kein durch einen Angemessenheitsbeschluss abgesichertes Datenschutzniveau besteht, erfolgt die Übermittlung auf Grundlage der EU-Standardvertragsklauseln bzw. – soweit zertifiziert – des EU-US Data Privacy Framework.</p>
+
+    <h3>13. Speicherdauer</h3>
+    <p>Wir speichern personenbezogene Daten nur so lange, wie es für die jeweiligen Zwecke erforderlich ist oder gesetzliche Aufbewahrungspflichten bestehen. Anschließend werden die Daten gelöscht oder anonymisiert.</p>
+
+    <h3>14. Ihre Rechte</h3>
+    <p>Sie haben das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) sowie Widerspruch gegen Verarbeitungen auf Grundlage von Art. 6 Abs. 1 lit. f (Art. 21 DSGVO). Erteilte Einwilligungen können Sie jederzeit mit Wirkung für die Zukunft widerrufen. Wenden Sie sich hierzu an <a href="mailto:info@greenchild.eu">info@greenchild.eu</a>.</p>
+    <p>Ihnen steht zudem ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu, insbesondere in dem Mitgliedstaat Ihres Aufenthaltsorts.</p>
+
+    <h3>15. Aktualität und Änderung</h3>
+    <p>Wir passen diese Datenschutzerklärung an, sobald Änderungen der Datenverarbeitung dies erforderlich machen. Es gilt die jeweils aktuelle, hier veröffentlichte Fassung.</p>
+  </div>
+</div>
+
+<script>
+// Hero-Video: startet stumm im Autoplay, Klick aktiviert den Ton
+(function(){
+  var v=document.getElementById('heroVideo'), btn=document.getElementById('heroPlay');
+  if(!v||!btn) return;
+  function unmute(){ v.muted=false; v.setAttribute('controls','controls'); if(v.paused) v.play(); btn.classList.add('hidden'); }
+  btn.addEventListener('click',unmute);
+  v.addEventListener('click',function(){ if(v.muted) unmute(); });
+})();
+// Header: scrolled-State
+(function(){
+  var h=document.getElementById('header'); if(!h) return;
+  var sp=document.getElementById('scrollProgress');
+  function onScroll(){
+    h.classList.toggle('scrolled', window.scrollY>20);
+    if(sp){ var d=document.documentElement; var p=d.scrollTop/((d.scrollHeight-d.clientHeight)||1); sp.style.width=(p*100)+'%'; }
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+// Reveal-Animationen
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.style.opacity=1;}); return; }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.style.animation='fadeUp .8s var(--ease) both'; io.unobserve(en.target);} });
+  },{threshold:.12});
+  els.forEach(function(e){ e.style.opacity=0; var d=e.className.match(/reveal-delay-(\d)/); if(d){e.style.animationDelay=(d[1]*0.12)+'s';} io.observe(e); });
+})();
+// Counter
+(function(){
+  var nums=document.querySelectorAll('[data-count]');
+  if(!('IntersectionObserver' in window)){ return; }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var el=en.target, target=parseInt(el.getAttribute('data-count'),10), suf=el.getAttribute('data-suffix')||'', t0=null;
+      function step(ts){ if(!t0)t0=ts; var p=Math.min((ts-t0)/1400,1); var val=Math.floor(p*target); el.textContent=val.toLocaleString('de-DE')+suf; if(p<1)requestAnimationFrame(step); else el.textContent=target.toLocaleString('de-DE')+suf; }
+      requestAnimationFrame(step); io.unobserve(el);
+    });
+  },{threshold:.4});
+  nums.forEach(function(n){ io.observe(n); });
+})();
+</script>
+<script>
+// Holz-Marktwert-Rechner — identische Logik wie der Homepage-Rechner (configSlider)
+(function(){
+  var s=document.getElementById('configSlider'); if(!s) return;
+  var PRICE=249, HA=625, VOL=1.37, CO2=301, MPRICE=400;
+  var el=function(id){return document.getElementById(id)};
+  function update(){
+    var t=parseInt(s.value,10)||0, area=t/HA, vol=t*VOL, co2=t*CO2, price=t*PRICE;
+    if(el('configCount'))el('configCount').textContent=t;
+    if(el('configPrice'))el('configPrice').textContent=price.toLocaleString('de-DE')+' €';
+    if(el('configArea'))el('configArea').textContent=area.toFixed(2).replace('.',',');
+    if(el('configCo2'))el('configCo2').textContent='ca. '+co2.toLocaleString('de-DE');
+    if(el('configVolume'))el('configVolume').textContent='ca. '+Math.round(vol).toLocaleString('de-DE');
+    if(el('configMarketLow'))el('configMarketLow').textContent='€'+Math.round(vol*MPRICE*0.8).toLocaleString('de-DE');
+    if(el('configMarketHigh'))el('configMarketHigh').textContent='€'+Math.round(vol*MPRICE*1.1).toLocaleString('de-DE');
+  }
+  s.addEventListener('input',update); update();
+})();
+</script>
+<script>window.GC_LEAD_SOURCE='baumbesitzer';</script>
+<script src="/js/lp-tracking.js"></script>
+<script src="/js/lp-realwert-form.js"></script>
+<script>
+(function(){
+  var n=0;
+  (function go(){
+    if(window.lucide&&window.lucide.createIcons){ lucide.createIcons(); return; }
+    if(n++<80){ setTimeout(go,100); }
+  })();
+  window.addEventListener('load',function(){ if(window.lucide&&window.lucide.createIcons) lucide.createIcons(); });
+})();
+</script>
+</body>
+</html>
