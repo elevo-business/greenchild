@@ -133,7 +133,9 @@
       event_id: eventId,
       event_source_url: location.href,
       fbp: window.gcCookie ? window.gcCookie('_fbp') : '',
-      fbc: window.gcCookie ? window.gcCookie('_fbc') : ''
+      fbc: window.gcCookie ? window.gcCookie('_fbc') : '',
+      // Nur mit Marketing-Einwilligung darf serverseitig an Meta (CAPI) gemeldet werden:
+      meta_consent: window.gcMarketingConsent ? window.gcMarketingConsent() : false
     };
 
     fetch(ENDPOINT, {

@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     if('scrollRestoration' in history)history.scrollRestoration='manual';
     window.scrollTo(0,0);
     if(window.lucide)lucide.createIcons();
+    // Rechts-Overlays per URL-Hash öffnen (z.B. Link von Unterseiten: /de/index.html#impressum)
+    (function(){var map={impressum:'impressumOverlay',datenschutz:'datenschutzOverlay',privacy:'datenschutzOverlay',agb:'agbOverlay'};var id=map[(location.hash||'').replace('#','').toLowerCase()];if(id){var o=document.getElementById(id);if(o)o.classList.add('active');}})();
     initGrowthSlider();
     initConfigurator();
 });

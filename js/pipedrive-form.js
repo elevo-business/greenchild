@@ -39,7 +39,9 @@
       vorname: vorname, nachname: nachname, email: email,
       interesse: interesse, nachricht: nachricht, botcheck: '',
       event_id: eventId, event_source_url: location.href,
-      fbp: cookie('_fbp'), fbc: cookie('_fbc')
+      fbp: cookie('_fbp'), fbc: cookie('_fbc'),
+      // Serverseitige Meta-Meldung (CAPI) nur mit Marketing-Einwilligung:
+      meta_consent: !!(window.gcConsent && window.gcConsent.marketing)
     };
 
     fetch(ENDPOINT, {

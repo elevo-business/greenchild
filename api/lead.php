@@ -152,6 +152,7 @@ $variant        = field($in, 'variant');  // optional (A/B-Test)
 $interesse      = field($in, 'interesse');  // nur Kontaktformular
 $nachricht      = field($in, 'nachricht');  // nur Kontaktformular
 $consent        = !empty($in['consent']);
+$metaConsent    = !empty($in['meta_consent']);  // Marketing-Einwilligung (Cookie-Banner) → Voraussetzung für Meta-CAPI
 
 // Meta Conversions API (Dedup + Matching)
 $eventId        = field($in, 'event_id');
@@ -362,6 +363,10 @@ if ($fbc === '' && $eventSourceUrl !== '') {
   }
 }
 
-meta_send_lead($META_PIXEL_ID, $META_CAPI_TOKEN, 'v19.0', $eventId, $eventSourceUrl, $email, $telefon, $vorname, $nachname, $fbp, $fbc, $customData, $META_TEST_EVENT_CODE);
+// Nur mit Marketing-Einwilligung an Meta melden (§ 25 TDDDG / Art. 6 Abs. 1 lit. a DSGVO).
+// Ohne Einwilligung bleibt der Lead in Pipedrive (lit. b), es erfolgt aber keine Meta-Übermittlung.
+if ($metaConsent) {
+  meta_send_lead($META_PIXEL_ID, $META_CAPI_TOKEN, 'v19.0', $eventId, $eventSourceUrl, $email, $telefon, $vorname, $nachname, $fbp, $fbc, $customData, $META_TEST_EVENT_CODE);
+}
 
 respond(true, 'ok');
