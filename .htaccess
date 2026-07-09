@@ -1,6 +1,6 @@
 # Schützt serverseitige Secret-Dateien, falls sie versehentlich im Webroot liegen.
 # (Der eigentliche, sichere Ablageort ist OBERHALB des Webroots – siehe api/lead.php.)
-<FilesMatch "(pipedrive-token|meta-capi-token|sipgate-token|dialer-passcode)\.txt$">
+<FilesMatch "(pipedrive-token|meta-capi-token|meta-test-code|sipgate-token|dialer-passcode|pd-webhook-secret)\.txt$">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>
