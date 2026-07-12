@@ -30,8 +30,8 @@
   var lang = (document.documentElement.lang || 'de').slice(0, 2).toLowerCase();
   var T = {
     de: {
-      title: 'Wir respektieren Ihre Privatsphäre',
-      body: 'Wir verwenden notwendige Cookies für den Betrieb der Website. Mit Ihrer Einwilligung nutzen wir zusätzlich Statistik- (Microsoft Clarity) und Marketing-Dienste (Meta-Pixel), um unser Angebot und unsere Werbung zu verbessern. Sie können frei entscheiden und Ihre Auswahl jederzeit ändern.',
+      title: 'Cookies & Datenschutz',
+      body: 'Notwendige Cookies sind immer aktiv. Mit Ihrer Einwilligung nutzen wir zusätzlich Statistik (Clarity) und Marketing (Meta), um Angebot und Werbung zu verbessern – jederzeit widerrufbar.',
       acceptAll: 'Alle akzeptieren',
       necessary: 'Nur notwendige',
       settings: 'Einstellungen',
@@ -47,8 +47,8 @@
       always: 'Immer aktiv'
     },
     en: {
-      title: 'We respect your privacy',
-      body: 'We use necessary cookies to operate this website. With your consent we also use statistics (Microsoft Clarity) and marketing services (Meta Pixel) to improve our offering and advertising. You are free to decide and can change your choice at any time.',
+      title: 'Cookies & Privacy',
+      body: 'Necessary cookies are always on. With your consent we also use statistics (Clarity) and marketing (Meta) to improve our offering and ads — revocable anytime.',
       acceptAll: 'Accept all',
       necessary: 'Necessary only',
       settings: 'Settings',
@@ -64,8 +64,8 @@
       always: 'Always active'
     },
     sq: {
-      title: 'Ne respektojmë privatësinë tuaj',
-      body: 'Përdorim cookie të nevojshme për funksionimin e faqes. Me pëlqimin tuaj përdorim edhe shërbime statistikore (Microsoft Clarity) dhe marketingu (Meta Pixel) për të përmirësuar ofertën dhe reklamat tona. Ju vendosni lirisht dhe mund ta ndryshoni zgjedhjen në çdo kohë.',
+      title: 'Cookie & Privatësia',
+      body: 'Cookie-t e nevojshme janë gjithmonë aktive. Me pëlqimin tuaj përdorim edhe statistika (Clarity) dhe marketing (Meta) për të përmirësuar ofertën dhe reklamat — të revokueshme në çdo kohë.',
       acceptAll: 'Prano të gjitha',
       necessary: 'Vetëm të nevojshme',
       settings: 'Cilësimet',
@@ -128,25 +128,26 @@
   // ---- UI ----
   var CSS = '' +
     '#gccw *{box-sizing:border-box}' +
-    '#gccw{position:fixed;inset:auto 0 0 0;z-index:99999;display:flex;justify-content:center;padding:16px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}' +
-    '#gccw .gc-card{background:#fff;color:#1a2b22;max-width:560px;width:100%;border:1px solid #e3e8e4;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.18);padding:22px}' +
-    '#gccw h2{font-size:17px;margin:0 0 8px}' +
-    '#gccw p{font-size:13.5px;line-height:1.55;color:#4a554d;margin:0 0 16px}' +
+    '#gccw{position:fixed;bottom:12px;right:12px;left:auto;z-index:99999;width:380px;max-width:calc(100vw - 24px);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}' +
+    '#gccw .gc-card{background:#fff;color:#1a2b22;width:100%;border:1px solid #e3e8e4;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.16);padding:14px 15px}' +
+    '#gccw h2{font-size:13.5px;margin:0 0 3px;font-weight:700}' +
+    '#gccw p{font-size:11.5px;line-height:1.45;color:#5a655d;margin:0 0 11px}' +
     '#gccw a{color:#00A86B;text-decoration:underline}' +
-    '#gccw .gc-btns{display:flex;gap:10px;flex-wrap:wrap}' +
-    '#gccw button{flex:1 1 auto;min-width:130px;padding:12px 16px;font-size:14px;font-weight:600;border-radius:10px;cursor:pointer;border:1px solid #cfd8d1;background:#fff;color:#1a2b22}' +
+    '#gccw .gc-btns{display:flex;gap:7px;flex-wrap:wrap;align-items:center}' +
+    '#gccw button{flex:1 1 auto;min-width:112px;padding:9px 12px;font-size:12.5px;font-weight:600;border-radius:8px;cursor:pointer;border:1px solid #cfd8d1;background:#fff;color:#1a2b22}' +
     '#gccw button.gc-primary{background:#00A86B;border-color:#00A86B;color:#fff}' +
     '#gccw button.gc-primary:hover{background:#00875a}' +
-    '#gccw button.gc-link{flex:0 0 100%;background:none;border:none;color:#647067;text-decoration:underline;font-weight:500;min-width:0;padding:4px}' +
-    '#gccw .gc-opts{margin:4px 0 16px;border-top:1px solid #eef2ef;padding-top:12px}' +
-    '#gccw .gc-opt{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #f2f5f2}' +
+    '#gccw button.gc-link{flex:0 0 auto;background:none;border:none;color:#7a857e;text-decoration:underline;font-weight:500;min-width:0;padding:2px 4px;font-size:11.5px}' +
+    '#gccw .gc-opts{margin:2px 0 11px;border-top:1px solid #eef2ef;padding-top:9px}' +
+    '#gccw .gc-opt{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid #f2f5f2}' +
     '#gccw .gc-opt:last-child{border-bottom:none}' +
     '#gccw .gc-opt .gc-txt{flex:1}' +
-    '#gccw .gc-opt strong{display:block;font-size:13.5px;margin-bottom:2px}' +
-    '#gccw .gc-opt span{font-size:12px;color:#647067;line-height:1.45}' +
-    '#gccw .gc-opt input{width:18px;height:18px;margin-top:2px;accent-color:#00A86B}' +
-    '#gccw .gc-opt .gc-fixed{font-size:11px;color:#9aa39c;white-space:nowrap;margin-top:3px}' +
-    '#gc-reopen{position:fixed;left:14px;bottom:14px;z-index:99998;background:#fff;border:1px solid #e3e8e4;border-radius:999px;padding:8px 14px;font:500 12px/-apple-system,sans-serif;color:#647067;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.1)}' +
+    '#gccw .gc-opt strong{display:block;font-size:12px;margin-bottom:1px}' +
+    '#gccw .gc-opt span{font-size:10.5px;color:#7a857e;line-height:1.4}' +
+    '#gccw .gc-opt input{width:17px;height:17px;margin-top:1px;accent-color:#00A86B}' +
+    '#gccw .gc-opt .gc-fixed{font-size:10px;color:#9aa39c;white-space:nowrap;margin-top:2px}' +
+    '@media (max-width:520px){#gccw{left:12px;right:12px;width:auto;max-width:none}}' +
+    '#gc-reopen{position:fixed;left:14px;bottom:14px;z-index:99998;background:#fff;border:1px solid #e3e8e4;border-radius:999px;padding:7px 12px;font:500 11px/-apple-system,sans-serif;color:#7a857e;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.1)}' +
     '@media (prefers-color-scheme:dark){#gccw .gc-card{background:#1c2620;color:#eaf0ec;border-color:#2c3a32}#gccw p{color:#b6c1ba}#gccw button{background:#243029;color:#eaf0ec;border-color:#33443a}#gc-reopen{background:#1c2620;color:#b6c1ba;border-color:#2c3a32}}';
 
   function injectCSS() {
