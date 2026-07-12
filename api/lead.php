@@ -154,6 +154,17 @@ $nachricht      = field($in, 'nachricht');  // nur Kontaktformular
 $consent        = !empty($in['consent']);
 $metaConsent    = !empty($in['meta_consent']);  // Marketing-Einwilligung (Cookie-Banner) → Voraussetzung für Meta-CAPI
 
+// First-Party-Attribution (utm_*/fbclid aus der Anzeigen-URL, vom LP-JS gesammelt).
+// Wird als Herkunft in die Lead-Notiz geschrieben → Creative-Performance im CRM
+// für JEDEN Lead sichtbar, unabhängig von der Cookie-Einwilligung.
+$attr = (isset($in['attribution']) && is_array($in['attribution'])) ? $in['attribution'] : array();
+function attr_val($attr, $key) {
+  if (!isset($attr[$key])) { return ''; }
+  $v = trim((string) $attr[$key]);
+  $v = preg_replace('/[\x00-\x1F\x7F]/', '', $v);   // Steuerzeichen raus
+  return mb_substr($v, 0, 250);
+}
+
 // Meta Conversions API (Dedup + Matching)
 $eventId        = field($in, 'event_id');
 $eventSourceUrl = field($in, 'event_source_url');
@@ -293,19 +304,34 @@ function meta_send_lead($pixelId, $token, $version, $eventId, $sourceUrl, $email
   pd_post($url, $body);
 }
 
-// ---- 1) Person anlegen ----
-$personData = array(
-  'name'  => $vorname . ' ' . $nachname,
-  'email' => array(array('value' => $email, 'primary' => true, 'label' => 'work')),
-);
-if ($telefon !== '') {
-  $personData['phone'] = array(array('value' => $telefon, 'primary' => true, 'label' => 'work'));
+// ---- 1) Person anlegen (mit Dedup: existiert die E-Mail schon, Person wiederverwenden) ----
+$personId = null;
+$searchUrl = $BASE . '/persons/search?term=' . urlencode($email) . '&fields=email&exact_match=true&limit=1&api_token=' . urlencode($API_TOKEN);
+if (function_exists('curl_init')) {
+  $chS = curl_init($searchUrl);
+  curl_setopt_array($chS, array(CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 10));
+  $searchRes = json_decode(curl_exec($chS), true);
+  curl_close($chS);
+} else {
+  $searchRes = json_decode(@file_get_contents($searchUrl), true);
 }
-$personRes = pd_post($BASE . '/persons?api_token=' . urlencode($API_TOKEN), $personData);
-if (empty($personRes['success']) || empty($personRes['data']['id'])) {
-  respond(false, 'CRM-Fehler');
+if (!empty($searchRes['success']) && !empty($searchRes['data']['items'][0]['item']['id'])) {
+  $personId = $searchRes['data']['items'][0]['item']['id'];
 }
-$personId = $personRes['data']['id'];
+if (!$personId) {
+  $personData = array(
+    'name'  => $vorname . ' ' . $nachname,
+    'email' => array(array('value' => $email, 'primary' => true, 'label' => 'work')),
+  );
+  if ($telefon !== '') {
+    $personData['phone'] = array(array('value' => $telefon, 'primary' => true, 'label' => 'work'));
+  }
+  $personRes = pd_post($BASE . '/persons?api_token=' . urlencode($API_TOKEN), $personData);
+  if (empty($personRes['success']) || empty($personRes['data']['id'])) {
+    respond(false, 'CRM-Fehler');
+  }
+  $personId = $personRes['data']['id'];
+}
 
 // ---- 2) Lead anlegen (Tag im Titel + sortierbarer Value) ----
 if ($isKontakt) {
@@ -335,6 +361,23 @@ if ($isKontakt) {
   if ($beruf !== '') { $noteLines[] = 'Beruflich: ' . $beruf; }
   if ($telefon !== '') { $noteLines[] = 'Telefon: ' . $telefon; }
   if ($variant !== '')        { $noteLines[] = 'A/B-Variante: ' . $variant; }
+}
+
+// ---- Werbe-Herkunft (First-Party-Attribution) an die Notiz hängen ----
+$aCampaign = attr_val($attr, 'utm_campaign');
+$aContent  = attr_val($attr, 'utm_content');   // = Creative/Anzeigenname
+$aSource   = attr_val($attr, 'utm_source');
+$aMedium   = attr_val($attr, 'utm_medium');    // = Placement (bei Meta-Platzhaltern)
+$aTerm     = attr_val($attr, 'utm_term');      // = Adset/Zielgruppe
+$aFbclid   = attr_val($attr, 'fbclid');
+if ($aCampaign !== '' || $aContent !== '' || $aSource !== '' || $aFbclid !== '') {
+  $noteLines[] = '— — —';
+  $noteLines[] = '📣 Werbe-Herkunft:';
+  if ($aSource !== '')   { $noteLines[] = 'Quelle: ' . $aSource . ($aMedium !== '' ? ' / ' . $aMedium : ''); }
+  if ($aCampaign !== '') { $noteLines[] = 'Kampagne: ' . $aCampaign; }
+  if ($aTerm !== '')     { $noteLines[] = 'Anzeigengruppe: ' . $aTerm; }
+  if ($aContent !== '')  { $noteLines[] = 'Creative/Anzeige: ' . $aContent; }
+  if ($aFbclid !== '' && $aCampaign === '' && $aContent === '') { $noteLines[] = 'Meta-Klick (fbclid vorhanden, keine utm-Parameter gesetzt)'; }
 }
 
 $noteData = array('content' => implode("\n", $noteLines), 'person_id' => $personId);
