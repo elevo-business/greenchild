@@ -207,7 +207,9 @@
       fbp: window.gcCookie ? window.gcCookie('_fbp') : '',
       fbc: window.gcCookie ? window.gcCookie('_fbc') : '',
       // Nur mit Marketing-Einwilligung darf serverseitig an Meta (CAPI) gemeldet werden:
-      meta_consent: window.gcMarketingConsent ? window.gcMarketingConsent() : false
+      meta_consent: window.gcMarketingConsent ? window.gcMarketingConsent() : false,
+      // First-Party-Attribution (Kampagne/Creative aus der Anzeigen-URL) → Pipedrive-Notiz:
+      attribution: window.gcAttribution ? window.gcAttribution() : {}
     };
 
     fetch(ENDPOINT, {

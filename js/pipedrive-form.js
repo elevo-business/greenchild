@@ -41,7 +41,9 @@
       event_id: eventId, event_source_url: location.href,
       fbp: cookie('_fbp'), fbc: cookie('_fbc'),
       // Serverseitige Meta-Meldung (CAPI) nur mit Marketing-Einwilligung:
-      meta_consent: !!(window.gcConsent && window.gcConsent.marketing)
+      meta_consent: !!(window.gcConsent && window.gcConsent.marketing),
+      // First-Party-Attribution (falls über eine Anzeige gekommen):
+      attribution: window.gcAttribution ? window.gcAttribution() : {}
     };
 
     fetch(ENDPOINT, {

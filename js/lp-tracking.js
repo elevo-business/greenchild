@@ -52,6 +52,36 @@
     return 'lead.' + Date.now() + '.' + Math.random().toString(36).slice(2, 10);
   };
 
+  /**
+   * First-Party-Attribution: Kampagnen-/Creative-Parameter aus der Anzeigen-URL
+   * (utm_*, fbclid) beim ersten Aufruf einsammeln und in sessionStorage halten,
+   * damit sie auch nach interner Navigation beim Formular-Submit noch da sind.
+   * Wird mit dem Lead an Pipedrive geschrieben → "welches Creative performt"
+   * ist im CRM für JEDEN Lead sichtbar, unabhängig von der Cookie-Einwilligung
+   * (eigene Herkunftsnotiz zur Anfrage, kein Tracking-Dienst).
+   */
+  var ATTR_KEY = 'gc_attr_v1';
+  var ATTR_FIELDS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'];
+  (function collectAttribution() {
+    try {
+      var qs = new URLSearchParams(window.location.search);
+      var found = {};
+      var any = false;
+      for (var i = 0; i < ATTR_FIELDS.length; i++) {
+        var v = qs.get(ATTR_FIELDS[i]);
+        if (v) { found[ATTR_FIELDS[i]] = v.slice(0, 250); any = true; }
+      }
+      if (any) {
+        found.landing = (location.pathname || '').slice(0, 200);
+        found.ts = new Date().toISOString();
+        sessionStorage.setItem(ATTR_KEY, JSON.stringify(found));
+      }
+    } catch (e) {}
+  })();
+  window.gcAttribution = function () {
+    try { return JSON.parse(sessionStorage.getItem(ATTR_KEY) || '{}'); } catch (e) { return {}; }
+  };
+
   // Cookie auslesen (für fbp/fbc – verbessert das Matching der CAPI-Events).
   window.gcCookie = function (name) {
     var m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
