@@ -8,11 +8,13 @@
  * zählt also nicht doppelt. Das ist der von Meta empfohlene Aufbau und sorgt
  * dafür, dass möglichst alle Conversions im Werbeanzeigenmanager ankommen.
  *
- * WICHTIG (Datenschutz): Der Pixel wird NICHT automatisch geladen. Er startet
- * erst, wenn die Marketing-Einwilligung erteilt ist (js/consent.js →
- * window.gcConsent.marketing bzw. Event 'gc-consent-changed'). Ohne Einwilligung
- * bleiben Pixel und – über den an api/lead.php gesendeten Consent-Flag – auch
- * die Conversions API inaktiv.
+ * HINWEIS (bewusste Entscheidung, Juli 2026): Der Pixel lädt SOFORT, ohne
+ * Consent-Gate – wie die Conversions API (api/lead.php). Mit Consent-Gate kamen
+ * nur ~3 % der Landingpage-Aufrufe bei Meta an (151 Klicks → 4 LPV), wodurch
+ * Kampagnen-Optimierung und Attribution zusammenbrachen. Das Cookie-Banner
+ * (js/consent.js) steuert weiterhin Microsoft Clarity. Die Datenschutzerklärung
+ * (Ziffer 9/11) wurde entsprechend angepasst. Zum Re-Aktivieren der Sperre:
+ * initPixel() wieder in maybeInit()/'gc-consent-changed' kapseln (git-History).
  *
  * EINRICHTEN: Meta-Pixel-ID unten eintragen. Den Conversions-API-Token NICHT
  * hier, sondern serverseitig in api/lead.php (bzw. ENV/Datei) hinterlegen.
@@ -39,13 +41,8 @@
     fbq('track', 'PageView');
   }
 
-  // Marketing-Einwilligung vorhanden? Dann Pixel sofort starten.
-  function maybeInit() {
-    if (window.gcConsent && window.gcConsent.marketing) initPixel();
-  }
-  maybeInit();
-  // ... sonst auf die Consent-Entscheidung warten.
-  window.addEventListener('gc-consent-changed', maybeInit);
+  // Pixel sofort starten (kein Consent-Gate, siehe Kopfkommentar).
+  initPixel();
 
   // Eindeutige Event-ID für die Pixel/CAPI-Deduplizierung.
   window.gcEventId = function () {
@@ -101,14 +98,15 @@
     return m ? m.pop() : '';
   };
 
-  // Hat der Nutzer in Marketing eingewilligt? (Formulare fragen das ab, um
-  // den Consent-Flag an api/lead.php zu übergeben → server-seitige CAPI-Gate.)
+  // Marketing-Einwilligung (Cookie-Banner). Wird von den Formularen als
+  // meta_consent an api/lead.php mitgeschickt – dort nur noch informativ
+  // protokolliert, kein Gate mehr (siehe Kopfkommentar).
   window.gcMarketingConsent = function () {
     return !!(window.gcConsent && window.gcConsent.marketing);
   };
 
   /**
-   * gcTrack(name, params) – feuert an Pixel (falls eingewilligt+aktiv) + dataLayer.
+   * gcTrack(name, params) – feuert an Pixel + dataLayer.
    * Für 'Lead' wird params.eventID als Pixel-eventID genutzt (Dedup mit CAPI).
    */
   window.gcTrack = function (name, params) {

@@ -1,15 +1,16 @@
 /**
  * Greenchild Cookie-/Einwilligungs-Banner (Consent Management, self-hosted).
  *
- * Zweck: Nicht notwendige Dienste dürfen nach § 25 Abs. 1 TDDDG und Art. 6 Abs. 1
- * lit. a DSGVO erst NACH aktiver Einwilligung geladen werden. Dieses Skript ersetzt
- * das früher fest im <head> eingebundene Microsoft-Clarity-Snippet und steuert
- * zusätzlich den Meta-Pixel (siehe js/lp-tracking.js).
+ * Zweck: Einwilligungspflichtige Dienste erst NACH aktiver Zustimmung laden.
+ * Dieses Skript steuert Microsoft Clarity. Der Meta-Pixel/die Conversions API
+ * laufen seit Juli 2026 bewusst OHNE Consent-Gate (siehe js/lp-tracking.js,
+ * Kopfkommentar) – der frühere Marketing-Schalter wurde deshalb aus dem Banner
+ * entfernt, damit das Banner nichts verspricht, was es nicht mehr steuert.
+ * Hinweis + Widerspruchsweg stehen in der Datenschutzerklärung (Ziffer 9).
  *
  * Kategorien:
  *   - notwendig  : immer aktiv, keine Einwilligung nötig (kein Tracking)
  *   - statistik  : Microsoft Clarity (Heatmaps/Session-Analyse)
- *   - marketing  : Meta-Pixel + Conversions API (Werbewirkungsmessung)
  *
  * Ablauf: Banner zeigt „Alle akzeptieren" und – gleichwertig – „Nur notwendige"
  * (Ablehnen muss so einfach sein wie Zustimmen). Feineinstellung optional.
@@ -31,7 +32,7 @@
   var T = {
     de: {
       title: 'Cookies & Datenschutz',
-      body: 'Notwendige Cookies sind immer aktiv. Mit Ihrer Einwilligung nutzen wir zusätzlich Statistik (Clarity) und Marketing (Meta), um Angebot und Werbung zu verbessern – jederzeit widerrufbar.',
+      body: 'Notwendige Cookies sind immer aktiv. Mit Ihrer Einwilligung nutzen wir zusätzlich Statistik (Microsoft Clarity), um unser Angebot zu verbessern – jederzeit widerrufbar. Hinweise zur Werbemessung (Meta) und Ihrem Widerspruchsrecht finden Sie in der',
       acceptAll: 'Alle akzeptieren',
       necessary: 'Nur notwendige',
       settings: 'Einstellungen',
@@ -41,14 +42,12 @@
       cNecessaryD: 'Für den technischen Betrieb erforderlich. Immer aktiv.',
       cStat: 'Statistik',
       cStatD: 'Microsoft Clarity: pseudonyme Analyse der Website-Nutzung (Heatmaps, Sitzungen).',
-      cMkt: 'Marketing',
-      cMktD: 'Meta-Pixel & Conversions API: Messung und Optimierung unserer Werbeanzeigen.',
       reopen: 'Cookie-Einstellungen',
       always: 'Immer aktiv'
     },
     en: {
       title: 'Cookies & Privacy',
-      body: 'Necessary cookies are always on. With your consent we also use statistics (Clarity) and marketing (Meta) to improve our offering and ads — revocable anytime.',
+      body: 'Necessary cookies are always on. With your consent we also use statistics (Microsoft Clarity) to improve our offering — revocable anytime. Details on ad measurement (Meta) and your right to object are in our',
       acceptAll: 'Accept all',
       necessary: 'Necessary only',
       settings: 'Settings',
@@ -58,14 +57,12 @@
       cNecessaryD: 'Required for technical operation. Always active.',
       cStat: 'Statistics',
       cStatD: 'Microsoft Clarity: pseudonymous analysis of website usage (heatmaps, sessions).',
-      cMkt: 'Marketing',
-      cMktD: 'Meta Pixel & Conversions API: measuring and optimising our ads.',
       reopen: 'Cookie settings',
       always: 'Always active'
     },
     sq: {
       title: 'Cookie & Privatësia',
-      body: 'Cookie-t e nevojshme janë gjithmonë aktive. Me pëlqimin tuaj përdorim edhe statistika (Clarity) dhe marketing (Meta) për të përmirësuar ofertën dhe reklamat — të revokueshme në çdo kohë.',
+      body: 'Cookie-t e nevojshme janë gjithmonë aktive. Me pëlqimin tuaj përdorim edhe statistika (Microsoft Clarity) për të përmirësuar ofertën — të revokueshme në çdo kohë. Detajet për matjen e reklamave (Meta) dhe të drejtën e kundërshtimit i gjeni te',
       acceptAll: 'Prano të gjitha',
       necessary: 'Vetëm të nevojshme',
       settings: 'Cilësimet',
@@ -75,8 +72,6 @@
       cNecessaryD: 'Të nevojshme për funksionimin teknik. Gjithmonë aktive.',
       cStat: 'Statistika',
       cStatD: 'Microsoft Clarity: analizë pseudonime e përdorimit të faqes.',
-      cMkt: 'Marketing',
-      cMktD: 'Meta Pixel & Conversions API: matja dhe optimizimi i reklamave tona.',
       reopen: 'Cilësimet e cookie-ve',
       always: 'Gjithmonë aktive'
     }
@@ -115,7 +110,7 @@
     window.gcConsent.marketing = !!o.marketing;
     window.gcConsent.set = true;
     if (o.statistik) loadClarity();
-    // Marketing (Meta-Pixel) wird von lp-tracking.js über dieses Event initialisiert:
+    // Event für andere Skripte (der Meta-Pixel hängt seit Juli 2026 NICHT mehr daran):
     try {
       window.dispatchEvent(new CustomEvent('gc-consent-changed', { detail: { statistik: !!o.statistik, marketing: !!o.marketing } }));
     } catch (e) {
@@ -202,7 +197,6 @@
       '<div class="gc-opts" ' + (expanded ? '' : 'style="display:none"') + ' id="gc-opts">' +
         '<div class="gc-opt"><div class="gc-txt"><strong>' + t.cNecessary + '</strong><span>' + t.cNecessaryD + '</span></div><div class="gc-fixed">' + t.always + '</div></div>' +
         '<div class="gc-opt"><div class="gc-txt"><strong>' + t.cStat + '</strong><span>' + t.cStatD + '</span></div><input type="checkbox" id="gc-c-stat" ' + (saved && saved.statistik ? 'checked' : '') + '></div>' +
-        '<div class="gc-opt"><div class="gc-txt"><strong>' + t.cMkt + '</strong><span>' + t.cMktD + '</span></div><input type="checkbox" id="gc-c-mkt" ' + (saved && saved.marketing ? 'checked' : '') + '></div>' +
       '</div>';
 
     wrap.innerHTML =
@@ -222,6 +216,8 @@
     bindPrivacyLink(wrap);
 
     wrap.querySelector('#gc-accept').addEventListener('click', function () {
+      // marketing-Flag bleibt aus Kompatibilität im Speicherformat, gated aber
+      // nichts mehr (Meta läuft ohne Consent-Gate, siehe js/lp-tracking.js).
       apply(save(true, true)); removeBanner(); renderReopen();
     });
     wrap.querySelector('#gc-necessary').addEventListener('click', function () {
@@ -236,8 +232,7 @@
     });
     wrap.querySelector('#gc-save').addEventListener('click', function () {
       var st = wrap.querySelector('#gc-c-stat').checked;
-      var mk = wrap.querySelector('#gc-c-mkt').checked;
-      apply(save(st, mk)); removeBanner(); renderReopen();
+      apply(save(st, st)); removeBanner(); renderReopen();
     });
   }
 
