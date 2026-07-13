@@ -181,17 +181,26 @@ if ($vorname === '' || $nachname === '' || $email === '' || (!$isKontakt && $tel
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
   respond(false, 'E-Mail ungültig');
 }
-// Telefon muss eine gültige Nummer sein (gleiche Regel wie im LP-JS):
-// nur Telefon-Zeichen, '+' nur am Anfang, 7–15 Ziffern. Beim Kontaktformular
-// nur prüfen, wenn überhaupt eine Nummer angegeben wurde (dort optional).
+// Telefon muss eine gültige Nummer sein (exakt dieselbe Regel wie im LP-JS,
+// js/lp-realwert-form.js -> isValidPhone). Fängt neben leer/zu kurz auch die
+// real beobachteten Fake-Muster ab: Doppel-Vorwahl „+49 0…", reine Ziffern-
+// folgen (1234567), Wiederholungen (1111111). Beim Kontaktformular nur prüfen,
+// wenn überhaupt eine Nummer angegeben wurde (dort optional).
 if ($telefon !== '') {
   $phoneOk = true;
-  if (preg_match('~[^0-9+()/.\-\s]~', $telefon)) { $phoneOk = false; }
-  if (substr_count($telefon, '+') > 1) { $phoneOk = false; }
-  if (strpos($telefon, '+') > 0) { $phoneOk = false; }
+  if (preg_match('~[^0-9+()/.\-\s]~', $telefon)) { $phoneOk = false; }   // nur Telefon-Zeichen
+  if (substr_count($telefon, '+') > 1) { $phoneOk = false; }             // max. ein '+'
+  if (strpos($telefon, '+') > 0) { $phoneOk = false; }                   // '+' nur am Anfang
+  $compact = preg_replace('~[()/.\-\s]~', '', $telefon);                 // Trennzeichen entfernen
+  if (preg_match('~^\+0~', $compact)) { $phoneOk = false; }              // keine Ländervorwahl „+0"
+  if (preg_match('~^(\+|00)(49|43|41)0~', $compact)) { $phoneOk = false; } // Doppel-Vorwahl +49 0 / 0049 0 (DACH)
   $phoneDigits = preg_replace('/\D/', '', $telefon);
   $len = strlen($phoneDigits);
-  if ($len < 7 || $len > 15) { $phoneOk = false; }
+  if ($len < 8 || $len > 15) { $phoneOk = false; }
+  if (preg_match('~^(\d)\1+$~', $phoneDigits)) { $phoneOk = false; }     // 00000…, 11111…
+  if (strlen($phoneDigits) >= 6 &&
+      (strpos('01234567890', $phoneDigits) !== false ||
+       strpos('09876543210', $phoneDigits) !== false)) { $phoneOk = false; } // 1234567, 0123456789…
   if (!$phoneOk) {
     respond(false, 'Telefonnummer ungültig');
   }

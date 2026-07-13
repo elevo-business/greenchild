@@ -16,20 +16,31 @@
   function track(name, params) { if (window.gcTrack) window.gcTrack(name, params); }
 
   /* ---------- Validierung: gültige Telefonnummer ---------- */
-  // Lenient genug, um echte (inkl. internationale) Nummern durchzulassen,
-  // streng genug, um „123", „asdf" oder leere Eingaben abzufangen.
-  // Gleiche Regel serverseitig in api/lead.php.
+  // Lässt echte (auch internationale) Nummern durch, fängt aber die real
+  // beobachteten Fake-/Tippfehler-Muster ab: Doppel-Vorwahl „+49 0…",
+  // reine Ziffernfolgen (1234567), Wiederholungen (1111111), zu kurz/lang.
+  // Exakt dieselbe Regel serverseitig in api/lead.php.
+  function isSequentialPhone(d) {
+    if (d.length < 6) return false;
+    return ('01234567890').indexOf(d) !== -1 || ('09876543210').indexOf(d) !== -1;
+  }
   function isValidPhone(s) {
     var raw = (s || '').trim();
     if (!raw) return false;
-    if (/[^0-9+()\/.\-\s]/.test(raw)) return false;   // nur Telefon-Zeichen
-    if ((raw.match(/\+/g) || []).length > 1) return false; // max. ein '+'
-    if (raw.indexOf('+') > 0) return false;            // '+' nur am Anfang
+    if (/[^0-9+()\/.\-\s]/.test(raw)) return false;        // nur Telefon-Zeichen
+    if ((raw.match(/\+/g) || []).length > 1) return false;  // max. ein '+'
+    if (raw.indexOf('+') > 0) return false;                 // '+' nur am Anfang
+    var compact = raw.replace(/[()\/.\-\s]/g, '');          // Trennzeichen entfernen
+    if (/^\+0/.test(compact)) return false;                 // keine Ländervorwahl „+0"
+    if (/^(\+|00)(49|43|41)0/.test(compact)) return false;  // Doppel-Vorwahl +49 0 / 0049 0 (DACH)
     var digits = raw.replace(/\D/g, '');
-    return digits.length >= 7 && digits.length <= 15;
+    if (digits.length < 8 || digits.length > 15) return false;
+    if (/^(\d)\1+$/.test(digits)) return false;             // 00000…, 11111…
+    if (isSequentialPhone(digits)) return false;            // 1234567, 0123456789…
+    return true;
   }
 
-  function fieldError(name, message) {
+  function fieldError(name, message, noFocus) {
     var el = form.querySelector('[name="' + name + '"]');
     if (!el) return;
     el.setAttribute('aria-invalid', 'true');
@@ -43,7 +54,7 @@
       grp.appendChild(err);
     }
     err.textContent = message;
-    el.focus();
+    if (!noFocus) el.focus();
   }
 
   function clearFieldError(name) {
@@ -56,9 +67,15 @@
     if (err) err.remove();
   }
 
+  var PHONE_MSG = 'Bitte eine gültige Telefonnummer mit Vorwahl eingeben – z. B. 0151 19133331 oder +49 151 19133331.';
   var telEl = form.querySelector('[name="telefon"]');
   if (telEl) {
     telEl.addEventListener('input', function () { clearFieldError('telefon'); });
+    // Sofortiges Feedback, sobald der Nutzer das Feld verlässt (nicht erst beim Absenden):
+    telEl.addEventListener('blur', function () {
+      var v = telEl.value.trim();
+      if (v && !isValidPhone(v)) fieldError('telefon', PHONE_MSG, true);
+    });
   }
 
   /* ---------- Schritt-Navigation (generisch, 2..n Schritte) ---------- */
@@ -187,7 +204,7 @@
     if (!vorname || !nachname || !email || !telefon) return;
     if (!isValidPhone(telefon)) {
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalText; }
-      fieldError('telefon', 'Bitte eine gültige Telefonnummer eingeben (mind. 7 Ziffern).');
+      fieldError('telefon', PHONE_MSG);
       return;
     }
     if (consent && !consent.checked) { consent.focus(); return; }
