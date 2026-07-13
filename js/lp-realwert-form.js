@@ -149,6 +149,36 @@
     document.body.appendChild(a); a.click(); a.remove();
   }
 
+  /* ---------- Optionale Termin-Buchung (Pipedrive-Terminplaner) ---------- */
+  // Zeigt nach dem Download eine dezente Box zum Buchen eines Telefontermins.
+  // Erscheint nur, wenn window.GC_BOOKING_URL gesetzt ist (Buchungslink aus
+  // Pipedrive). window.GC_BOOKING_MODE: 'button' (Link, Standard) oder 'embed' (iframe).
+  function bookingBlock() {
+    var url = (window.GC_BOOKING_URL || '').trim();
+    if (!url) return '';
+    var mode = (window.GC_BOOKING_MODE || 'button');
+    var head =
+      '<div class="lp-booking" style="margin-top:26px;padding-top:22px;border-top:1px solid #e3e8e4;text-align:center;">' +
+        '<div style="font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#128a5b;margin-bottom:6px;">Optional · empfohlen</div>' +
+        '<h4 style="font-size:20px;margin:0 0 8px;">Lieber gleich persönlich sprechen?</h4>' +
+        '<p style="font-size:15px;margin:0 auto 16px;max-width:44ch;">Sichern Sie sich einen <strong>kostenlosen Telefontermin</strong> (ca. 20 Min., unverbindlich). Einfach einen freien Zeitpunkt wählen – wir rufen Sie dann an.</p>';
+    if (mode === 'embed') {
+      return head +
+        '<div style="border:1px solid #e3e8e4;border-radius:12px;overflow:hidden;">' +
+          '<iframe src="' + url + '" title="Telefontermin buchen" loading="lazy" style="width:100%;height:660px;border:0;"></iframe>' +
+        '</div>' +
+        '<p style="font-size:13px;margin-top:10px;">Kalender lädt nicht? <a class="js-booking" href="' + url + '" target="_blank" rel="noopener">Hier in neuem Tab öffnen</a></p>' +
+      '</div>';
+    }
+    return head +
+      '<a href="' + url + '" target="_blank" rel="noopener" class="btn btn-primary btn-lg js-booking" style="justify-content:center;">📞 Telefontermin auswählen</a>' +
+    '</div>';
+  }
+  function wireBooking(inner) {
+    var bk = inner.querySelector('.js-booking');
+    if (bk) bk.addEventListener('click', function () { track('LP_Booking_Click', { source: SOURCE }); });
+  }
+
   function showSuccess() {
     var inner = document.getElementById('formInner');
     if (!inner) return;
@@ -159,8 +189,10 @@
           '<h3>Eingetragen!</h3>' +
           '<p><strong>Geschafft! Wir melden uns zu Ihrer Wunschzeit persönlich bei Ihnen.</strong> Meist schon am selben Werktag.</p>' +
           '<p style="font-size:13px;color:var(--text-muted);">Das Gespräch dauert nur ein paar Minuten und ist völlig unverbindlich. Kleiner Tipp: Falls sich in den nächsten Tagen eine unbekannte Nummer meldet, sind wir das wahrscheinlich.</p>' +
+          bookingBlock() +
         '</div>';
       if (window.lucide) lucide.createIcons();
+      wireBooking(inner);
       return;
     }
     inner.innerHTML =
@@ -170,8 +202,10 @@
         '<p>Ihr Sachwertvergleich 2026 wird gerade heruntergeladen. <strong>Wir melden uns in Kürze telefonisch bei Ihnen, um Ihren persönlichen Termin abzustimmen.</strong></p>' +
         '<p style="font-size:13px;margin-bottom:14px;">Download nicht automatisch gestartet?</p>' +
         '<a href="' + PDF_URL + '" download target="_blank" rel="noopener" class="btn btn-primary btn-lg" style="justify-content:center;">PDF herunterladen</a>' +
+        bookingBlock() +
       '</div>';
     if (window.lucide) lucide.createIcons();
+    wireBooking(inner);
     startDownload();
   }
 
