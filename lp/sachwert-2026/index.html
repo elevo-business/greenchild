@@ -567,7 +567,13 @@
   s.addEventListener('input',update); update();
 })();
 </script>
-<script>window.GC_LEAD_SOURCE='sachwert-2026';</script>
+<script>
+  window.GC_LEAD_SOURCE='sachwert-2026';
+  /* Pipedrive-Terminplaner: hier den Buchungslink aus Pipedrive einsetzen
+     (Pipedrive → Terminplaner → Link kopieren). Leer = Termin-Box ausgeblendet. */
+  window.GC_BOOKING_URL='';
+  window.GC_BOOKING_MODE='button'; /* 'button' = Link, 'embed' = Kalender direkt auf der Seite */
+</script>
 <script src="/js/lp-tracking.js"></script>
 <script src="/js/lp-realwert-form.js"></script>
 <script>
