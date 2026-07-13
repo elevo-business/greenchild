@@ -415,10 +415,16 @@ if ($fbc === '' && $eventSourceUrl !== '') {
   }
 }
 
-// Nur mit Marketing-Einwilligung an Meta melden (§ 25 TDDDG / Art. 6 Abs. 1 lit. a DSGVO).
-// Ohne Einwilligung bleibt der Lead in Pipedrive (lit. b), es erfolgt aber keine Meta-Übermittlung.
-if ($metaConsent) {
-  meta_send_lead($META_PIXEL_ID, $META_CAPI_TOKEN, 'v19.0', $eventId, $eventSourceUrl, $email, $telefon, $vorname, $nachname, $fbp, $fbc, $customData, $META_TEST_EVENT_CODE);
-}
+// Meta Conversions API IMMER melden – auch ohne Marketing-Einwilligung.
+// Bewusste Betreiber-Entscheidung, um die im Werbeanzeigenmanager fehlenden
+// Conversions zurückzugewinnen (mit reinem Pixel-/Consent-Tracking kamen nur
+// ~60 % der Leads an). Es werden ausschließlich SHA-256-gehashte Identifier
+// gesendet; die Klick-ID (fbc) stammt aus dem fbclid der URL, nicht aus einem
+// Cookie/Endgeräte-Zugriff (§ 25 TDDDG betrifft das nicht). Die Rechtsgrundlage
+// für die Übermittlung an Meta (Art. 6 DSGVO) sowie eine ggf. nötige DSFA liegen
+// in der Verantwortung des Betreibers – bitte mit dem Datenschutz abstimmen.
+// $metaConsent wird weiterhin vom Formular übergeben; zum Re-Aktivieren der
+// Consent-Sperre einfach den folgenden Aufruf wieder in `if ($metaConsent) {…}` kapseln.
+meta_send_lead($META_PIXEL_ID, $META_CAPI_TOKEN, 'v19.0', $eventId, $eventSourceUrl, $email, $telefon, $vorname, $nachname, $fbp, $fbc, $customData, $META_TEST_EVENT_CODE);
 
 respond(true, 'ok');

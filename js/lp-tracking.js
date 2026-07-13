@@ -74,12 +74,25 @@
       if (any) {
         found.landing = (location.pathname || '').slice(0, 200);
         found.ts = new Date().toISOString();
-        sessionStorage.setItem(ATTR_KEY, JSON.stringify(found));
+        var json = JSON.stringify(found);
+        // In localStorage UND sessionStorage ablegen: übersteht interne
+        // Navigation, neue Tabs und ein späteres Wiederkommen im selben Browser
+        // (z. B. Meta In-App-Browser → Formular wird erst Minuten später
+        // ausgefüllt). Mit sessionStorage allein ging die Herkunft bei jedem
+        // Tab-/Sitzungswechsel verloren – Grund, warum bisher die meisten Leads
+        // ohne Creative-Zuordnung im CRM ankamen.
+        try { localStorage.setItem(ATTR_KEY, json); } catch (e) {}
+        try { sessionStorage.setItem(ATTR_KEY, json); } catch (e) {}
       }
     } catch (e) {}
   })();
   window.gcAttribution = function () {
-    try { return JSON.parse(sessionStorage.getItem(ATTR_KEY) || '{}'); } catch (e) { return {}; }
+    try {
+      // sessionStorage zuerst (aktuellster Klick in dieser Sitzung), sonst der
+      // in localStorage gemerkte letzte bekannte Anzeigen-Klick als Fallback.
+      var raw = sessionStorage.getItem(ATTR_KEY) || localStorage.getItem(ATTR_KEY) || '{}';
+      return JSON.parse(raw);
+    } catch (e) { return {}; }
   };
 
   // Cookie auslesen (für fbp/fbc – verbessert das Matching der CAPI-Events).
