@@ -1,6 +1,25 @@
-# Schützt serverseitige Secret-Dateien, falls sie versehentlich im Webroot liegen.
-# (Der eigentliche, sichere Ablageort ist OBERHALB des Webroots – siehe api/lead.php.)
-<FilesMatch "(pipedrive-token|meta-capi-token|meta-test-code|pd-webhook-secret)\.txt$">
+# ============================================================================
+# greenchild.eu / greenchild.at  –  Startseite
+# Server-seitige Weiterleitung der Domain-Wurzel auf die deutsche Startseite.
+# Ersetzt die frühere JavaScript-/Meta-Weiterleitung in index.html, die kurz
+# eine sichtbare „Weiterleitung…"-Seite zeigte und ohne bzw. bei blockiertem
+# JavaScript haengen blieb. Der Query-String (utm_*/fbclid) wird automatisch
+# mit uebertragen, sodass die Anzeigen-Herkunft erhalten bleibt.
+# ============================================================================
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Nur die exakte Wurzel ("/") -> /de/  (301, dauerhaft)
+  RewriteRule ^$ /de/ [R=301,L]
+</IfModule>
+
+# Fallback, falls mod_rewrite nicht verfuegbar ist: index.html enthaelt weiterhin
+# die alte JS-/Meta-Weiterleitung als Sicherheitsnetz.
+
+# ----------------------------------------------------------------------------
+# Schuetzt serverseitige Secret-Dateien, falls sie versehentlich im Webroot liegen.
+# (Der eigentliche, sichere Ablageort ist OBERHALB des Webroots - siehe api/lead.php.)
+# ----------------------------------------------------------------------------
+<FilesMatch "(pipedrive-token|meta-capi-token|meta-test-code|pd-webhook-secret|sipgate-webhook-secret)\.txt$">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>
