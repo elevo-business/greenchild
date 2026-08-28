@@ -29,12 +29,19 @@
     .gc-wrap{width:100%!important}
     .gc-pad{padding-left:24px!important;padding-right:24px!important}
     .gc-pad-sm{padding-left:22px!important;padding-right:22px!important}
-    .gc-h1{font-size:32px!important;line-height:1.12!important}
-    .gc-h2{font-size:24px!important;line-height:1.2!important}
+    .gc-pad-head{padding-left:20px!important;padding-right:20px!important}
+    .gc-logo{width:122px!important}
+    .gc-h1{font-size:31px!important;line-height:1.12!important}
+    .gc-h2{font-size:23px!important;line-height:1.2!important}
     .gc-stat{display:inline-block!important;width:50%!important;box-sizing:border-box!important}
-    .gc-stat-num{font-size:32px!important}
+    .gc-stat-num{font-size:33px!important}
     .gc-gallery{width:33.33%!important}
+    /* Buttons: auf Mobil volle Breite + zentriert für gute Tap-Ziele */
     .gc-btn-full a{display:block!important;text-align:center!important}
+    .gc-btnwrap{width:100%!important}
+    .gc-btnwrap a{display:block!important;text-align:center!important}
+    /* Grosse vertikale Abstaende auf Mobil etwas straffen */
+    .gc-sec{padding-top:38px!important}
   }
 
   /* Auf helles Design festgelegt: kein automatisches Umfaerben im Dark Mode,
@@ -64,11 +71,11 @@
   <tr><td style="padding:0;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0C2E20;border-radius:16px 16px 0 0;">
       <tr>
-        <td class="gc-pad" style="padding:22px 40px;" align="left">
-          <img src="https://greenchild.eu/assets/img/logo-greenchild-white.png" width="150" alt="Greenchild" style="width:150px;max-width:150px;height:auto;">
+        <td class="gc-pad gc-pad-head" style="padding:22px 40px;" align="left">
+          <img src="https://greenchild.eu/assets/img/logo-greenchild-white.png" width="150" alt="Greenchild" class="gc-logo" style="width:150px;max-width:150px;height:auto;">
         </td>
-        <td class="gc-b" style="padding:22px 40px;font-family:'Outfit',Arial,sans-serif;font-size:11px;letter-spacing:2px;color:#7FE3C0;text-transform:uppercase;font-weight:600;" align="right" valign="middle">
-          Newsletter&nbsp;·&nbsp;01/2026
+        <td class="gc-b gc-pad-head" style="padding:22px 40px;font-family:'Outfit',Arial,sans-serif;font-size:11px;letter-spacing:2px;color:#7FE3C0;text-transform:uppercase;font-weight:600;white-space:nowrap;" align="right" valign="middle">
+          01/2026
         </td>
       </tr>
     </table>
@@ -93,7 +100,7 @@
   </td></tr>
 
   <!-- ===== Intro / warm words ===== -->
-  <tr><td class="gc-pad" style="background:#FFFFFF;padding:48px 40px 8px;" align="left">
+  <tr><td class="gc-pad gc-sec" style="background:#FFFFFF;padding:48px 40px 8px;" align="left">
     <p class="gc-b gc-card-txt" style="margin:0 0 20px;font-family:'Outfit',Arial,sans-serif;font-size:17px;line-height:1.75;color:#1C2B23;font-weight:400;">
       Sie waren einer der Ersten. Als andere noch zögerten, haben <strong style="font-weight:700;color:#0C2E20;">Sie an eine Idee geglaubt</strong> — dass ein Baum mehr sein kann als ein Baum. Ein Sachwert. Ein Erbe. Ein Stück Zukunft mit Ihrem Namen darauf.
     </p>
@@ -133,7 +140,7 @@
   </td></tr>
 
   <!-- ===== Section heading: Updates ===== -->
-  <tr><td class="gc-pad" style="background:#FFFFFF;padding:52px 40px 4px;" align="left">
+  <tr><td class="gc-pad gc-sec" style="background:#FFFFFF;padding:52px 40px 4px;" align="left">
     <h2 class="gc-h gc-h2 gc-h-dark" style="margin:0 0 12px;font-family:'Manrope',Arial,sans-serif;font-size:27px;line-height:1.22;font-weight:800;color:#0F1A14;letter-spacing:-0.3px;">
       Wir haben nicht geredet.<br>Wir haben aufgebaut.
     </h2>
@@ -185,7 +192,7 @@
   </td></tr>
 
   <!-- ===== Instagram / Social ===== -->
-  <tr><td style="background:#FFFFFF;padding:52px 0 0;">
+  <tr><td class="gc-sec" style="background:#FFFFFF;padding:52px 0 0;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0A3A2A;">
       <tr><td class="gc-pad" style="padding:46px 40px 28px;" align="center">
         <div class="gc-b" style="font-family:'Outfit',Arial,sans-serif;font-size:11.5px;font-weight:700;letter-spacing:2px;color:#7FE3C0;text-transform:uppercase;margin:0 0 14px;">Jetzt sind wir sichtbar</div>
@@ -212,7 +219,7 @@
   </td></tr>
 
   <!-- ===== Lead magnet / Treuebonus ===== -->
-  <tr><td class="gc-pad" style="background:#FFFFFF;padding:54px 40px 8px;" align="left">
+  <tr><td class="gc-pad gc-sec" style="background:#FFFFFF;padding:54px 40px 8px;" align="left">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0C2E20;border-radius:20px;">
       <tr><td class="gc-pad-sm" style="padding:42px 38px 36px;">
         <div class="gc-b" style="font-family:'Outfit',Arial,sans-serif;font-size:11.5px;font-weight:700;letter-spacing:2px;color:#E0B85C;text-transform:uppercase;margin:0 0 16px;">Ihr Treue-Geschenk</div>
@@ -235,7 +242,7 @@
           Ihr erster Baum war eine Entscheidung fürs Leben. Wenn Sie Ihren Wald jetzt erweitern, legen wir <strong style="font-weight:700;color:#E0B85C;">2 Bäume gratis dazu</strong> — Vollservice inklusive, mit Ihrem Namen auf dem Zertifikat. Und damit Sie in Ruhe entscheiden können, liegt Ihr aktueller <strong style="font-weight:700;color:#7FE3C0;">Sachwertvergleich 2026</strong> bereit.
         </p>
 
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="gc-btnwrap">
           <tr>
             <td style="padding:0;">
               <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://greenchild.eu/de/kontakt.html" style="height:52px;v-text-anchor:middle;width:260px;" arcsize="50%" fillcolor="#00A86B"><w:anchorlock/><center style="color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;">2 Gratis-Bäume sichern</center></v:roundrect><![endif]-->
@@ -252,12 +259,12 @@
   </td></tr>
 
   <!-- ===== Closing CTA ===== -->
-  <tr><td class="gc-pad" style="background:#FFFFFF;padding:48px 40px 54px;" align="center">
+  <tr><td class="gc-pad gc-sec" style="background:#FFFFFF;padding:48px 40px 54px;" align="center">
     <h2 class="gc-h gc-h2 gc-h-dark" style="margin:0 0 14px;font-family:'Manrope',Arial,sans-serif;font-size:25px;line-height:1.28;font-weight:800;color:#0F1A14;letter-spacing:-0.3px;">Für Sie. Für die Erde.<br>Für Ihre Kinder.</h2>
     <p class="gc-b gc-card-txt" style="margin:0 0 28px;font-family:'Outfit',Arial,sans-serif;font-size:16px;line-height:1.72;color:#1C2B23;font-weight:400;">
       Jeder weitere Baum kostet 249 € — Pflanzung, Pflege und Ernte inklusive. Kein Finanzprodukt, sondern echtes Eigentum mit Ihrem Namen auf dem Zertifikat. Lassen Sie uns unverbindlich sprechen.
     </p>
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" class="gc-btnwrap">
       <tr><td style="padding:0;">
         <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://greenchild.eu/de/kontakt.html" style="height:52px;v-text-anchor:middle;width:240px;" arcsize="50%" fillcolor="#0C2E20"><w:anchorlock/><center style="color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;">Erstgespräch anfragen</center></v:roundrect><![endif]-->
         <!--[if !mso]><!-->
