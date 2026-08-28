@@ -36,6 +36,7 @@
     .gc-stat{display:inline-block!important;width:50%!important;box-sizing:border-box!important}
     .gc-stat-num{font-size:33px!important}
     .gc-gallery{width:33.33%!important}
+    .gc-half{display:block!important;width:100%!important;box-sizing:border-box!important;padding:0 0 10px 0!important}
     /* Buttons: auf Mobil volle Breite + zentriert für gute Tap-Ziele */
     .gc-btn-full a{display:block!important;text-align:center!important}
     .gc-btnwrap{width:100%!important}
@@ -59,10 +60,11 @@
 </div>
 
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="gc-body-bg" style="background:#EDF2EF;">
-<tr><td align="center" style="padding:0;">
+<tr><td align="center" style="padding:12px;">
 
-<!-- ===== Container ===== -->
-<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" class="gc-wrap" style="width:600px;max-width:600px;">
+<!-- ===== Container (fluid-hybrid: schrumpft auf Mobil auch ohne Media-Query) ===== -->
+<!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td><![endif]-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="gc-wrap" style="width:100%;max-width:600px;margin:0 auto;">
 
   <!-- top spacer -->
   <tr><td style="height:24px;line-height:24px;font-size:0;">&nbsp;</td></tr>
@@ -218,6 +220,44 @@
     </table>
   </td></tr>
 
+  <!-- ===== Holzpreis / Marktargument ===== -->
+  <tr><td class="gc-pad gc-sec" style="background:#FFFFFF;padding:52px 40px 8px;" align="left">
+    <div class="gc-b" style="font-family:'Outfit',Arial,sans-serif;font-size:11.5px;font-weight:700;letter-spacing:2px;color:#008F5A;text-transform:uppercase;margin:0 0 12px;">Der Markt für Ihr Holz</div>
+    <h2 class="gc-h gc-h2 gc-h-dark" style="margin:0 0 14px;font-family:'Manrope',Arial,sans-serif;font-size:27px;line-height:1.22;font-weight:800;color:#0F1A14;letter-spacing:-0.3px;">Der Preis für Paulownia-Edelholz steigt.</h2>
+    <p class="gc-b gc-card-txt" style="margin:0 0 26px;font-family:'Outfit',Arial,sans-serif;font-size:16px;line-height:1.72;color:#1C2B23;font-weight:400;">
+      Während Ihre Bäume Jahr für Jahr an Masse gewinnen, wird das Holz selbst wertvoller. Der Grund: strengere Abholzungsregeln für Naturwälder verlagern die Nachfrage auf nachhaltiges Plantagenholz — und Paulownia gilt als Ersatz für Tropenhölzer aus dem Regenwald. Die Nachfrage aus China und Japan wächst dabei beständig weiter.
+    </p>
+
+    <!-- Stat-Karten (stacken auf Mobil) -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td class="gc-half" width="50%" valign="top" style="padding:0 8px 0 0;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8F7F0;border-radius:14px;">
+            <tr><td style="padding:22px 22px;">
+              <div class="gc-h" style="font-family:'Manrope',Arial,sans-serif;font-size:26px;font-weight:800;color:#008F5A;line-height:1;">400–900&nbsp;€</div>
+              <div class="gc-b" style="font-family:'Outfit',Arial,sans-serif;font-size:13px;color:#2E5344;line-height:1.5;margin-top:8px;font-weight:500;">pro m³ — europäischer Marktpreis für Paulownia-Holz</div>
+            </td></tr>
+          </table>
+        </td>
+        <td class="gc-half" width="50%" valign="top" style="padding:0 0 0 8px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8F7F0;border-radius:14px;">
+            <tr><td style="padding:22px 22px;">
+              <div class="gc-h" style="font-family:'Manrope',Arial,sans-serif;font-size:26px;font-weight:800;color:#008F5A;line-height:1;">~6,8&nbsp;% <span style="font-size:16px;">p.a.</span></div>
+              <div class="gc-b" style="font-family:'Outfit',Arial,sans-serif;font-size:13px;color:#2E5344;line-height:1.5;margin-top:8px;font-weight:500;">erwartetes Marktwachstum für Paulownia-Holz bis 2030</div>
+            </td></tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Mobil-Abstand zwischen gestackten Karten -->
+    <div style="height:8px;line-height:8px;font-size:0;">&nbsp;</div>
+
+    <p class="gc-b" style="margin:18px 0 0;font-family:'Outfit',Arial,sans-serif;font-size:12px;line-height:1.6;color:#6E8A7E;font-weight:400;">
+      Quellen: <a href="https://www.ipaulownia.com/de/paulownia-holzmarkt/" style="color:#008F5A;text-decoration:underline;">iPaulownia — Paulownia Holzmarkt</a> · <a href="https://www.alibaba.com/product-insights/paulownia-wood-price-m3.html" style="color:#008F5A;text-decoration:underline;">Marktanalyse Paulownia-Holzpreis (m³)</a>. Marktangaben Dritter; keine Garantie. Marktpreise unterliegen Schwankungen.
+    </p>
+  </td></tr>
+
   <!-- ===== Lead magnet / Treuebonus ===== -->
   <tr><td class="gc-pad gc-sec" style="background:#FFFFFF;padding:54px 40px 8px;" align="left">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0C2E20;border-radius:20px;">
@@ -239,7 +279,7 @@
         </table>
 
         <p class="gc-b" style="margin:0 0 28px;font-family:'Outfit',Arial,sans-serif;font-size:16px;line-height:1.72;color:#FFFFFF;font-weight:400;">
-          Ihr erster Baum war eine Entscheidung fürs Leben. Wenn Sie Ihren Wald jetzt erweitern, legen wir <strong style="font-weight:700;color:#E0B85C;">2 Bäume gratis dazu</strong> — Vollservice inklusive, mit Ihrem Namen auf dem Zertifikat. Und damit Sie in Ruhe entscheiden können, liegt Ihr aktueller <strong style="font-weight:700;color:#7FE3C0;">Sachwertvergleich 2026</strong> bereit.
+          Ein steigender Holzpreis belohnt die, die früh dabei waren — und die, die jetzt nachlegen. Wenn Sie Ihren Wald jetzt erweitern, legen wir Ihnen <strong style="font-weight:700;color:#E0B85C;">2 Bäume gratis dazu</strong> — Vollservice inklusive, mit Ihrem Namen auf dem Zertifikat. Und damit Sie in Ruhe entscheiden können, liegt Ihr aktueller <strong style="font-weight:700;color:#7FE3C0;">Sachwertvergleich 2026</strong> bereit.
         </p>
 
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="gc-btnwrap">
@@ -316,6 +356,7 @@
   <tr><td style="height:24px;line-height:24px;font-size:0;">&nbsp;</td></tr>
 
 </table>
+<!--[if mso]></td></tr></table><![endif]-->
 <!-- ===== /Container ===== -->
 
 </td></tr>
