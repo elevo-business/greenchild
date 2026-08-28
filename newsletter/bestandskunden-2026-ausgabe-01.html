@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
 <title>Greenchild Newsletter</title>
 <!--[if mso]>
 <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
@@ -37,19 +37,10 @@
     .gc-btn-full a{display:block!important;text-align:center!important}
   }
 
-  /* Dark mode */
-  @media (prefers-color-scheme:dark){
-    .gc-body-bg{background:#0A1712!important}
-    .gc-card{background:#12241B!important}
-    .gc-card-txt{color:#DCE8E1!important}
-    .gc-h-dark{color:#F3F8F5!important}
-    .gc-sub{color:#AFC4B9!important}
-  }
-  [data-ogsc] .gc-body-bg{background:#0A1712!important}
-  [data-ogsc] .gc-card{background:#12241B!important}
-  [data-ogsc] .gc-card-txt{color:#DCE8E1!important}
-  [data-ogsc] .gc-h-dark{color:#F3F8F5!important}
-  [data-ogsc] .gc-sub{color:#AFC4B9!important}
+  /* Auf helles Design festgelegt: kein automatisches Umfaerben im Dark Mode,
+     damit dunkle Schrift immer auf hellem Grund lesbar bleibt (alle Clients). */
+  :root{color-scheme:light;supported-color-schemes:light}
+  u+.gc-body,.gc-body{color-scheme:light}
 </style>
 </head>
 <body class="gc-body-bg" style="margin:0;padding:0;background:#EDF2EF;">
