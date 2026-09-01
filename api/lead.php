@@ -172,10 +172,12 @@ $fbp            = field($in, 'fbp');
 $fbc            = field($in, 'fbc');
 
 $isKontakt = ($source === 'kontakt');
+$isSimpleSachwert = ($source === 'sachwert-v2');
 
 // ---- Validierung ----
-// Telefon ist Pflicht für die Lead-Magnet-LPs, beim Kontaktformular optional.
-if ($vorname === '' || $nachname === '' || $email === '' || (!$isKontakt && $telefon === '')) {
+// Telefon ist für die bisherigen Lead-Magnet-LPs Pflicht; beim Kontaktformular
+// und beim reduzierten Sachwertvergleich V2 ist es optional.
+if ($vorname === '' || (!$isSimpleSachwert && $nachname === '') || $email === '' || (!$isKontakt && !$isSimpleSachwert && $telefon === '')) {
   respond(false, 'Pflichtfelder fehlen');
 }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -241,6 +243,8 @@ if ($isKontakt) {
   $srcLabel = 'Kontaktformular (Website)';
 } elseif ($source === 'factsheet') {
   $srcLabel = 'Messe-Landingpage (QR-Kärtchen) — Investoren-Factsheet';
+} elseif ($source === 'sachwert-v2') {
+  $srcLabel = 'Landingpage „Sachwertvergleich 2026“ — CRO V2 (PDF-Download)';
 } else {
   $srcLabel = 'Landingpage „Sachwert" — Sachwertvergleich 2026';
 }
@@ -329,7 +333,7 @@ if (!empty($searchRes['success']) && !empty($searchRes['data']['items'][0]['item
 }
 if (!$personId) {
   $personData = array(
-    'name'  => $vorname . ' ' . $nachname,
+    'name'  => trim($vorname . ' ' . $nachname),
     'email' => array(array('value' => $email, 'primary' => true, 'label' => 'work')),
   );
   if ($telefon !== '') {
@@ -347,7 +351,7 @@ if ($isKontakt) {
   $title = 'Anfrage: ' . $vorname . ' ' . $nachname;
   if ($interesseLabel !== '') { $title .= ' — ' . $interesseLabel; }
 } else {
-  $title = '[' . $budget['tag'] . '] ' . (($source === 'factsheet') ? 'Factsheet' : 'Sachwertvergleich') . ' 2026 — ' . $vorname . ' ' . $nachname;
+  $title = '[' . $budget['tag'] . '] ' . (($source === 'factsheet') ? 'Factsheet' : 'Sachwertvergleich') . ' 2026 — ' . trim($vorname . ' ' . $nachname);
 }
 $leadData = array('title' => $title, 'person_id' => $personId);
 if (!$isKontakt && $budget['value'] > 0) {
@@ -363,7 +367,7 @@ if ($isKontakt) {
   if ($nachricht !== '')      { $noteLines[] = 'Nachricht: ' . $nachricht; }
   if ($telefon !== '')        { $noteLines[] = 'Telefon: ' . $telefon; }
 } else {
-  $noteLines[] = 'Ziel: persönlichen Termin vereinbaren.';
+  $noteLines[] = $isSimpleSachwert ? 'Ziel: Sachwertvergleich als PDF angefordert.' : 'Ziel: persönlichen Termin vereinbaren.';
   $noteLines[] = '— — —';
   $noteLines[] = 'Investitionsrahmen: ' . $budget['label'];
   if ($erreichbarkeit !== '') { $noteLines[] = 'Beste Erreichbarkeit: ' . $erreichbarkeit; }

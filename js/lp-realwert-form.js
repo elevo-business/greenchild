@@ -2,6 +2,9 @@
   var ENDPOINT = '/api/lead.php';
   var SOURCE = (typeof window !== 'undefined' && window.GC_LEAD_SOURCE) || 'sachwert';
   var PDF_URL = '/assets/downloads/sachwertvergleich-2026.pdf';
+  // V2 des Sachwertvergleichs reduziert die erste Hürde auf Vorname + E-Mail.
+  // Die bestehende Qualifizierungsstrecke bleibt für alle anderen LPs unverändert.
+  var SIMPLE_LEAD = !!(typeof window !== 'undefined' && window.GC_SIMPLE_LEAD);
 
   var form = document.getElementById('realwertForm');
   if (!form) return;
@@ -195,6 +198,20 @@
       wireBooking(inner);
       return;
     }
+    if (SIMPLE_LEAD) {
+      inner.innerHTML =
+        '<div class="lp-success">' +
+          '<div class="succ-ic"><i data-lucide="check"></i></div>' +
+          '<h3>Vielen Dank – Ihr Sachwertvergleich 2026 ist unterwegs.</h3>' +
+          '<p>Der Download startet direkt. Falls nicht, können Sie das PDF hier sofort öffnen.</p>' +
+          '<a href="' + PDF_URL + '" download target="_blank" rel="noopener" class="btn btn-primary btn-lg" style="justify-content:center;">PDF jetzt herunterladen</a>' +
+          bookingBlock() +
+        '</div>';
+      if (window.lucide) lucide.createIcons();
+      wireBooking(inner);
+      startDownload();
+      return;
+    }
     inner.innerHTML =
       '<div class="lp-success">' +
         '<div class="succ-ic"><i data-lucide="check"></i></div>' +
@@ -228,15 +245,15 @@
     if (botEl && botEl.checked) return;
 
     var budgetEl = form.querySelector('[name="budget"]:checked');
-    if (!budgetEl) { setStep(1); return; }
+    if (!SIMPLE_LEAD && !budgetEl) { setStep(1); return; }
 
     var vorname = val('vorname'), nachname = val('nachname'),
         email = val('email'), telefon = val('telefon'),
         erreichbarkeit = val('erreichbarkeit');
     var consent = form.querySelector('[name="consent"]');
 
-    if (!vorname || !nachname || !email || !telefon) return;
-    if (!isValidPhone(telefon)) {
+    if (!vorname || !email || (!SIMPLE_LEAD && (!nachname || !telefon))) return;
+    if (telefon && !isValidPhone(telefon)) {
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalText; }
       fieldError('telefon', PHONE_MSG);
       return;
@@ -249,7 +266,7 @@
     var payload = {
       source: SOURCE,
       vorname: vorname, nachname: nachname, email: email, telefon: telefon,
-      erreichbarkeit: erreichbarkeit, budget: budgetEl.value, consent: true,
+      erreichbarkeit: erreichbarkeit, budget: budgetEl ? budgetEl.value : 'info', consent: true,
       beruf: (form.querySelector('[name="beruf"]:checked') || {value:''}).value,
       botcheck: '',
       // Meta Conversions API (serverseitig) – Dedup + besseres Matching:
@@ -271,7 +288,7 @@
       .then(function (r) { return r.json(); })
       .then(function (res) {
         if (!res || !res.success) throw new Error('lead');
-        track('Lead', { source: SOURCE, content_name: 'Sachwertvergleich 2026', budget: budgetEl.value, value: 0, eventID: eventId });
+        track('Lead', { source: SOURCE, content_name: 'Sachwertvergleich 2026', budget: budgetEl ? budgetEl.value : 'info', value: 0, eventID: eventId });
         showSuccess();
       })
       .catch(function () { showError(); });
