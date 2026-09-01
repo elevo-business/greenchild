@@ -235,7 +235,18 @@
         <div class="lp-hero-center">
             <div class="label light center" style="animation:fadeUp .8s .1s both;">GREENCHILD &middot; SACHWERTVERGLEICH 2026</div>
             <h1 style="animation:fadeUp .8s .25s both;">Sachwertvergleich 2026</h1>
-            <p class="lp-sub" style="animation:fadeUp .8s .4s both;">8 Sachwertklassen im direkten Vergleich – von Aktien und Gold bis Immobilien und Paulownia.</p>
+            <p class="lp-sub" style="animation:fadeUp .8s .4s both;">8 Anlage- und Sachwertklassen im direkten Vergleich – von Aktien und Gold bis Immobilien und Paulownia.</p>
+            <div class="lp-video-wrap" style="animation:fadeUp .8s .5s both;">
+                <div class="lp-video-frame">
+                    <video id="heroVideo" poster="/assets/img/lp-sachwert-hero-poster.jpg" playsinline autoplay muted loop preload="metadata">
+                        <source src="/assets/video/lp-sachwert-hero.mp4" type="video/mp4">
+                    </video>
+                    <button class="lp-video-play" id="heroPlay" aria-label="Video mit Ton ansehen">
+                        <span class="pp"><i data-lucide="volume-2"></i></span>
+                        <span class="pp-label">Mit Ton ansehen</span>
+                    </button>
+                </div>
+            </div>
             <div class="btn-group" style="animation:fadeUp .8s .6s both;">
                 <a href="#anfordern" class="btn btn-primary-glow btn-lg">Kostenlosen Vergleich sichern</a>
             </div>
@@ -244,7 +255,7 @@
                 <span><i data-lucide="lock"></i> Unverbindlich</span>
                 <span><i data-lucide="file-text"></i> Als PDF</span>
             </div>
-            <p style="margin:18px 0 0;font-size:13px;color:rgba(255,255,255,.7);">Persönlicher Ansprechpartner: Mert</p>
+            <p style="margin:18px 0 0;font-size:13px;color:rgba(255,255,255,.7);">Ihr persönlicher Ansprechpartner: Mert</p>
         </div>
     </div>
 </section>
@@ -276,11 +287,11 @@
             <div class="lp-magnet-text reveal">
                 <div class="label">Kostenloser Download</div>
                 <h2>Der Sachwertvergleich 2026</h2>
-                <p style="font-size:16.5px;color:var(--text-body);line-height:1.8;margin-top:12px;">Ein unabhängiger Vergleich, in dem wir <strong>acht verschiedene Sachwert-Klassen</strong> gegenüberstellen – und ehrlich auch unsere eigene Einordnung zeigen. Vergleichen Sie selbst und entscheiden Sie, ob das etwas für Sie ist.</p>
+                <p style="font-size:16.5px;color:var(--text-body);line-height:1.8;margin-top:12px;">Der kompakte Überblick zu <strong>acht Anlage- und Sachwertklassen</strong> – mit zentralen Eigenschaften, Besonderheiten und unserer transparent gekennzeichneten Einordnung zu Paulownia.</p>
                 <ul class="lp-magnet-list">
                     <li><i data-lucide="check"></i> Paulownia im direkten Vergleich zu Aktien, Anleihen, Gold &amp; Immobilien</li>
-                    <li><i data-lucide="check"></i> 8 Sachwert-Klassen objektiv gegenübergestellt</li>
-                    <li><i data-lucide="check"></i> Ehrliche Einordnung – inklusive unserer eigenen Position</li>
+                    <li><i data-lucide="check"></i> 8 Sachwert-Klassen direkt gegenübergestellt</li>
+                    <li><i data-lucide="check"></i> Greenchilds Einordnung zu Paulownia – klar als unsere Perspektive gekennzeichnet</li>
                     <li><i data-lucide="check"></i> Sofort als PDF, komplett kostenlos &amp; unverbindlich</li>
                 </ul>
                 <div class="lp-pdf-visual">
@@ -291,11 +302,13 @@
             <div class="lp-form-card reveal reveal-delay-1">
                 <div id="formInner">
                     <h3>Vergleich kostenlos erhalten</h3>
-                    <p class="lp-form-sub">Vorname und E-Mail genügen. Der PDF-Download startet direkt nach dem Absenden.</p>
+                    <p class="lp-form-sub">In unter einer Minute zum PDF. So kann Mert bei Rückfragen persönlich für Sie da sein.</p>
                     <form id="realwertForm" class="lp-form" novalidate>
                         <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none;">
                         <div class="form-group"><label class="form-label">Vorname *</label><input type="text" name="vorname" class="form-input" autocomplete="given-name" required></div>
                         <div class="form-group"><label class="form-label">E-Mail *</label><input type="email" name="email" class="form-input" autocomplete="email" required></div>
+                        <div class="form-group"><label class="form-label">Telefon *</label><input type="tel" name="telefon" class="form-input" autocomplete="tel" inputmode="tel" placeholder="z. B. 0151 19133331" required><small class="form-hint" style="display:block;margin-top:5px;font-size:12.5px;color:var(--text-muted,#6b7280);">Für Rückfragen zum Vergleich – kein Callcenter.</small></div>
+                        <div class="form-group"><label class="form-label">Was trifft am ehesten auf Sie zu? *</label><div class="qual-options" style="margin-bottom:0;"><label class="qual-opt"><input type="radio" name="lead_intent" value="investment" required><span class="qual-radio"></span><span class="qual-txt">Ich prüfe eine Investition<span class="qual-sub">Ich möchte Sachwerte konkret vergleichen</span></span></label><label class="qual-opt"><input type="radio" name="lead_intent" value="info"><span class="qual-radio"></span><span class="qual-txt">Ich möchte mich zunächst informieren<span class="qual-sub">Der Vergleich ist mein erster Schritt</span></span></label></div></div>
                         <label class="lp-consent"><input type="checkbox" name="consent" required><span>Ich möchte den Sachwertvergleich erhalten und habe die <a href="#" onclick="event.preventDefault();document.getElementById('datenschutzOverlay').classList.add('active')">Datenschutzerklärung</a> gelesen.</span></label>
                         <button type="submit" class="btn btn-primary-glow btn-lg" style="width:100%;justify-content:center;">Sachwertvergleich kostenlos erhalten</button>
 

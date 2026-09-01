@@ -147,6 +147,7 @@ $telefon        = field($in, 'telefon');
 $erreichbarkeit = field($in, 'erreichbarkeit');
 $beruf          = field($in, 'beruf');
 $budgetKey      = field($in, 'budget');
+$leadIntentKey  = field($in, 'lead_intent');
 $source         = field($in, 'source');   // 'sachwert' | 'factsheet' | 'kontakt'
 $variant        = field($in, 'variant');  // optional (A/B-Test)
 $interesse      = field($in, 'interesse');  // nur Kontaktformular
@@ -175,9 +176,8 @@ $isKontakt = ($source === 'kontakt');
 $isSimpleSachwert = ($source === 'sachwert-v2');
 
 // ---- Validierung ----
-// Telefon ist für die bisherigen Lead-Magnet-LPs Pflicht; beim Kontaktformular
-// und beim reduzierten Sachwertvergleich V2 ist es optional.
-if ($vorname === '' || (!$isSimpleSachwert && $nachname === '') || $email === '' || (!$isKontakt && !$isSimpleSachwert && $telefon === '')) {
+// Telefon ist für die Lead-Magnet-LPs Pflicht; beim Kontaktformular optional.
+if ($vorname === '' || (!$isSimpleSachwert && $nachname === '') || $email === '' || (!$isKontakt && $telefon === '')) {
   respond(false, 'Pflichtfelder fehlen');
 }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -237,6 +237,14 @@ $INTERESSE_MAP = array(
   'partner'      => 'Partnerschaft',
   'sonstiges'    => 'Sonstiges',
 );
+$LEAD_INTENT_MAP = array(
+  'investment' => 'Prüft eine Investition',
+  'info'       => 'Möchte sich zunächst informieren',
+);
+$leadIntent = isset($LEAD_INTENT_MAP[$leadIntentKey]) ? $LEAD_INTENT_MAP[$leadIntentKey] : '';
+if ($isSimpleSachwert && $leadIntent === '') {
+  respond(false, 'Einordnung fehlt');
+}
 $interesseLabel = isset($INTERESSE_MAP[$interesse]) ? $INTERESSE_MAP[$interesse] : $interesse;
 
 if ($isKontakt) {
@@ -369,7 +377,11 @@ if ($isKontakt) {
 } else {
   $noteLines[] = $isSimpleSachwert ? 'Ziel: Sachwertvergleich als PDF angefordert.' : 'Ziel: persönlichen Termin vereinbaren.';
   $noteLines[] = '— — —';
-  $noteLines[] = 'Investitionsrahmen: ' . $budget['label'];
+  if ($isSimpleSachwert) {
+    $noteLines[] = 'Einordnung: ' . $leadIntent;
+  } else {
+    $noteLines[] = 'Investitionsrahmen: ' . $budget['label'];
+  }
   if ($erreichbarkeit !== '') { $noteLines[] = 'Beste Erreichbarkeit: ' . $erreichbarkeit; }
   if ($beruf !== '') { $noteLines[] = 'Beruflich: ' . $beruf; }
   if ($telefon !== '') { $noteLines[] = 'Telefon: ' . $telefon; }

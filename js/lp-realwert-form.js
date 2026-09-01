@@ -141,8 +141,13 @@
   var backStep1 = document.getElementById('backStep1');
   if (backStep1 && !backStep1.classList.contains('js-back')) backStep1.addEventListener('click', goBack);
 
-  form.addEventListener('change', function () {
+  form.addEventListener('change', function (e) {
     if (!startedTracked) { startedTracked = true; track('LP_Form_Start', { source: SOURCE }); }
+    if (e.target && e.target.name === 'lead_intent') {
+      var intentGroup = e.target.closest('.form-group');
+      var intentError = intentGroup && intentGroup.querySelector('.field-err');
+      if (intentError) intentError.remove();
+    }
   });
 
   /* ---------- Erfolg / Fehler ---------- */
@@ -250,9 +255,27 @@
     var vorname = val('vorname'), nachname = val('nachname'),
         email = val('email'), telefon = val('telefon'),
         erreichbarkeit = val('erreichbarkeit');
+    var leadIntentEl = form.querySelector('[name="lead_intent"]:checked');
     var consent = form.querySelector('[name="consent"]');
 
-    if (!vorname || !email || (!SIMPLE_LEAD && (!nachname || !telefon))) return;
+    if (SIMPLE_LEAD) {
+      if (!vorname) { fieldError('vorname', 'Bitte Ihren Vornamen eintragen.'); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { fieldError('email', 'Bitte eine gültige E-Mail-Adresse eintragen.'); return; }
+      if (!telefon) { fieldError('telefon', 'Bitte Ihre Telefonnummer eintragen.'); return; }
+      if (!leadIntentEl) {
+        var intentGroup = form.querySelector('[name="lead_intent"]');
+        intentGroup = intentGroup && (intentGroup.closest('.form-group') || intentGroup.parentNode);
+        if (intentGroup && !intentGroup.querySelector('.field-err')) {
+          var intentError = document.createElement('div');
+          intentError.className = 'field-err';
+          intentError.style.cssText = 'color:#dc2626;font-size:12.5px;margin-top:7px;';
+          intentError.textContent = 'Bitte wählen Sie eine der beiden Optionen.';
+          intentGroup.appendChild(intentError);
+        }
+        return;
+      }
+    }
+    if (!vorname || !email || !telefon || (!SIMPLE_LEAD && !nachname) || (SIMPLE_LEAD && !leadIntentEl)) return;
     if (telefon && !isValidPhone(telefon)) {
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalText; }
       fieldError('telefon', PHONE_MSG);
@@ -267,6 +290,7 @@
       source: SOURCE,
       vorname: vorname, nachname: nachname, email: email, telefon: telefon,
       erreichbarkeit: erreichbarkeit, budget: budgetEl ? budgetEl.value : 'info', consent: true,
+      lead_intent: leadIntentEl ? leadIntentEl.value : '',
       beruf: (form.querySelector('[name="beruf"]:checked') || {value:''}).value,
       botcheck: '',
       // Meta Conversions API (serverseitig) – Dedup + besseres Matching:
@@ -288,7 +312,7 @@
       .then(function (r) { return r.json(); })
       .then(function (res) {
         if (!res || !res.success) throw new Error('lead');
-        track('Lead', { source: SOURCE, content_name: 'Sachwertvergleich 2026', budget: budgetEl ? budgetEl.value : 'info', value: 0, eventID: eventId });
+        track('Lead', { source: SOURCE, content_name: 'Sachwertvergleich 2026', budget: budgetEl ? budgetEl.value : 'info', lead_intent: leadIntentEl ? leadIntentEl.value : '', value: 0, eventID: eventId });
         showSuccess();
       })
       .catch(function () { showError(); });
