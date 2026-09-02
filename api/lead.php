@@ -217,18 +217,30 @@ if (preg_match('~https?://|www\.~i', $vorname . ' ' . $nachname)) {
 }
 
 // ---- Budget-Stufen → Pipedrive-Mapping (serverseitig, damit nicht fälschbar) ----
+// Absicht statt Investitionsvolumen: Die Landingpages fragen nicht mehr nach einem
+// Betrag (zu harter Einstieg fuer einen kostenlosen Report), sondern weich nach dem
+// Anliegen. Die alten Budget-Keys bleiben erhalten, weil aeltere Landingpages sie
+// noch senden.
+// 'value' ist bewusst ueberall 0: frueher landeten diese Staffelbetraege als
+// Deal-Wert in Pipedrive und haetten als Fake-Umsatz an Meta gemeldet werden koennen.
+// Der echte Vertragswert wird vom Vertrieb eingetragen.
 $BUDGET_MAP = array(
-  'info'        => array('label' => 'Erst einmal informieren', 'tag' => 'INFO',       'value' => 0),
-  'bis-2500'    => array('label' => 'bis 2.500 €',             'tag' => '€ bis 2,5k',  'value' => 2500),
-  '2500-10000'  => array('label' => '2.500 – 10.000 €',         'tag' => '€€ 2,5–10k',  'value' => 10000),
-  '10000-25000' => array('label' => '10.000 – 25.000 €',        'tag' => '€€€ 10–25k',  'value' => 25000),
-  '25000-plus'  => array('label' => 'über 25.000 €',            'tag' => '€€€€ 25k+',   'value' => 50000),
+  // -- neu: Absicht (weich) --
+  'info'        => array('label' => 'Möchte sich zunächst informieren', 'tag' => 'INFO',     'value' => 0, 'note' => 'Anliegen'),
+  'ueberlegen'  => array('label' => 'Überlegt noch, ob es passt',       'tag' => 'PRÜFT',    'value' => 0, 'note' => 'Anliegen'),
+  'kaufen'      => array('label' => 'Denkt konkret über Bäume nach',    'tag' => 'KAUFINT.', 'value' => 0, 'note' => 'Anliegen'),
+  // -- Bestand: Budget-Staffel aelterer Landingpages --
+  'bis-2500'    => array('label' => 'bis 2.500 €',             'tag' => '€ bis 2,5k',  'value' => 0, 'note' => 'Investitionsrahmen'),
+  '2500-10000'  => array('label' => '2.500 – 10.000 €',         'tag' => '€€ 2,5–10k',  'value' => 0, 'note' => 'Investitionsrahmen'),
+  '10000-25000' => array('label' => '10.000 – 25.000 €',        'tag' => '€€€ 10–25k',  'value' => 0, 'note' => 'Investitionsrahmen'),
+  '25000-plus'  => array('label' => 'über 25.000 €',            'tag' => '€€€€ 25k+',   'value' => 0, 'note' => 'Investitionsrahmen'),
 );
 if (isset($BUDGET_MAP[$budgetKey])) {
   $budget = $BUDGET_MAP[$budgetKey];
 } else {
-  $budget = array('label' => '(nicht abgefragt)', 'tag' => '—', 'value' => 0);
+  $budget = array('label' => '(nicht abgefragt)', 'tag' => '—', 'value' => 0, 'note' => 'Angabe');
 }
+if (!isset($budget['note'])) { $budget['note'] = 'Angabe'; }
 
 $INTERESSE_MAP = array(
   'baumbesitzer' => 'Baumbesitzer werden',
@@ -378,9 +390,9 @@ if ($isKontakt) {
   $noteLines[] = $isSimpleSachwert ? 'Ziel: Sachwertvergleich als PDF angefordert.' : 'Ziel: persönlichen Termin vereinbaren.';
   $noteLines[] = '— — —';
   if ($isSimpleSachwert) {
-    $noteLines[] = 'Einordnung: ' . $leadIntent;
+    $noteLines[] = 'Einordnung: ' . $leadIntent;   // CRO-V2-Seite (sachwert-c)
   } else {
-    $noteLines[] = 'Investitionsrahmen: ' . $budget['label'];
+    $noteLines[] = $budget['note'] . ': ' . $budget['label'];
   }
   if ($erreichbarkeit !== '') { $noteLines[] = 'Beste Erreichbarkeit: ' . $erreichbarkeit; }
   if ($beruf !== '') { $noteLines[] = 'Beruflich: ' . $beruf; }
