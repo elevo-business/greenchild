@@ -173,7 +173,7 @@ $fbp            = field($in, 'fbp');
 $fbc            = field($in, 'fbc');
 
 $isKontakt = ($source === 'kontakt');
-$isSimpleSachwert = ($source === 'sachwert-v2');
+$isSimpleSachwert = in_array($source, array('sachwert-v2', 'sachwert-d'), true);
 
 // ---- Validierung ----
 // Telefon ist für die Lead-Magnet-LPs Pflicht; beim Kontaktformular optional.
@@ -250,7 +250,8 @@ $INTERESSE_MAP = array(
   'sonstiges'    => 'Sonstiges',
 );
 $LEAD_INTENT_MAP = array(
-  'investment' => 'Prüft eine Investition',
+  'investment' => 'Prüft eine Investition',                 // sachwert-c
+  'kauf'       => 'Möchte konkret über eigene Bäume sprechen', // sachwert-d (Bild-Ads)
   'info'       => 'Möchte sich zunächst informieren',
 );
 $leadIntent = isset($LEAD_INTENT_MAP[$leadIntentKey]) ? $LEAD_INTENT_MAP[$leadIntentKey] : '';
@@ -265,6 +266,8 @@ if ($isKontakt) {
   $srcLabel = 'Messe-Landingpage (QR-Kärtchen) — Investoren-Factsheet';
 } elseif ($source === 'sachwert-v2') {
   $srcLabel = 'Landingpage „Sachwertvergleich 2026“ — CRO V2 (PDF-Download)';
+} elseif ($source === 'sachwert-d') {
+  $srcLabel = 'Landingpage „Eigener Baum“ — Bild-Ads (Kontaktanfrage)';
 } else {
   $srcLabel = 'Landingpage „Sachwert" — Sachwertvergleich 2026';
 }
