@@ -100,6 +100,10 @@
 .lp-success{text-align:center;padding:20px 0}
 .lp-success .succ-ic{width:64px;height:64px;border-radius:50%;background:var(--green-pale);color:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
 .lp-success .succ-ic i{width:32px;height:32px}
+.team-ic{width:56px;height:56px;border-radius:50%;background:var(--green);color:#fff;flex:none;display:flex;align-items:center;justify-content:center}
+.team-ic i,.team-ic svg{width:26px;height:26px}
+.team-ic.sm{width:52px;height:52px}
+.team-ic.sm i,.team-ic.sm svg{width:24px;height:24px}
 .lp-success h3{margin-bottom:8px}
 .lp-success p{font-size:14.5px;color:var(--text-muted);margin-bottom:20px}
 
@@ -255,7 +259,7 @@
                 <span><i data-lucide="lock"></i> Unverbindlich</span>
                 <span><i data-lucide="file-text"></i> Als PDF</span>
             </div>
-            <p style="margin:18px 0 0;font-size:13px;color:rgba(255,255,255,.7);">Ihr persönlicher Ansprechpartner: Mert</p>
+            <p style="margin:18px 0 0;font-size:13px;color:rgba(255,255,255,.7);">Jemand aus unserem Team meldet sich pers&ouml;nlich bei Ihnen</p>
         </div>
     </div>
 </section>
@@ -274,8 +278,8 @@
             <div class="card reveal reveal-delay-2"><h4>Greenchilds Einordnung</h4><p>Unsere Perspektive auf Paulownia – transparent als eigene Einordnung gekennzeichnet.</p></div>
         </div>
         <div class="reveal" style="max-width:650px;margin:32px auto 0;display:flex;align-items:center;gap:16px;padding:16px 20px;background:var(--green-pale);border-radius:14px;">
-            <img src="/assets/img/headshot-mert.jpg" alt="Mert, persönlicher Ansprechpartner bei Greenchild" width="56" height="56" loading="lazy" style="border-radius:50%;object-fit:cover;flex:none;">
-            <p style="margin:0;font-size:14px;line-height:1.55;"><strong>Persönlicher Ansprechpartner: Mert.</strong><br>Bei Fragen zum Vergleich erreichen Sie einen echten Ansprechpartner – kein Callcenter.</p>
+            <span class="team-ic"><i data-lucide="users"></i></span>
+            <p style="margin:0;font-size:14px;line-height:1.55;"><strong>Pers&ouml;nlicher Kontakt aus unserem Team.</strong><br>Bei Fragen zum Vergleich erreichen Sie einen echten Ansprechpartner &ndash; kein Callcenter.</p>
         </div>
     </div>
 </section>
@@ -302,10 +306,10 @@
             <div class="lp-form-card reveal reveal-delay-1">
                 <div id="formInner">
                     <h3>Vergleich kostenlos erhalten</h3>
-                    <p class="lp-form-sub">In unter einer Minute zum PDF. So kann Mert bei Rückfragen persönlich für Sie da sein.</p>
+                    <p class="lp-form-sub">In unter einer Minute zum PDF. So k&ouml;nnen wir bei R&uuml;ckfragen pers&ouml;nlich f&uuml;r Sie da sein.</p>
                     <form id="realwertForm" class="lp-form" novalidate>
                         <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none;">
-                        <div class="form-group"><label class="form-label">Vorname *</label><input type="text" name="vorname" class="form-input" autocomplete="given-name" required></div>
+                        <div class="form-group"><label class="form-label">Vor- und Nachname *</label><input type="text" name="fullname" class="form-input" autocomplete="name" placeholder="z.&nbsp;B. Max Mustermann" required></div>
                         <div class="form-group"><label class="form-label">E-Mail *</label><input type="email" name="email" class="form-input" autocomplete="email" required></div>
                         <div class="form-group"><label class="form-label">Telefon *</label><input type="tel" name="telefon" class="form-input" autocomplete="tel" inputmode="tel" placeholder="z. B. 0151 19133331" required><small class="form-hint" style="display:block;margin-top:5px;font-size:12.5px;color:var(--text-muted,#6b7280);">Für Rückfragen zum Vergleich – kein Callcenter.</small></div>
                         <div class="form-group"><label class="form-label">Was trifft am ehesten auf Sie zu? *</label><div class="qual-options" style="margin-bottom:0;"><label class="qual-opt"><input type="radio" name="lead_intent" value="investment" required><span class="qual-radio"></span><span class="qual-txt">Ich prüfe eine Investition<span class="qual-sub">Ich möchte Sachwerte konkret vergleichen</span></span></label><label class="qual-opt"><input type="radio" name="lead_intent" value="info"><span class="qual-radio"></span><span class="qual-txt">Ich möchte mich zunächst informieren<span class="qual-sub">Der Vergleich ist mein erster Schritt</span></span></label></div></div>
@@ -318,10 +322,9 @@
                             <div class="trust-signal"><i data-lucide="x-circle"></i> Jederzeit widerrufbar</div>
                         </div>
                     </form>
-                    <!-- TODO: vollen Namen ergänzen, sobald freigegeben -->
                     <div style="display:flex;align-items:center;gap:14px;margin-top:20px;padding:14px 16px;background:var(--bg,#FAFCFB);border:1px solid var(--border,#e3e8e4);border-radius:12px;">
-                        <img src="/assets/img/headshot-mert.jpg" alt="Ihr Ansprechpartner bei Greenchild" width="52" height="52" loading="lazy" style="border-radius:50%;object-fit:cover;flex:none;">
-                        <div style="font-size:13.5px;line-height:1.5;color:var(--text-body,#3B5347);"><strong style="color:var(--text,#152019);">Ihr Ansprechpartner: Mert.</strong><br>Persönlich erreichbar – kein Callcenter, kein aggressiver Verkaufsdruck.</div>
+                        <span class="team-ic sm"><i data-lucide="users"></i></span>
+                        <div style="font-size:13.5px;line-height:1.5;color:var(--text-body,#3B5347);"><strong style="color:var(--text,#152019);">Jemand aus unserem Team meldet sich.</strong><br>Pers&ouml;nlich erreichbar &ndash; kein Callcenter, kein aggressiver Verkaufsdruck.</div>
                     </div>
                 </div>
             </div>

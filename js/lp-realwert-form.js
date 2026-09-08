@@ -255,11 +255,25 @@
     var vorname = val('vorname'), nachname = val('nachname'),
         email = val('email'), telefon = val('telefon'),
         erreichbarkeit = val('erreichbarkeit');
+
+    // Kombiniertes Namensfeld: Eine Landingpage kann statt zwei Feldern ein
+    // einzelnes "Vor- und Nachname"-Feld anbieten. Wir teilen es hier auf,
+    // damit Pipedrive (Personenname) und das Meta-Matching unveraendert
+    // funktionieren - dort werden Vor- und Nachname getrennt gehasht.
+    // Seiten ohne dieses Feld bleiben unberuehrt.
+    var fullEl = form.querySelector('[name="fullname"]');
+    if (fullEl) {
+      var nameParts = (fullEl.value || '').trim().replace(/\s+/g, ' ').split(' ');
+      vorname  = nameParts.shift() || '';
+      nachname = nameParts.join(' ');
+    }
     var leadIntentEl = form.querySelector('[name="lead_intent"]:checked');
     var consent = form.querySelector('[name="consent"]');
 
     if (SIMPLE_LEAD) {
-      if (!vorname) { fieldError('vorname', 'Bitte Ihren Vornamen eintragen.'); return; }
+      if (fullEl) {
+        if (!vorname || !nachname) { fieldError('fullname', 'Bitte Vor- und Nachnamen eintragen.'); return; }
+      } else if (!vorname) { fieldError('vorname', 'Bitte Ihren Vornamen eintragen.'); return; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { fieldError('email', 'Bitte eine gültige E-Mail-Adresse eintragen.'); return; }
       if (!telefon) { fieldError('telefon', 'Bitte Ihre Telefonnummer eintragen.'); return; }
       if (!leadIntentEl) {
