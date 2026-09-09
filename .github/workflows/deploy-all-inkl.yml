@@ -49,8 +49,18 @@ jobs:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          PD_WEBHOOK_SECRET: ${{ secrets.PD_WEBHOOK_SECRET }}
           DRY_RUN: ${{ inputs.dry_run || false }}
         run: |
+          # Secret-Datei fuer api/pd-deal-won.php erzeugen - BEWUSST ausserhalb von
+          # _site, damit sie nicht in die oeffentlichen Webroots mit hochgeladen wird.
+          mkdir -p _secret
+          if [ -n "$PD_WEBHOOK_SECRET" ]; then
+            printf '%s' "$PD_WEBHOOK_SECRET" > _secret/pd-webhook-secret.txt
+            echo "Secret-Datei vorbereitet (Inhalt wird nicht geloggt)."
+          else
+            echo "Hinweis: PD_WEBHOOK_SECRET ist nicht gesetzt - Secret-Upload wird uebersprungen."
+          fi
           npm install basic-ftp@5 --no-save --silent
           cat > deploy.mjs <<'EOF'
           import { Client } from "basic-ftp";
@@ -117,6 +127,25 @@ jobs:
           const files = walk(LOCAL);
           console.log(`Lokale Dateien: ${files.length}`);
           for (const t of targets) await deployTarget(t, files);
+
+          // Secret-Datei in die FTP-Wurzel legen - also OBERHALB von /greenchild.eu/
+          // und /greenchild.at/. api/pd-deal-won.php sucht sie ueber
+          // __DIR__ + '/../../', was von /greenchild.eu/api aus genau hier landet.
+          // Dort ist sie ueber das Web nicht erreichbar.
+          const SECRET_LOCAL = "_secret/pd-webhook-secret.txt";
+          if (fs.existsSync(SECRET_LOCAL)) {
+            if (DRY) {
+              console.log("\nTrockenlauf: Secret-Datei nicht hochgeladen.");
+            } else {
+              const c = await connect();
+              await c.cd("/");
+              await c.uploadFrom(SECRET_LOCAL, "pd-webhook-secret.txt");
+              c.close();
+              console.log("\nSecret-Datei in die FTP-Wurzel geschrieben (ausserhalb der Webroots).");
+            }
+          } else {
+            console.log("\nKeine Secret-Datei vorhanden - uebersprungen.");
+          }
           console.log("\nAlle Ziele abgeschlossen.");
           EOF
           node deploy.mjs
