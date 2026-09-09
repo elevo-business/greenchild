@@ -79,7 +79,16 @@ function debug_log($code, $data) {
   if ($f === '') { return; }
   $keys = array();
   if (!empty($GLOBALS['GC_BODY_KEYS']) && is_array($GLOBALS['GC_BODY_KEYS'])) {
-    foreach ($GLOBALS['GC_BODY_KEYS'] as $k) { $keys[] = preg_replace('/[^A-Za-z0-9_.\-]/', '', (string) $k); }
+    $raw = isset($GLOBALS['GC_BODY_RAWKEYS']) ? $GLOBALS['GC_BODY_RAWKEYS'] : array();
+    foreach ($GLOBALS['GC_BODY_KEYS'] as $i => $k) {
+      $name = preg_replace('/[^A-Za-z0-9_.\-]/', '', (string) $k);
+      // Auffaellig machen, wenn der Originalschluessel laenger war als der
+      // bereinigte - sonst sieht "id " im Protokoll aus wie "id".
+      if (isset($raw[$i]) && strlen((string) $raw[$i]) !== strlen((string) $k)) {
+        $name .= '<' . strlen((string) $raw[$i]) . 'z>';
+      }
+      $keys[] = $name;
+    }
   }
   $line = sprintf(
     "%s  HTTP %d  %s  ct=%s  len=%d  felder=[%s]  meldung=%s\n",
@@ -284,6 +293,29 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET' && isset($_GET['selftest']))
 $raw = file_get_contents('php://input');
 $in = json_decode($raw, true);
 if (!is_array($in) && !empty($_POST)) { $in = $_POST; }
+/**
+ * Feldnamen saeubern. In der Pipedrive-Automation werden die Schluessel von
+ * Hand getippt - ein versehentliches Leerzeichen ("id " statt "id") ist dort
+ * unsichtbar, macht den Schluessel im JSON aber zu einem anderen. Genau daran
+ * scheiterte die Einrichtung: gesucht wurde 'id', geliefert wurde 'id '.
+ * Deshalb hier Rand-Leerzeichen, geschuetzte Leerzeichen und Zero-Width-
+ * Zeichen entfernen, bevor irgendetwas nachgeschlagen wird.
+ */
+function clean_keys($arr) {
+  if (!is_array($arr)) { return $arr; }
+  $out = array();
+  foreach ($arr as $k => $v) {
+    if (is_string($k)) {
+      $k2 = preg_replace('/^[\s\x{00A0}\x{200B}-\x{200D}\x{FEFF}]+|[\s\x{00A0}\x{200B}-\x{200D}\x{FEFF}]+$/u', '', $k);
+      if ($k2 !== '' || $k === '') { $k = $k2; }
+    }
+    $out[$k] = $v;
+  }
+  return $out;
+}
+
+$GLOBALS['GC_BODY_RAWKEYS'] = is_array($in) ? array_keys($in) : array();
+$in = clean_keys($in);
 $GLOBALS['GC_BODY_LEN']  = strlen((string) $raw);
 $GLOBALS['GC_BODY_KEYS'] = is_array($in) ? array_keys($in) : array();
 $GLOBALS['GC_BODY_SAFE'] = array();
