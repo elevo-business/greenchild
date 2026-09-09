@@ -66,6 +66,16 @@ function debug_log($code, $data) {
     implode(',', array_slice($keys, 0, 25)),
     isset($data['error']) ? $data['error'] : (isset($data['skipped']) ? 'SKIP: ' . $data['skipped'] : '-')
   );
+  // Werte der unkritischen Felder mitschreiben - ohne die ist nicht erkennbar,
+  // ob ein Merge-Feld leer bleibt oder etwas Unerwartetes liefert. Bewusst NUR
+  // diese vier: Deal-ID, Status, Waehrung und Betrag sind keine Personendaten.
+  if (!empty($GLOBALS['GC_BODY_SAFE']) && is_array($GLOBALS['GC_BODY_SAFE'])) {
+    $pairs = array();
+    foreach ($GLOBALS['GC_BODY_SAFE'] as $k => $v) {
+      $pairs[] = $k . '=' . preg_replace('/[^\x20-\x7E]/', '', substr(var_export($v, true), 0, 30));
+    }
+    $line = rtrim($line, "\n") . '  werte{' . implode(' ', $pairs) . "}\n";
+  }
   @file_put_contents($f, $line, FILE_APPEND | LOCK_EX);
   // Datei klein halten: nur die letzten 60 Zeilen behalten.
   $c = @file($f);
@@ -214,6 +224,12 @@ $in = json_decode($raw, true);
 if (!is_array($in) && !empty($_POST)) { $in = $_POST; }
 $GLOBALS['GC_BODY_LEN']  = strlen((string) $raw);
 $GLOBALS['GC_BODY_KEYS'] = is_array($in) ? array_keys($in) : array();
+$GLOBALS['GC_BODY_SAFE'] = array();
+if (is_array($in)) {
+  foreach (array('id', 'status', 'currency', 'value', 'person_id') as $k) {
+    if (array_key_exists($k, $in) && !is_array($in[$k])) { $GLOBALS['GC_BODY_SAFE'][$k] = $in[$k]; }
+  }
+}
 if (!is_array($in)) {
   out(false, array('error' => 'Kein lesbarer Body (weder JSON noch Formularfelder).'));
 }
@@ -221,10 +237,28 @@ if (!is_array($in)) {
 // Pipedrive-Webhook liefert die Deal-Daten je nach Version unter data/current.
 // (v2.0: {meta, data, previous}; v1: {event, current, previous, meta})
 $deal = null;
-if (isset($in['data']) && is_array($in['data']))         { $deal = $in['data']; }
+if (isset($in['data']) && is_array($in['data']))           { $deal = $in['data']; }
 elseif (isset($in['current']) && is_array($in['current'])) { $deal = $in['current']; }
-elseif (isset($in['id']) || isset($in['status']))         { $deal = $in; } // flacher Payload / manueller Test
+elseif (array_key_exists('id', $in) || array_key_exists('status', $in)) {
+  // Flacher Payload (Automation "Webhook-Anfrage senden" / manueller Test).
+  // array_key_exists statt isset: ein nicht aufgeloestes Merge-Feld kommt als
+  // null an - der Schluessel ist da, der Wert fehlt. Das ist ein anderer
+  // Fehler als "gar keine Deal-Daten" und muss auch so gemeldet werden.
+  $deal = $in;
+}
 if (!$deal) { out(false, array('error' => 'Keine Deal-Daten im Payload.')); }
+
+// Leere Pflichtfelder frueh und benennbar abfangen.
+$missing = array();
+foreach (array('id', 'status') as $req) {
+  if (!isset($deal[$req]) || trim((string) $deal[$req]) === '') { $missing[] = $req; }
+}
+if ($missing) {
+  out(false, array(
+    'error' => 'Feld(er) ohne Wert: ' . implode(', ', $missing)
+             . '. Das Merge-Feld in der Automation loest nicht auf.',
+  ));
+}
 
 $prev = isset($in['previous']) && is_array($in['previous']) ? $in['previous'] : array();
 
