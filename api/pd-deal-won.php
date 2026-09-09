@@ -31,9 +31,45 @@ header('X-Content-Type-Options: nosniff');
 
 function out($ok, $data = array(), $code = null) {
   if ($code === null) { $code = $ok ? 200 : 400; }
+  debug_log($code, $data);
   http_response_code($code);
   echo json_encode(array_merge(array('ok' => $ok), $data));
   exit;
+}
+
+/**
+ * Diagnose-Protokoll. Ohne Serverzugang ist sonst nicht erkennbar, warum ein
+ * Webhook-Aufruf scheitert - Pipedrive zeigt im Automations-Log nur "Fehler".
+ * Bewusst datensparsam: nur Statuscode, Fehlertext, Content-Type und die
+ * NAMEN der uebermittelten Felder. Keine Werte, also keine Personendaten.
+ * Auslesen: ?debug=1&key=SECRET&   Loeschen: ?debug=clear&key=SECRET&
+ */
+function debug_path() {
+  $dirs = array(__DIR__ . '/../../', __DIR__ . '/../');
+  foreach ($dirs as $d) { if (@is_dir($d) && @is_writable($d)) { return $d . 'pd-webhook-debug.log'; } }
+  return '';
+}
+function debug_log($code, $data) {
+  if ($code >= 200 && $code < 300 && empty($data['skipped'])) { return; }  // Erfolg nicht protokollieren
+  $f = debug_path();
+  if ($f === '') { return; }
+  $keys = array();
+  if (!empty($GLOBALS['GC_BODY_KEYS']) && is_array($GLOBALS['GC_BODY_KEYS'])) {
+    foreach ($GLOBALS['GC_BODY_KEYS'] as $k) { $keys[] = preg_replace('/[^A-Za-z0-9_.\-]/', '', (string) $k); }
+  }
+  $line = sprintf(
+    "%s  HTTP %d  %s  ct=%s  len=%d  felder=[%s]  meldung=%s\n",
+    gmdate('Y-m-d H:i:s'), $code,
+    isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '?',
+    isset($_SERVER['CONTENT_TYPE']) ? substr($_SERVER['CONTENT_TYPE'], 0, 60) : '-',
+    isset($GLOBALS['GC_BODY_LEN']) ? (int) $GLOBALS['GC_BODY_LEN'] : -1,
+    implode(',', array_slice($keys, 0, 25)),
+    isset($data['error']) ? $data['error'] : (isset($data['skipped']) ? 'SKIP: ' . $data['skipped'] : '-')
+  );
+  @file_put_contents($f, $line, FILE_APPEND | LOCK_EX);
+  // Datei klein halten: nur die letzten 60 Zeilen behalten.
+  $c = @file($f);
+  if (is_array($c) && count($c) > 60) { @file_put_contents($f, implode('', array_slice($c, -60)), LOCK_EX); }
 }
 function read_secret_file($filename) {
   $paths = array(__DIR__ . '/../../' . $filename, __DIR__ . '/../' . $filename);
@@ -145,6 +181,17 @@ if (!hash_equals($SECRET, $given)) {
   out(false, array('error' => 'Zugang verweigert (Secret fehlt/falsch).'), 401);
 }
 
+// ---- Diagnose: GET ?debug=1&key=SECRET& -> letzte Fehlversuche im Klartext ----
+if (isset($_GET['debug'])) {
+  $f = debug_path();
+  if ($_GET['debug'] === 'clear') { @unlink($f); out(true, array('debug' => 'Protokoll geleert.')); }
+  $lines = ($f !== '' && @is_readable($f)) ? @file($f, FILE_IGNORE_NEW_LINES) : array();
+  header('Content-Type: text/plain; charset=utf-8');
+  http_response_code(200);
+  echo $lines ? implode("\n", $lines) : 'Noch keine Fehlversuche protokolliert.';
+  exit;
+}
+
 // ---- Selbsttest: GET ?selftest=1&key=SECRET → Konfig-Status, sendet nichts ----
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET' && isset($_GET['selftest'])) {
   $pd = pd_get($PD_BASE, $PD_TOKEN, '/users/me');
@@ -165,6 +212,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET' && isset($_GET['selftest']))
 $raw = file_get_contents('php://input');
 $in = json_decode($raw, true);
 if (!is_array($in) && !empty($_POST)) { $in = $_POST; }
+$GLOBALS['GC_BODY_LEN']  = strlen((string) $raw);
+$GLOBALS['GC_BODY_KEYS'] = is_array($in) ? array_keys($in) : array();
 if (!is_array($in)) {
   out(false, array('error' => 'Kein lesbarer Body (weder JSON noch Formularfelder).'));
 }
