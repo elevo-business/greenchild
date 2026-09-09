@@ -108,6 +108,33 @@ function hash_name($n) {
   return $x !== '' ? hash('sha256', $x) : '';
 }
 
+/**
+ * Betrag robust einlesen. Der klassische Pipedrive-Webhook liefert eine reine
+ * Zahl (26200). Ein Merge-Feld aus einer Automation kann dagegen formatiert
+ * ankommen ("26.200,00 EUR"). Ein simples (float) wuerde daraus 26.20 machen
+ * und Meta einen falschen Umsatz melden - deshalb hier explizit normalisieren.
+ */
+function parse_amount($v) {
+  if (is_int($v) || is_float($v)) { return (float) $v; }
+  $s = trim((string) $v);
+  if ($s === '') { return 0.0; }
+  // Alles ausser Ziffern, Trennzeichen und Vorzeichen entfernen (EUR, Symbole, NBSP).
+  $s = preg_replace('/[^0-9,.\-]/u', '', $s);
+  $hasComma = strpos($s, ',') !== false;
+  $hasDot   = strpos($s, '.') !== false;
+  if ($hasComma && $hasDot) {
+    // Das zuletzt stehende Zeichen ist das Dezimaltrennzeichen.
+    if (strrpos($s, ',') > strrpos($s, '.')) { $s = str_replace('.', '', $s); $s = str_replace(',', '.', $s); }
+    else                                     { $s = str_replace(',', '', $s); }
+  } elseif ($hasComma) {
+    $s = str_replace(',', '.', $s);          // deutsches Dezimalkomma
+  } elseif ($hasDot) {
+    // Nur Punkte: Tausenderpunkte sehen aus wie 26.200 oder 1.234.567.
+    if (preg_match('/^-?\d{1,3}(\.\d{3})+$/', $s)) { $s = str_replace('.', '', $s); }
+  }
+  return (float) $s;
+}
+
 // ---- Zugangsschutz ----
 if ($SECRET === '') {
   out(false, array('error' => 'Nicht konfiguriert: PD_WEBHOOK_SECRET fehlt (ENV oder pd-webhook-secret.txt).'), 503);
@@ -131,9 +158,16 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET' && isset($_GET['selftest']))
 }
 
 // ---- Webhook-Payload lesen ----
+// Pipedrive schickt je nach Quelle unterschiedlich: der klassische Webhook
+// (Einstellungen > Webhooks) sendet JSON, die Automation "Webhook-Anfrage
+// senden" im Modus "Schlusselwert" kann auch form-urlencoded senden. Beides
+// akzeptieren, sonst scheitert die Einrichtung an einer Formatoption.
 $raw = file_get_contents('php://input');
 $in = json_decode($raw, true);
-if (!is_array($in)) { out(false, array('error' => 'Kein JSON-Body.')); }
+if (!is_array($in) && !empty($_POST)) { $in = $_POST; }
+if (!is_array($in)) {
+  out(false, array('error' => 'Kein lesbarer Body (weder JSON noch Formularfelder).'));
+}
 
 // Pipedrive-Webhook liefert die Deal-Daten je nach Version unter data/current.
 // (v2.0: {meta, data, previous}; v1: {event, current, previous, meta})
@@ -156,7 +190,7 @@ if (isset($prev['status']) && $prev['status'] === 'won') {
 
 // ---- Deal-Werte ----
 $dealId   = isset($deal['id']) ? $deal['id'] : (isset($deal['deal_id']) ? $deal['deal_id'] : '');
-$value    = isset($deal['value']) ? (float) $deal['value'] : 0.0;
+$value    = parse_amount(isset($deal['value']) ? $deal['value'] : 0);
 $currency = isset($deal['currency']) && $deal['currency'] ? $deal['currency'] : 'EUR';
 
 // person_id kann int oder Objekt {value:…} sein
