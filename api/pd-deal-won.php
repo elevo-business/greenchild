@@ -49,6 +49,30 @@ function debug_path() {
   foreach ($dirs as $d) { if (@is_dir($d) && @is_writable($d)) { return $d . 'pd-webhook-debug.log'; } }
   return '';
 }
+/**
+ * Struktur des Payloads beschreiben, OHNE Werte preiszugeben: pro Feld nur
+ * Typ und Laenge/Anzahl. Damit ist erkennbar, ob ein Merge-Feld z.B. ein
+ * Objekt statt einer Zahl liefert - ohne dass Kundendaten im Protokoll landen.
+ */
+function structure_dump($v, $depth = 0) {
+  if ($depth > 2)        { return '...'; }
+  if (is_array($v)) {
+    $isList = array_keys($v) === range(0, count($v) - 1);
+    $parts = array();
+    $i = 0;
+    foreach ($v as $k => $x) {
+      if ($i++ >= 8) { $parts[] = '...'; break; }
+      $name = preg_replace('/[^A-Za-z0-9_.\-]/', '', (string) $k);
+      $parts[] = ($isList ? '' : $name . ':') . structure_dump($x, $depth + 1);
+    }
+    return ($isList ? '[' : '{') . implode(',', $parts) . ($isList ? ']' : '}');
+  }
+  if (is_null($v))   { return 'null'; }
+  if (is_bool($v))   { return $v ? 'true' : 'false'; }
+  if (is_int($v) || is_float($v)) { return 'zahl'; }
+  return 'text(' . strlen((string) $v) . ')';
+}
+
 function debug_log($code, $data) {
   if ($code >= 200 && $code < 300 && empty($data['skipped'])) { return; }  // Erfolg nicht protokollieren
   $f = debug_path();
@@ -74,8 +98,12 @@ function debug_log($code, $data) {
     foreach ($GLOBALS['GC_BODY_SAFE'] as $k => $v) {
       $pairs[] = $k . '=' . preg_replace('/[^\x20-\x7E]/', '', substr(var_export($v, true), 0, 30));
     }
-    $line = rtrim($line, "\n") . '  werte{' . implode(' ', $pairs) . "}\n";
+    $line = rtrim($line, "\n") . '  werte{' . implode(' ', $pairs) . '}';
   }
+  if (isset($GLOBALS['GC_BODY_STRUCT'])) {
+    $line = rtrim($line, "\n") . '  struktur=' . $GLOBALS['GC_BODY_STRUCT'];
+  }
+  $line = rtrim($line, "\n") . "\n";
   @file_put_contents($f, $line, FILE_APPEND | LOCK_EX);
   // Datei klein halten: nur die letzten 60 Zeilen behalten.
   $c = @file($f);
@@ -181,6 +209,40 @@ function parse_amount($v) {
   return (float) $s;
 }
 
+/**
+ * Merge-Felder koennen statt eines einfachen Wertes eine Struktur liefern
+ * (z. B. {value: 26} oder [26]). Fuer id/status/person_id brauchen wir aber
+ * einen Skalar - hier den ersten sinnvollen herausziehen, statt den ganzen
+ * Aufruf abzulehnen.
+ */
+function scalarize($v, $depth = 0) {
+  if (is_array($v) && $depth < 3) {
+    foreach (array('value', 'id', 'name', 0) as $k) {
+      if (array_key_exists($k, $v)) { return scalarize($v[$k], $depth + 1); }
+    }
+    foreach ($v as $x) { if (!is_array($x) && $x !== null && $x !== '') { return $x; } }
+    return '';
+  }
+  return is_array($v) ? '' : $v;
+}
+
+/**
+ * Waehrung auf ISO-4217 bringen. Das Pipedrive-Merge-Feld "Deal-Waehrung"
+ * liefert den Anzeigenamen ("Euro"), Meta erwartet aber den Code ("EUR") und
+ * lehnt das Event sonst ab.
+ */
+function normalize_currency($c) {
+  $x = strtoupper(trim((string) $c));
+  $map = array(
+    'EURO' => 'EUR', '€' => 'EUR', 'EU' => 'EUR',
+    'US DOLLAR' => 'USD', 'DOLLAR' => 'USD', 'US-DOLLAR' => 'USD', '$' => 'USD',
+    'SCHWEIZER FRANKEN' => 'CHF', 'FRANKEN' => 'CHF',
+    'BRITISCHES PFUND' => 'GBP', 'PFUND' => 'GBP',
+  );
+  if (isset($map[$x])) { return $map[$x]; }
+  return preg_match('/^[A-Z]{3}$/', $x) ? $x : 'EUR';
+}
+
 // ---- Zugangsschutz ----
 if ($SECRET === '') {
   out(false, array('error' => 'Nicht konfiguriert: PD_WEBHOOK_SECRET fehlt (ENV oder pd-webhook-secret.txt).'), 503);
@@ -225,6 +287,7 @@ if (!is_array($in) && !empty($_POST)) { $in = $_POST; }
 $GLOBALS['GC_BODY_LEN']  = strlen((string) $raw);
 $GLOBALS['GC_BODY_KEYS'] = is_array($in) ? array_keys($in) : array();
 $GLOBALS['GC_BODY_SAFE'] = array();
+if (is_array($in)) { $GLOBALS['GC_BODY_STRUCT'] = structure_dump($in); }
 if (is_array($in)) {
   foreach (array('id', 'status', 'currency', 'value', 'person_id') as $k) {
     if (array_key_exists($k, $in) && !is_array($in[$k])) { $GLOBALS['GC_BODY_SAFE'][$k] = $in[$k]; }
@@ -247,6 +310,11 @@ elseif (array_key_exists('id', $in) || array_key_exists('status', $in)) {
   $deal = $in;
 }
 if (!$deal) { out(false, array('error' => 'Keine Deal-Daten im Payload.')); }
+
+// Verschachtelte Merge-Werte auf Skalare reduzieren (siehe scalarize()).
+foreach (array('id', 'status', 'value', 'currency', 'person_id', 'deal_id', 'won_time') as $k) {
+  if (isset($deal[$k]) && is_array($deal[$k])) { $deal[$k] = scalarize($deal[$k]); }
+}
 
 // Leere Pflichtfelder frueh und benennbar abfangen.
 $missing = array();
@@ -274,7 +342,7 @@ if (isset($prev['status']) && $prev['status'] === 'won') {
 // ---- Deal-Werte ----
 $dealId   = isset($deal['id']) ? $deal['id'] : (isset($deal['deal_id']) ? $deal['deal_id'] : '');
 $value    = parse_amount(isset($deal['value']) ? $deal['value'] : 0);
-$currency = isset($deal['currency']) && $deal['currency'] ? $deal['currency'] : 'EUR';
+$currency = normalize_currency(isset($deal['currency']) ? $deal['currency'] : 'EUR');
 
 // person_id kann int oder Objekt {value:…} sein
 $personId = isset($deal['person_id']) ? $deal['person_id'] : null;
@@ -323,7 +391,7 @@ $event = array(
   'event_id'      => 'deal.won.' . $dealId,
   'user_data'     => $ud,
   'custom_data'   => array(
-    'currency' => strtoupper($currency),
+    'currency' => $currency,
     'value'    => round($value, 2),
     'content_name' => 'Deal gewonnen',
   ),
@@ -335,7 +403,7 @@ $url = 'https://graph.facebook.com/v19.0/' . $META_PIXEL_ID . '/events?access_to
 $r = http_json('POST', $url, array(), $body);
 
 if (isset($r['json']['events_received'])) {
-  out(true, array('sent' => true, 'event' => 'Purchase', 'value' => round($value, 2), 'currency' => strtoupper($currency), 'deal_id' => $dealId));
+  out(true, array('sent' => true, 'event' => 'Purchase', 'value' => round($value, 2), 'currency' => $currency, 'deal_id' => $dealId));
 }
 $msg = isset($r['json']['error']['message']) ? $r['json']['error']['message'] : ('HTTP ' . $r['status']);
 out(false, array('error' => 'Meta-Fehler: ' . $msg, 'deal_id' => $dealId), 502);
