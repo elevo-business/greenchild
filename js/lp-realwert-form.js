@@ -81,6 +81,134 @@
     });
   }
 
+  /* ---------- Pflicht-Telefonverifizierung (Twilio Verify, SMS-Code) ----------
+   * Nur aktiv, wenn die Seite window.GC_REQUIRE_PHONE_VERIFY = true setzt
+   * (aktuell sachwert-c/sachwert-v2 und sachwert-d). Server-seitig hart
+   * durchgesetzt in api/lead.php - dieser Block ist nur die Bedienung dazu;
+   * ein Bypass hier (z. B. deaktiviertes JS) würde beim Absenden trotzdem
+   * mit "Telefonnummer nicht bestätigt" abgelehnt.
+   * Endpunkte: api/verify-phone-start.php (SMS senden), api/verify-phone-
+   * check.php (Code prüfen, liefert den Proof für den Lead-Submit).
+   */
+  var REQUIRE_PHONE_VERIFY = !!(typeof window !== 'undefined' && window.GC_REQUIRE_PHONE_VERIFY);
+  var phoneVerify = { proof: '', phone: '' };
+
+  if (REQUIRE_PHONE_VERIFY && telEl) {
+    var pvGrp = telEl.closest('.form-group') || telEl.parentNode;
+    var pvBox = document.createElement('div');
+    pvBox.className = 'pv-box';
+    pvBox.style.marginTop = '10px';
+    pvGrp.parentNode.insertBefore(pvBox, pvGrp.nextSibling);
+
+    var pvState = 'idle'; // idle | sent | verified
+
+    function pvStatus(msg, isError) {
+      var s = pvBox.querySelector('.pv-status');
+      if (s) { s.textContent = msg || ''; s.style.color = isError ? '#dc2626' : 'var(--text-muted,#6b7280)'; }
+    }
+
+    function pvRender() {
+      if (pvState === 'verified') {
+        pvBox.innerHTML =
+          '<div style="display:flex;align-items:center;gap:8px;color:#128a5b;font-size:13.5px;font-weight:600;">' +
+            '<i data-lucide="check-circle" style="width:18px;height:18px;"></i> Nummer bestätigt' +
+          '</div>';
+        if (window.lucide) lucide.createIcons();
+        return;
+      }
+      if (pvState === 'sent') {
+        pvBox.innerHTML =
+          '<label class="form-label" style="font-size:13px;">Code aus der SMS *</label>' +
+          '<div style="display:flex;gap:8px;">' +
+            '<input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="8" class="form-input pv-code" placeholder="Code eingeben">' +
+            '<button type="button" class="btn btn-secondary pv-confirm" style="white-space:nowrap;">Bestätigen</button>' +
+          '</div>' +
+          '<div class="pv-status" style="font-size:12.5px;margin-top:6px;color:var(--text-muted,#6b7280);">' +
+            'Code per SMS gesendet. <a href="#" class="pv-resend">Erneut senden</a>' +
+          '</div>';
+        var codeEl = pvBox.querySelector('.pv-code');
+        pvBox.querySelector('.pv-confirm').addEventListener('click', pvCheck);
+        codeEl.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); pvCheck(); } });
+        codeEl.addEventListener('input', function () { pvStatus(''); });
+        pvBox.querySelector('.pv-resend').addEventListener('click', function (e) { e.preventDefault(); pvSend(); });
+        codeEl.focus();
+        return;
+      }
+      // idle
+      pvBox.innerHTML =
+        '<button type="button" class="btn btn-secondary pv-send" style="width:100%;justify-content:center;">Nummer per SMS bestätigen</button>' +
+        '<div class="pv-status" style="font-size:12.5px;margin-top:6px;"></div>';
+      pvBox.querySelector('.pv-send').addEventListener('click', pvSend);
+    }
+
+    function pvSend() {
+      var phone = telEl.value.trim();
+      if (!isValidPhone(phone)) { fieldError('telefon', PHONE_MSG); return; }
+      clearFieldError('telefon');
+      var btn = pvBox.querySelector('.pv-send') || pvBox.querySelector('.pv-resend');
+      if (btn) { btn.style.pointerEvents = 'none'; btn.disabled = true; }
+      pvStatus('Code wird gesendet …');
+      fetch('/api/verify-phone-start.php', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ telefon: phone })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (!res || !res.ok) {
+            pvStatus((res && res.error) || 'Senden fehlgeschlagen.', true);
+            if (btn) { btn.style.pointerEvents = ''; btn.disabled = false; }
+            return;
+          }
+          pvState = 'sent'; pvRender();
+          track('PhoneVerify_Sent', { source: SOURCE });
+        })
+        .catch(function () {
+          pvStatus('Senden fehlgeschlagen. Bitte erneut versuchen.', true);
+          if (btn) { btn.style.pointerEvents = ''; btn.disabled = false; }
+        });
+    }
+
+    function pvCheck() {
+      var phone = telEl.value.trim();
+      var codeEl = pvBox.querySelector('.pv-code');
+      var code = codeEl ? codeEl.value.trim() : '';
+      if (!code) { pvStatus('Bitte den Code eingeben.', true); return; }
+      var btn = pvBox.querySelector('.pv-confirm');
+      if (btn) { btn.disabled = true; btn.textContent = 'Prüfe …'; }
+      fetch('/api/verify-phone-check.php', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ telefon: phone, code: code })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (!res || !res.ok) {
+            pvStatus((res && res.error) || 'Code falsch oder abgelaufen.', true);
+            if (btn) { btn.disabled = false; btn.textContent = 'Bestätigen'; }
+            return;
+          }
+          phoneVerify.proof = res.proof; phoneVerify.phone = phone;
+          pvState = 'verified'; pvRender();
+          track('PhoneVerify_Confirmed', { source: SOURCE });
+        })
+        .catch(function () {
+          pvStatus('Prüfung fehlgeschlagen. Bitte erneut versuchen.', true);
+          if (btn) { btn.disabled = false; btn.textContent = 'Bestätigen'; }
+        });
+    }
+
+    // Nummer geändert, nachdem sie bestätigt/angestoßen wurde -> Verifizierung verwerfen,
+    // sonst könnte man Nummer A bestätigen und dann mit Nummer B absenden.
+    telEl.addEventListener('input', function () {
+      var v = telEl.value.trim();
+      if ((phoneVerify.proof || pvState !== 'idle') && v !== phoneVerify.phone) {
+        phoneVerify.proof = ''; phoneVerify.phone = '';
+        pvState = 'idle'; pvRender();
+      }
+    });
+
+    pvRender();
+  }
+
   /* ---------- Schritt-Navigation (generisch, 2..n Schritte) ---------- */
   var steps = Array.prototype.slice.call(form.querySelectorAll('.lp-step'));
   var dots = form.querySelectorAll('.step-dot');
@@ -297,6 +425,17 @@
     }
     if (consent && !consent.checked) { consent.focus(); return; }
 
+    // Pflicht-Telefonverifizierung: ohne bestätigten Proof für GENAU diese
+    // Nummer nicht absenden (server-seitig ohnehin hart durchgesetzt, siehe
+    // api/lead.php - das hier ist nur die frühere, freundlichere Rückmeldung).
+    if (REQUIRE_PHONE_VERIFY && (!phoneVerify.proof || phoneVerify.phone !== telefon)) {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalText; }
+      var pvBoxEl = form.querySelector('.pv-box');
+      if (pvBoxEl && pvBoxEl.scrollIntoView) { pvBoxEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      fieldError('telefon', 'Bitte bestätigen Sie zuerst Ihre Telefonnummer per SMS-Code.', true);
+      return;
+    }
+
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet …'; }
 
     var eventId = window.gcEventId ? window.gcEventId() : ('lead.' + Date.now());
@@ -315,7 +454,10 @@
       // Nur mit Marketing-Einwilligung darf serverseitig an Meta (CAPI) gemeldet werden:
       meta_consent: window.gcMarketingConsent ? window.gcMarketingConsent() : false,
       // First-Party-Attribution (Kampagne/Creative aus der Anzeigen-URL) → Pipedrive-Notiz:
-      attribution: window.gcAttribution ? window.gcAttribution() : {}
+      attribution: window.gcAttribution ? window.gcAttribution() : {},
+      // Nachweis der Telefonverifizierung (nur relevant, wenn REQUIRE_PHONE_VERIFY;
+      // auf anderen Seiten leer und von api/lead.php dort ignoriert):
+      phone_verify_proof: phoneVerify.proof
     };
 
     fetch(ENDPOINT, {
@@ -325,7 +467,19 @@
     })
       .then(function (r) { return r.json(); })
       .then(function (res) {
-        if (!res || !res.success) throw new Error('lead');
+        if (!res || !res.success) {
+          // Proof kurz nach der Bestätigung abgelaufen (>15 Min bis zum Absenden)
+          // oder nachträglich manipuliert -> gezielt zur erneuten SMS-Bestätigung
+          // zurückführen statt der generischen Fehlermeldung.
+          if (res && res.message === 'Telefonnummer nicht bestätigt') {
+            phoneVerify.proof = ''; phoneVerify.phone = '';
+            if (telEl) { telEl.dispatchEvent(new Event('input')); }
+            if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalText; }
+            fieldError('telefon', 'Die Bestätigung ist abgelaufen. Bitte die Nummer erneut per SMS bestätigen.', true);
+            return;
+          }
+          throw new Error('lead');
+        }
         track('Lead', { source: SOURCE, content_name: 'Sachwertvergleich 2026', budget: budgetEl ? budgetEl.value : 'info', lead_intent: leadIntentEl ? leadIntentEl.value : '', value: 0, eventID: eventId });
         showSuccess();
       })

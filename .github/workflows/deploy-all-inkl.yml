@@ -50,17 +50,35 @@ jobs:
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           PD_WEBHOOK_SECRET: ${{ secrets.PD_WEBHOOK_SECRET }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_VERIFY_SERVICE_SID: ${{ secrets.TWILIO_VERIFY_SERVICE_SID }}
+          PHONE_VERIFY_SECRET: ${{ secrets.PHONE_VERIFY_SECRET }}
           DRY_RUN: ${{ inputs.dry_run || false }}
         run: |
-          # Secret-Datei fuer api/pd-deal-won.php erzeugen - BEWUSST ausserhalb von
-          # _site, damit sie nicht in die oeffentlichen Webroots mit hochgeladen wird.
+          # Secret-Dateien fuer api/pd-deal-won.php + api/verify-phone-*.php
+          # erzeugen - BEWUSST ausserhalb von _site, damit sie nicht in die
+          # oeffentlichen Webroots mit hochgeladen werden. Ueber ENV-Namen ->
+          # Dateiname gesteuert, damit ein weiteres Secret kuenftig nur hier
+          # einen Eintrag braucht (deploy.mjs liest das Verzeichnis generisch).
           mkdir -p _secret
-          if [ -n "$PD_WEBHOOK_SECRET" ]; then
-            printf '%s' "$PD_WEBHOOK_SECRET" > _secret/pd-webhook-secret.txt
-            echo "Secret-Datei vorbereitet (Inhalt wird nicht geloggt)."
-          else
-            echo "Hinweis: PD_WEBHOOK_SECRET ist nicht gesetzt - Secret-Upload wird uebersprungen."
-          fi
+          declare -A SECRET_FILES=(
+            [PD_WEBHOOK_SECRET]=pd-webhook-secret.txt
+            [TWILIO_ACCOUNT_SID]=twilio-account-sid.txt
+            [TWILIO_AUTH_TOKEN]=twilio-auth-token.txt
+            [TWILIO_VERIFY_SERVICE_SID]=twilio-verify-sid.txt
+            [PHONE_VERIFY_SECRET]=phone-verify-secret.txt
+          )
+          for VAR_NAME in "${!SECRET_FILES[@]}"; do
+            FILE_NAME="${SECRET_FILES[$VAR_NAME]}"
+            VALUE="${!VAR_NAME}"
+            if [ -n "$VALUE" ]; then
+              printf '%s' "$VALUE" > "_secret/$FILE_NAME"
+              echo "Secret-Datei vorbereitet: $FILE_NAME (Inhalt wird nicht geloggt)."
+            else
+              echo "Hinweis: $VAR_NAME ist nicht gesetzt - $FILE_NAME wird uebersprungen."
+            fi
+          done
           npm install basic-ftp@5 --no-save --silent
           cat > deploy.mjs <<'EOF'
           import { Client } from "basic-ftp";
@@ -128,23 +146,28 @@ jobs:
           console.log(`Lokale Dateien: ${files.length}`);
           for (const t of targets) await deployTarget(t, files);
 
-          // Secret-Datei in die FTP-Wurzel legen - also OBERHALB von /greenchild.eu/
-          // und /greenchild.at/. api/pd-deal-won.php sucht sie ueber
-          // __DIR__ + '/../../', was von /greenchild.eu/api aus genau hier landet.
-          // Dort ist sie ueber das Web nicht erreichbar.
-          const SECRET_LOCAL = "_secret/pd-webhook-secret.txt";
-          if (fs.existsSync(SECRET_LOCAL)) {
-            if (DRY) {
-              console.log("\nTrockenlauf: Secret-Datei nicht hochgeladen.");
-            } else {
-              const c = await connect();
-              await c.cd("/");
-              await c.uploadFrom(SECRET_LOCAL, "pd-webhook-secret.txt");
-              c.close();
-              console.log("\nSecret-Datei in die FTP-Wurzel geschrieben (ausserhalb der Webroots).");
-            }
+          // Alle vorbereiteten Secret-Dateien in die FTP-Wurzel legen - also
+          // OBERHALB von /greenchild.eu/ und /greenchild.at/. Die betroffenen
+          // PHP-Endpunkte (pd-deal-won.php, verify-phone-*.php) suchen dort
+          // ueber __DIR__ + '/../../', was von .../api aus genau hier landet.
+          // Dort ist nichts ueber das Web erreichbar. Generisch ueber den
+          // Verzeichnisinhalt statt Dateiname-fuer-Dateiname, damit ein
+          // weiteres Secret kuenftig nur im vorigen Schritt ergaenzt werden muss.
+          const SECRET_DIR = "_secret";
+          const secretFiles = fs.existsSync(SECRET_DIR) ? fs.readdirSync(SECRET_DIR) : [];
+          if (!secretFiles.length) {
+            console.log("\nKeine Secret-Dateien vorhanden - uebersprungen.");
+          } else if (DRY) {
+            console.log(`\nTrockenlauf: ${secretFiles.length} Secret-Datei(en) nicht hochgeladen.`);
           } else {
-            console.log("\nKeine Secret-Datei vorhanden - uebersprungen.");
+            const c = await connect();
+            await c.cd("/");
+            for (const name of secretFiles) {
+              await c.uploadFrom(path.join(SECRET_DIR, name), name);
+              console.log(`  Secret-Datei hochgeladen: ${name}`);
+            }
+            c.close();
+            console.log("\nSecret-Dateien in die FTP-Wurzel geschrieben (ausserhalb der Webroots).");
           }
           console.log("\nAlle Ziele abgeschlossen.");
           EOF
