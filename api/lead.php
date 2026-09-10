@@ -207,6 +207,21 @@ if ($telefon !== '') {
     respond(false, 'Telefonnummer ungültig');
   }
 }
+// Bestimmte Landingpages verlangen eine per SMS bestätigte Telefonnummer
+// (Twilio Verify, siehe api/verify-phone-start.php / -check.php). Hart
+// durchgesetzt: ohne gültigen Proof wird kein Lead angelegt, auch wenn alle
+// anderen Felder stimmen - keine stille Ausnahme bei Twilio-Ausfall.
+$PHONE_VERIFY_REQUIRED_SOURCES = array('sachwert-v2', 'sachwert-d');
+if (in_array($source, $PHONE_VERIFY_REQUIRED_SOURCES, true)) {
+  define('GC_VERIFY_INTERNAL', true);
+  require __DIR__ . '/_phone-verify-common.php';
+  $phoneVerifySecret = getenv('PHONE_VERIFY_SECRET');
+  if (!$phoneVerifySecret) { $phoneVerifySecret = read_secret_file('phone-verify-secret.txt'); }
+  $phoneProof = field($in, 'phone_verify_proof');
+  if (!gc_check_phone_proof($phoneProof, $telefon, $phoneVerifySecret)) {
+    respond(false, 'Telefonnummer nicht bestätigt');
+  }
+}
 // Consent-Checkbox haben nur die LP-Formulare; Kontaktformular hat sie nicht.
 if (!$isKontakt && !$consent) {
   respond(false, 'Einwilligung fehlt');
