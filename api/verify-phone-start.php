@@ -49,9 +49,15 @@ $PROOF_SECRET      = cfg('PHONE_VERIFY_SECRET');
 if ($PROOF_SECRET === '') { $PROOF_SECRET = read_secret_file('phone-verify-secret.txt'); }
 
 // ---- Diagnose: GET ?debug=1&key=SECRET& -> letzte Fehlversuche im Klartext ----
+// "nicht konfiguriert" und "Zugang verweigert" bewusst UNTERSCHIEDEN (anders
+// als sonst bei einer Zugangsprüfung üblich): dieser Zweig ist nur zur
+// Diagnose da, und genau die Unterscheidung "Secret fehlt" vs. "falscher Key
+// eingegeben" ist die Information, die man hier braucht - eine Sammelmeldung
+// hätte hier (wie schon einmal) in die Irre geführt.
 if (isset($_GET['debug'])) {
+  if ($PROOF_SECRET === '') { respond(false, array('error' => 'Verifizierung ist derzeit nicht konfiguriert (fehlt: PHONE_VERIFY_SECRET).')); }
   $given = isset($_GET['key']) ? (string) $_GET['key'] : '';
-  if ($PROOF_SECRET === '' || !hash_equals($PROOF_SECRET, $given)) {
+  if (!hash_equals($PROOF_SECRET, $given)) {
     respond(false, array('error' => 'Zugang verweigert.'));
   }
   $f = null;
@@ -65,8 +71,15 @@ if (isset($_GET['debug'])) {
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') { respond(false, array('error' => 'Method not allowed')); }
 
-if ($TWILIO_SID === '' || $TWILIO_TOKEN === '' || $TWILIO_VERIFY_SID === '') {
-  respond(false, array('error' => 'Verifizierung ist derzeit nicht konfiguriert.'));
+// Benennt fehlende Secrets statt nur "nicht konfiguriert" zu sagen - sonst
+// bleibt unklar, welches der drei fehlt (Lehre aus der Purchase-Webhook-
+// Diagnose: eine Sammelmeldung kostet eine ganze Debug-Runde extra).
+$missingSecrets = array();
+if ($TWILIO_SID === '')        { $missingSecrets[] = 'TWILIO_ACCOUNT_SID'; }
+if ($TWILIO_TOKEN === '')      { $missingSecrets[] = 'TWILIO_AUTH_TOKEN'; }
+if ($TWILIO_VERIFY_SID === '') { $missingSecrets[] = 'TWILIO_VERIFY_SERVICE_SID'; }
+if ($missingSecrets) {
+  respond(false, array('error' => 'Verifizierung ist derzeit nicht konfiguriert (fehlt: ' . implode(', ', $missingSecrets) . ').'));
 }
 
 // ---- Eingabe ----

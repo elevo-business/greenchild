@@ -45,8 +45,16 @@ if ($TWILIO_VERIFY_SID === '') { $TWILIO_VERIFY_SID = read_secret_file('twilio-v
 $PROOF_SECRET      = cfg('PHONE_VERIFY_SECRET');
 if ($PROOF_SECRET === '') { $PROOF_SECRET = read_secret_file('phone-verify-secret.txt'); }
 
-if ($TWILIO_SID === '' || $TWILIO_TOKEN === '' || $TWILIO_VERIFY_SID === '' || $PROOF_SECRET === '') {
-  respond(false, array('error' => 'Verifizierung ist derzeit nicht konfiguriert.'));
+// Benennt fehlende Secrets statt nur "nicht konfiguriert" zu sagen - sonst
+// bleibt unklar, welches der vier fehlt (Lehre aus der Purchase-Webhook-
+// Diagnose: eine Sammelmeldung kostet eine ganze Debug-Runde extra).
+$missingSecrets = array();
+if ($TWILIO_SID === '')        { $missingSecrets[] = 'TWILIO_ACCOUNT_SID'; }
+if ($TWILIO_TOKEN === '')      { $missingSecrets[] = 'TWILIO_AUTH_TOKEN'; }
+if ($TWILIO_VERIFY_SID === '') { $missingSecrets[] = 'TWILIO_VERIFY_SERVICE_SID'; }
+if ($PROOF_SECRET === '')      { $missingSecrets[] = 'PHONE_VERIFY_SECRET'; }
+if ($missingSecrets) {
+  respond(false, array('error' => 'Verifizierung ist derzeit nicht konfiguriert (fehlt: ' . implode(', ', $missingSecrets) . ').'));
 }
 
 // ---- Eingabe ----
